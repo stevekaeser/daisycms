@@ -1,0 +1,13 @@
+<html>
+<body>
+
+<table print-width="200px" width="100px">
+<tr>
+<td>
+<p>hello!</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

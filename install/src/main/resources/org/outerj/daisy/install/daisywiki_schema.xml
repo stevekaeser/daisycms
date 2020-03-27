@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- This file is processed by the class SchemaUploader -->
+<schema>
+  <partType name="NavigationDescription" mimeTypes="text/xml" daisyHtml="false" linkExtractor="navigation">
+    <label locale="" text="Navigation Description"/>
+    <label locale="nl" text="Navigatiebeschrijving"/>
+    <label locale="ru" text="Описание навигации"/>
+    <label locale="de" text="Navigationsbeschreibung"/>
+    <label locale="pl" text="Opis nawigacji"/>
+    <label locale="fr" text="Description de la navigation"/>
+    <label locale="es" text="Descripción de la navegación"/>
+    <label locale="cs" text="Popis navigace"/>
+  </partType>
+
+  <documentType name="Navigation">
+    <partTypeUse partTypeName="NavigationDescription" required="true"/>
+
+    <label locale="" text="Navigation"/>
+    <label locale="nl" text="Navigatie"/>
+    <label locale="ru" text="Навигация"/>
+    <label locale="de" text="Navigation"/>
+    <label locale="pl" text="Nawigacja"/>
+    <label locale="fr" text="Navigation"/>
+    <label locale="es" text="Navegación"/>
+    <label locale="cs" text="Navigace"/>
+
+    <description locale="" text="For documents describing the site navigation."/>
+    <description locale="nl" text="Voor documenten die de site navigatie beschrijven."/>
+    <description locale="ru" text="Для документов описывающих навигацию по сайту."/>
+    <description locale="de" text="Für Dokumente, die die Site-Navigation beschreiben."/>
+    <description locale="pl" text="Dla dokumentów opisujących nawigację witryny."/>
+    <description locale="fr" text="Pour les documents qui décrivent la navigation du site."/>
+    <description locale="es" text="Para los documentos que describen la navegación del sitio."/>
+    <description locale="cs" text="Pro dokumenty popisující navigaci stránek."/>
+  </documentType>
+
+  <partType name="SimpleDocumentContent" mimeTypes="text/xml" daisyHtml="true" linkExtractor="daisy-html">
+    <label locale="" text="Content"/>
+    <label locale="nl" text="Tekst"/>
+    <label locale="ru" text="Содержание"/>
+    <label locale="de" text="Inhalt"/>
+    <label locale="pl" text="Tekst"/>
+    <label locale="fr" text="Contenu"/>
+    <label locale="es" text="Contenido"/>
+    <label locale="cs" text="Text"/>
+  </partType>
+
+  <documentType name="SimpleDocument">
+    <partTypeUse partTypeName="SimpleDocumentContent" required="true"/>
+
+    <label locale="" text="Simple Document"/>
+    <label locale="nl" text="Eenvoudig document"/>
+    <label locale="ru" text="Простой документ"/>
+    <label locale="de" text="Einfaches Dokument"/>
+    <label locale="pl" text="Prosty dokument"/>
+    <label locale="fr" text="Document simple"/>
+    <label locale="es" text="Documento simple"/>
+    <label locale="cs" text="Jednoduchý dokument"/>
+
+    <description locale="" text="A basic document type."/>
+    <description locale="nl" text="Een basis documenttype."/>
+    <description locale="ru" text="Базовый тип документа."/>
+    <description locale="de" text="Ein auf das Wesentliche reduzierter Dokument-Typ."/>
+    <description locale="pl" text="Prosty typ dokumentu."/>
+    <description locale="fr" text="Un type de document simple."/>
+    <description locale="es" text="Un tipo de documento simple."/>
+    <description locale="cs" text="Základní typ dokumentu."/>
+  </documentType>
+
+  <partType name="ImageData" mimeTypes="" daisyHtml="false">
+    <label locale="" text="Image Data"/>
+    <label locale="nl" text="Afbeeldingsdata"/>
+    <label locale="ru" text="Данные изображений"/>
+    <label locale="de" text="Bild-Datei"/>
+    <label locale="pl" text="Dane obrazka"/>
+    <label locale="fr" text="Données image"/>
+    <label locale="es" text="Datos de imagen"/>
+    <label locale="cs" text="Data obrázku"/>
+  </partType>
+
+  <partType name="ImageThumbnail" mimeTypes="" daisyHtml="false">
+    <label locale="" text="Image Thumbnail"/>
+    <label locale="nl" text="Verkleinde afbeelding"/>
+    <label locale="de" text="Miniaturbild"/>
+    <label locale="fr" text="Miniature"/>
+    <label locale="ru" text="Мини Изображение"/>
+    <label locale="es" text="Miniaturas de imagen"/>
+    <label locale="cs" text="Miniatura obrázku"/>
+
+    <description locale="" text="Automatically generated, you do not need to provide this yourself."/>
+    <description locale="nl" text="Automatisch gegenereerd, je hoeft deze niet zelf aan te leveren."/>
+    <description locale="de" text="Automatisch erzeugt, wird vom System erzeugt und bereitgestellt."/>
+    <description locale="fr" text="Générée automatiquement, il n'est pas nécessaire d'en fournir une vous-même."/>
+    <description locale="ru" text="Создаётся автоматически, создаётся и предоставляется системой."/>
+    <description locale="es" text="Generado automáticamente, no necesita proporcionarlo."/>
+    <description locale="cs" text="Generováno automaticky, data doplní systém."/>
+  </partType>
+
+  <!-- ImagePreview is like a thumbnail but then larger -->
+  <partType name="ImagePreview" mimeTypes="" daisyHtml="false">
+    <label locale="" text="Image Preview"/>
+    <label locale="nl" text="Voorbeeld afbeelding"/>
+    <label locale="de" text="Vorschaubild"/>
+    <label locale="fr" text="Aperçu"/>
+    <label locale="ru" text="Показательное изображение"/>
+    <label locale="es" text="Vista previa de la Imagen"/>
+    <label locale="cs" text="Náhled obrázku"/>
+
+    <description locale="" text="Automatically generated, you do not need to provide this yourself."/>
+    <description locale="nl" text="Automatisch gegenereerd, je hoeft deze niet zelf aan te leveren."/>
+    <description locale="de" text="Automatisch erzeugt, wird vom System erzeugt und bereitgestellt."/>
+    <description locale="fr" text="Généré automatiquement, il n'est pas nécessaire d'en fournir un vous-même."/>
+    <description locale="ru" text="Создаётся автоматически, создаётся и предоставляется системой."/>
+    <description locale="es" text="Generado automáticamente, no necesita proporcionarlo."/>
+    <description locale="cs" text="Generováno automaticky, data doplní systém."/>
+  </partType>
+
+  <fieldType name="ImageWidth" valueType="long" multiValue="false" aclAllowed="false" size="4">
+    <label locale="" text="Width"/>
+    <label locale="nl" text="Breedte"/>
+    <label locale="de" text="Breite"/>
+    <label locale="fr" text="Largeur"/>
+    <label locale="ru" text="Ширина"/>
+    <label locale="es" text="Anchura"/>
+    <label locale="cs" text="Šířka"/>
+
+    <description locale="" text="Automatically assigned, you do not need to enter this yourself."/>
+    <description locale="nl" text="Automatisch toegewezen, je hoeft dit niet zelf op te geven."/>
+    <description locale="de" text="Automatisch erzeugt, braucht nicht vom Benutzer eingeben zu werden."/>
+    <description locale="fr" text="Définie automatiquement, vous n'avez pas besoin de la spécifier vous-même."/>
+    <description locale="ru" text="Создаётся автоматически, пользователю не нужно задавать."/>
+    <description locale="es" text="Asignado automáticamente, no necesita proporcionarlo."/>
+    <description locale="cs" text="Generováno automaticky, hodnotu doplní systém."/>
+  </fieldType>
+
+  <fieldType name="ImageHeight" valueType="long" multiValue="false" aclAllowed="false" size="4">
+    <label locale="" text="Height"/>
+    <label locale="nl" text="Hoogte"/>
+    <label locale="de" text="Höhe"/>
+    <label locale="fr" text="Hauteur"/>
+    <label locale="ru" text="Высота"/>
+    <label locale="es" text="Altura."/>
+    <label locale="cs" text="Výška"/>
+
+    <description locale="" text="Automatically assigned, you do not need to enter this yourself."/>
+    <description locale="nl" text="Automatisch toegewezen, je hoeft dit niet zelf op te geven."/>
+    <description locale="de" text="Automatisch erzeugt, braucht nicht vom Benutzer eingeben zu werden."/>
+    <description locale="fr" text="Définie automatiquement, vous n'avez pas besoin de la spécifier vous-même."/>
+    <description locale="ru" text="Создаётся автоматически, пользователю не нужно задавать."/>
+    <description locale="es" text="Asignado automáticamente, no necesita proporcionarlo."/>
+    <description locale="cs" text="Generováno automaticky, hodnotu doplní systém."/>
+  </fieldType>
+
+  <documentType name="Image">
+    <partTypeUse partTypeName="ImageData" required="true"/>
+    <partTypeUse partTypeName="ImageThumbnail" required="false" editable="false"/>
+    <partTypeUse partTypeName="ImagePreview" required="false" editable="false"/>
+    <fieldTypeUse fieldTypeName="ImageWidth" required="false" editable="false"/>
+    <fieldTypeUse fieldTypeName="ImageHeight" required="false" editable="false"/>
+
+    <label locale="" text="Image"/>
+    <label locale="nl" text="Afbeelding"/>
+    <label locale="ru" text="Изображение"/>
+    <label locale="de" text="Bild"/>
+    <label locale="fr" text="Image"/>
+    <label locale="pl" text="Obrazek"/>
+    <label locale="fr" text="Image"/>
+    <label locale="es" text="Imagen"/>
+    <label locale="cs" text="Obrázek"/>
+
+    <description locale="" text="Use this document type to upload images in the Daisy Wiki."/>
+    <description locale="nl" text="Gebruik dit documenttype om afbeeldingen in de Daisy Wiki te plaatsen."/>
+    <description locale="ru" text="Используйте этот тип документа для загрузки изображений в Daisy Wiki."/>
+    <description locale="de" text="Benutze diesen Dokument-Typ, um eine Bild-Datei in das Daisy Wiki zu laden."/>
+    <description locale="fr" text="Utilisez ce type de document pour charger des images dans le Daisy Wiki."/>
+    <description locale="pl" text="Używaj tego typu dokumentu do umieszczania obrazków w Daisy Wiki."/>
+    <description locale="fr" text="Utilisez ce type de document pour charger des images dans Daisy Wiki."/>
+    <description locale="es" text="Use este tipo de documento para subir imágenes al Wiki Daisy."/>
+    <description locale="cs" text="Pro nahrání obrázku do Daisy Wiki použijte tento typ dokumentu."/>
+  </documentType>
+
+  <partType name="AttachmentData" mimeTypes="" daisyHtml="false">
+    <label locale="" text="Attachment Data"/>
+    <label locale="nl" text="Bijlage-data"/>
+    <label locale="ru" text="Прикрепленные данные"/>
+    <label locale="de" text="Anlage-Datei"/>
+    <label locale="pl" text="Dane załącznika"/>
+    <label locale="fr" text="Données de pièce jointe"/>
+    <label locale="es" text="Datos de Adjunto"/>
+    <label locale="cs" text="Data přílohy"/>
+  </partType>
+
+  <documentType name="Attachment">
+    <partTypeUse partTypeName="AttachmentData" required="true"/>
+
+    <label locale="" text="Attachment"/>
+    <label locale="nl" text="Bijlage"/>
+    <label locale="ru" text="Прикрепленные данные"/>
+    <label locale="de" text="Anlage"/>
+    <label locale="pl" text="Załącznik"/>
+    <label locale="fr" text="Pièce jointe"/>
+    <label locale="es" text="Adjunto"/>
+    <label locale="cs" text="Příloha"/>
+
+    <description locale="" text="Use this document type to upload documents that serve as attachments to other documents."/>
+    <description locale="nl" text="Gebruik dit documenttype om documenten op de server te plaatsen die dienen als bijlagen voor andere documenten."/>
+    <description locale="ru" text="Используйте этот тип документа для загрузки документов, которые в дальнейшем будут служить как прикрепленные данные для других документов."/>
+    <description locale="de" text="Benutze diesen Dokument-Typ, um Dokumente in das Daisy Wiki zu laden, die als Anlage zu anderen Dokumenten dienen sollen."/>
+    <description locale="pl" text="Używaj tego typu dokumentu do umieszczania plików będących załącznikami do innych dokumentów."/>
+    <description locale="fr" text="Utilisez ce type de document pour charger des documents qui pourront être placés en pièces jointes à d'autres documents."/>
+    <description locale="es" text="Use este tipo de documento para subir documentos que sirvan como adjuntos a otros documentos."/>
+    <description locale="cs" text="Pro nahrání dokumentů, které budou sloužit jako přílohy k jiným dokumentům, použijte tento typ."/>
+
+  </documentType>
+
+  <partType name="BookDefinitionDescription" mimeTypes="text/xml" daisyHtml="false" linkExtractor="book">
+    <label locale="" text="Book Definition Description"/>
+    <label locale="pl" text="Opis definicji książkia"/>
+    <label locale="de" text="Beschreibung der Buchdefiniton"/>
+    <label locale="fr" text="Description d'une définition de livre"/>
+    <label locale="nl" text="Boekdefinitie-beschrijving"/>
+    <label locale="ru" text="Описание апределения книги"/>
+    <label locale="es" text="Descripción de Definición de Libro"/>
+    <label locale="cs" text="Popis definice knihy"/>
+  </partType>
+
+  <partType name="BookPublicationsDefault" mimeTypes="text/xml" daisyHtml="false" linkExtractor="bookpubs">
+    <label locale="" text="Default Book Publications"/>
+    <label locale="pl" text="Domyślne ustawienia publikacji książek"/>
+    <label locale="de" text="Voreinstellung für Buchpublikationen"/>
+    <label locale="fr" text="Publications de livres par défaut"/>
+    <label locale="nl" text="Standaard boek publicaties"/>
+    <label locale="ru" text="Стандартные установки для публикаций книги"/>
+    <label locale="es" text="Publicación de Libro Predeterminada"/>
+    <label locale="cs" text="Výchozí knižní publikace"/>
+
+    <description locale="" text="These publications and publication settings will be used as default when publishing this book."/>
+    <description locale="pl" text="Zostaną użyte jako domyślne przy publikowaniu tej książki."/>
+    <description locale="de" text="Diese Publikationstypen und die dazugehörigen Einstellungen werden bei der Veröffentlichung dieses Buchs als Voreinstellung verwendet."/>
+    <description locale="fr" text="Ces publications et leurs paramètres seront utilisés par défaut lors de la publication de ce livre."/>
+    <description locale="nl" text="Deze publicaties en publicatie instellingen zullen standaard gebruikt worden bij het publiceren van dit boek."/>
+    <description locale="ru" text="Эти типы публикаций и к нем принадлежащие установки будут применятся как стандартные установки при публикации этой книги."/>
+    <description locale="es" text="Estos tipos de publicaciones y las preferencias de publicación correspondientes se usarán por defecto cuando se publique este libro."/>
+    <description locale="cs" text="Tyto publikace a jejich nastavení budou při publikování knihy použity jako výchozí."/>
+  </partType>
+
+  <partType name="BookAclDefault" mimeTypes="text/xml" daisyHtml="false">
+    <label locale="" text="Default Book Access Control"/>
+    <label locale="pl" text="Domyślne ustawienia dostępu"/>
+    <label locale="de" text="Voreinstellung Zugriffsrechte für Buchpublikation"/>
+    <label locale="fr" text="Règles par défaut de contrôle d'accès à un livre"/>
+    <label locale="nl" text="Standaard boek toegangscontrole"/>
+    <label locale="ru" text="Стандартные установки  прав доступа для публикаций книги"/>
+    <label locale="es" text="Control de Acceso al Libro Predeterminado"/>
+    <label locale="cs" text="Výchozí přístupová práva ke knihám"/>
+
+    <description locale="" text="This ACL will be used as default when publishing this book."/>
+    <description locale="pl" text="Zostaną użyte jako domyślne przy publikowaniu tej książki."/>
+    <description locale="de" text="Diese Zugriffsrechte werden bei der Veröffentlichung dieses Buchs als Voreinstellung benutzt."/>
+    <description locale="fr" text="Ces règles de contrôle d'accès seront utilisées par défaut lors de la publication de ce livre."/>
+    <description locale="nl" text="Deze ACL zal standaard gebruikt worden bij het publiceren van dit boek."/>
+    <description locale="ru" text="Эти права доступа будут применятся как стандартные установки при публикации этой книги"/>
+    <description locale="es" text="Esta ACL se usará por defecto cuando se publique este libro."/>
+    <description locale="cs" text="Tato přístupová práva budou při publikaci knihy požita jako výchozí."/>
+  </partType>
+
+  <partType name="BookMetadata" mimeTypes="text/xml" daisyHtml="false" linkExtractor="xmlproperties">
+    <label locale="" text="Book Metadata"/>
+    <label locale="pl" text="Metadane książki"/>
+    <label locale="de" text="Metadaten Buchpublikation"/>
+    <label locale="fr" text="Méta-données de livre"/>
+    <label locale="nl" text="Boek metadata"/>
+    <label locale="ru" text="Metadata публикации книги"/>
+    <label locale="es" text="Metadatos del Libro"/>
+    <label locale="cs" text="Metadata o knize"/>
+  </partType>
+
+  <fieldType name="BookPath" valueType="string" multiValue="false" aclAllowed="false" size="100">
+    <label locale="" text="Book path"/>
+    <label locale="pl" text="Ścieżka książki"/>
+    <label locale="de" text="Pfadangabe Buchpublikation"/>
+    <label locale="fr" text="Chemin d'accès au livre"/>
+    <label locale="nl" text="Boek pad"/>
+    <label locale="ru" text="заданный маршрут публикации книги"/>
+    <label locale="es" text="Path del libro"/>
+    <label locale="cs" text="Cesta ke knize"/>
+
+    <description locale="" text="Path where this book will appear in the hierarchical book overview. Use slashes to separate path components."/>
+    <description locale="pl" text="Ścieżka pod jaką umieszczona zostanie książka. Użyj ukośników do oddzielania elementów ścieżki."/>
+    <description locale="de" text="Pfad unter dem das Buch in der hierarchischen Übersicht der publizierten Bücher erscheint. Benutzen Sie Schrägstriche um die einzelnen Bestandteile des Pfads voneinander abzutrennen."/>
+    <description locale="fr" text="Hiérarchie sous laquelle le livre apparaîtra dans l'aperçu hiérarchique des livres. Utiliser la barre oblique droite (slash) pour séparer les segments du chemin."/>
+    <description locale="nl" text="Het pad waar het boek zal voorkomen in het hierarchische boek overzicht. Gebruik slashes om delen van het pad the scheiden."/>
+    <description locale="ru" text="Маршрут, по которому книга показана в иерархическом списке опубликованных книг. Используйте знак косой штрих , чтобы разделить части маршрута."/>
+    <description locale="es" text="Path donde este libro aparecerá en la vista jerárquica de libro. Use barras para separar los componentes del path."/>
+    <description locale="cs" text="Cesta, kde se kniha objeví v hierarchickém přehledu knih. K oddělení částí cesty použijte lomítka."/>
+  </fieldType>
+
+  <documentType name="BookDefinition">
+    <partTypeUse partTypeName="BookDefinitionDescription" required="true"/>
+    <partTypeUse partTypeName="BookMetadata" required="false"/>
+    <partTypeUse partTypeName="BookPublicationsDefault" required="false"/>
+    <partTypeUse partTypeName="BookAclDefault" required="false"/>
+    <fieldTypeUse fieldTypeName="BookPath" required="false"/>
+
+    <label locale="" text="Book Definition"/>
+    <label locale="pl" text="Definicja książki"/>
+    <label locale="de" text="Buchdefinition"/>
+    <label locale="fr" text="Définition de livre"/>
+    <label locale="nl" text="Boekdefinitie"/>
+    <label locale="ru" text="Определение книги"/>
+    <label locale="es" text="Definición de Libros"/>
+    <label locale="cs" text="Definice knihy"/>
+  </documentType>
+
+  <partType name="MultiMediaData" mimeTypes="" daisyHtml="false">
+    <label locale="" text="Multimedia data"/>
+    <label locale="pl" text="Dane multimedialne"/>
+    <label locale="de" text="Multimediadaten"/>
+    <label locale="fr" text="Données multimédia"/>
+    <label locale="nl" text="Multimedia data"/>
+    <label locale="ru" text="Данные мультимедиа"/>
+    <label locale="es" text="Datos Multimedia"/>
+    <label locale="cs" text="Multimediální data"/>
+  </partType>
+
+  <fieldType name="MultiMediaObjectHeight" valueType="long" multiValue="false" aclAllowed="false" size="4">
+    <label locale="" text="Height"/>
+    <label locale="pl" text="Wysokość"/>
+    <label locale="de" text="Höhe"/>
+    <label locale="fr" text="Hauteur"/>
+    <label locale="nl" text="Hoogte"/>
+    <label locale="ru" text="Высота"/>
+    <label locale="es" text="Altura"/>
+    <label locale="cs" text="Výška"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectWidth" valueType="long" multiValue="false" aclAllowed="false" size="4">
+    <label locale="" text="Width"/>
+    <label locale="pl" text="Szerokość"/>
+    <label locale="de" text="Breite"/>
+    <label locale="fr" text="Largeur"/>
+    <label locale="nl" text="Breedte"/>
+    <label locale="ru" text="Ширина"/>
+    <label locale="es" text="Anchura"/>
+    <label locale="cs" text="Šířka"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectBgcolor" valueType="string" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Background color"/>
+    <label locale="pl" text="Kolor tła"/>
+    <label locale="de" text="Hintergrundfarbe"/>
+    <label locale="fr" text="Couleur de fond"/>
+    <label locale="nl" text="Achtergrond kleur"/>
+    <label locale="ru" text="Цвет заднего плана"/>
+    <label locale="es" text="Color de fondo"/>
+    <label locale="cs" text="Barva pozadí"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectVolume" valueType="long" multiValue="false" aclAllowed="false" size="3">
+    <label locale="" text="Volume"/>
+    <label locale="pl" text="Głośność"/>
+    <label locale="de" text="Lautstärke"/>
+    <label locale="fr" text="Volume"/>
+    <label locale="nl" text="Volume"/>
+    <label locale="ru" text="Громкость"/>
+    <label locale="es" text="Volumen"/>
+    <label locale="cs" text="Hlasitost"/>
+
+    <description locale="" text="Sets the volume of audio fragments"/>
+    <description locale="pl" text="Ustawia głośność dźwięku"/>
+    <description locale="de" text="Legt die Laustärke der Audiokomponenten fest"/>
+    <description locale="fr" text="Définit le volume de la séquence sonore"/>
+    <description locale="nl" text="Stelt het volume in voor geluidsfragmenten"/>
+    <description locale="ru" text="Установить громкость для аудиокомпонентов"/>
+    <description locale="es" text="Establece el volumen del sonido"/>
+    <description locale="cs" text="Nastavuje hlasitost zvukových ukázek"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectQuality" valueType="string" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Flash quality"/>
+    <label locale="pl" text="Jakość animacji Flash"/>
+    <label locale="de" text="Flash-Qualität"/>
+    <label locale="fr" text="Qualité Flash"/>
+    <label locale="nl" text="Flash kwaliteit"/>
+    <label locale="ru" text="Качество Flash"/>
+    <label locale="es" text="Calidad Flash"/>
+    <label locale="cs" text="Kvalita flashové animace"/>
+
+    <description locale="" text="Sets the quality of the flash animation"/>
+    <description locale="pl" text="Ustawia jakość animacji Flash"/>
+    <description locale="de" text="Legt die Qualität der Flash-Animation fest"/>
+    <description locale="fr" text="Définit la qualité de l'animation Flash"/>
+    <description locale="nl" text="Stelt de kwaliteit van de flash animatie in"/>
+    <description locale="ru" text="Установить качество для Flash-анимации "/>
+    <description locale="es" text="Establece la calidad de la animación flash"/>
+    <description locale="cs" text="Nastavuje kvalitu flashové animace"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectFlashVars" valueType="string" multiValue="false" aclAllowed="false" size="50">
+    <label locale="" text="Flash variables"/>
+    <label locale="pl" text="Ustawienia animacji Flash"/>
+    <label locale="de" text="Flash-Variablen"/>
+    <label locale="fr" text="Variables Flash"/>
+    <label locale="nl" text="Flash variabelen"/>
+    <label locale="ru" text="Flash-Переменные"/>
+    <label locale="es" text="Variables Flash"/>
+    <label locale="cs" text="Proměnné flashové animace"/>
+
+    <description locale="" text="Pass variables to the flash animation.  It is supported in flashplayer 6.0+.  More info can be found here : http://www.macromedia.com/go/tn_16417"/>
+    <description locale="pl" text="Przekazywane zmienne do animacji. Są obsługiwane przez wtyczkę od wersji 6.0. Więcej można znaleźć pod adresem: http://www.macromedia.com/go/tn_16417"/>
+    <description locale="de" text="Übergabe von Variablen an die Flash-Animation. Diese Funtionalität wird ab Flashplayer 6.0 unterstützt. Nähere Informationen hierzu finden Sie unter: http://www.macromedia.com/go/tn_16417"/>
+    <description locale="fr" text="Pour passer des variables à l'animation Flash. Supporté à partir de la version 6.0 du FlashPlayer. Davantage d'informations peuvent être trouvées sous http://www.macromedia.com/go/tn_16417"/>
+    <description locale="nl" text="Geef variabelen mee aan de flash animatie.  Dit wordt ondersteund in flashplayer 6.0+.  Meer informatie is hier te vinden : http://www.macromedia.com/go/tn_16417"/>
+    <description locale="ru" text="Задача переменных во Flash-анимацию. Функционирует с версией Flash плейера 6.0. Дальнейшие информации по адресу : http://www.macromedia.com/go/tn_16417"/>
+    <description locale="es" text="Pasar variables a la animación flash.  Soportado a partir de flashplayer 6.0+.  Más información aquí : http://www.macromedia.com/go/tn_16417"/>
+    <description locale="cs" text="Předání hodnot proměnných flashové animaci. Je podporováno ve verzi flashplayer 6.0+. Více informací: http://www.macromedia.com/go/tn_16417"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectPlay" valueType="boolean" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Start Flash"/>
+    <label locale="pl" text="Rozpocznij animację"/>
+    <label locale="de" text="Flash abspielen"/>
+    <label locale="fr" text="Démarrer Flash"/>
+    <label locale="nl" text="Speel Flash"/>
+    <label locale="ru" text="Стартовать Flash"/>
+    <label locale="es" text="Reproducir Flash"/>
+    <label locale="cs" text="Spustit animaci"/>
+
+    <description locale="" text="Play flash animation on document load"/>
+    <description locale="pl" text="Rozpoczyna animację Flash po wczytaniu strony"/>
+    <description locale="de" text="Flash-Animation beim Laden des Dokuments abspielen"/>
+    <description locale="fr" text="Démarrer l'animation Flash sur le chargement du document"/>
+    <description locale="nl" text="Speel de flash animatie af bij het laden van het document"/>
+    <description locale="ru" text="Загрузить Flash-анимацию при загрузке документа"/>
+    <description locale="es" text="Reproducir animación flash al cargar el documento"/>
+    <description locale="cs" text="Přehrát animaci po zobrazení stránky"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectLoop" valueType="boolean" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Loop"/>
+    <label locale="pl" text="Pętla"/>
+    <label locale="de" text="Endlosschleife"/>
+    <label locale="fr" text="En boucle"/>
+    <label locale="nl" text="Lus"/>
+    <label locale="ru" text="Бесконечная лента"/>
+    <label locale="es" text="Repetición"/>
+    <label locale="cs" text="Smyčka"/>
+
+    <description locale="" text="Play the flash animation or sound/video fragment in a loop"/>
+    <description locale="pl" text="Odgrywa animację i/lub dźwięk w pętli"/>
+    <description locale="de" text="Die Flash-Animation oder die Sound/Videokomponente in einer Endlosschleife abspielen"/>
+    <description locale="fr" text="Jouer en boucle l'animation Flash ou la séquence sonore/vidéo"/>
+    <description locale="nl" text="Speel de flash animatie, geluidsfragment of videofragment in een lus af"/>
+    <description locale="ru" text="Проигрывать Flash-Анимацию или музыкальные/видеокомпоненты постоянно (бесконечно)"/>
+    <description locale="es" text="Reproducir la animación flash o el fragmento de sonido/video repetidamente"/>
+    <description locale="cs" text="Přehrávat flashovou animaci nebo zvukovou/obrazovou ukázku ve smyčce"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectAutoplay" valueType="boolean" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Start video"/>
+    <label locale="pl" text="Rozpocznij film"/>
+    <label locale="de" text="Video abspielen"/>
+    <label locale="fr" text="Démarrer vidéo"/>
+    <label locale="nl" text="Speel video"/>
+    <label locale="ru" text="Стартовать видео"/>
+    <label locale="es" text="Reproducir video"/>
+    <label locale="cs" text="Spustit video"/>
+
+    <description locale="" text="Start the video on document load"/>
+    <description locale="pl" text="Rozpoczyna film po wczytaniu strony"/>
+    <description locale="de" text="Videokomponente beim Laden des Dokuments abspielen"/>
+    <description locale="fr" text="Démarrer la séquence vidéo sur le chargement du document"/>
+    <description locale="nl" text="Start het videofragment bij het laden van het document"/>
+    <description locale="ru" text="Загрузить видеокомпоненты при загрузке документа"/>
+    <description locale="es" text="Reproducir el video al cargar el documento"/>
+    <description locale="cs" text="Spustit video ukázku po zobrazení stránky"/>
+  </fieldType>
+
+  <fieldType name="MultiMediaObjectAutostart" valueType="boolean" multiValue="false" aclAllowed="false" size="0">
+    <label locale="" text="Start audio"/>
+    <label locale="pl" text="Rozpocznij muzykę"/>
+    <label locale="de" text="Audio abspielen"/>
+    <label locale="fr" text="Démarrer audio"/>
+    <label locale="nl" text="Speel audio"/>
+    <label locale="ru" text="Стартовать аудио"/>
+    <label locale="es" text="Reproducir audio"/>
+    <label locale="cs" text="Spustit audio"/>
+
+    <description locale="" text="Start the audio fragment on document load"/>
+    <description locale="pl" text="Odgrywa muzykę po wczytaniu strony"/>
+    <description locale="de" text="Audiokomponente beim Laden des Dokuments abspielen"/>
+    <description locale="fr" text="Démarrer la séquence sonore sur le chargement du document"/>
+    <description locale="nl" text="Start het audiofragment bij het laden van het document"/>
+    <description locale="ru" text="Загрузить аудиокомпомненты при загрузке документа"/>
+    <description locale="es" text="Reproducir el audio al cargar el documento"/>
+    <description locale="cs" text="Spustit audio ukázku po zobrazení stránky"/>
+  </fieldType>
+
+  <documentType name="MultiMediaObject">
+    <partTypeUse partTypeName="MultiMediaData" required="true"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectHeight" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectWidth" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectBgcolor" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectVolume" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectFlashVars" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectQuality" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectPlay" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectLoop" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectAutoplay" required="false"/>
+    <fieldTypeUse fieldTypeName="MultiMediaObjectAutostart" required="false"/>
+
+    <label locale="" text="Multimedia Object"/>
+    <label locale="nl" text="Multimedia Object"/>
+    <label locale="de" text="Multimedia Objekt"/>
+    <label locale="fr" text="Objet multimedia"/>
+    <label locale="ru" text="Объект мультимедиа"/>
+    <label locale="es" text="Objetos Multimedia"/>
+    <label locale="cs" text="Multimediální objekt"/>
+
+    <description locale="" text="Use this document type to upload and add Flash, video (e.g. mpeg) or audio (e.g. mp3) files."/>
+    <description locale="nl" text="Gebruik dit document type om Flash-, video- (bijv. mpeg) of audio- (bijv. mp3) bestanden toe te voegen."/>
+    <description locale="de" text="Benutzen Sie diesen Dokumententyp um Flash-Animationen, Videos (z.B. im MPEG-Format) oder Audio-Dateien (z.B. im MP3-Format) hochzuladen und hinzuzufügen."/>
+    <description locale="fr" text="Utilisez ce type de document pour charger des animations Flash, séquences vidéo (p.ex. MPEG) ou audio (p.ex. MP3)."/>
+    <description locale="ru" text="Используйте этот тип документа,чтобы загружать и вставлять Flash-Анимации, Видео(напр. в формате MPEG) или Аудио- Файлы(напр. в формате MP3)."/>
+    <description locale="es" text="Usa este tipo de documento para subir y añadir archivos de Flash, video (p.e. mpeg) o sonido (p.e. mp3)."/>
+    <description locale="cs" text="Pro nahrání animace Flash, videa (např. mpeg) nebo zvuku (např. mp3) použijte tento typ dokumentu."/>
+  </documentType>
+
+  <partType name="SvgData" mimeTypes="image/svg+xml" daisyHtml="false">
+    <label locale="" text="SVG data"/>
+    <label locale="de" text="SVG Daten"/>
+    <label locale="fr" text="Données SVG"/>
+    <label locale="ru" text="SVG фаил"/>
+    <label locale="es" text="Datos SVG"/>
+    <label locale="cs" text="SVG data"/>
+  </partType>
+
+  <documentType name="SvgDocument">
+    <partTypeUse partTypeName="SvgData" required="true"/>
+
+    <label locale="" text="SVG document"/>
+    <label locale="de" text="SVG Dokument"/>
+    <label locale="fr" text="Document SVG"/>
+    <label locale="nl" text="SVG Document"/>
+    <label locale="ru" text="SVG документ"/>
+    <label locale="es" text="Documento SVG"/>
+    <label locale="cs" text="SVG dokument"/>
+
+    <description locale="" text="*** Experimental *** Use this document type to upload SVGs (Scalable Vector Graphics)."/>
+    <description locale="de" text="*** Experimentell *** Benutzen sie diesen Dokumententyp, um skalierbare Vektorgrafiken (SVG) hochzuladen."/>
+    <description locale="fr" text="*** Expérimental *** Utilisez ce type de document pour charger des documents graphiques vectoriels (SVG)."/>
+    <description locale="nl" text="*** Experimenteel *** Gebruik dit Documenttype, om SVG's (Scalable Vector Graphics) op de server te plaatsen."/>
+    <description locale="ru" text="*** експерименталный *** используите тип етого документа, для создания графика (SVG)."/>
+    <description locale="es" text="*** Experimental *** Usa este tipo de documento para subir SVGs (Scalable Vector Graphics)."/>
+    <description locale="cs" text="*** Experimentální *** Pro nahrání SVG dokumentu (Scalable Vector Graphics) použijte tento typ."/>
+  </documentType>
+
+  <partType name="LiteralHtmlData" mimeTypes="text/xml" daisyHtml="false">
+    <label locale="" text="Literal HTML data"/>
+    <label locale="de" text="In reinem HTML formulierte Daten"/>
+    <label locale="fr" text="Fragment HTML littéral"/>
+    <label locale="es" text="Fragmento en código HTML puro."/>
+    <label locale="cs" text="Prostý HTML fragment"/>
+
+    <description locale="" text="Free-form HTML, in the form of well-formed XML."/>
+    <description locale="de" text="Beliebiger HTML-Code, in Gestalt von wohlgeformtem XML."/>
+    <description locale="fr" text="Fragment de contenu HTML littéral, sous forme de document XML bien formé."/>
+    <description locale="es" text="Fragmento en código HTML puro, en la forma de un documento XML bien formado."/>
+    <description locale="cs" text="Libovolný fragment HTML, zapsaný jako správně formátované XML."/>
+  </partType>
+
+  <documentType name="LiteralHtml">
+    <partTypeUse partTypeName="LiteralHtmlData" required="true"/>
+
+    <label locale="" text="Literal HTML document"/>
+    <label locale="de" text="Dokument mit reinem HTML-Code"/>
+    <label locale="fr" text="Document HTML littéral"/>
+    <label locale="es" text="Documento en codigo HTML puro"/>
+    <label locale="cs" text="Prostý HTML dokument"/>
+
+    <description locale="" text="Use this to upload some arbitrary HTML, for example to embed YouTube movies."/>
+    <description locale="de" text="Benutzen Sie diesen Typ um beliebigen HTML-Code hochzuladen, etwa um Filme aus YouTube einzubinden."/>
+    <description locale="fr" text="Utilisez ce type de document pour charger un fragment de contenu HTML arbitraire, par exemple pour embarquer une séquence vidéo YouTube."/>
+    <description locale="es" text="Utilice este tipo de documento para cargar un fragmento de codigo HTML arbitrario, por ejemplo para enlazar una secuencia video YouTube."/>
+    <description locale="cs" text="Pro nahrání libovolného HTML (např. vloženého filmu YouTube) použijte tento typ dokumentu."/>
+  </documentType>
+
+  <partType name="VariablesData" mimeTypes="text/xml" daisyHtml="false">
+    <label locale="" text="Variables data"/>
+    <label locale="de" text="Variablendaten"/>
+    <label locale="nl" text="Variabele-data"/>
+    <label locale="fr" text="Données de variables"/>
+    <label locale="es" text="Datos de variables"/>
+    <label locale="cs" text="Data proměnných"/>
+  </partType>
+
+  <documentType name="Variables">
+    <partTypeUse partTypeName="VariablesData" required="true"/>
+
+    <label locale="" text="Variable definitions"/>
+    <label locale="de" text="Variablendefinitionen"/>
+    <label locale="nl" text="Variabele-definities"/>
+    <label locale="fr" text="Définitions de variables"/>
+    <label locale="es" text="Definiciones de variables"/>
+    <label locale="cs" text="Definice proměnných"/>
+
+    <description locale="" text="Used to define document variables."/>
+    <description locale="de" text="Wird für die Definition von Dokumentenvariablen genutzt."/>
+    <description locale="nl" text="Gebruikt om document-variabelen te definiëren."/>
+    <description locale="fr" text="Utilisé pour créer des documents contenant des définitions de variables."/>
+    <description locale="es" text="Usado para definir variables del documento."/>
+    <description locale="cs" text="Použijte pro definování proměnných dokumentů."/>
+  </documentType>
+</schema>

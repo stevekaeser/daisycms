@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="timer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exception" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="dueDate" type="xs:dateTime"/>
+      <xs:attribute name="recurrence" type="xs:string"/>
+      <xs:attribute name="suspended" type="xs:boolean"/>
+      <xs:attribute name="processId" type="xs:string"/>
+      <xs:attribute name="executionPath" type="xs:string"/>
+      <xs:attribute name="transitionName" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="timers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:timer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

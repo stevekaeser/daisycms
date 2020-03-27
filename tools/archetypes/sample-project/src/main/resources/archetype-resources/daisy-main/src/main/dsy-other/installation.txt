@@ -1,0 +1,51 @@
+################################
+# installation
+################################
+
+# Choose paths
+app=/home/daisy/${rootArtifactId}
+backups=/home/daisy/${rootArtifactId}-backups
+packages=/home/daisy/${rootArtifactId}-packages
+daisy.home=/home/daisy/${rootArtifactId}/daisy
+daisy.data=/home/daisy/${rootArtifactId}/repodata
+daisy.wiki=/home/daisy/${rootArtifactId}/wikidata
+daisy.env=/home/daisy/${rootArtifactId}/env
+
+#
+* Extract package to /home/daisy/{app}-packages/{version}
+* copy {package}/daisy to ${daisy.home}
+* create databases
+* run {daisy.home}/install/daisy-repository-init
+
+* copy {package}/etc/daisy to /etc (service scrips, /etc/daisy/{application}/[repo,wiki]-service.conf, /etc/daisy/{application}/env.properties)
+* Change service.conf (why? when is this necessary?)
+* Change env.properties to match the values from activemq-conf, myconfig.xml, ... (env.properties should contain comments containing file + xpath where to find properties)
+
+* copy {package}/repodata/* to ${daisy.data}
+* copy {package}/wikidata/* to ${daisy.wiki}
+
+start repo via /etc/init.d/{app}-repo start
+
+* run {daisy.home}/install/daisy-wiki-init
+
+* daisy-import -i ${app}-package-{version}/project.zip (import options?)
+
+* install workflows (script?)
+
+start wiki via /etc/init.d/{app}-repo start
+
+#################################
+# upgrade
+#################################
+* Extract package to /home/daisy/{app}-packages/{version}
+* stop wiki & repo
+
+# this is the patch phase... manually patching {app}
+* copy {package}/daisy to {daisy.home}
+* copy {package}/repodata to {repodata}
+* copy {package}/wikidata to {wikidata}
+* remove x,y,z -> list of files to delete can be obtained using diffs between {repodata} and the {package}/repodata
+
+* perform upgrade steps (described online for upgrading between official builds?, or included in package docs)
+
+* start repo & wiki (if needed)

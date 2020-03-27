@@ -1,0 +1,10 @@
+<documents>
+  <!--
+       List <query> and/or <document> elements.
+       On <document>, branch and language are optional (defaults to main resp. default)
+  -->
+  <query>select id where namespace='${project-namespace}'</query>
+  <!--
+    <document id="123-DSY" branch="somebranch" language="somelanguage"/>
+  -->
+</documents>

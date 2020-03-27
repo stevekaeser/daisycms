@@ -1,0 +1,197 @@
+/*
+  Tabbed navigation
+*/
+
+ul.tabNavigation {
+  position: absolute;
+  display: inline;
+}
+
+ul.tabNavigation, 
+ul.tabNavigation ul, 
+ul.tabNavigation li {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  z-index: 3;
+}
+
+ul.tabNavigation li {
+  margin-left: 1em;
+  margin-top: 0.2em;
+  font-size: 0.9em;
+  float: left;
+}
+
+ul.tabNavigation li ul li.dsy-menuseparator div {
+  border-top: 1px solid #693;
+  padding-top: 3px;
+  /* for IE6 and IE7 only */
+  *font-size: 0;
+  *height: 0;
+}
+
+
+ul.tabNavigation ul {
+  display: none;
+  padding-top: 0.2em;
+} 
+
+ul.tabNavigation li:hover ul, 
+ul.tabNavigation li.over ul {
+  display: block;
+  background-color: #efc;
+  border: solid #cf9;
+  border-width: 0 1px 1px 1px;
+  position: absolute;
+  width: 10em;
+}
+
+ul.tabNavigation li:hover ul li, 
+ul.tabNavigation li.over ul li {
+  margin: 0;
+  padding-left: 0.2em;
+  float: none;
+  /* IE border with color == background-color so that li are spaced properly */
+  border: 1px solid #efc; 
+}
+
+.tabNavigation li li a{
+  min-width: 10em;
+  width: auto !important;
+  width: 10em;
+}
+
+.tabNavigation a{
+  padding-bottom: 0.2em;
+}
+
+.tabNavigation a:hover {
+  background-color: #ffc;
+}
+
+.tabNavigation span {
+  visibility: visible !important;
+}
+
+#liveStagingIndicator {
+  float: right;
+  margin-right: 1em;
+}
+
+/*
+  Normal navigation
+*/
+
+ul.navigation {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.5em 0 0;
+  border: none;
+  background-color: #fff;  
+  font-size: 0.8em;
+}
+
+li.navigation {
+  margin: 0;
+  padding: 0 0 0.5em 0;
+  border: none;
+}
+
+li.navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5em 0.5em 1em 0;  
+  border: none;
+}
+
+li.navigation ul li {
+  padding:0 0 0.5em 0.5em;
+  border-left: 0.5em solid #dfc;
+}
+
+/* IE6 fix for items moving off to the left (see issue DSY-408) */
+* html li.navigation ul li {
+  display: inline-block;
+  margin: -0.3em 0;
+}
+
+/* Since the hover effect on li's doesn't work on IE6, underline hovered items instead. */
+* html ul.navigation a:hover {
+  text-decoration: underline;
+}
+
+li.navigation ul li:hover {
+  border-left-color: #ceb;
+}
+
+.navigation a, .tabNavigation a {
+  color: #693;
+  text-decoration: none;
+  display: block;
+}
+ 
+a.active-navnode {
+  font-weight: bold;
+  /* IE for some reason bold doesn't show in font-size: 1em 
+  Note: 2007/04/02 HL yes it does in IE6, but 1.1 gives more
+  contrast aka better recognition
+  */
+  font-size: 1.1em;
+}
+
+a.navgroup {
+  cursor: default;
+}
+
+a.navnode-open, a.navnode-closed {
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding-left: 10px;
+}
+
+a.navnode-open {
+  background-image: url("../images/navnode_open.gif");
+  
+}
+
+a.navnode-closed {
+  background-image: url("../images/navnode_closed.gif");
+}
+
+a.navnode-open:hover {
+  background-image: url("../images/navnode_open_hover.gif");
+}
+
+a.navnode-closed:hover {
+  background-image: url("../images/navnode_closed_hover.gif");
+}
+
+a.naverror {
+  cursor: default;
+  color: red;
+}
+
+div.navseparator {
+  border: none;
+  border-top: 1px solid #693;
+  height: 2px;
+}
+
+.currentVariant {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.navinvalid {
+  margin-bottom: 5px;
+  padding: 2px;
+}
+.navinvalid img {
+  vertical-align: bottom;
+  margin-right: 4px;
+}
+.navinvalid a {
+  display: inline;
+  cursor: pointer;
+}

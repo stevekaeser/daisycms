@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.outerj.daisy.frontend.admin.AdminLocales']">
+
+  <component
+      class="org.outerj.daisy.frontend.admin.AdminLocalesImpl"
+      role="org.outerj.daisy.frontend.admin.AdminLocales"
+      logger="daisy" >
+    <localesSource>context://daisy/admin/resources/conf/locales.txt</localesSource>
+  </component>
+
+</xconf>

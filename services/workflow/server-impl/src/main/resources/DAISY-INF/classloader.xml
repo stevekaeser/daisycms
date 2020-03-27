@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><classloader>
+  <classpath>
+    <artifact groupId="daisy" artifactId="daisy-workflow-api" version="2.4.2" share="required"/>
+    <artifact groupId="daisy" artifactId="daisy-workflow-xmlschema-bindings" version="2.4.2" share="required"/>
+
+    <artifact groupId="daisy" artifactId="daisy-workflow-common-impl" version="2.4.2" share="prohibited"/>
+
+    <artifact groupId="antlr" artifactId="antlr" version="2.7.6" share="allowed"/>
+    <artifact groupId="asm" artifactId="asm" version="1.5.3" share="allowed"/>
+    <artifact groupId="asm" artifactId="asm-attrs" version="1.5.3" share="allowed"/>
+    <artifact groupId="bsh" artifactId="bsh" version="1.3.0" share="allowed"/>
+    <artifact groupId="cglib" artifactId="cglib" version="2.1_3" share="allowed"/>
+    <artifact groupId="dom4j" artifactId="dom4j" version="1.6.1" share="allowed"/>
+    <artifact groupId="net.sf.ehcache" artifactId="ehcache" version="1.2.4" share="prohibited"/>
+    <artifact groupId="org.hibernate" artifactId="hibernate" version="3.2.1.ga" share="allowed"/>
+    <artifact groupId="jaxen" artifactId="jaxen" version="1.1-beta-4" share="allowed"/>
+    <artifact groupId="jbpm" artifactId="jbpm-jpdl" version="3.2" share="allowed"/>
+    <artifact groupId="jbpm" artifactId="jbpm-identity" version="3.2" share="allowed"/>
+    <artifact groupId="jbpm" artifactId="jbpm.sar.cfg" version="3.2" share="allowed"/>
+    <artifact groupId="org.apache.geronimo.specs" artifactId="geronimo-jta_1.0.1B_spec" version="1.1.1" share="allowed"/>
+    <artifact groupId="javax.sql" artifactId="jdbc-stdext" version="2.0" share="allowed"/>
+    <artifact groupId="javax.mail" artifactId="mail" version="1.4" share="allowed"/>
+    <artifact groupId="javax.activation" artifactId="activation" version="1.1" share="allowed"/>
+    <artifact groupId="org.freemarker" artifactId="freemarker" version="2.3.16" share="allowed"/>
+    <artifact groupId="rhino" artifactId="js" version="1.6R5" share="allowed"/>
+  </classpath>
+</classloader>

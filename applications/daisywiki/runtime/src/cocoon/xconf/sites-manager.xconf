@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.outerj.daisy.frontend.components.siteconf.SitesManager']">
+
+  <component
+      class="org.outerj.daisy.frontend.components.siteconf.SitesManagerImpl"
+      role="org.outerj.daisy.frontend.components.siteconf.SitesManager"
+      logger="daisy.sitesmanager" >
+    <directory>file:/$${daisywiki.data}/sites</directory>
+  </component>
+
+</xconf>

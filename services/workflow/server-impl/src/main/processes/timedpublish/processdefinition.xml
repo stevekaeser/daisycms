@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<process-definition name="timedpublish">
+  <swimlane name="initiator"/>
+
+  <start-state name="startTimedPublish">
+    <task name="startTimedPublishTask" swimlane="initiator" blocking="true"/>
+    <transition name="start-timer" to="waitForTimer"/>
+  </start-state>
+
+  <state name="waitForTimer">
+    <event type="node-enter">
+      <action class="org.outerj.daisy.workflow.jbpm_util.JavascriptActionHandler">
+        <script>
+          <![CDATA[
+          var publishTime = variables.getGlobalVariable("publishTime");
+
+          /* check publish time is not in the past */
+          if (publishTime.getTime() < java.lang.System.currentTimeMillis())
+            throw "The specified publish time is in the past: " + publishTime;
+
+          /* create the timer */
+          var mytimer = new Packages.org.jbpm.job.Timer(executionContext.getToken());
+          mytimer.setName("document-publish-timer");
+          mytimer.setDueDate(publishTime);
+          action = executionContext.getProcessDefinition().getAction("publishDocument");
+          mytimer.setAction(action);
+          mytimer.setTransitionName("end");
+          mytimer.setGraphElement(executionContext.getEventSource());
+          mytimer.setTaskInstance(executionContext.getTaskInstance());
+          mytimer.setExclusive(true);
+
+          var schedulerService = Packages.org.jbpm.svc.Services.getCurrentService("scheduler");
+          schedulerService.createTimer(mytimer);
+          ]]>
+        </script>
+      </action>
+    </event>
+
+    <transition name="end" to="end"/>
+  </state>
+
+  <action name="publishDocument" class="org.outerj.daisy.workflow.jbpm_util.JavascriptActionHandler">
+    <script>
+      var docVersionKey = variables.getGlobalVariable("daisy_document");
+
+      /* Check the process owner is allowed to put the version live.
+         Otherwise everyone could put anything live through this workflow process. */
+      var processOwnerKey = variables.getGlobalVariable("daisy_owner");
+      var processOwner = wfRepository.getUserManager().getUser(processOwnerKey.getId(), false);
+      var aclResult = wfRepository.getAccessManager().getAclInfoOnLive(processOwner.getId(), processOwner.getAllRoleIds(), docVersionKey.getVariantKey());
+      if (!aclResult.isAllowed(Packages.org.outerj.daisy.repository.acl.AclPermission.PUBLISH)) {
+        throw "Process owner does not have publish rights on the document.";
+      }
+
+      var document = wfRepository.getDocument(docVersionKey.getVariantKey(), true);
+
+      var versionSpec = docVersionKey.getVersion();
+      var version;
+      if (versionSpec == "live") {
+        /* doesn't make sense, can't put something live which is already live */
+        version = null;
+      } else if (versionSpec == "last" || versionSpec == null) {
+        version = document.getLastVersion();
+      } else {
+        version = document.getVersion(parseInt(docVersionKey.getVersion()));
+      }
+
+      if (version != null) {
+        version.setState(Packages.org.outerj.daisy.repository.VersionState.PUBLISH);
+        version.save();
+      }
+    </script>
+  </action>
+
+  <end-state name="end"/>
+</process-definition>

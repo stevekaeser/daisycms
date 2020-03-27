@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="lockInfo">
+    <xs:complexType>
+      <xs:attribute name="hasLock" type="xs:boolean" use="optional"/>
+      <xs:attribute name="userId" type="xs:long" use="optional"/>
+      <xs:attribute name="timeAcquired" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="duration" type="xs:long" use="optional"/>
+      <xs:attribute name="type" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="warn"/>
+            <xs:enumeration value="pessimistic"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

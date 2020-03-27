@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>crossref.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/daisy_edit.js"></script>
+  </extraHeadContent>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+        DaisyBookUtils = window.opener.DaisyBookUtils;
+        i18n = DaisyBookUtils.I18N;
+
+        function Init() {
+            daisy.dialog.translate(i18n);
+            daisy.dialog.init();
+
+            // initialize content
+            var params = window.dialogArguments;
+            window.editor = params.editor;
+            window.branchId = params.branchId;
+            window.languageId = params.languageId;
+
+            if (params.crossref != null) {
+                var crossRefRegExp = /^([^:]+:)(.+)$/;
+                if (params.crossref.match(crossRefRegExp)) {
+                    var format = RegExp.$1;
+                    var target = RegExp.$2;
+                    document.getElementById("target").value = target;
+                    selectOtherTargetType();
+                    setCrossRefFormat(format);
+                }
+            } else {
+                // change the selection in the list box so that the translated label gets picked up
+                var formatSelect = document.getElementById("crossRefFormat");
+                formatSelect.selectedIndex = 1;
+                formatSelect.selectedIndex = 0;
+            }
+
+            daisy.dialog.sizeAndPosition();
+         }
+
+         dojo.addOnLoad(Init);
+
+
+         function ok() {
+             var target;
+             if (document.getElementById("targettype_id").checked) {
+                 var idSelect = document.getElementById("ids");
+                 if (idSelect.selectedIndex == -1) {
+                     alert(i18n["crossref.no-id-selected"]);
+                     return;
+                 }
+                 target = "#" + idSelect.options[idSelect.selectedIndex].value;
+             } else {
+                 target = document.getElementById("target").value;
+                 if (target == null || target == "") {
+                     alert(i18n["crossref.no-target"]);
+                     return;
+                 }
+                 if (!(target.match(/^#.*$/) || target.match(daisyUrlRegexp))) {
+                     alert(i18n["crossref.invalid-crossref-target"]);
+                     return;
+                 }
+             }
+
+             var crossRefFormat = getCrossRefFormat();
+
+             var params = new Object();
+             params.crossref = crossRefFormat + target;
+
+             daisy.dialog.close(params);
+         }
+
+         function getCrossRefFormat() {
+             var formatSelect = document.getElementById("crossRefFormat");
+             return formatSelect.options[formatSelect.selectedIndex].value;
+         }
+
+         function setCrossRefFormat(format) {
+             var formatSelect = document.getElementById("crossRefFormat");
+             var options = formatSelect.options;
+             for (var i = 0; i < options.length; i++) {
+                 if (options[i].value == format) {
+                     options[i].selected = true;
+                     break;
+                 }
+             }
+         }
+
+        function selectIdTargetType() {
+            document.getElementById("targettype_id").checked = true;
+        }
+
+        function selectOtherTargetType() {
+            document.getElementById("targettype_other").checked = true;
+        }
+
+        function popuplateIds() {
+            if (window.idsLoaded != "yes") {
+                var ids = extractIdsFromDoc(editor._doc);
+                var idSelect = document.getElementById("ids");
+                for (var i = 0; i < ids.length; i++) {
+                    idSelect.options[i] = new Option(ids[i], ids[i]);
+                }
+                document.getElementById('ids').disabled = false;
+                window.idsLoaded = "yes";
+            }
+        }
+
+        function browseOther() {
+            daisy.dialog.popupDialog(daisy.mountPoint + "/" + daisy.site.name + "/editing/documentBrowser?branch=" + window.branchId + "&language=" + window.languageId,
+              function(params) {
+                  selectOtherTargetType();
+                  document.getElementById("target").value = params.url;
+              }, {});
+        }
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">crossref.title</div>
+
+    <form>
+      <table>
+        <tr>
+          <td valign="top"><span>crossref.format</span>:</td>
+          <td valign="top">
+              <select id="crossRefFormat">
+                  <option value="page:">crossref.format.pagenumber</option>
+                  <option value="textpage:">crossref.format.onpage</option>
+                  <option value="ref:">crossref.format.ref</option>
+                  <option value="reftitle:">crossref.format.reftitle</option>
+                  <option value="ref+reftitle:">crossref.format.ref+reftitle</option>
+                  <option value="ref+reftitle+textpage:">crossref.format.ref+reftitle+textpage</option>
+                  <option value="ref+textpage:">crossref.format.ref+textpage</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+            <td valign="top"><span>crossref.target</span>:</td>
+            <td valign="top">
+                <input type="radio" name="targettype" id="targettype_id" onclick="popuplateIds();"/><label for="targettype_id"><span>crossref.id-in-doc</span>:</label>
+                <div style="padding-left: 2em;">
+                  <select id="ids" disabled="disabled" onchange="selectIdTargetType();"> </select>
+                </div>
+
+                <input type="radio" name="targettype" id="targettype_other"/><label for="targettype_other"><span>crossref.other</span>:</label>
+                <div style="padding-left: 2em;">
+                  <input name="target" id="target" size="20" onkeypress="selectOtherTargetType();"/>
+                  <button type="button" onclick="browseOther();">crossref.lookup</button>
+                </div>
+            </td>
+        </tr>
+      </table>
+    </form>
+
+    <br/>
+    <br/>
+    <div class="dsydlg-buttons">
+      <button type="button" onclick="ok()" class="dsyfrm-primaryaction">crossref.ok</button>
+      &#160;
+      <button type="button" onclick="daisy.dialog.close(null); return false;">crossref.cancel</button>
+    </div>
+  </content>
+</page>

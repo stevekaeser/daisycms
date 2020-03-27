@@ -1,0 +1,64 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  cursor: default;
+  font-family: helvetica, sans-serif;
+  font-size: 76%;
+  background-color: white;
+}
+
+div.label {
+    /* This sequence of height-specifications is to make the min-height work on IE */
+    min-height: 20px;
+    height:auto !important;
+    height: 20px;
+    background-position: 1px 1px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+}
+
+div.rootnode {
+    padding-left: 0px;
+}
+
+div.documentnode {
+    background-image: url("images/documentnode.gif");
+}
+
+span.documentnode {
+}
+
+div.querynode {
+    background-image: url("images/querynode.gif");
+}
+
+span.querynode {
+}
+
+div.linknode {
+    background-image: url("images/linknode.gif");
+}
+
+span.linknode {
+}
+
+div.groupnode {
+    background-image: url("images/groupnode.gif");
+}
+
+span.groupnode {
+}
+
+div.importnode {
+    background-image: url("images/importnode.gif");
+}
+
+span.importnode {
+}
+
+div.separatornode {
+    background-image: url("images/separatornode.gif");
+}
+
+span.separatornode {
+}

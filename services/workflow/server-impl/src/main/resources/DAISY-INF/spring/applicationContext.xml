@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans              xmlns = "http://www.springframework.org/schema/beans"
+                xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:daisy = "http://outerx.org/daisy/1.0#runtime-springext"
+               xmlns:conf = "http://outerx.org/daisy/1.0#config-springext"
+            xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+                             http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                             http://outerx.org/daisy/1.0#runtime-springext
+                             http://daisycms.org/schemas/daisyruntime-springext.xsd
+                             http://outerx.org/daisy/1.0#config-springext
+                             http://daisycms.org/schemas/config-springext.xsd">
+
+  <context:annotation-config/>
+
+  <daisy:import-service id="configurationManager" service="org.outerj.daisy.configuration.ConfigurationManager"/>
+  <daisy:import-service id="dataSource" service="javax.sql.DataSource"/>
+  <daisy:import-service id="repositoryManager" service="org.outerj.daisy.repository.RepositoryManager"/>
+  <daisy:import-service id="pluginRegistry" service="org.outerj.daisy.plugin.PluginRegistry"/>
+
+
+  <bean id="wfManager" class="org.outerj.daisy.workflow.serverimpl.CommonWorkflowManager">
+    <constructor-arg>
+      <conf:configuration group="extra" name="workflow" source="configurationManager">
+        <conf:default xmlns="">
+          <jbpm>
+            <!-- Optional path to a jbpm.cfg.xml file, by default a built-in configuration is used.
+            <jbpm-config>/path/to/a/jbpm.cfg.xml</jbpm-config>
+            -->
+            <hibernate>
+              <properties>
+                <!-- entry key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</entry -->
+                <entry key="hibernate.connection.provider_class">org.outerj.daisy.workflow.serverimpl.DaisyConnectionProvider</entry>
+                <entry key="hibernate.cache.use_second_level_cache">true</entry>
+                <entry key="hibernate.cache.use_query_cache">true</entry>
+                <entry key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</entry>
+                <entry key="net.sf.ehcache.configurationResourceName">/daisy-jbpm-ehcache.xml</entry>
+                <!-- Useful for debugging
+                <entry key="hibernate.show_sql">true</entry>
+                -->
+              </properties>
+            </hibernate>
+          </jbpm>
+          <!--
+          <mailTemplates>
+            <location>resource:/org/outerj/daisy/workflow/serverimpl/mailtemplates/</location>
+            <location>${daisy.datadir}/templates/workflow/</location>
+          </mailTemplates>
+          -->
+          <!--
+          <taskURL>http://localhost:8888/daisy/${site}/workflow/performtask?taskId=${taskId}</taskURL>
+          -->
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="dataSource"/>
+    <constructor-arg ref="pluginRegistry"/>
+    <constructor-arg ref="repositoryManager"/>
+    <constructor-arg ref="wfAuthorizer"/>
+  </bean>
+
+  <bean id="wfHttpConnector" class="org.outerj.daisy.workflow.serverimpl.httpconnector.WorkflowHttpConnector">
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="wfAuthorizer" class="org.outerj.daisy.workflow.serverimpl.DefaultWorkflowAuthorizer">
+  </bean>
+
+</beans>

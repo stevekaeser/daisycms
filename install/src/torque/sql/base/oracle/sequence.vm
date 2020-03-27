@@ -1,0 +1,4 @@
+#if ($table.IdMethod == "native")
+CREATE SEQUENCE $table.SequenceName INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE ORDER
+/
+#end

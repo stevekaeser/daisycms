@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<process-definition name="review">
+  <swimlane name="initiator"/>
+  <swimlane name="reviewer">
+    <assignment class="org.outerj.daisy.workflow.jbpm_util.ActorKeyAssignmentHandler">
+      <variableName>reviewer</variableName>
+      <variableScope>global</variableScope>
+    </assignment>
+  </swimlane>
+
+  <start-state name="startReview">
+    <task name="startReviewTask" swimlane="initiator" blocking="true"/>
+    <transition name="review" to="review"/>
+  </start-state>
+
+  <task-node name="review">
+    <task name="reviewTask" swimlane="reviewer" blocking="true">
+      <event type="task-create">
+        <action class="org.outerj.daisy.workflow.jbpm_util.JavascriptActionHandler">
+          <script>
+            taskInstance.setPriority(variables.getGlobalVariable("taskPriority").intValue());
+            var dueDate = variables.getGlobalVariable("taskDueDate");
+            if (dueDate != null)
+                taskInstance.setDueDate(dueDate);
+          </script>
+        </action>
+      </event>
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="publish" to="publish"/>
+    <transition name="endReview" to="end"/>
+    <transition name="requestChanges" to="requestChanges"/>
+    <transition name="reject" to="rejected"/>
+  </task-node>
+
+  <task-node name="requestChanges">
+    <task name="requestChangesTask" swimlane="initiator" blocking="true">
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="newReview" to="review"/>
+    <transition name="giveUp" to="end"/>
+  </task-node>
+
+  <node name="publish">
+    <action class="org.outerj.daisy.workflow.jbpm_util.JavascriptActionHandler">
+      <script>
+        var document = variables.getGlobalVariable("daisy_document");
+        var version = document.getVersion(repository);
+        version.setState(Packages.org.outerj.daisy.repository.VersionState.PUBLISH);
+        version.save();
+        token.signal();
+      </script>
+    </action>
+    <transition name="done" to="end"/>
+  </node>
+
+  <task-node name="rejected">
+    <task name="rejectedTask" swimlane="initiator" blocking="true">
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="confirm" to="end"/>
+  </task-node>
+
+  <end-state name="end"/>
+</process-definition>

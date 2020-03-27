@@ -1,0 +1,61 @@
+.deprecated {
+  text-decoration: line-through
+}
+
+/*
+  ACL editing screen
+ */
+
+table.acl {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background-color: #efc;
+}
+
+table.acl td {
+  padding: 2px 4px 2px 4px;
+}
+
+table.acl tr th {
+  border: 1px solid #ceb;
+  padding: 2px 4px 2px 4px;
+}
+
+table.acl tr.objecttop {
+  border-top: 1px solid #ceb;
+  height: 4px;
+}
+
+table.acl td.objectbottom {
+  border-bottom: 1px solid #ceb;
+  border-left: 1px solid #ceb;
+  border-right: 1px solid #ceb;
+  height: 4px;
+}
+
+table.acl td.objectleft {
+  border-left: 1px solid #ceb;
+  width: 4px;
+}
+
+table.acl td.objectright {
+  border-right: 1px solid #ceb;
+  width: 4px;
+}
+
+table.acl tr.aclsplitrow {
+  background-color: white;
+  height: 6px;
+}
+
+table.acl td.aclBottomActions {
+  border: 1px solid #ceb;
+  padding: 2px;
+}
+
+td.aclPermission {
+  text-align: center;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<exportOptions>
+  <exportLastVersion>false</exportLastVersion>
+  <failOnError>false</failOnError>
+  <includeListOfRetiredDocuments>true</includeListOfRetiredDocuments>
+  <exportDocumentOwners>false</exportDocumentOwners>
+  <stackTracesOfFailures>false</stackTracesOfFailures>
+  <enableLinkExtraction>true</enableLinkExtraction>
+  <exportVersionState>true</exportVersionState>
+  <exportReferenceLanguage>true</exportReferenceLanguage>
+  <!--+
+      | A document customizer allows to manipulate the content of a document before export.
+      +-->
+  <documentCustomizer factoryClass="org.outerj.daisy.tools.importexport.export.config.BasicCustomizerFactory">
+    <exportLinks>true</exportLinks>
+    <exportCustomFields>true</exportCustomFields>
+    <!--+
+        | To drop fields, parts or collections from the documents, use:
+        |  <dropField type='...' documentType='...'/>
+        |  <dropPart type='...' documentType='...'/>
+        |  <dropCollection name='...'/>
+        | For dropField and dropPart, the documentType attribute is optional, it specifies
+        | that the field or part should only be dropped for documents of that type.
+        +-->
+    <dropField type="ImageHeight" documentType="Image"/>
+    <dropField type="ImageWidth" documentType="Image"/>
+    <dropPart type="ImagePreview" documentType="Image"/>
+    <dropPart type="ImageThumbnail" documentType="Image"/>
+  </documentCustomizer>
+
+  <!--+
+      | A schema customizer allows to manipulate the schema before export.
+      +-->
+  <schemaCustomizer factoryClass="org.outerj.daisy.tools.importexport.config.BasicSchemaCustomizerFactory">
+    <!--+
+        | Use these elements to exclude part, field and document types from the export schema:
+        |  <dropPartType name='...'/>
+        |  <dropFieldType name='...'/>
+        |  <dropDocumentType name='...'/>
+        +-->
+  </schemaCustomizer>
+</exportOptions>
+

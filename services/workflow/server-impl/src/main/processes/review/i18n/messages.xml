@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="review.label">Review</message>
+  <message key="review.description">A workflow for reviewing a document</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Document to review</message>
+  <message key="variable.reviewSubmitComment.label">Review request comment</message>
+  <message key="variable.reviewSubmitComment.description">Comment for the reviewer</message>
+  <message key="variable.reviewer.label">Reviewer</message>
+  <message key="variable.fixComment.label">Fix comment</message>
+  <message key="variable.fixComment.description">Comment provided by the workflow creator after updating the document based on the reviewer's comments.</message>
+  <message key="variable.reviewComment.label">Review comment</message>
+  <message key="variable.reviewComment.description">Comment provided by the reviewer</message>
+
+  <!-- Tasks -->
+  <message key="startReviewTask.label">Start review</message>
+  <message key="startReviewTask.description">Please provide the parameters needed for document review.</message>
+  <message key="reviewTask.label">Review</message>
+  <message key="reviewTask.description">You are requested to review a document.</message>
+  <message key="requestChangesTask.label">Review change request</message>
+  <message key="requestChangesTask.description">You are requested to adjust the document and resubmit it for review.</message>
+  <message key="rejectedTask.label">Review rejected</message>
+  <message key="rejectedTask.description">This is to inform you that the document you request to be reviewed has been rejected.</message>
+
+  <!-- Transitions -->
+  <message key="transition.request-review">Request review</message>
+  <message key="transition.publish">Publish document</message>
+  <message key="transition.endReview">End review</message>
+  <message key="transition.request-changes">Request changes</message>
+  <message key="transition.reject">Reject</message>
+  <message key="transition.request-new-review">Request new review</message>
+  <message key="transition.give-up">Give up</message>
+  <message key="transition.confirm">Confirm</message>
+</catalogue>

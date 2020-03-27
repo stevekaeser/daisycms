@@ -1,0 +1,38 @@
+/**
+ * Styles used by some popup windows.
+ */
+body {
+  padding: 0px;
+  font-size: 76%;
+  font-family: helvetica, sans-serif;
+}
+
+h1 {
+  color: #693;
+  font-weight: normal;
+  font-size: 1.7em;
+}
+
+table.daisySelectList th {
+  text-align: left;
+  background-color: #ddd;
+}
+
+ul.selectList li {
+  list-style: none;
+}
+
+ul.hierarchicalSelectList {
+  padding-left: 1.5em;
+  list-style-type: disc;
+}
+
+ul.hierarchicalSelectList li ul {
+  padding-left: 1.5em;
+  list-style-type: disc;
+}
+
+ul.hierarchicalSelectList li ul li ul {
+  padding-left: 1.5em;
+  list-style-type: disc;
+}

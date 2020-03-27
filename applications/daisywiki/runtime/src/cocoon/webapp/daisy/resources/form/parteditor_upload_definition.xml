@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<jx:if test="true"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+    <fd:upload id="upload-part"><!-- User uploads set the value on this widget, which accepts any mime-type -->
+      <fd:label><i18n:text key="editdoc.upload-data"/>:</fd:label>
+      <fd:hint>${partTypeUse.partType.getDescription(locale)}</fd:hint>
+    </fd:upload>
+    <fd:upload id="last-upload-part"><!-- After an upload, the value from upload-part is copied to this widget -->
+    </fd:upload>
+    <fd:field id="upload-part-mimetype">
+      <fd:datatype base="string"/>
+      <fd:label><i18n:text key="editdoc.mime-type"/>:</fd:label>
+      <jx:if test="${partTypeUse.partType.mimeTypes != ''}">
+        <fd:hint><i18n:translate>
+          <i18n:text key="editdoc.mime-types.accepted"/>
+          <i18n:param>${partTypeUse.partType.mimeTypes}</i18n:param>
+        </i18n:translate></fd:hint>
+      </jx:if>
+    </fd:field>
+    <fd:field id="upload-part-filename">
+      <fd:datatype base="string"/>
+      <fd:label><i18n:text key="editdoc.filename"/>:</fd:label>
+    </fd:field>
+
+</jx:if>

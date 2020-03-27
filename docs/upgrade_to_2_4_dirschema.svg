@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="610.91302"
+   height="325.73306"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="upgrade_to_2_4_dirschema.svg"
+   style="enable-background:new"
+   inkscape:export-filename="upgrade_to_2_4_dirschema.svg.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path4087"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2884"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2901"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2969"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3012"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3184"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3221"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4525"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter4550"
+       color-interpolation-filters="sRGB">
+      <feBlend
+         inkscape:collect="always"
+         mode="multiply"
+         in2="BackgroundImage"
+         id="feBlend4552" />
+    </filter>
+    <inkscape:perspective
+       id="perspective3630"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter4675"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.8896084"
+         id="feGaussianBlur4677" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4679"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.8896084"
+         id="feGaussianBlur4681" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4683"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.8896084"
+         id="feGaussianBlur4685" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4687"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.8896084"
+         id="feGaussianBlur4689" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4691"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.8896084"
+         id="feGaussianBlur4693" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="320.18471"
+     inkscape:cy="221.88238"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:window-width="1065"
+     inkscape:window-height="868"
+     inkscape:window-x="332"
+     inkscape:window-y="119"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Laag"
+     style="display:inline"
+     transform="translate(-96.474644,-311.2493)">
+    <rect
+       style="color:#000000;fill:#848282;fill-opacity:1;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4675);enable-background:accumulate"
+       id="rect2891-10"
+       width="194.95944"
+       height="85.862968"
+       x="133.8046"
+       y="344.18436" />
+    <rect
+       style="color:#000000;fill:#848282;fill-opacity:1;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4679);enable-background:accumulate"
+       id="rect2891-2-4"
+       width="186.87915"
+       height="111.17546"
+       x="110.27782"
+       y="518.87183" />
+    <rect
+       style="color:#000000;fill:#848282;fill-opacity:1;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4683);enable-background:accumulate"
+       id="rect2891-8-4-8"
+       width="237.81659"
+       height="140.86298"
+       x="437.8046"
+       y="318.18436" />
+    <rect
+       style="color:#000000;fill:#848282;fill-opacity:1;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4687);enable-background:accumulate"
+       id="rect2891-7-7"
+       width="186.87915"
+       height="111.17546"
+       x="312.55698"
+       y="518.87183" />
+    <rect
+       style="color:#000000;fill:#848282;fill-opacity:1;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4691);enable-background:accumulate"
+       id="rect2891-1-0"
+       width="184.35378"
+       height="109.66023"
+       x="516.09882"
+       y="519.62946" />
+    <rect
+       style="color:#000000;fill:#e5e5e5;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2891"
+       width="194.95944"
+       height="85.862968"
+       x="129.8046"
+       y="338.18436" />
+    <rect
+       style="color:#000000;fill:#e5e5e5;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2891-2"
+       width="186.87915"
+       height="111.17546"
+       x="106.27782"
+       y="512.87183" />
+    <rect
+       style="color:#000000;fill:#e5e5e5;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2891-8-4"
+       width="237.81659"
+       height="140.86298"
+       x="433.8046"
+       y="312.18436" />
+    <rect
+       style="color:#000000;fill:#e5e5e5;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2891-7"
+       width="186.87915"
+       height="111.17546"
+       x="308.55698"
+       y="512.87183" />
+    <rect
+       style="color:#000000;fill:#e5e5e5;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2891-1"
+       width="184.35378"
+       height="109.66023"
+       x="512.09882"
+       y="513.62946" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="206.78571"
+       y="536.64789"
+       id="text2992"><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="536.64789"
+         id="tspan3002"
+         style="font-size:12px;text-align:center;text-anchor:middle">MySQL</tspan><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="551.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3110" /><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="566.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3112">databases:</tspan><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="581.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3114" /><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="596.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3116">daisyrepository</tspan><tspan
+         sodipodi:role="line"
+         x="206.78571"
+         y="611.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3118">activemq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="550.78571"
+       y="336.64789"
+       id="text2992-2"><tspan
+         sodipodi:role="line"
+         id="tspan2994-3"
+         x="550.78571"
+         y="336.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle">daisy-<tspan
+   style="font-size:16px"
+   id="tspan3045">2.4</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="352.66089"
+         id="tspan2996-5"
+         style="font-size:12px;text-align:center;text-anchor:middle">(newly extracted Daisy download)</tspan><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="367.66089"
+         id="tspan2998-1"
+         style="font-size:12px;text-align:center;text-anchor:middle" /><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="382.66089"
+         id="tspan3000-7"
+         style="font-size:12px;text-align:center;text-anchor:middle">Contains bin, lib, daisywiki,</tspan><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="397.66089"
+         id="tspan3002-8"
+         style="font-size:12px;text-align:center;text-anchor:middle">repository-server, ...</tspan><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="412.66089"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3041" /><tspan
+         sodipodi:role="line"
+         x="550.78571"
+         y="427.66089"
+         style="font-size:12px;font-weight:bold;text-align:center;text-anchor:middle"
+         id="tspan3043">&lt;DAISY_HOME&gt;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="98.571426"
+       y="471.79077"
+       id="text3047"><tspan
+         sodipodi:role="line"
+         x="98.571426"
+         y="471.79077"
+         style="font-size:14px"
+         id="tspan4542">APPLICATION</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="399.14285"
+       y="535.64789"
+       id="text3120"><tspan
+         sodipodi:role="line"
+         id="tspan3122"
+         x="399.14285"
+         y="535.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle">Repository data directory</tspan><tspan
+         sodipodi:role="line"
+         x="399.14285"
+         y="550.64789"
+         id="tspan3124"
+         style="font-size:12px;text-align:center;text-anchor:middle" /><tspan
+         sodipodi:role="line"
+         x="399.14285"
+         y="565.64789"
+         id="tspan3126"
+         style="font-size:12px;text-align:center;text-anchor:middle">Contains blobstore,</tspan><tspan
+         sodipodi:role="line"
+         x="399.14285"
+         y="580.64789"
+         id="tspan3128"
+         style="font-size:12px;text-align:center;text-anchor:middle">indexstore, conf, logs, ...</tspan><tspan
+         sodipodi:role="line"
+         x="399.14285"
+         y="595.64789"
+         id="tspan3130"
+         style="font-size:12px;text-align:center;text-anchor:middle" /><tspan
+         sodipodi:role="line"
+         x="399.14285"
+         y="610.64789"
+         id="tspan3132"
+         style="font-size:12px;font-weight:bold;text-align:center;text-anchor:middle">&lt;daisydata dir&gt;</tspan></text>
+    <path
+       style="fill:#ffa5a5;fill-opacity:1;stroke:#ff5f5d;stroke-width:16.29999924;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:0.5461847;stroke-dasharray:none"
+       d="M 297.995,321.51681 165.66502,438.18943"
+       id="path4548"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="226.78571"
+       y="356.64789"
+       id="text2992-25"><tspan
+         sodipodi:role="line"
+         id="tspan2994"
+         x="226.78571"
+         y="356.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle">daisy-2.3</tspan><tspan
+         sodipodi:role="line"
+         x="226.78571"
+         y="371.64789"
+         id="tspan2996"
+         style="font-size:12px;text-align:center;text-anchor:middle">(old extracted Daisy download)</tspan><tspan
+         sodipodi:role="line"
+         x="226.78571"
+         y="386.64789"
+         id="tspan2998"
+         style="font-size:12px;text-align:center;text-anchor:middle" /><tspan
+         sodipodi:role="line"
+         x="226.78571"
+         y="401.64789"
+         id="tspan3000"
+         style="font-size:12px;text-align:center;text-anchor:middle">Contains bin, lib, daisywiki,</tspan><tspan
+         sodipodi:role="line"
+         x="226.78571"
+         y="416.64789"
+         id="tspan3002-5"
+         style="font-size:12px;text-align:center;text-anchor:middle">repository-server, ...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="605.14282"
+       y="535.64789"
+       id="text3120-0"><tspan
+         sodipodi:role="line"
+         id="tspan3122-5"
+         x="605.14282"
+         y="535.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle">Daisy WIki data directory</tspan><tspan
+         sodipodi:role="line"
+         x="605.14282"
+         y="550.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3253" /><tspan
+         sodipodi:role="line"
+         x="605.14282"
+         y="565.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3255">Contains daisy.xconf, sites,</tspan><tspan
+         sodipodi:role="line"
+         x="605.14282"
+         y="580.64789"
+         style="font-size:12px;text-align:center;text-anchor:middle"
+         id="tspan3257">resources, bookstore, ...</tspan><tspan
+         sodipodi:role="line"
+         x="605.14282"
+         y="595.64789"
+         id="tspan3124-2"
+         style="font-size:12px;text-align:center;text-anchor:middle" /><tspan
+         sodipodi:role="line"
+         x="605.14282"
+         y="610.64789"
+         id="tspan3132-6"
+         style="font-size:12px;font-weight:bold;text-align:center;text-anchor:middle">&lt;wikidata dir&gt;</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 326.02673,380.61074 104.29825,0"
+       id="path3268" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Bitstream Vera Sans"
+       x="98.571426"
+       y="499.79077"
+       id="text3047-1"><tspan
+         sodipodi:role="line"
+         id="tspan3049-8"
+         x="98.571426"
+         y="499.79077"
+         style="font-size:14px">DATA</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       d="m 96.974644,482.63615 598.010306,0"
+       id="path4546" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4556"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       transform="translate(14,178)"><flowRegion
+         id="flowRegion4558"><rect
+           id="rect4560"
+           width="97.984795"
+           height="35.355339"
+           x="315.1676"
+           y="206.8645"
+           style="font-size:12px;text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara4562">will be</flowPara><flowPara
+         id="flowPara4564">replaced with</flowPara></flowRoot>  </g>
+  <g
+     inkscape:label="Laag 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     sodipodi:insensitive="true"
+     style="display:none;filter:url(#filter4550)"
+     transform="translate(-96.474644,-311.2493)">
+    <image
+       y="310.43948"
+       x="99.799316"
+       id="image2886"
+       height="322"
+       width="605"
+       xlink:href="file:///home/karel/tmp/upgrade_to_2-3_dirschema.png" />
+  </g>
+</svg>

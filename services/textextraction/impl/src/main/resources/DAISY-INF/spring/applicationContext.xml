@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans              xmlns = "http://www.springframework.org/schema/beans"
+                xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:daisy = "http://outerx.org/daisy/1.0#runtime-springext"
+               xmlns:conf = "http://outerx.org/daisy/1.0#config-springext"
+            xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+                             http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                             http://outerx.org/daisy/1.0#runtime-springext
+                             http://daisycms.org/schemas/daisyruntime-springext.xsd
+                             http://outerx.org/daisy/1.0#config-springext
+                             http://daisycms.org/schemas/config-springext.xsd">
+
+  <context:annotation-config/>
+
+  <daisy:import-service id="pluginRegistry" service="org.outerj.daisy.plugin.PluginRegistry"/>
+
+  <daisy:export-service ref="textExtractorManager" service="org.outerj.daisy.textextraction.TextExtractorManager"/>
+
+  <bean id="textExtractorManager" class="org.outerj.daisy.textextraction.impl.TextExtractorManagerImpl">
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="xml" class="org.outerj.daisy.textextraction.impl.XmlTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/xhtml+xml</value>
+        <value>text/xml</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="plaintext" class="org.outerj.daisy.textextraction.impl.PlainTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>text/plain</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="pdf" class="org.outerj.daisy.textextraction.impl.PDFTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/pdf</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="openoffice" class="org.outerj.daisy.textextraction.impl.OpenOfficeTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/vnd.sun.xml.writer</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="msword" class="org.outerj.daisy.textextraction.impl.MSWordTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/msword</value>
+        <value>application/vnd.ms-word</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="powerpoint" class="org.outerj.daisy.textextraction.impl.MSPowerPointTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/mspowerpoint</value>
+        <value>application/vnd.ms-powerpoint</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="msexcel" class="org.outerj.daisy.textextraction.impl.MSExcelTextExtractor">
+    <constructor-arg>
+      <list>
+        <value>application/msexcel</value>
+        <value>application/vnd.ms-excel</value>
+      </list>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+</beans>

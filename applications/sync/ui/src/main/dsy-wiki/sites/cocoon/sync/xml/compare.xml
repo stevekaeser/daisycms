@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<container xmlns:cinclude="http://apache.org/cocoon/include/1.0"> 
+  ${pageContext} 
+  <cinclude:include src="cocoon:/navigation"/>
+  <entity-compare>
+    <sync>
+      <entity xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+        <name>${syncEntity.name}</name>
+        <internal-name>${syncEntity.internalName}</internal-name>
+        <external-id>${syncEntity.externalId}</external-id>
+        <external-deleted>${syncEntity.externalDeleted}</external-deleted>
+        <variant-key documentId="${syncEntity.daisyVariantKey.documentId}"
+          branchId="${syncEntity.daisyVariantKey.branchId}"
+          languageId="${syncEntity.daisyVariantKey.languageId}"/>
+        <daisy-version>${syncEntity.daisyVersion}</daisy-version>
+        <daisy-deleted>${syncEntity.daisyDeleted}</daisy-deleted>
+        <update-timestamp>${syncEntity.updateTimestamp}</update-timestamp>
+        <lastmodified>${syncEntity.lastModified}</lastmodified>
+        <state>${syncEntity.state}</state>
+        <attributes>
+          <jx:forEach var="attribute" items="${syncEntity.attributes}">
+            <attribute isMultivalue="${attribute.isMultivalue()}">
+              <external-name>${attribute.externalName}</external-name>
+              <daisy-name>${attribute.daisyName}</daisy-name>
+              <type>${attribute.type}</type>
+              <values>
+                <jx:forEach var="value" items="${attribute.values}">
+                  <value>${value}</value>
+                </jx:forEach>
+              </values>
+            </attribute>
+          </jx:forEach>
+        </attributes>
+      </entity>
+    </sync>
+    <daisy>
+      <entity xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+        <name>${daisyEntity.name}</name>
+        <internal-name>${daisyEntity.internalName}</internal-name>
+        <external-id>${daisyEntity.externalId}</external-id>
+        <external-deleted>${daisyEntity.externalDeleted}</external-deleted>
+        <variant-key documentId="${daisyEntity.daisyVariantKey.documentId}"
+          branchId="${daisyEntity.daisyVariantKey.branchId}"
+          languageId="${daisyEntity.daisyVariantKey.languageId}"/>
+        <daisy-version>${daisyEntity.daisyVersion}</daisy-version>
+        <daisy-deleted>${daisyEntity.daisyDeleted}</daisy-deleted>
+        <update-timestamp>${daisyEntity.updateTimestamp}</update-timestamp>
+        <lastmodified>${daisyEntity.lastModified}</lastmodified>
+        <state>${daisyEntity.state}</state>
+        <attributes>
+          <jx:forEach var="attribute" items="${daisyEntity.attributes}">
+            <attribute isMultivalue="${attribute.isMultivalue()}">
+              <external-name>${attribute.externalName}</external-name>
+              <daisy-name>${attribute.daisyName}</daisy-name>
+              <type>${attribute.type}</type>
+              <values>
+                <jx:forEach var="value" items="${attribute.values}">
+                  <value>${value}</value>
+                </jx:forEach>
+              </values>
+            </attribute>
+          </jx:forEach>
+        </attributes>
+      </entity>
+    </daisy>
+  </entity-compare>
+</container>

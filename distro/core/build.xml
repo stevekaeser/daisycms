@@ -1,0 +1,436 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project>
+
+  <!-- allow to override properties defined below -->
+  <property file="build.properties"/>
+
+  <!-- directories -->
+  <property name="target.dir" location="target"/>
+  <property name="daisy.dir" location="target/daisy"/>
+  <property name="daisyrepo.dir" location="target/daisy/lib"/>
+
+  <property name="root.dir" location="../.."/>
+  <property name="deps.dir" location="${root.dir}/../daisy-deps"/>
+  
+  <target name="init">
+    <delete dir="${target.dir}"/>
+    <mkdir dir="${target.dir}"/>
+
+    <fail unless="project.version">project.version is not set</fail>
+
+    <condition property="isWindows">
+      <contains string="${os.name}" substring="windows" casesensitive="false" />
+    </condition>
+    <condition property="shbat" value="bat">
+      <contains string="${os.name}" substring="windows" casesensitive="false" />
+    </condition>
+    <property name="shbat" value=""/>
+
+    <!-- Ant's move works unreliable in Windows and slow on Unix, so use our own rename script -->
+    <echo file="${target.dir}/myrename.bat" message="rename %1 %2"/>
+    <echo file="${target.dir}/myrename.sh" message="mv $@"/>
+    <chmod perm="ug+x" file="${target.dir}/myrename.sh"/>
+    <condition property="renamescript" value="${target.dir}/myrename.bat">
+      <contains string="${os.name}" substring="windows" casesensitive="false" />
+    </condition>
+    <property name="renamescript" value="${target.dir}/myrename.sh"/>
+
+  </target>
+
+  <target name="build-binary-dist" depends="init">
+
+
+    <!--
+       | First, make sure we have the distributions of the software shipped with Daisy.
+       -->
+    <mkdir dir="${deps.dir}"/>
+
+    <available property="jetty_available" file="${deps.dir}/${dist.jetty.file}"/>
+    <antcall target="download-jetty" inheritAll="true"/>
+
+    <!--
+       | Repository Server and its maven repository
+       -->
+    <property name="destination_repo" value="${target.dir}/daisy/lib/"/>
+    <mkdir dir="${target.dir}/daisy/repository-server"/>
+
+    <!-- daisy maven-style repository is populated via maven's dependency plugin -->
+
+    <!--  copy config files -->
+    <mkdir dir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/runtime-config.xml" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/repository-log4j.properties" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/myconfig.xml.template" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/activemq-conf.xml.template" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/login.config" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/users.properties" todir="${target.dir}/daisy/repository-server/conf"/>
+    <copy file="${root.dir}/repository/server/src/conf/groups.properties" todir="${target.dir}/daisy/repository-server/conf"/>
+
+    <!-- create bin dir and copy necessary files -->
+    <mkdir dir="${target.dir}/daisy/repository-server/bin"/>
+    <copy file="${basedir}/resources/daisy-repository-server" todir="${target.dir}/daisy/repository-server/bin"/>
+    <chmod perm="ug+x" file="${target.dir}/daisy/repository-server/bin/daisy-repository-server"/>
+    <copy file="${basedir}/resources/daisy-repository-server.bat" todir="${target.dir}/daisy/repository-server/bin"/>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/repository-server/bin" includes="daisy-repository-server.bat"/>
+
+    <!--
+       | Daisy Wiki
+       -->
+    <mkdir dir="${target.dir}/daisy/daisywiki"/>
+    <unzip src="${deps.dir}/${dist.jetty.file}" dest="${target.dir}/daisy/daisywiki"/>
+    
+    <exec dir="${target.dir}/daisy/daisywiki" executable="${renamescript}" failonerror="true">
+      <arg line="${dist.jetty.dir} jetty"/>
+    </exec>
+
+    <echo message="Jetty version: ${dist.jetty.file}" file="${target.dir}/daisy/daisywiki/jetty-version.txt"/>
+    <copy todir="${target.dir}/daisy/daisywiki/webapp">
+      <fileset dir="${root.dir}/applications/daisywiki/runtime/target/cocoon/webapp"/>
+    </copy>
+
+    <copy todir="${target.dir}/daisy/daisywiki/wikidata-template">
+      <fileset dir="${root.dir}/applications/daisywiki/runtime/src/cocoon/wikidata"/>
+    </copy>
+
+    <mkdir dir="${target.dir}/daisy/daisywiki/conf"/>
+    <copy file="${basedir}/resources/jetty-daisywiki.xml" todir="${target.dir}/daisy/daisywiki/conf"/>
+    <copy file="${basedir}/resources/jetty-daisywiki-defaults.xml" todir="${target.dir}/daisy/daisywiki/conf"/>
+    <mkdir dir="${target.dir}/daisy/daisywiki/bin"/>
+    <copy todir="${target.dir}/daisy/daisywiki/bin">
+      <fileset dir="${basedir}/resources" includes="daisy-wiki*"/>
+    </copy>
+    <chmod perm="ug+x" file="${target.dir}/daisy/daisywiki/bin/daisy-wiki"/>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/daisywiki/bin" includes="daisy-wiki.bat"/>
+    <mkdir dir="${target.dir}/daisy/daisywiki/endorsedlibs"/>
+    <copy todir="${target.dir}/daisy/daisywiki/endorsedlibs">
+      <fileset dir="${root.dir}/applications/daisywiki/runtime/target/cocoon-endorsed-libs/" includes="*.jar"/>
+    </copy>
+
+    <!-- Log4j should be higher in the class hierarchy, otherwise commons-logging,
+         which is also included with Jetty, doesn't find it -->
+    <copy file="${target.dir}/daisy/daisywiki/webapp/WEB-INF/lib/log4j-1.2.14.jar"
+          todir="${target.dir}/daisy/daisywiki/jetty/ext"/>
+
+    <!--
+       | Install
+       -->
+    <mkdir dir="${target.dir}/daisy/install"/>
+    <copy todir="${target.dir}/daisy/install">
+      <fileset dir="${root.dir}/install/target">
+        <include name="daisy-repository-init"/>
+        <include name="daisy-repository-init.bat"/>
+        <include name="daisy-wiki-init"/>
+        <include name="daisy-wiki-init.bat"/>
+        <include name="daisy-wikidata-init"/>
+        <include name="daisy-wikidata-init.bat"/>
+        <include name="daisy-wiki-add-site"/>
+        <include name="daisy-wiki-add-site.bat"/>
+        <include name="daisy-service-install"/>
+        <include name="daisy-service-install.bat"/>
+      </fileset>
+    </copy>
+    <chmod perm="ug+x">
+      <fileset dir="${target.dir}/daisy/install">
+        <exclude name="*.bat"/>
+      </fileset>
+    </chmod>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/install" includes="*.bat"/>
+
+    <!--
+       | Javascript interpreter scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/applications/jsclient/target">
+        <include name="daisy-js"/>
+        <include name="daisy-js.bat"/>
+        <include name="daisy-js-debug"/>
+        <include name="daisy-js-debug.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Backuptool scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/applications/backuptool/target">
+        <include name="daisy-backup-tool"/>
+        <include name="daisy-backup-tool.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Blobstore Convertor scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/applications/blobstoreconvertor/target">
+        <include name="daisy-blobstore-convertor"/>
+        <include name="daisy-blobstore-convertor.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Docid Convertor scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/applications/docidconvertor/target">
+        <include name="daisy-docid-convertor"/>
+        <include name="daisy-docid-convertor.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Schema uploader scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/install/target">
+        <include name="daisy-schema-uploader"/>
+        <include name="daisy-schema-uploader.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Import/export tools
+       -->
+    <mkdir dir="${target.dir}/daisy/bin"/>
+    <copy todir="${target.dir}/daisy/bin">
+      <fileset dir="${root.dir}/applications/importexport/target">
+        <include name="daisy-import"/>
+        <include name="daisy-import.bat"/>
+        <include name="daisy-export"/>
+        <include name="daisy-export.bat"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | Tanuki wrapper scripts
+       -->
+    <mkdir dir="${target.dir}/daisy/wrapper"/>
+    <mkdir dir="${target.dir}/daisy/wrapper/bin"/>
+    <copy todir="${target.dir}/daisy/wrapper/bin">
+      <fileset dir="${root.dir}/distro/core/resources/wrapper/bin">
+        <include name="wrapper-windows-x86-32.exe"/>
+        <include name="wrapper-linux-ppc-64"/>
+        <include name="wrapper-linux-x86-32"/>
+        <include name="wrapper-linux-x86-64"/>
+        <include name="wrapper-macosx-ppc-32"/>
+        <include name="wrapper-macosx-universal-32"/>
+        <include name="wrapper-solaris-sparc-32"/>
+        <include name="wrapper-solaris-sparc-64"/>
+        <include name="wrapper-solaris-x86-32"/>
+        <include name="daisy-repository-server-service"/>
+        <include name="daisy-repository-server-service.bat"/>
+        <include name="daisy-wiki-service"/>
+        <include name="daisy-wiki-service.bat"/>
+        <include name="daisy-startup.bat"/>
+        <include name="DO_NOT_USE_THESE_SCRIPTS.txt"/>
+      </fileset>
+    </copy>
+    <mkdir dir="${target.dir}/daisy/wrapper/conf"/>
+    <copy todir="${target.dir}/daisy/wrapper/conf">
+      <fileset dir="${root.dir}/distro/core/resources/wrapper/conf">
+        <include name="daisy-repository-server-service-global.conf"/>
+        <include name="daisy-repository-server-service.conf"/>
+        <include name="daisy-wiki-service-global.conf"/>
+        <include name="daisy-wiki-service.conf"/>
+      </fileset>
+    </copy>
+    <mkdir dir="${target.dir}/daisy/wrapper/lib"/>
+    <copy todir="${target.dir}/daisy/wrapper/lib">
+      <fileset dir="${root.dir}/distro/core/resources/wrapper/lib/">
+        <include name="wrapper-windows-x86-32.dll"/>
+        <include name="libwrapper-aix-ppc32.a"/>
+        <include name="libwrapper-aix-ppc64.a"/>
+        <include name="libwrapper-hpux-parisc-32.sl"/>
+        <include name="libwrapper-hpux-parisc-64.sl"/>
+        <include name="libwrapper-linux-ppc-64.so"/>
+        <include name="libwrapper-linux-x86-32.so"/>
+        <include name="libwrapper-linux-x86-64.so"/>
+        <include name="libwrapper-macosx-ppc-32.jnilib"/>
+        <include name="libwrapper-macosx-universal-32.jnilib"/>
+        <include name="libwrapper-solaris-sparc-32.so"/>
+        <include name="libwrapper-solaris-sparc-64.so"/>
+        <include name="libwrapper-solaris-x86-32.so"/>
+        <include name="wrapper.jar"/>
+      </fileset>
+    </copy>
+    <mkdir dir="${target.dir}/daisy/wrapper/service"/>
+    <copy todir="${target.dir}/daisy/wrapper/service">
+      <fileset dir="${root.dir}/distro/core/resources/wrapper/service/">
+        <include name="install-daisy-repository-server-service.bat"/>
+        <include name="install-daisy-wiki-service.bat"/>
+        <include name="uninstall-daisy-repository-server-service.bat"/>
+        <include name="uninstall-daisy-wiki-service.bat"/>
+        <include name="start-daisy-repository-server-service.bat"/>
+        <include name="start-daisy-wiki-service.bat"/>
+        <include name="stop-daisy-repository-server-service.bat"/>
+        <include name="stop-daisy-wiki-service.bat"/>
+        <include name="restart-daisy-repository-server-service.bat"/>
+        <include name="restart-daisy-wiki-service.bat"/>
+        <include name="DO_NOT_USE_THESE_SCRIPTS.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- Make scripts executable and fix line endings -->
+    <chmod perm="ug+x">
+      <fileset dir="${target.dir}/daisy/bin">
+        <exclude name="*.bat"/>
+      </fileset>
+      <fileset dir="${target.dir}/daisy/wrapper/bin">
+        <exclude name="*.exe"/>
+        <exclude name="*.txt"/>
+      </fileset>
+    </chmod>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/bin" includes="*.bat"/>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/wrapper/bin" includes="*.bat"/>
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/wrapper/service" includes="*.bat"/>
+    <antcall target="fix-wrapper-conf"/>
+
+    <!--
+       | README
+       -->
+    <copy todir="${target.dir}/daisy" flatten="true">
+      <fileset dir="${root.dir}">
+        <include name="distro/core/resources/README.txt"/>
+        <include name="LICENSE.txt"/>
+        <include name="NOTICE.txt"/>
+      </fileset>
+    </copy>
+
+    <!--
+       | JavaDoc
+       -->
+<!-- gives some strange error
+    <exec dir="${root.dir}"
+          executable="mvn${shbat}"
+          failonerror="true">
+      <arg line="javadoc:aggregate -Pdev"/>
+    </exec>
+    <copy todir="${target.dir}/daisy/apidocs">
+      <fileset dir="${root.dir}/target/javadoc"/>
+    </copy>
+-->
+
+    <mkdir dir="${basedir}/target/daisy/apidocs"/>
+    <path id="javadoc.cp">
+      <path>
+        <fileset dir="${root.dir}">
+          <include name="repository/xmlschema-bindings/target/*-xmlschema-bindings-*.jar" />
+          <include name="services/*/xmlschema-bindings/target/*-xmlschema-bindings-*.jar" />
+          <include name="services/util/target/daisy-util-*.jar" />
+        </fileset>
+      </path>
+    </path>
+
+    <javadoc destdir="${basedir}/target/daisy/apidocs" classpathref="javadoc.cp"
+        access="public"
+        doctitle="Daisy ${project.version} API"
+        header="&lt;a href='http://www.daisycms.org'>Daisy Open Source CMS&lt;/a>"
+        footer="&lt;a href='http://www.daisycms.org'>Daisy Open Source CMS&lt;/a>">
+
+      <packageset dir="${root.dir}/repository/api/src/main/java"/>
+      <packageset dir="${root.dir}/repository/spi/src/main/java"/>
+      <packageset dir="${root.dir}/repository/server-spi/src/main/java"/>
+      <packageset dir="${root.dir}/applications/importexport/src/main/java">
+        <exclude name="org/outerj/daisy/tools/importexport/import_/documents/**"/>
+      </packageset>
+      <packageset dir="${root.dir}/services/htmlcleaner/src/main/java"/>
+      <packageset dir="${root.dir}/services/doctaskrunner/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/emailer/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/emailnotifier/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/jms/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/navigation/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/publisher/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/workflow/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/textextraction/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/linkextraction/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/configuration/api/src/main/java"/>
+      <packageset dir="${root.dir}/services/pluginregistry/api/src/main/java"/>
+
+      <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+      <link href="http://java.sun.com/javaee/5/docs/api/"/>
+      <link href="http://xmlbeans.apache.org/docs/2.2.0/reference/"/>
+      <link href="http://excalibur.apache.org/apidocs/"/>
+
+      <group title="Core repository"
+             packages="org.outerj.daisy.repository,
+              org.outerj.daisy.repository.acl,
+              org.outerj.daisy.repository.comment,
+              org.outerj.daisy.repository.namespace,
+              org.outerj.daisy.repository.query,
+              org.outerj.daisy.repository.schema,
+              org.outerj.daisy.repository.user,
+              org.outerj.daisy.repository.variant"/>
+
+      <group title="Plugin registry"
+             packages="org.outerj.daisy.plugin"/>
+
+      <group title="Repository extensions"
+             packages="org.outerj.daisy.workflow,
+              org.outerj.daisy.publisher,
+              org.outerj.daisy.navigation,
+              org.outerj.daisy.doctaskrunner,
+              org.outerj.daisy.emailer,
+              org.outerj.daisy.emailnotifier"/>
+
+      <group title="Utilities" packages="org.outerj.daisy.htmlcleaner,org.outerj.daisy.tools.importexport"/>
+
+      <group title="Repository SPI (Service Provider Interface)"
+             packages="org.outerj.daisy.repository.spi"/>
+
+      <group title="Server SPI (= SPI only available inside repository JVM)"
+             packages="org.outerj.daisy.authentication.spi,
+              org.outerj.daisy.backuplock.spi,
+              org.outerj.daisy.httpconnector.spi,
+              org.outerj.daisy.repository.spi.local"/>
+
+      <group title="Components that could be relevant to plugins"
+             packages="org.outerj.daisy.linkextraction,
+                       org.outerj.daisy.textextraction,
+                       org.outerj.daisy.configuration,
+                       org.outerj.daisy.jms"/>
+
+    </javadoc>
+
+    <!--
+       | Misc resources
+       -->
+    <filter token="daisy.version" value="${project.version}"/>
+    <copy todir="${daisy.dir}/misc" filtering="true">
+      <fileset dir="${basedir}/resources/misc"/>
+    </copy>
+    <chmod perm="ug+x" file="${daisy.dir}/misc/regenerate-summaries.sh"/>
+
+  </target>
+
+  <target name="download-jetty" unless="jetty_available">
+    <echo>Downloading Jetty Distribution</echo>
+    <get src="${dist.jetty.location}${dist.jetty.file}"
+         dest="${deps.dir}/${dist.jetty.file}"
+         verbose="true"/>
+  </target>
+
+  <target name="fix-wrapper-conf" if="isWindows">
+    <fixcrlf eol="crlf" srcdir="${target.dir}/daisy/wrapper/conf" includes="*.conf"/>
+  </target>
+
+</project>

@@ -1,0 +1,7 @@
+# Default set of locales to be editable through admin GUI
+# The special value 'empty' denotes, as its name suggests,
+# an empty locale, ie the one to be used if none other is specified
+empty
+nl
+fr
+en

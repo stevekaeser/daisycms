@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="bookDefinitionName" state="output">
+      <fd:label><i18n:text key="name"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+    <fd:field id="bookDefinitionId" state="output">
+      <fd:label><i18n:text key="bookip.id"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+    <fd:field id="bookDefinitionBranchName" state="output">
+      <fd:label><i18n:text key="branch"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+    <fd:field id="bookDefinitionLanguageName" state="output">
+      <fd:label><i18n:text key="language"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:field id="bookInstanceName" required="true">
+      <fd:label><i18n:text key="bookip.book-instance-name"/></fd:label>
+      <fd:help><i18n:text key="bookip.book-instance-name-help"/></fd:help>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:javascript>
+          var error = Packages.org.outerj.daisy.books.store.BookStoreUtil.isValidBookInstanceName(widget.getValue());
+          if (error != null) {
+            widget.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError(error, false));
+            return false;
+          } else {
+            return true;
+          }
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+    <fd:field id="bookInstanceLabel" required="true">
+      <fd:label><i18n:text key="bookip.book-instance-label"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:field id="dataBranchId" required="true">
+      <fd:label><i18n:text key="bookip.content-branch"/></fd:label>
+      <fd:datatype base="long"/>
+    </fd:field>
+    <fd:field id="dataLanguageId" required="true">
+      <fd:label><i18n:text key="bookip.content-language"/></fd:label>
+      <fd:datatype base="long"/>
+    </fd:field>
+    <fd:field id="dataVersion" required="true">
+      <fd:label><i18n:text key="bookip.content-version"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="live"/>
+        <fd:item value="last"/>
+      </fd:selection-list>
+    </fd:field>
+
+    <fd:field id="locale" required="true">
+      <fd:label><i18n:text key="bookip.locale"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+  </fd:widgets>
+
+</fd:form>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="toc">Table of Contents</message>
+  <message key="figure.default">Figure</message>
+  <message key="figure.screenshot">Screenshot</message>
+  <message key="table.default">Table</message>
+  <message key="list-of-figures.default">Figures</message>
+  <message key="list-of-figures.screenshot">Screenshots</message>
+  <message key="list-of-tables.default">Tables</message>
+  <message key="link.page">page</message>
+
+  <!-- For cross references -->
+  <message key="crossrefname.img.default">Figure</message>
+  <message key="crossrefname.img.screenshot">Screenshot</message>
+  <message key="crossrefname.table.default">Table</message>
+  <message key="crossrefname.h1">Chapter</message>
+  <message key="crossrefname.h2">Section</message>
+  <message key="crossrefname.h3">Section</message>
+  <message key="crossrefname.h4">Section</message>
+  <message key="crossrefname.h5">Section</message>
+  <message key="crossrefname.h6">Section</message>
+  <message key="crossrefname.h7">Section</message>
+  <message key="crossrefname.h8">Section</message>
+  <message key="crossrefname.h9">Section</message>
+  <message key="crossref.onpage">on page</message>
+  <!-- The 'here' text is used in HTML rendering instead of the page number or 'on page X' format -->
+  <message key="crossref.here">here</message>
+
+  <message key="index">Index</message>
+
+  <message key="bookindex">Book Index</message>
+
+  <!-- 'notes' is the title of the footnotes section when they are rendered at the end of the chapter
+       instead of the bottom of the page -->
+  <message key="notes">Notes</message>
+</catalogue>

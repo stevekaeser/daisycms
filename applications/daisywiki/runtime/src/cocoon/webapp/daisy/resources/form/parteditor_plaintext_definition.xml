@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<jx:if test="true"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+    <fd:field id="mimetype">
+      <fd:label>Mime-type</fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:javascript>
+          if (widget.lookupWidget("../plaintext").getValue() != null &amp;&amp; widget.getValue() == null) {
+            widget.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError(
+               new Packages.org.apache.cocoon.forms.util.I18nMessage("general.field-required", "forms")));
+            return false;
+          }
+          return true;
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="plaintext">
+      <fd:datatype base="string"/>
+    </fd:field>
+
+</jx:if>

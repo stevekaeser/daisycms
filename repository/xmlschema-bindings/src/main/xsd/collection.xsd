@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element id="collection" name="collection">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="updatecount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="collections">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:collection"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="collectionCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newCollection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:collection"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="collectionUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldCollection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:collection"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newCollection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:collection"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="collectionDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedCollection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:collection"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

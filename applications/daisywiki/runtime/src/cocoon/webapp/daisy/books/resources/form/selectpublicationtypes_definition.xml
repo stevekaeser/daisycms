@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="editmode">
+      <fd:datatype base="string"/>
+      <fd:label><i18n:text key="book.edit-mode"/></fd:label>
+      <fd:selection-list>
+        <fd:item value="xml"><fd:label><i18n:text key="book.edit-mode-xml"/></fd:label></fd:item>
+        <fd:item value="gui"><fd:label><i18n:text key="book.edit-mode-graphical"/></fd:label></fd:item>
+      </fd:selection-list>
+    </fd:field>
+
+    <fd:union id="editors" case="editmode">
+      <fd:widgets>
+        <fd:group id="xml">
+          <fd:widgets>
+            <fd:field id="xmlText">
+              <fd:datatype base="string"/>
+              <fd:validation>
+                <fd:xml/>
+              </fd:validation>
+            </fd:field>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="gui">
+          <fd:widgets>
+            <fd:messages id="messages"/>
+            <fd:repeater id="publications">
+              <fd:widgets>
+                <fd:field id="typeName" state="invisible">
+                  <fd:datatype base="string"/>
+                </fd:field>
+                <fd:field id="typeLabel" state="output">
+                  <fd:datatype base="string"/>
+                </fd:field>
+                <fd:field id="outputName" required="true">
+                  <fd:datatype base="string"/>
+                  <fd:label><i18n:text key="pubtypes.output-name"/></fd:label>
+                  <fd:help><i18n:text key="bookip.book-instance-name-help"/></fd:help>
+                  <fd:validation>
+                    <fd:javascript>
+                      // use same check (name restriction) as for book instance names
+                      var error = Packages.org.outerj.daisy.books.store.BookStoreUtil.isValidBookInstanceName(widget.getValue());
+                      if (error != null) {
+                        widget.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError(error, false));
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    </fd:javascript>
+                  </fd:validation>
+                </fd:field>
+                <fd:field id="outputLabel" required="true">
+                  <fd:datatype base="string"/>
+                  <fd:label><i18n:text key="pubtypes.output-label"/></fd:label>
+                </fd:field>
+                <fd:row-action id="delete" command="delete">
+                  <fd:label><i18n:text key="delete"/></fd:label>
+                </fd:row-action>
+
+                <fd:repeater id="properties">
+                  <fd:widgets>
+                    <fd:field id="name" required="true">
+                      <fd:datatype base="string"/>
+                    </fd:field>
+                    <fd:field id="value">
+                      <fd:datatype base="string"/>
+                    </fd:field>
+                    <fd:row-action id="delete" command="delete">
+                      <fd:label><i18n:text key="delete"/></fd:label>
+                    </fd:row-action>
+                  </fd:widgets>
+                </fd:repeater>
+                <fd:field id="defaultProperties">
+                  <fd:datatype base="string"/>
+                </fd:field>
+                <fd:action id="addDefaultProperty">
+                  <fd:label><i18n:text key="add"/></fd:label>
+                  <fd:on-action>
+                    <javascript>
+                      var parent = event.getSource().getParent();
+                      var name = parent.getChild("defaultProperties").getValue();
+                      if (name != null) {
+                        var value = parent.getChild("defaultProperties").getAttribute("properties").get(name);
+                        var row = parent.getChild("properties").addRow();
+                        row.getChild("name").setValue(name);
+                        row.getChild("value").setValue(value);
+                      }
+                    </javascript>
+                  </fd:on-action>
+                </fd:action>
+                <fd:action id="addProperty">
+                  <fd:label><i18n:text key="pubtypes.add-property"/></fd:label>
+                  <fd:on-action>
+                    <javascript>
+                      var row = event.getSource().getParent().getChild("properties").addRow();
+                    </javascript>
+                  </fd:on-action>
+                </fd:action>
+
+              </fd:widgets>
+            </fd:repeater>
+
+            <fd:field id="availablePublicationTypes">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:action id="addPublicationType">
+              <fd:label><i18n:text key="add"/></fd:label>
+            </fd:action>
+          </fd:widgets>
+        </fd:group>
+      </fd:widgets>
+    </fd:union>
+
+    <fd:action id="goBack">
+      <fd:label><i18n:text key="bookwizard.back"/></fd:label>
+    </fd:action>
+
+  </fd:widgets>
+
+  <fd:validation>
+    <fd:javascript>
+      var repeater = widget.lookupWidget("editors/gui/publications");
+      if (repeater.getSize() == 0) {
+        if (widget.getAttribute("publications-required") != null) {
+          var message = new Packages.org.apache.cocoon.forms.util.I18nMessage("pubtypes.need-at-least-one");
+          widget.getForm().lookupWidget("editors/gui/messages").addMessage(message);
+          return false;
+        }
+      } else {
+        // check no two publications have the same output name
+        var names = new java.util.HashSet();
+        for (var i = 0; i &lt; repeater.getSize(); i++) {
+          var outputNameWidget = repeater.getRow(i).getChild("outputName");
+          var outputName = outputNameWidget.getValue();
+          if (names.contains(outputName)) {
+            var message = new Packages.org.apache.cocoon.forms.util.I18nMessage("pubtypes.duplicate-output-name");
+            outputNameWidget.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError(message));
+            return false;
+          }
+          names.add(outputName);
+        }
+      }
+      return true;
+    </fd:javascript>
+  </fd:validation>
+
+</fd:form>

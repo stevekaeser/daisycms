@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- layout.xsl -->
+  <message key="layout.user">User:</message>
+  <message key="layout.role">Role:</message>
+  <message key="layout.changelogin">Change login</message>
+  <message key="layout.logout">Logout</message>
+  <message key="layout.user-settings">User settings</message>
+  <message key="layout.change-locale">Change locale</message>
+  <message key="layout.query-search">Query Search</message>
+  <message key="layout.recent-changes">Recent Changes</message>
+  <message key="layout.new-document">New Document</message>
+  <message key="layout.hide">Hide</message>
+  <message key="layout.search">Search</message>
+  <message key="layout.navigationdoc">Navigation doc:</message>
+  <message key="layout.navigationdoc-view">view</message>
+  <message key="layout.navigationdoc-edit">edit</message>
+  <message key="layout.my-comments">My comments</message>
+  <message key="layout.registration">Register</message>
+  <message key="layout.administration">Administration</message>
+  <message key="layout.doctask">Document tasks</message>
+  <message key="layout.search-and-replace">Search &amp; replace</message>
+  <message key="layout.variants">Variants</message>
+  <message key="layout.branch-language">(branch - language)</message>
+  <message key="layout.add-variant">Add variant ...</message>
+  <message key="layout.use-all-roles">Use all roles</message>
+  <message key="layout.excl-administrator">(excl. Administrator)</message>
+  <message key="layout.multiple-roles">Multiple</message>
+  <message key="layout.page-actions">Actions</message>
+  <message key="layout.tools">Tools</message>
+  <message key="layout.books">Book publishing</message>
+  <message key="layout.basket">Document basket</message>
+  <message key="layout.new-workflow">Start new workflow</message>
+  <message key="layout.workflow-console">Workflow console</message>
+  <message key="layout.variables">Variables</message>
+  <message key="layout.translation-management">Translation management</message>
+  <message key="minimal-feed">Minimal Feed (contains document names only)</message>
+  <message key="normal-feed">Normal Feed (contains full content of documents)</message>
+  <message key="editors-feed">Editors Feed (contains full content of documents and diff with previous version)</message>
+  <message key="layout.versionmode-live">LIVE</message>
+  <message key="layout.versionmode-last">STAGING</message>
+  <message key="layout.versionmode-live-label">live</message>
+  <message key="layout.versionmode-last-label">staging</message>
+  <message key="layout.versionmode-point-in-time-label">point in time</message>
+  <message key="layout.switch-to-live-hint">Click to switch to live view</message>
+  <message key="layout.switch-to-last-hint">Click to switch to staging view</message>
+  <message key="image.show-referrers">See where this image is used</message>
+</catalogue>

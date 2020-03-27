@@ -1,0 +1,88 @@
+#!/bin/bash
+
+DAISY_HOME=/usr/lib/daisy
+
+. /usr/lib/java-wrappers/java-wrappers.sh
+find_java_runtime
+export JAVA_HOME
+
+purge () {
+  DB_USER=debian-sys-maint
+  DB_PASSWORD=`cat /etc/mysql/debian.cnf | grep password | head -1 | sed 's/password = //'`
+
+  DAISY_DATA=`cat /tmp/daisyresources.txt | grep daisydata= | sed -r 's/daisydata=//'`
+  JMS_DB=`cat /tmp/daisyresources.txt | grep jmsdb= | sed -r 's/jmsdb=//'`
+  DAISY_DB=`cat /tmp/daisyresources.txt | grep daisydb= | sed -r 's/daisydb=//'`
+  DAISY_DB_USER=`cat /tmp/daisyresources.txt | grep daisydb_user= | sed -r 's/daisydb_user=//'`
+  JMS_DB_USER=`cat /tmp/daisyresources.txt | grep jmsdb_user= | sed -r 's/jmsdb_user=//'`
+
+  update-rc.d daisy-repository-server remove > /dev/null
+  update-rc.d daisy-wiki remove > /dev/null
+
+  daisydb_exists=`mysql --user=$DB_USER --password=$DB_PASSWORD -e "show databases" | grep $DAISY_DB`
+  if [ -n "${daisydb_exists}" ]; then 
+    /usr/bin/mysqladmin -f --user=$DB_USER --password=$DB_PASSWORD drop $DAISY_DB
+  fi
+  
+  jmsdb_exists=`mysql --user=$DB_USER --password=$DB_PASSWORD -e "show databases" | grep $JMS_DB`
+  if [ -n "${jmsdb_exists}" ]; then 
+    /usr/bin/mysqladmin -f --user=$DB_USER --password=$DB_PASSWORD drop $JMS_DB
+  fi
+
+  # drop daisy users
+  /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD -e "drop user '${DAISY_DB_USER}'@'%';"
+  /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD -e "drop user '${JMS_DB_USER}'@'%';"
+  /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD -e "drop user '${DAISY_DB_USER}'@'localhost';"
+  /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD -e "drop user '${JMS_DB_USER}'@'localhost';"
+
+  if [ -d $DAISY_DATA ]; then
+    rm -fr $DAISY_DATA  
+  fi
+  
+  if [ -d $DAISY_HOME/daisywiki/webapp/daisy/sites ]; then
+    rm -fr $DAISY_HOME/daisywiki/webapp/daisy/sites
+  fi
+
+  if [ -n `grep daisy_user /etc/passwd` ]; then
+    userdel daisy_user  
+  fi
+}
+
+restore () {
+  DAISY_DATA=`cat /tmp/daisyresources.txt | grep daisydata= | sed -r 's/daisydata=//'`
+
+  BACKUP_DIR=/tmp/daisy-backup
+  BACKUP_NAME=`ls --sort=time -1 $BACKUP_DIR | head -n1`
+  
+  daisy-backup-tool -r $BACKUP_NAME -d $DAISY_DATA -l $BACKUP_DIR -a $DAISY_HOME/misc/wiki_backup_settings.xml
+}
+
+find $DAISY_HOME -type f -name "*.log" -exec rm {} \;
+find $DAISY_HOME -type d -name "logs" -exec rmdir {} \;
+find $DAISY_HOME -type f -name "*.backup" -exec rm {} \;
+find $DAISY_HOME -type f -name "*~" -exec rm {} \;
+
+case "$1" in 
+  purge )
+    purge
+  ;;
+  
+  remove | upgrade | disappear )
+  ;;
+  
+  failed-upgrade )
+    restore 
+  ;;
+  
+  abort-install )
+    if [ -z "$2" ]; then
+      purge
+    fi
+  ;;
+
+  * )
+    echo "I don't know how to $1"
+    exit1
+  ;;
+esac
+

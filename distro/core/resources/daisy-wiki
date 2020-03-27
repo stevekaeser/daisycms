@@ -1,0 +1,23 @@
+#! /bin/sh
+
+if [ -z "$DAISY_HOME" ] ; then
+  echo "DAISY_HOME not set!"
+  exit 1
+fi
+
+DAISYWIKI_DATA=$1
+
+if [ -z "$1" ]; then
+  echo "Specify the daisywiki data directory as an argument"
+  exit 1
+fi
+
+DAISYWIKI_HOME="$DAISY_HOME/daisywiki"
+
+CONFFILE=$DAISYWIKI_HOME/conf/jetty-daisywiki.xml
+if [ -f $DAISYWIKI_DATA/jetty-daisywiki.xml ]; then
+  CONFFILE=$DAISYWIKI_DATA/jetty-daisywiki.xml
+fi
+
+cd $DAISYWIKI_HOME/jetty
+$JAVA_HOME/bin/java -Xmx128m -Djava.endorsed.dirs=$DAISYWIKI_HOME/endorsedlibs/ -Ddaisywiki.home=$DAISYWIKI_HOME -Dorg.mortbay.util.URI.charset=UTF-8 -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.variant= -Ddaisywiki.data=$DAISYWIKI_DATA -Djava.awt.headless=true -Djava.io.tmpdir=$DAISYWIKI_DATA/tmp -jar start.jar $CONFFILE

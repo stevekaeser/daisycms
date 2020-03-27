@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<workflowMeta xmlns="http://outerx.org/daisy/1.0#workflowmeta"
+    xmlns:wf="http://outerx.org/daisy/1.0#workflow">
+
+  <resourceBundles>
+    <resourceBundle>messages</resourceBundle>
+    <resourceBundle>common</resourceBundle>
+  </resourceBundles>
+
+  <label i18n="true">generictask.label</label>
+  <description i18n="true">generictask.description</description>
+
+  <!-- Resuable variable definitions -->
+  <variables>
+    <variable name="daisy_document" type="daisy-link" scope="global">
+      <label i18n="true">variable.document.label</label>
+      <description i18n="true">variable.document.description</description>
+    </variable>
+    <variable name="taskDueDate" type="datetime" scope="global">
+      <label i18n="true">variable.taskDueDate.label</label>
+    </variable>
+    <variable name="details" type="string" scope="global">
+      <label i18n="true">variable.details.label</label>
+      <description i18n="true">variable.details.description</description>
+      <styling width="25em" rows="4"/>
+    </variable>
+    <variable name="workerComment" type="string" scope="global">
+      <label i18n="true">variable.workerComment.label</label>
+      <description i18n="true">variable.workerComment.description</description>
+      <styling width="25em" rows="4"/>
+    </variable>
+    <variable name="feedbackComment" type="string" scope="global">
+      <label i18n="true">variable.feedbackComment.label</label>
+      <styling width="25em" rows="4"/>
+    </variable>
+    <variable name="needsConfirmation" type="boolean" scope="global">
+      <label i18n="true">variable.needsConfirmation.label</label>
+      <description i18n="true">variable.needsConfirmation.description</description>
+    </variable>
+    <variable name="taskPriority" type="long" scope="global" required="true">
+      <label i18n="true">variable.priority.label</label>
+      <selectionList>
+        <listItem>
+          <wf:long>5</wf:long>
+          <label i18n="true">variable.priority.lowest</label>
+        </listItem>
+        <listItem>
+          <wf:long>4</wf:long>
+          <label i18n="true">variable.priority.low</label>
+        </listItem>
+        <listItem>
+          <wf:long>3</wf:long>
+          <label i18n="true">variable.priority.normal</label>
+        </listItem>
+        <listItem>
+          <wf:long>2</wf:long>
+          <label i18n="true">variable.priority.high</label>
+        </listItem>
+        <listItem>
+          <wf:long>1</wf:long>
+          <label i18n="true">variable.priority.highest</label>
+        </listItem>
+      </selectionList>
+      <initialValueScript>return new java.lang.Long(3);</initialValueScript>
+    </variable>
+    <variable name="daisy_description" type="string" scope="global" required="true">
+      <label i18n="true">variable.daisy_description.label</label>
+      <description i18n="true">variable.daisy_description.description</description>
+      <styling width="25em"/>
+    </variable>
+    <variable name="worker" type="actor" scope="global" required="true">
+      <label i18n="true">variable.worker.label</label>
+    </variable>
+    <variable name="daisy_site_hint" type="string" scope="global" required="false" hidden="true"/>
+  </variables>
+
+  <nodes>
+    <node path="start">
+      <transition name="start">
+        <label i18n="true">transition.start</label>
+      </transition>
+    </node>
+
+    <node path="perform">
+      <transition name="failure">
+        <label i18n="true">transition.failure</label>
+      </transition>
+      <transition name="success">
+        <label i18n="true">transition.success</label>
+      </transition>
+    </node>
+
+    <node path="feedback">
+      <transition name="performAgain">
+        <label i18n="true">transition.performAgain</label>
+      </transition>
+      <transition name="end">
+        <label i18n="true">transition.end</label>
+      </transition>
+    </node>
+
+    <node path="finished">
+      <transition name="end">
+        <label i18n="true">transition.end</label>
+      </transition>
+    </node>
+  </nodes>
+
+  <tasks>
+    <task name="startTask">
+      <label i18n="true">startTask.label</label>
+      <description i18n="true">startTask.description</description>
+      <variables>
+        <variable base="daisy_description" required="true"/>
+        <variable base="details" required="true"/>
+        <variable base="needsConfirmation" required="true"/>
+        <variable base="daisy_document"/>
+        <variable base="worker" required="true"/>
+        <variable base="taskDueDate"/>
+        <variable base="taskPriority" required="true"/>
+        <variable base="daisy_site_hint"/>
+      </variables>
+    </task>
+
+    <task name="performTask">
+      <label i18n="true">performTask.label</label>
+      <description i18n="true">performTask.description</description>
+      <variables>
+        <variable base="daisy_description" readOnly="true"/>
+        <variable base="daisy_document" readOnly="true"/>
+        <variable base="details" readOnly="true"/>
+        <variable base="feedbackComment" readOnly="true"/>
+        <variable base="workerComment"/>
+      </variables>
+    </task>
+
+    <task name="feedbackTask">
+      <label i18n="true">feedbackTask.label</label>
+      <description i18n="true">feedbackTask.description</description>
+      <variables>
+        <variable base="daisy_description"/>
+        <variable base="daisy_document"/>
+        <variable base="details" readOnly="true"/>
+        <variable base="workerComment" readOnly="true"/>
+        <variable base="feedbackComment"/>
+      </variables>
+    </task>
+
+    <task name="finishedTask">
+      <label i18n="true">finishedTask.label</label>
+      <description i18n="true">finishedTask.description</description>
+      <variables>
+        <variable base="daisy_description" readOnly="true"/>
+        <variable base="daisy_document" readOnly="true"/>
+        <variable base="details" readOnly="true"/>
+        <variable base="feedbackComment" readOnly="true"/>
+        <variable base="workerComment" readOnly="true"/>
+      </variables>
+    </task>
+  </tasks>
+</workflowMeta>

@@ -1,0 +1,517 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle>Edit ACL</pageTitle>
+
+  <content>
+    <script type="text/javascript">
+      dojo.addOnLoad(daisy.acleditor.init);
+
+      function subjectChange(name, newSubjectType) {
+        var newLinkLabel = "";
+        var EVERYONE = "org.outerj.daisy.repository.acl.AclSubjectType.EVERYONE";
+        var OWNER = "org.outerj.daisy.repository.acl.AclSubjectType.OWNER";
+        if (newSubjectType != EVERYONE &amp;&amp; newSubjectType != OWNER) {
+          newLinkLabel = "(select...)";
+        }
+        document.getElementById(name + ".subjectValueLink").innerHTML = newLinkLabel;
+        document.getElementById(name + ".subjectValueLabel").value = newLinkLabel;
+        document.getElementById(name + ".subjectValue").value = "-1";
+      }
+
+      function selectSubject(subjectId) {
+        var subjectType = document.getElementById(subjectId + ".subjectType:input").value;
+        if (subjectType == 'org.outerj.daisy.repository.acl.AclSubjectType.ROLE') {
+          var popup = window.open("${pageContext.mountPoint}/selectRole", "selectrole", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+          popup.onRoleSelected = function(id, name) {
+            document.getElementById(subjectId + ".subjectValueLink").innerHTML = name;
+            document.getElementById(subjectId + ".subjectValueLabel").value = name;
+            document.getElementById(subjectId + ".subjectValue").value = id;
+          }
+        } else {
+          var popup = window.open("${pageContext.mountPoint}/selectUser", "selectuser", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+          popup.onUserSelected = function(id, name) {
+            document.getElementById(subjectId + ".subjectValueLink").innerHTML = name;
+            document.getElementById(subjectId + ".subjectValueLabel").value = name;
+            document.getElementById(subjectId + ".subjectValue").value = id;
+          }
+        }
+      }
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/css/inlinedialog.css"/>
+
+    <!--
+       The dialog for editing the read access details.
+    -->
+    <div dojoType="dialog" id="ReadAccessDetailsDialog" bgColor="white" closeNode="closeButton" style="display: none">
+
+      <div class="dsydlg-title">Read access details</div>
+
+      <style>
+        .dsy-ad-dlgitem {
+           margin-top: 3px;
+           margin-bottom: 3px;
+        }
+      </style>
+
+      <form onsubmit="return false;">
+        <div class="dsy-ad-dlgitem">
+          Allow to:
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radNonLive" id="radNonLiveSwitch"/>
+          <input type="hidden" id="radNonLive" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radNonLiveSwitch"/>
+          read non-live versions
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radLiveHistory" id="radLiveHistorySwitch"/>
+          <input type="hidden" id="radLiveHistory" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radLiveHistorySwitch"/>
+          read live history
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radAllFields" id="radAllFieldsSwitch"
+              onAclActionChange="dojo.byId('radFields').disabled = dojo.byId('radAllFields').value != 'org.outerj.daisy.repository.acl.AclActionType.DENY'"/>
+          <input type="hidden" id="radAllFields" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radAllFieldsSwitch"/>
+          read all fields
+          <div style="margin-left: 3em;">
+            Allowed fields: (comma-separated list of names)
+            <br/>
+            <input id='radFields'/>
+          </div>
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radAllParts" id="radAllPartsSwitch"
+              onAclActionChange="dojo.byId('radParts').disabled = dojo.byId('radAllParts').value != 'org.outerj.daisy.repository.acl.AclActionType.DENY'"/>
+          <input type="hidden" id="radAllParts" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radAllPartsSwitch"/>
+          read all parts
+          <div style="margin-left: 3em;">
+            Allowed parts: (comma-separated list of names)
+            <br/>
+            <input id='radParts'/>
+          </div>
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radFullText" id="radFullTextSwitch"/>
+          <input type="hidden" id="radFullText" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radFullTextSwitch"/>
+          read full text index
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radFTFragments" id="radFTFragmentsSwitch"/>
+          <input type="hidden" id="radFTFragments" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radFTFragmentsSwitch"/>
+          read full text index fragments
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="radSummary" id="radSummarySwitch"/>
+          <input type="hidden" id="radSummary" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="radSummarySwitch"/>
+          read document summary
+        </div>
+
+        <div class="dsydlg-buttons">
+          <button class="dsyfrm-primaryaction" id="closeButton" onclick="daisy.acleditor.closeReadAccessDetailsDialog();">OK</button>
+          &#160;
+          <button type="button" onclick="dojo.widget.byId('ReadAccessDetailsDialog').hide();">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!--
+       The dialog for editing the write access details.
+    -->
+    <div dojoType="dialog" id="WriteAccessDetailsDialog" bgColor="white" closeNode="closeButton" style="display: none">
+
+      <div class="dsydlg-title">Write access details</div>
+
+      <style>
+        .dsy-ad-dlgitem {
+           margin-top: 3px;
+           margin-bottom: 3px;
+        }
+      </style>
+
+      <form onsubmit="return false;">
+        <div class="dsy-ad-dlgitem">
+          Allow to:
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadDocumentName" id="wadDocumentNameSwitch"/>
+          <input type="hidden" id="wadDocumentName" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadDocumentNameSwitch"/>
+          change the document name
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadLinks" id="wadLinksSwitch"/>
+          <input type="hidden" id="wadLinks" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadLinksSwitch"/>
+          change the out-of-line links
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadCustomFields" id="wadCustomFieldsSwitch"/>
+          <input type="hidden" id="wadCustomFields" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadCustomFieldsSwitch"/>
+          change the custom fields
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadCollections" id="wadCollectionsSwitch"/>
+          <input type="hidden" id="wadCollections" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadCollectionsSwitch"/>
+          change the collection membership
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadDocumentType" id="wadDocumentTypeSwitch"/>
+          <input type="hidden" id="wadDocumentType" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadDocumentTypeSwitch"/>
+          change the document type
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadRetired" id="wadRetiredSwitch"/>
+          <input type="hidden" id="wadRetired" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadRetiredSwitch"/>
+          change the retired flag
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadPrivate" id="wadPrivateSwitch"/>
+          <input type="hidden" id="wadPrivate" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadPrivateSwitch"/>
+          change the private flag
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadReferenceLanguage" id="wadReferenceLanguageSwitch"/>
+          <input type="hidden" id="wadReferenceLanguage" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadReferenceLanguageSwitch"/>
+          change the reference language
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadAllFields" id="wadAllFieldsSwitch"
+              onAclActionChange="dojo.byId('wadFields').disabled = dojo.byId('wadAllFields').value != 'org.outerj.daisy.repository.acl.AclActionType.DENY'"/>
+          <input type="hidden" id="wadAllFields" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadAllFieldsSwitch"/>
+          change all fields
+          <div style="margin-left: 3em;">
+            Allowed fields: (comma-separated list of names)
+            <br/>
+            <input id='wadFields'/>
+          </div>
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadAllParts" id="wadAllPartsSwitch"
+              onAclActionChange="dojo.byId('wadParts').disabled = dojo.byId('wadAllParts').value != 'org.outerj.daisy.repository.acl.AclActionType.DENY'"/>
+          <input type="hidden" id="wadAllParts" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadAllPartsSwitch"/>
+          change all parts
+          <div style="margin-left: 3em;">
+            Allowed parts: (comma-separated list of names)
+            <br/>
+            <input id='wadParts'/>
+          </div>
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadChangeComment" id="wadChangeCommentSwitch"/>
+          <input type="hidden" id="wadChangeComment" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadChangeCommentSwitch"/>
+          set the change comment for a new version
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadChangeType" id="wadChangeTypeSwitch"/>
+          <input type="hidden" id="wadChangeType" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadChangeTypeSwitch"/>
+          set the change type for a new version
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadSyncedWith" id="wadSyncedWithSwitch"/>
+          <input type="hidden" id="wadSyncedWith" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadSyncedWithSwitch"/>
+          set the synced-with link for a new version
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="wadVersionMeta" id="wadVersionMetaSwitch"/>
+          <input type="hidden" id="wadVersionMeta" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="wadVersionMetaSwitch"/>
+          change the version metadata post factum
+        </div>
+
+        <div class="dsydlg-buttons">
+          <button class="dsyfrm-primaryaction" id="closeButton" onclick="daisy.acleditor.closeWriteAccessDetailsDialog();">OK</button>
+          &#160;
+          <button type="button" onclick="dojo.widget.byId('WriteAccessDetailsDialog').hide();">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!--
+       The dialog for editing the publish access details.
+    -->
+    <div dojoType="dialog" id="PublishAccessDetailsDialog" bgColor="white" closeNode="closeButton" style="display: none">
+
+      <div class="dsydlg-title">Publish access details</div>
+
+      <style>
+        .dsy-ad-dlgitem {
+           margin-top: 3px;
+           margin-bottom: 3px;
+        }
+      </style>
+
+      <form onsubmit="return false;">
+        <div class="dsy-ad-dlgitem">
+          Allow to:
+        </div>
+        <div class="dsy-ad-dlgitem">
+          <img style="cursor: pointer" aclActionSwitchFor="padLiveHistory" id="padLiveHistorySwitch"/>
+          <input type="hidden" id="padLiveHistory" value="org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING" aclActionSwitch="padLiveHistorySwitch"/>
+          change the live history
+        </div>
+
+        <div class="dsydlg-buttons">
+          <button class="dsyfrm-primaryaction" id="closeButton" onclick="daisy.acleditor.closePublishAccessDetailsDialog();">OK</button>
+          &#160;
+          <button type="button" onclick="dojo.widget.byId('PublishAccessDetailsDialog').hide();">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <h1>Edit ACL</h1>
+
+    <ft:form-template action="${submitPath}" method="POST">
+      <table class="acl">
+        <tr>
+          <th rowspan="2" colspan="3">Object</th>
+          <th colspan="2">Subject</th>
+          <th colspan="4">Permissions</th>
+          <th rowspan="2" colspan="2">Actions</th>
+        </tr>
+        <tr>
+          <th>type</th>
+          <th>value</th>
+          <th>Read</th>
+          <th>Write</th>
+          <th>Delete</th>
+          <th>Publish</th>
+        </tr>
+        <tr class="aclsplitrow">
+          <td colspan="11"/>
+        </tr>
+
+        <ft:repeater-widget id="objects">
+          <jx:set var="borderRowspan" value="${widget.getChild('entries').getSize()}"/>
+          <jx:choose>
+            <jx:when test="${borderRowspan == 0}">
+              <jx:set var="borderRowspan" value="${borderRowspan + 4}"/>
+            </jx:when>
+            <jx:otherwise>
+              <jx:set var="borderRowspan" value="${borderRowspan + 3}"/>
+            </jx:otherwise>
+          </jx:choose>
+          <tr class="objecttop">
+            <td rowspan="${borderRowspan}" class="objectleft"/>
+            <td colspan="9"/>
+            <td rowspan="${borderRowspan}" class="objectright"/>
+          </tr>
+          <tr>
+            <td><strong>If</strong></td>
+            <td colspan="7">
+              <ft:widget id="expr" fi:style="width: 90%;"/>
+            </td>
+            <td>
+              <ft:widget id="delete">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="Delete"/>
+              </ft:widget>
+              <ft:widget id="moveUp">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/up.gif" title="Move up"/>
+              </ft:widget>
+              <ft:widget id="moveDown">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/down.gif" title="Move down"/>
+              </ft:widget>
+              <ft:widget id="addAfter">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/new.gif" title="Add object"/>
+              </ft:widget>
+            </td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td colspan="7"><strong>Then</strong></td>
+          </tr>
+          <jx:choose>
+            <jx:when test="${widget.getChild('entries').getSize() == 0}">
+              <tr>
+                <td/>
+                <td/>
+                <td colspan="10">
+                  <ft:widget id="appendEntry"/>
+                </td>
+              </tr>
+            </jx:when>
+            <jx:otherwise>
+              <ft:repeater-widget id="entries">
+                <tr>
+                  <td/>
+                  <td/>
+                  <td>
+                    <ft:widget id="subjectType">
+                      <fi:styling onchange="subjectChange('${widget.parent.fullName}', document.getElementById('${widget.fullName}:input').value)"></fi:styling>
+                    </ft:widget>
+                  </td>
+                  <td>
+                    <a href="#" onclick="selectSubject('${widget.fullName}'); return false;" id="${widget.fullName}.subjectValueLink">${widget.getChild('subjectValueLabel').getValue()}</a>
+                    <ft:validation-error id="subjectValue"/>
+                    <ft:widget id="subjectValueLabel">
+                      <fi:styling type="hidden"/>
+                    </ft:widget>
+                    <ft:widget id="subjectValue">
+                      <fi:styling type="hidden"/>
+                    </ft:widget>
+                  </td>
+                  <td class="aclPermission">
+                    <div style="white-space: nowrap">
+                      <img style="cursor: pointer"
+                           aclActionSwitchFor="${widget.getChild('readPerm').fullName}"
+                           onAclActionChange="daisy.acleditor.updateReadDetailsIcon('${widget.fullName}')"/>
+                      <ft:widget id="readPerm" fi:type="hidden"/>
+                      <img style="cursor: pointer;"
+                           onclick="daisy.acleditor.editReadAccessDetails('${widget.fullName}');"
+                           id="${widget.fullName}.radEdit">
+                      </img>
+                    </div>
+                    <div style="display: none">
+                      <ft:widget id="radNonLive"/>
+                      <ft:widget id="radLiveHistory"/>
+                      <ft:widget id="radAllFields"/>
+                      <ft:widget id="radFields"/>
+                      <ft:widget id="radAllParts"/>
+                      <ft:widget id="radParts"/>
+                      <ft:widget id="radFullText"/>
+                      <ft:widget id="radFTFragments"/>
+                      <ft:widget id="radSummary"/>
+                    </div>
+                  </td>
+                  <td class="aclPermission">
+                    <div style="white-space: nowrap">
+                      <img style="cursor: pointer"
+                           aclActionSwitchFor="${widget.getChild('writePerm').fullName}"
+                           onAclActionChange="daisy.acleditor.updateWriteDetailsIcon('${widget.fullName}')"/>
+                      <ft:widget id="writePerm" fi:type="hidden"/>
+                      <img style="cursor: pointer;"
+                           onclick="daisy.acleditor.editWriteAccessDetails('${widget.fullName}');"
+                           id="${widget.fullName}.wadEdit">
+                      </img>
+                    </div>
+                    <div style="display: none">
+                      <ft:widget id="wadDocumentName"/>
+                      <ft:widget id="wadLinks"/>
+                      <ft:widget id="wadCustomFields"/>
+                      <ft:widget id="wadCollections"/>
+                      <ft:widget id="wadDocumentType"/>
+                      <ft:widget id="wadRetired"/>
+                      <ft:widget id="wadPrivate"/>
+                      <ft:widget id="wadReferenceLanguage"/>
+                      <ft:widget id="wadAllFields"/>
+                      <ft:widget id="wadFields"/>
+                      <ft:widget id="wadAllParts"/>
+                      <ft:widget id="wadParts"/>
+                      <ft:widget id="wadChangeComment"/>
+                      <ft:widget id="wadChangeType"/>
+                      <ft:widget id="wadSyncedWith"/>
+                      <ft:widget id="wadVersionMeta"/>
+                    </div>
+                  </td>
+                  <td class="aclPermission">
+                    <img aclActionSwitchFor="${widget.getChild('deletePerm').fullName}" style="cursor: pointer"/>
+                    <ft:widget id="deletePerm" fi:type="hidden"/>
+                  </td>
+                  <td class="aclPermission">
+                    <div style="white-space: nowrap">
+                      <img style="cursor: pointer"
+                           aclActionSwitchFor="${widget.getChild('publishPerm').fullName}"
+                           onAclActionChange="daisy.acleditor.updatePublishDetailsIcon('${widget.fullName}')"/>
+                      <ft:widget id="publishPerm" fi:type="hidden"/>
+                      <img style="cursor: pointer;"
+                           onclick="daisy.acleditor.editPublishAccessDetails('${widget.fullName}');"
+                           id="${widget.fullName}.padEdit">
+                      </img>
+                    </div>
+                    <div style="display: none">
+                      <ft:widget id="padLiveHistory"/>
+                    </div>
+                  </td>
+                  <td>
+                    <ft:widget id="delete">
+                      <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="Delete"/>
+                    </ft:widget>
+                    <ft:widget id="moveUp">
+                      <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/up.gif" title="Move up"/>
+                    </ft:widget>
+                    <ft:widget id="moveDown">
+                      <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/down.gif" title="Move down"/>
+                    </ft:widget>
+                    <ft:widget id="addAfter">
+                      <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/new.gif" title="Add entry"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+              </ft:repeater-widget>
+            </jx:otherwise>
+          </jx:choose>
+          <tr>
+            <td class="objectbottom" colspan="11"/>
+          </tr>
+          <tr class="aclsplitrow">
+            <td colspan="12"/>
+          </tr>
+        </ft:repeater-widget>
+        <tr>
+          <td class="aclBottomActions" colspan="11" align="right"><ft:widget id="appendObject"/></td>
+        </tr>
+      </table>
+      <br/>
+      <input type="submit" value="Save"/>
+      <input type="submit" value="Cancel" onclick="window.location='../../../'; return false;"/>
+    </ft:form-template>
+
+    <h2>Quick help</h2>
+    <ul>
+      <li><p>The ACL is always evaluated completely from top to bottom, later rules overwrite the result
+      of earlier ones. The start situation is that all rights are denied.</p></li>
+      <li><p>Meaning of the icons:</p>
+        <ul>
+          <li>
+            <img src="${pageContext.mountPoint}/resources/skins/default/images/acl_grant.gif"/>
+            = grant permission
+          </li>
+          <li>
+            <img src="${pageContext.mountPoint}/resources/skins/default/images/acl_deny.gif"/>
+            = deny permission
+          </li>
+          <li>
+            <img src="${pageContext.mountPoint}/resources/skins/default/images/acl_nothing.gif"/>
+            = leave permission as is. Thus, the previous situation (grant or deny) will be left unchanged.
+          </li>
+        </ul>
+      </li>
+      <li><p>In the textbox next to "If" you put an expression that will be evaluated on the document
+          and results to either true or false. Some samples:</p>
+        <ul>
+          <li><tt>true</tt></li>
+          <li><tt>documentType = 'SimpleDocument'</tt></li>
+          <li><tt>documentType = 'SimpleDocument' and InCollection('mycollection')</tt></li>
+          <li><tt>id = 234</tt></li>
+        </ul>
+      </li>
+      <li><p>When granting the read permission, you can edit details by clicking the
+      <img src="${pageContext.mountPoint}/resources/skins/default/images/acl_accessdetailsdim.png"/> icon.
+      When any details are set, this icon changes to
+      <img src="${pageContext.mountPoint}/resources/skins/default/images/acl_accessdetails.png"/>.</p></li>
+      <li><p>After saving your changes, you have to put the updated ACL live for your changes
+          to take effect. Before putting it live, you might want to test the ACL. See the corresponding options
+          in the administration menu.</p></li>
+      <li><p>For more information see the full documentation.</p></li>
+    </ul>
+  </content>
+</page>

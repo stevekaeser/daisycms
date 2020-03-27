@@ -1,0 +1,75 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  <head>
+    <script type="text/javascript">
+      window.daisyVersionMode = "${versionMode}";
+
+      function onSelectDocument(docId, branch, language) {
+        window.top.setLink(docId, branch, language, window.daisyVersionMode);
+      }
+    </script>
+    <script type="text/javascript" src="${mountPoint}/resources/js/daisy.js"/>
+    <style type="text/css">
+      html, body {
+        font: 11px Tahoma,Verdana,sans-serif;
+        margin: 0px;
+        padding: 0px;
+      }
+      div.doc {
+        border-bottom: 1px solid #ddd;
+        padding: .3em;
+      }
+      a {
+        text-decoration: none;
+        color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <jx:set var="documents" value="${searchResult.rows.rowArray}"/>
+    <jx:set var="info" value="${searchResult.executionInfo}"/>
+
+    <jx:choose>
+      <jx:when test="${empty documents}">
+        <p style='padding-left: 1em; margin-top: 1em;'><i18n:text key="docbrowser.nothing-found"/></p>
+      </jx:when>
+      <jx:otherwise>
+        <jx:forEach var="document" items="${documents}">
+          <div class="doc">
+            <a href="#"
+               onclick="onSelectDocument('${document.documentId}', '${document.valueArray[1]}', '${document.valueArray[2]}'); return false;"
+              >${document.valueArray[0]}</a>
+          </div>
+        </jx:forEach>
+      </jx:otherwise>
+    </jx:choose>
+
+    <jx:comment>
+      Query: ${info.getQuery()}
+      Extra condition: ${info.getExtraCondition}
+      Parse and prepare time: ${info.parseAndPrepareTime}
+      FullText query time: ${info.fullTextQueryTime}
+      RDBMS query time: ${info.rdbmsQueryTime}
+      Merge time: ${info.mergeTime}
+      ACL filter time: ${info.aclFilterTime}
+      Sort time: ${info.sortTime}
+      Output generation time: ${info.outputGenerationTime}
+    </jx:comment>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#bookstoremeta" xmlns:meta="http://outerx.org/daisy/1.0#bookstoremeta" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="resourceProperties">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="mimeType" type="xs:string"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bookInstanceMetaData">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="bookPath" type="xs:string"/>
+        <xs:element name="createdOn" type="xs:dateTime"/>
+        <xs:element name="createdBy" type="xs:long"/>
+        <xs:element name="label" type="xs:string"/>
+        <xs:element minOccurs="0" name="bookDefinition" type="xs:string"/>
+        <xs:element minOccurs="0" name="updateFrom" type="xs:string"/>
+        <xs:element minOccurs="0" name="dataBranchId" type="xs:long"/>
+        <xs:element minOccurs="0" name="dataLanguageId" type="xs:long"/>
+        <xs:element minOccurs="0" name="dataVersion" type="xs:string"/>        
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publicationsInfo">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="publicationInfo">
+          <xs:complexType>
+            <xs:attribute name="startResource" type="xs:string" use="required"/>
+            <xs:attribute name="package" type="xs:string" use="optional"/>
+            <xs:attribute name="label" type="xs:string" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="publishedOn" type="xs:dateTime" use="required"/>
+            <xs:attribute name="publishedBy" type="xs:long" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bookAcl">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="bookAclEntry">
+          <xs:complexType>
+            <xs:attribute name="subjectType" type="meta:bookAclSubject" use="required"/>
+            <xs:attribute name="subjectValue" type="xs:long" use="required"/>
+            <xs:attribute name="permRead" type="meta:bookAclAction"/>
+            <xs:attribute name="permManage" type="meta:bookAclAction"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="bookAclAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="grant"/>
+      <xs:enumeration value="deny"/>
+      <xs:enumeration value="nothing"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bookAclSubject">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="role"/>
+      <xs:enumeration value="user"/>
+      <xs:enumeration value="everyone"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

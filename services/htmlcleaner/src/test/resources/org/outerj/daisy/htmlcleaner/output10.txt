@@ -1,0 +1,7 @@
+<html>
+<body>
+
+<p>Hi this is <strong>strong</strong> and <em>emphasized</em></p>
+
+</body>
+</html>

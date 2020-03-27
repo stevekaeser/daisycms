@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Allgemeine Aufgabe</message>
+  <message key="generictask.description">Ein Arbeitsablauf für jegliche Art von Aufgaben, die nicht von anderen Arbeitsabläufen abgedeckt werden.</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Dokument</message>
+  <message key="variable.document.description">Falls diese Aufgabe in Beziehung zu einem Dokument steht, können Sie dieses hier angeben.</message>
+  <message key="variable.details.label">Detaillierte Beschreibung</message>
+  <message key="variable.details.description">Erläutern Sie hier, was getan werden soll.</message>
+  <message key="variable.workerComment.label">Kommentar des Bearbeiters</message>
+  <message key="variable.workerComment.description">Kommentare von derjenigen Person, die die Aufgabe verrichtet.</message>
+  <message key="variable.feedbackComment.label">Rückmeldung</message>
+  <message key="variable.needsConfirmation.label">Bestätigung benötigt</message>
+  <message key="variable.needsConfirmation.description">Ankreuzen, falls Sie im Eingangskorb Ihrer Aufgaben darüber informiert werden möchten, dass die Aufgabe abgeschlossen wurde.</message>
+  <message key="variable.worker.label">Bearbeiter der Aufgabe</message>
+  <message key="variable.reviewSubmitComment.label">Kommentar zur Durchsicht</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Allgemeine Aufgabe starten</message>
+  <message key="startTask.description">Bitte geben Sie die benötigten Informationen für die allgemeine Aufgabe an.</message>
+  <message key="performTask.label">Allgemeine Aufgabe</message>
+  <message key="performTask.description">Sie werden gebeten, die unten näher erläuterte Aufgabe zu bearbeiten.</message>
+  <message key="feedbackTask.label">Rückmeldung zu allgemeiner Aufgabe</message>
+  <message key="feedbackTask.description">Zu der von Ihnen erzeugten Aufgabe wurde die folgende Rückmeldung gegeben.</message>
+  <message key="finishedTask.label">Allgemeine Aufgabe beendet</message>
+  <message key="finishedTask.description">Hiermit werden Sie darüber informiert, dass die von Ihnen erzeugten Aufgabe abgeschlossen wurde.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Aufgabe absenden</message>
+  <message key="transition.failure">Rückmeldung an den Aufgabensteller</message>
+  <message key="transition.success">Aufgabe beenden</message>
+  <message key="transition.performAgain">Aufgabe nochmals absenden</message>
+  <message key="transition.end">Aufgabe beenden</message>
+</catalogue>

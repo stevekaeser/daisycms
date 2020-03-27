@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="wfassign.title"/></pageTitle>
+  <layoutHints wideLayout="true"/>
+
+  <content>
+    <h1><i18n:text key="wfassign.title"/></h1>
+
+    <ft:form-template action="" method="POST">
+      <div class="wfInput">
+        <span class="wfInputLabel"><i18n:text key="wf.actor"/></span>
+        <br/>
+        <ft:widget id="actorCase">
+          <fi:styling list-type="radio" list-orientation="horizontal"/>
+        </ft:widget>
+        <ft:union id="actor">
+          <ft:case id="user">
+            <ft:group id="user">
+              <i18n:text key="wf.login"/>: <ft:widget id="user" fi:size="10" fi:dojoType="daisy:UserSelector"/>
+            </ft:group>
+          </ft:case>
+          <ft:case id="pool">
+            <ft:group id="pool">
+              <ft:widget id="pool" fi:list-type="double-listbox"/>
+            </ft:group>
+          </ft:case>
+        </ft:union>
+      </div>
+
+      <div class="wfInput">
+        <span class="wfInputLabel"><i18n:text key="wfassign.scope"/></span>
+        <br/>
+        <ft:widget id="scope">
+          <fi:styling list-type="radio"/>
+        </ft:widget>
+      </div>
+
+      <ft:widget id="assign"/>&#160;<ft:widget id="cancel"/>
+
+    </ft:form-template>
+
+  </content>
+
+</page>

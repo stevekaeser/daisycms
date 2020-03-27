@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="label" type="wf:i18nType"/>
+  <xs:element name="description" type="wf:i18nType"/>
+  <xs:complexType name="i18nType">
+    <xs:complexContent>
+      <xs:extension base="xs:anyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="processDefinition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="wf:label"/>
+        <xs:element minOccurs="0" ref="wf:description"/>
+        <xs:element minOccurs="0" name="startTask">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="wf:taskDefinition"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="startNodeDefinition">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="wf:nodeDefinition"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="tasks">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:taskDefinition"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" ref="wf:variableDefinitions"/>
+        <xs:element minOccurs="0" name="problems">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="problem" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="id" type="xs:string" use="required"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="version" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="processDefinitions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:processDefinition"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="taskDefinition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="wf:label"/>
+        <xs:element minOccurs="0" ref="wf:description"/>
+        <xs:element minOccurs="0" ref="wf:variableDefinitions"/>
+        <xs:element minOccurs="0" ref="wf:nodeDefinition"/>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variableDefinitions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:variableDefinition"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variableDefinition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="wf:label"/>
+        <xs:element minOccurs="0" ref="wf:description"/>
+        <xs:element minOccurs="0" ref="wf:selectionList"/>
+        <xs:element minOccurs="0" ref="wf:styling"/>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="type" type="wf:dataType" use="required"/>
+      <xs:attribute name="readOnly" type="xs:boolean"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="hidden" type="xs:boolean"/>
+      <xs:attribute name="scope" type="wf:scopeType" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="selectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="listItem">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="wf:variableValuesType">
+                <xs:sequence>
+                  <xs:element minOccurs="0" ref="wf:label"/>
+                </xs:sequence>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="scopeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="task"/>
+      <xs:enumeration value="local"/>
+      <xs:enumeration value="global"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="daisy-link"/>
+      <xs:enumeration value="long"/>
+      <xs:enumeration value="date"/>
+      <xs:enumeration value="datetime"/>
+      <xs:enumeration value="actor"/>
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="user"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="nodeDefinition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="leavingTransitions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:transitionDefinition"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="fullyQualifiedName" type="xs:string" use="required"/>
+      <xs:attribute name="nodeType" type="xs:string" use="required"/>
+      <xs:attribute name="processDefinitionId" type="xs:string" use="required"/>
+      <xs:attribute name="processDefinitionName" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="transitionDefinition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="label" type="wf:i18nType"/>
+        <xs:element name="confirmation" type="wf:i18nType"/>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="styling">
+    <xs:complexType>
+      <xs:complexContent mixed="true">
+        <xs:restriction base="xs:anyType">
+          <xs:sequence>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="skip"/>
+          </xs:sequence>
+          <xs:anyAttribute namespace="##other" processContents="skip"/>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="processInstanceCounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="processInstanceCount">
+          <xs:complexType>
+            <xs:attribute name="definitionId" type="xs:string"/>
+            <xs:attribute name="count" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

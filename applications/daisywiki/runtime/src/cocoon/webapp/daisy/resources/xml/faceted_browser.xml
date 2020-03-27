@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  ${pageContext}
+  ${navigationTree}
+  <variantParams>${variantParams}</variantParams>
+  <variantQueryString>${variantQueryString}</variantQueryString>
+
+  ${facetedQueryResult}
+
+  <limitToSiteCollection>${limitToSiteCollection}</limitToSiteCollection>
+  <limitToSiteVariant>${limitToSiteVariant}</limitToSiteVariant>
+  <orderBy>${orderBy}</orderBy>
+
+  <filters>
+    <jx:forEach var="filter" items="${filters}">
+      <filter facetName="${filter.facetName}" facetExpression="${facetedNavDef.getFacetDefinition(filter.facetName).expression}" queryValue="${filter.queryValue}" displayValue="${filter.displayValue}" operator="${filter.operator.key}" isDiscrete="${filter.isDiscrete()}"/>
+    </jx:forEach>
+  </filters>
+
+  <facetConfs>
+    <jx:forEach var="facetConf" items="${facetConfs}">
+      <jx:if test="${facetConf.isFacet()}">
+        <facetConf maxValues="${facetConf.maxValues}" sortOnValue="${facetConf.sortOnValue}" sortAscending="${facetConf.sortAscending}" minValue="${facetConf.minValue}" maxValue="${facetConf.maxValue}"/>        
+      </jx:if>
+    </jx:forEach>
+  </facetConfs>
+  
+  <additionalSelects>
+    <jx:forEach var="additionalSelect" items="${facetedNavDef.additionalSelects}">
+      <expression sortingExpression="${additionalSelect.sortingExpression}" expression="${additionalSelect.expression}"/>
+    </jx:forEach>
+  </additionalSelects>
+
+  <facetDefinitions selectedOptions="${facetedNavDef.selectedOptions}">
+    <requestParams>
+      <jx:forEach var="requestParamName" items="${facetedNavDef.foundRequestParams.keySet()}">
+        <requestParam name="${requestParamName}" value="${facetedNavDef.foundRequestParams.get(requestParamName)}"/>
+      </jx:forEach>
+    </requestParams>
+    <jx:forEach var="facetDef" items="${facetedNavDef.facetDefinitions}">
+      <facetDefinition name="${facetDef.name}" isDiscrete="${facetDef.discrete}" sortingExpression="${facetDef.sortingExpression}"/>
+    </jx:forEach>
+  </facetDefinitions>
+  
+  <fullTextSearchQuery>${fullTextSearchQuery}</fullTextSearchQuery>
+  
+</page>

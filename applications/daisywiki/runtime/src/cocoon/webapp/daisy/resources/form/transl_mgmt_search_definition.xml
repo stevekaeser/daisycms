@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="referenceLanguage">
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:javascript>
+          <![CDATA[
+          var query = widget.lookupWidget("../query").getValue();
+          if ((query.equals("only-translation-exists")) && widget.getValue() == null) {
+              var error = new Packages.org.apache.cocoon.forms.validation.ValidationError("tmsearch.required-for-current-query", true);
+              widget.setValidationError(error);
+              return false;
+          }
+          return true;
+          ]]>
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="referenceLanguageVersion" required="true">
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="live"><fd:label><i18n:text key="tmsearch.live-version"/></fd:label></fd:item>
+        <fd:item value="last"><fd:label><i18n:text key="tmsearch.last-version"/></fd:label></fd:item>
+      </fd:selection-list>
+      <fd:initial-value>last</fd:initial-value>
+    </fd:field>
+
+    <fd:field id="language">
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:javascript>
+          <![CDATA[
+          var query = widget.lookupWidget("../query").getValue();
+          var refLang = widget.lookupWidget("../referenceLanguage").getValue();
+
+          if (query.equals("translation-does-not-exist") && widget.getValue() == null) {
+              var error = new Packages.org.apache.cocoon.forms.validation.ValidationError("tmsearch.required-for-current-query", true);
+              widget.setValidationError(error);
+              return false;
+          }
+          
+          if (refLang == null || !refLang.equals(widget.getValue()))
+            return true;
+
+          if (query.equals("lang-in-sync") || query.equals("lang-not-in-sync") || query.equals("translation-does-not-exist") || query.equals("only-translation-exists")) {
+              var error = new Packages.org.apache.cocoon.forms.validation.ValidationError("tmsearch.lang-reflang-conflict", true);
+              widget.setValidationError(error);
+              return false;
+          }
+          return true;
+          ]]>
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="languageVersion" required="true">
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="live"><fd:label><i18n:text key="tmsearch.live-version"/></fd:label></fd:item>
+        <fd:item value="last"><fd:label><i18n:text key="tmsearch.last-version"/></fd:label></fd:item>
+      </fd:selection-list>
+      <fd:initial-value>last</fd:initial-value>
+    </fd:field>
+
+    <fd:field id="branch">
+      <fd:label><i18n:text key="branch"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:javascript>
+          <![CDATA[
+          var query = widget.lookupWidget("../query").getValue();
+          if ((query.equals("translation-does-not-exist") || query.equals("only-translation-exists")) && widget.getValue() == null) {
+              var error = new Packages.org.apache.cocoon.forms.validation.ValidationError("tmsearch.required-for-current-query", true);
+              widget.setValidationError(error);
+              return false;
+          }
+          return true;
+          ]]>
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="query" required="true">
+      <fd:label><i18n:text key="tmsearch.query"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="overview"><fd:label><i18n:text key="tmsearch.overview"/></fd:label></fd:item>
+        <fd:item value="in-sync"><fd:label><i18n:text key="tmsearch.in-sync"/></fd:label></fd:item>
+        <fd:item value="not-in-sync"><fd:label><i18n:text key="tmsearch.not-in-sync"/></fd:label></fd:item>
+        <fd:item value="translation-does-not-exist"><fd:label><i18n:text key="tmsearch.translation-does-not-exist"/></fd:label></fd:item>
+        <fd:item value="only-translation-exists"><fd:label><i18n:text key="tmsearch.only-translation-exists"/></fd:label></fd:item>
+        <fd:item value="no-major-changes"><fd:label><i18n:text key="tmsearch.no-major-changes"/></fd:label></fd:item>
+        <fd:item value="no-reference-language"><fd:label><i18n:text key="tmsearch.no-reference-language"/></fd:label></fd:item>
+        <fd:item value="not-synced-with-reference-language"><fd:label><i18n:text key="tmsearch.not-synced-with-reference-language"/></fd:label></fd:item>
+      </fd:selection-list>
+      <fd:initial-value>overview</fd:initial-value>
+    </fd:field>
+
+    <fd:field id="collection">
+      <fd:label><i18n:text key="collection"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:submit id="send">
+      <fd:label><i18n:text key="tmsearch.search"/></fd:label>
+    </fd:submit>
+
+  </fd:widgets>
+
+</fd:form>

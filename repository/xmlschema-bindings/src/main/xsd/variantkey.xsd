@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="variantKey">
+    <xs:complexType>
+      <xs:attribute name="documentId" type="xs:string"/>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variantKeys">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:variantKey"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

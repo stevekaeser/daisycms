@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+		xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+  	<jx:if test="${formConfig.editDocumentName}">
+	    <fd:field id="documentName">
+          <fd:label><i18n:text key="editdoc.title"/></fd:label>
+          <fd:datatype base="string"/>
+          <fd:validation>
+	        <fd:length max="255"/>
+	      </fd:validation>
+	    </fd:field>
+  	</jx:if>
+	
+    <jx:forEach items="${fieldEditors}" var="fieldEditor">
+      <fd:group id="field_${fieldEditor.fieldTypeUse.fieldType.id}">
+        <fd:widgets>
+          ${fieldEditor.generateFormDefinitionFragment(cocoon.consumer, locale, displayMode, serviceManager)}
+        </fd:widgets>
+      </fd:group>
+    </jx:forEach>
+
+    <jx:forEach items="${partEditors}" var="partEditor">
+      <fd:group id="part_${partEditor.partTypeUse.partType.id}">
+        <fd:widgets>
+          ${partEditor.generateFormDefinitionFragment(cocoon.consumer, locale, displayMode, serviceManager)}
+        </fd:widgets>
+      </fd:group>
+    </jx:forEach>
+
+    <!--
+        | Dummy action used to cause a server roundtrip without ending the use case or validation.
+		| TODO: not used? clean up?
+        -->
+    <fd:action id="dummy">
+      <fd:label>dummy action</fd:label>
+    </fd:action>
+
+    <fd:submit id="save">
+      <fd:label><i18n:text key="editdoc.save"/></fd:label>
+    </fd:submit>
+
+    <fd:action id="cancel">
+      <fd:label><i18n:text key="editdoc.cancel"/></fd:label>
+    </fd:action>
+  </fd:widgets>
+
+</fd:form>

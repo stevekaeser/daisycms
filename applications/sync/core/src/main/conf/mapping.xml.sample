@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<mapping xmlns="http://outerx.org/daisy/1.0#syncmapping">
+    <entity name="PerPerson" documentTypeName="Person">
+        <attribute name="PerEmail" daisyName="Email" type="FIELD"/>
+        <attribute name="FullName" daisyName="name" type="PROPERTY">
+            <associated-attribute name="PerFirstName"/>
+            <associated-attribute name="PerName"/>
+        </attribute>        
+        <attribute name="PerPhone1" daisyName="TelephoneNumber" type="FIELD"/>
+    </entity>
+    <entity name="PrdProduct" documentTypeName="Programme">
+        <attribute name="PrdLongDescription" daisyName="name" type="PROPERTY"/>
+        <!--
+        Duration
+        <attribute name="TrmLongDescription" daisyName="" type=""/>
+        Business Line -> Programme Type Masters,MBA, ManagementProgramme
+        <attribute name="BliLongDescription" daisyName="" type=""/>
+        Domain
+        <attribute name="DomLongDescription" daisyName="" type=""/>
+        -->
+    </entity>
+    <entity name="PrgProgram" documentTypeName="ProgrammeEdition">
+        <attribute name="PrgStartDate" daisyName="StartDate" type="FIELD"/>
+        <attribute name="PrgEndDate" daisyName="EndDate" type="FIELD"/>
+        <attribute name="PrgPriceEuro" daisyName="Price" type="FIELD"/>
+        <attribute name="PrgLongDescription" daisyName="name" type="PROPERTY"/>
+    </entity>
+</mapping>

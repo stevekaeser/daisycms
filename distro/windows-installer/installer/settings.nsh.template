@@ -1,0 +1,117 @@
+/*
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+/*
+
+Settings for Daisy installer
+
+*/
+
+; comment this for download installer, can be given via /D switch, too
+;!define SETUPTYPE_BUNDLE "Bundled installer"
+
+;--------------------------------
+;File locations
+
+; adapt to the directory containing the windows installer files
+!define FILES_INSTALLER "C:\daisy\distro\windows-installer"
+; adapt to the directory containing the binary Daisy distribution from which to start
+!define FILES_DAISY "C:\distro\distro\core\target\daisy"
+; adapt to the directory containing your MySQL binary
+!define FILES_MYSQL "C:\Program Files\MySQL\MySQL Server 5.1"
+; adapt to the directory containing your binaries for the bundled installer version (JRE, JAI, MySQL)
+!define FILES_BINARIES_BUNDLE "C:\somewhere"
+
+; End of section 'File locations'
+
+!define FILES_DAISY_CUSTOM "${FILES_INSTALLER}\util"
+!define FILES_WRAPPER "${FILES_DAISY}\wrapper"
+!define FILES_ICONS "${FILES_INSTALLER}\icons"
+
+!define FILES_LICENSE "license.rtf"
+
+;--------------------------------
+;Locations of components to download
+
+!define DOWNLOAD_JAVA "http://javadl.sun.com/webapps/download/AutoDL?BundleId=41732"
+!define DOWNLOAD_JAI "http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-windows-i586-jre.exe"
+!define DOWNLOAD_MySQL "http://ftp.gwdg.de/pub/misc/mysql/Downloads/MySQL-5.1/mysql-essential-5.1.50-win32.msi"
+;--------------------------------
+;Download size (in KB)
+
+!define SIZE_DOWNLOAD_JAVA 15981
+!define SIZE_DOWNLOAD_JAI 10099
+!define SIZE_DOWNLOAD_MySQL 39795
+
+;--------------------------------
+;Approximations of space required for components (in KB)
+
+!define SIZE_JAVA 92500
+!define SIZE_JAI 2209
+!define SIZE_MySQL 107000
+
+;--------------------------------
+;Locations of setup files for components (for bundled setup)
+
+!define INSTALL_JAVA "jre-6u21-windows-i586-s.exe"
+;download link: http://www.java.com/en/download/
+!define INSTALL_JAI "jai-1_1_3-lib-windows-i586-jre.exe"
+;download link: https://jai.dev.java.net/binary-builds.html
+!define INSTALL_MySQL "mysql-essential-5.1.50-win32.msi"
+;download link: http://www.mysql.com/downloads/mysql/
+
+;--------------------------------
+;Names and version
+
+!define APP_NAME "Daisy"
+!define APP_VERSION "2"
+!define APP_SERIES_KEY "4.2"
+!define APP_INFO "${APP_NAME} - The open source content management application framework"
+
+!define APP_RUN "bin\daisy.bat"
+
+!define APP_REGKEY "Software\${APP_NAME}"
+!define APP_REGKEY_SETUP "Software\${APP_NAME}\Setup"
+
+;--------------------------------
+;Setup settings
+
+!ifndef SETUPTYPE_BUNDLE
+  !define /date SETUP_EXE "daisy-${APP_VERSION}.${APP_SERIES_KEY}-%Y%m%d.exe"
+!else
+  !define /date SETUP_EXE "daisy-${APP_VERSION}.${APP_SERIES_KEY}-bundle-%Y%m%d.exe"
+!endif
+
+!define SETUP_DEFAULT_DIRECTORY "$PROGRAMFILES\${APP_NAME}"
+!define SETUP_ICON "${FILES_ICONS}\daisy_32x32.ico"
+!define SETUP_HEADERIMAGE "graphics\header.bmp"
+!define SETUP_WIZARDIMAGE "graphics\wizard.bmp"
+!define SETUP_UNINSTALLER "Uninstall-${APP_NAME}.exe"
+!define SETUP_UNINSTALLER_KEY "${APP_NAME}"
+
+;--------------------------------
+;Names of binaries to identify compontents
+
+!define BIN_JAVA "java.exe"
+!define BIN_MySQL "mysql.exe"
+!define BIN_JAI "jai_core.jar"
+!define BIN_MySQLAdmin "mysqladmin.exe"
+
+;--------------------------------
+;Compression
+
+SetCompressor /SOLID lzma
+;SetCompressor zlib ; fast but inefficient

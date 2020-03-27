@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon/forms-datatype/datatypes/datatype[@name='string']/convertors"
+       unless="convertor[@name='wfversionkey']">
+  <convertor name="wfversionkey" src="org.outerj.daisy.frontend.workflow.WfVersionKeyConvertorBuilder"/>
+</xconf>

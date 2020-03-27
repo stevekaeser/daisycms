@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#navigationspec" xmlns:nav="http://outerx.org/daisy/1.0#navigationspec" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="navigationTree">
+    <xs:complexType>
+      <xs:sequence>
+        <!--The collections element specifies that all query nodes in the navigation tree
+will automatically be limited to the specified collections-->
+        <xs:element maxOccurs="1" minOccurs="0" name="collections">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="collection">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+          <xs:choice>
+            <xs:element ref="nav:doc"/>
+            <xs:element ref="nav:query"/>
+            <xs:element ref="nav:group"/>
+            <xs:element ref="nav:import"/>
+            <xs:element ref="nav:link"/>
+            <xs:element ref="nav:separator"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doc">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="nav:childNodes">
+          <xs:attribute name="id" type="xs:string" use="required"/>
+          <xs:attribute name="branch" type="xs:string" use="optional"/>
+          <xs:attribute name="language" type="xs:string" use="optional"/>
+          <xs:attribute name="nodeId" type="nav:nodeId" use="optional"/>
+          <xs:attribute name="label" type="xs:string" use="optional"/>
+          <xs:attribute name="visibility" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="query">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="column">
+          <xs:complexType>
+            <xs:attribute name="sortOrder" type="xs:string" use="optional"/>
+            <xs:attribute name="visibility" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+          <xs:choice>
+            <xs:element ref="nav:doc"/>
+            <xs:element ref="nav:query"/>
+            <xs:element ref="nav:group"/>
+            <xs:element ref="nav:import"/>
+            <xs:element ref="nav:link"/>
+            <xs:element ref="nav:separator"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:sequence>
+      <xs:attribute name="q" type="xs:string" use="required"/>
+      <xs:attribute name="filterVariants" type="xs:boolean" use="optional"/>
+      <xs:attribute name="visibility" type="xs:string" use="optional"/>
+      <xs:attribute name="useSelectValues" type="xs:int" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="group">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="nav:childNodes">
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="id" type="nav:nodeId" use="optional"/>
+          <xs:attribute name="visibility" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="separator">
+    <xs:complexType/>
+  </xs:element>
+  <xs:simpleType name="nodeId">
+    <xs:restriction base="xs:string">
+      <!--ID should not be a number (first character non-digit) (to avoid confusion with document ID's)
+and be at least one character long, and not contain whitespace-->
+      <xs:pattern value="[^\s\d]\S*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="import">
+    <xs:complexType>
+      <xs:attribute name="docId" type="xs:string" use="required"/>
+      <xs:attribute name="branch" type="xs:string" use="optional"/>
+      <xs:attribute name="language" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="link">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="nav:childNodes">
+          <xs:attribute name="url" type="xs:string" use="required"/>
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="id" type="nav:nodeId" use="optional"/>
+          <xs:attribute name="inheritAclDocId" type="xs:string" use="optional"/>
+          <xs:attribute name="inheritAclBranch" type="xs:string" use="optional"/>
+          <xs:attribute name="inheritAclLanguage" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="childNodes">
+    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:choice>
+        <xs:element ref="nav:doc"/>
+        <xs:element ref="nav:query"/>
+        <xs:element ref="nav:group"/>
+        <xs:element ref="nav:import"/>
+        <xs:element ref="nav:link"/>
+        <xs:element ref="nav:separator"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

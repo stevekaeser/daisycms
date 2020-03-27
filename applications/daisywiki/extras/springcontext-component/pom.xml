@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisywiki-springcontext-component</artifactId>
+  <version>2.4.2</version>
+  <name>Daisywiki Spring Context Component</name>
+
+  <parent>
+    <groupId>daisy</groupId>
+    <artifactId>daisywiki-parent</artifactId>
+    <relativePath>../..</relativePath>
+    <version>2.4.2</version>
+  </parent>
+
+  <properties>
+    <spring.version>2.5.6</spring.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>daisycms</id>
+      <url>http://daisycms.org/maven2</url>
+    </repository>
+    <!--
+    <repository>
+      <id>daisycms-legacy</id>
+      <url>http://daisycms.org/maven</url>
+      <layout>legacy</layout>
+    </repository>
+    -->
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>daisy</groupId><artifactId>daisywiki-frontend</artifactId><version>${project.version}</version>
+      <exclusions>
+        <exclusion><groupId>commons-jxpath</groupId><artifactId>commons-jxpath</artifactId></exclusion>
+        <exclusion><groupId>jaxen</groupId><artifactId>jaxen</artifactId></exclusion>
+        <exclusion><groupId>excalibur-component</groupId><artifactId>excalibur-testcase</artifactId></exclusion>
+        <exclusion><groupId>geronimo-spec</groupId><artifactId>geronimo-spec-javamail</artifactId></exclusion>
+        <exclusion><groupId>jisp</groupId><artifactId>jisp</artifactId></exclusion>
+        <exclusion><groupId>jtidy</groupId><artifactId>jtidy</artifactId></exclusion>
+        <exclusion><groupId>xml-apis</groupId><artifactId>xml-apis</artifactId></exclusion>
+        <exclusion><groupId>xml-apis</groupId><artifactId>xmlParserAPIs</artifactId></exclusion>
+        <exclusion><groupId>commons-vfs</groupId><artifactId>commons-vfs</artifactId></exclusion>
+        <exclusion><groupId>ant</groupId><artifactId>ant</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>${spring.version}</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>${spring.version}</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>${spring.version}</version></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.2</version><scope>test</scope></dependency>
+  </dependencies>
+
+  <build/>
+</project>

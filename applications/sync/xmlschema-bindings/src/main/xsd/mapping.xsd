@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://outerx.org/daisy/1.0#syncmapping"
+  xmlns:syncmapping="http://outerx.org/daisy/1.0#syncmapping">
+  <xs:element name="associated-entity">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="syncmapping:associated-attribute"/>
+        <xs:element ref="syncmapping:attribute-filter"/>
+        <xs:element ref="syncmapping:associated-entity"/>
+        <xs:element ref="syncmapping:concat"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="joinKey" type="xs:string" use="optional"/>
+      <xs:attribute name="joinParentKey" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attribute" id="attribute">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="syncmapping:attribute-filter"/>
+        <xs:element ref="syncmapping:associated-entity"/>
+        <xs:element ref="syncmapping:associated-attribute"/>
+        <xs:element ref="syncmapping:concat"/>
+        <xs:element name="value" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="type" default="FIELD">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="FIELD"/>
+            <xs:enumeration value="CUSTOM_FIELD"/>
+            <xs:enumeration value="PROPERTY"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="daisyName" type="xs:string" use="required"/>
+      <xs:attribute name="multivalue" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="associated-attribute">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attribute-filter">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="syncmapping:attribute-filter"/>
+        <xs:element ref="syncmapping:associated-attribute"/>
+        <xs:element ref="syncmapping:associated-entity"/>
+        <xs:element ref="syncmapping:concat"/>
+        <xs:element name="value" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="attribute-name" type="xs:string" use="required"/>
+      <xs:attribute name="match" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="concat">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="syncmapping:attribute-filter"/>
+        <xs:element ref="syncmapping:associated-attribute"/>
+        <xs:element ref="syncmapping:associated-entity"/>
+        <xs:element name="value" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mapping">    
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="entity">
+          <xs:complexType>
+            <xs:choice>
+              <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="language">
+                  <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                      <xs:element ref="syncmapping:attribute"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="createCondition" type="xs:string"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element ref="syncmapping:attribute"/>
+              </xs:sequence>  
+            </xs:choice>            
+            
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="documentTypeName" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+    
+  </xs:element>
+</xs:schema>

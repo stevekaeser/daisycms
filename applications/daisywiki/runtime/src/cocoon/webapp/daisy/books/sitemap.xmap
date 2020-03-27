@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:actions>
+    </map:actions>
+    <map:transformers default="xalan">
+      <map:transformer name="BookLinkTransformer" src="org.outerj.daisy.books.publisher.impl.cocooncomponents.BookLinkTransformer"/>
+      <!-- This transformer is declared here to be available to the child publication type sitemaps -->
+      <map:transformer name="BookMergePropertiesAndMetadata" src="org.outerj.daisy.books.publisher.impl.cocooncomponents.MergePropsAndMetadataTransformer"/>
+    </map:transformers>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources>
+  </map:resources>
+
+  <map:flow language="apples"/>
+
+  <map:pipelines>
+
+   <map:pipeline internal-only="true" type="noncaching">
+     <map:match pattern="bookDocPublishReq">
+       <map:generate type="jx" src="resources/xml/publishreq.xml"/>
+       <map:serialize/>
+     </map:match>
+
+    <!-- Generates a Cocoon form definition for all fields of a Daisy document type -->
+     <map:match pattern="internal/bookPublishing/selectPublicationTypesDefinition">
+       <map:generate type="jx" src="resources/form/selectpublicationtypes_definition.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+ 
+     <map:match pattern="StyleDocumentPipe">
+       <map:generate type="jx" src="resources/xml/document.xml"/>
+       <map:transform type="DaisyIDAbsolutizer"/>
+       <map:transform type="DaisyCrossRefParser"/>
+       <map:transform type="BookLinkTransformer"/>
+       <map:transform src="{flow-attr:stylesheet}"/>
+       <map:transform src="wikidata:/books/publicationtypes/{flow-attr:publicationTypeName}/query-styling.xsl"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="BookManagementPipe">
+       <map:generate type="jx" src="resources/xml/bookmanagement.xml"/>
+       <map:transform src="daisyskin:xslt/books/bookmanagement.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:match pattern="BookInstanceManagementPipe">
+       <map:generate type="jx" src="resources/xml/bookinstancemanagement.xml"/>
+       <map:transform src="daisyskin:xslt/books/bookinstancemanagement.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:match pattern="BookInstanceEditorPipe">
+       <map:generate type="jx" src="resources/xml/edit_bookinstance.xml"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:match pattern="PublishTasksPipe">
+       <map:generate type="jx" src="resources/xml/publishtasks.xml"/>
+       <map:transform src="daisyskin:xslt/books/publishtasks.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:match pattern="publicationTypes/*/**">
+       <map:mount check-reload="yes" src="wikidata:/books/publicationtypes/{1}/sitemap.xmap" uri-prefix="publicationTypes/{1}/" />
+     </map:match>
+
+     <map:match pattern="Form-*-Pipe">
+       <map:generate type="jx" src="resources/form/{1}_template.xml"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="forms"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform src="../resources/xslt/daisy-forms-styling.xsl">
+         <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+         <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="PublishTaskStatePipe">
+        <map:generate type="jx" src="resources/xml/publishtaskstate.xml"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+   </map:pipeline>
+
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+
+     <map:match pattern="">
+       <map:call function="org.outerj.daisy.books.frontend.ManageBookInstancesApple"/>
+     </map:match>
+
+     <map:match pattern="definitions">
+       <map:call function="org.outerj.daisy.books.frontend.ManageBooksApple"/>
+     </map:match>
+
+     <map:match pattern="createBookInstance">
+       <map:call function="org.outerj.daisy.books.frontend.CreateBookInstanceApple"/>
+     </map:match>
+
+     <map:match pattern="createBookInstance/*/*">
+       <map:call continuation="{1}">
+         <map:parameter name="resource" value="{2}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="publishTaskState">
+       <map:call function="org.outerj.daisy.books.frontend.PublishStateApple"/>
+     </map:match>
+
+     <map:match pattern="publishTasks">
+       <map:call function="org.outerj.daisy.books.frontend.ListPublishTasksApple"/>
+     </map:match>
+
+     <map:match pattern="*">
+       <map:call function="org.outerj.daisy.books.frontend.ManageBookInstancesApple">
+         <map:parameter name="bookInstanceName" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="*/acl">
+       <map:call function="org.outerj.daisy.books.frontend.BookAclEditorApple">
+         <map:parameter name="bookInstanceName" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="*/edit">
+       <map:call function="org.outerj.daisy.books.frontend.BookInstanceEditorApple">
+         <map:parameter name="bookInstanceName" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="*/acl/*">
+       <map:call continuation="{2}"/>
+     </map:match>
+
+     <map:match pattern="*/**">
+       <map:match pattern="*/**">
+         <map:read src="bookstore:{1}/{2}">
+           <!-- Byte ranges do not work, at least not when acrobat 7 embedded in firefox on linux tries
+                to download a PDF. Needs further research to see if this is a problem in Cocoon,
+                in the bookstore source, or with the browser/acrobat. -->
+           <map:parameter name="byte-ranges" value="false"/>
+         </map:read>
+       </map:match>
+     </map:match>
+
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

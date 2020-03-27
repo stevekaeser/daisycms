@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<process-definition name="generictask">
+  <swimlane name="initiator"/>
+
+  <swimlane name="worker">
+    <assignment class="org.outerj.daisy.workflow.jbpm_util.ActorKeyAssignmentHandler">
+      <variableName>worker</variableName>
+      <variableScope>global</variableScope>
+    </assignment>
+  </swimlane>
+
+  <start-state name="start">
+    <task name="startTask" swimlane="initiator" blocking="true"/>
+    <transition name="start" to="perform"/>
+  </start-state>
+
+  <task-node name="perform">
+    <task name="performTask" swimlane="worker" blocking="true">
+      <event type="task-create">
+        <action class="org.outerj.daisy.workflow.jbpm_util.JavascriptActionHandler">
+          <script>
+            taskInstance.setPriority(variables.getGlobalVariable("taskPriority").intValue());
+            var dueDate = variables.getGlobalVariable("taskDueDate");
+            if (dueDate != null)
+                taskInstance.setDueDate(dueDate);
+          </script>
+        </action>
+      </event>
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="failure" to="feedback"/>
+    <transition name="success" to="success"/>
+  </task-node>
+
+  <task-node name="feedback">
+    <task name="feedbackTask" swimlane="initiator" blocking="true">
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="performAgain" to="perform"/>
+    <transition name="end" to="end"/>
+  </task-node>
+
+  <decision name="success" expression='#{needsConfirmation ? "finished" : "end"}'>
+    <transition name="end" to="end">
+    </transition>
+    <transition name="finished" to="finished">
+    </transition>
+  </decision>
+
+  <task-node name="finished">
+    <task name="finishedTask" swimlane="initiator" blocking="true">
+      <event type="task-assign">
+        <action class="org.outerj.daisy.workflow.jbpm_util.NotifyTaskAssignAction"/>
+      </event>
+    </task>
+    <transition name="end" to="end"/>
+  </task-node>
+
+  <end-state name="end"/>
+</process-definition>

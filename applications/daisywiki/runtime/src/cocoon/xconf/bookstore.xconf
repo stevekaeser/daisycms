@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.outerj.daisy.books.store.impl.CommonBookStore']">
+
+  <component
+      class="org.outerj.daisy.books.store.impl.CommonBookStore"
+      role="org.outerj.daisy.books.store.impl.CommonBookStore"
+      logger="daisy" >
+    <storageDirectory>file:/$${daisywiki.data}/bookstore</storageDirectory>
+    <!--
+      How often should the thread run that detects newly added book instances?
+      This is only relevant when the bookstore directory is shared by multiple
+      Daisy Wiki instances, or when you do manual changes in the bookstore directory.
+      The value is in seconds.
+
+      Note: you can also let a book instance be detected immediately by just
+      surfing to it. Book instance deletions are detected immediately.
+    -->
+    <checkChangesInterval>60</checkChangesInterval>
+  </component>
+
+</xconf>

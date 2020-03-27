@@ -1,0 +1,711 @@
+#pageMessage {
+  background-color: #a4e886;
+  border: 1px solid #53803f;
+  padding: 1em;
+  margin: 1em;
+}
+
+/*
+ * Styles specific for fulltext search result page
+ */
+div.fulltext-doc-summary, div.fulltext-infoline, div.fulltext-fragment {
+  margin-left: 1em;
+  margin-right: 2em;
+}
+
+div.dsyft-infoline{
+  color: gray;
+}
+
+div.dsyft-scorebox {
+    border: 1px solid black;
+    margin: .4em 1em;
+    padding: 0;
+    width: 4em;
+}
+
+div.dsyft-score {
+    border: none;
+    background: #a1a1a1;
+    height: .3em;
+    margin: 0;
+    padding: 0;
+    color: #693;
+    font-size: .3em; /* needed for IE6 */
+}
+
+span.fulltext-hit {
+    font-weight : bold;
+}
+
+.dsyft-pages {
+    text-align:center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.dsyft-pages a {
+    text-decoration: none;
+    color: blue;
+}
+
+.dsyft-prevb {
+    background: transparent url(../images/prev.gif) no-repeat scroll right center;
+    margin-right: 1px;
+    padding-right: 14px;
+    font-weight: bold;
+}
+
+.dsyft-nextb {
+    background: transparent url(../images/next.gif) no-repeat scroll left center;
+    margin-left: 1px;
+    padding-left: 14px;
+    font-weight: bold;
+}
+
+.dsyft-navlink {
+    color: blue;
+    text-decoration: underline;
+}
+
+.dsyft-activepage {
+    font-weight: bold;
+}
+
+.dsyft-pagestitle {
+    font-weight: bold;
+    margin-bottom: .2em;
+}
+
+.dsyft-pagelink {
+    padding: 3px 7px;
+}
+
+a.dsyft-pagelink:hover {
+    padding: 2px 6px;
+    border: 1px solid #0000dd;
+}
+
+.dsyft-info {
+    border-top: 1px solid black;
+    padding: .3em;
+    background-color: #ddd;
+    margin-bottom: 1em;
+}
+
+/*
+ * Styles specific for the doctype selection page.
+ */
+.doctypeLabel {
+}
+
+.doctypeDescription {
+    font-style: italic;
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+
+/*
+ * Styles specific for the classic diff page.
+ */
+div.diff-added {
+  font-family: "Andale Mono" monospace;
+  font-size: 80%;
+  background-color: #ccffcc; /* light green */
+  border-left: 4px solid darkgreen; /* light green */
+}
+div.diff-removed {
+  font-family: "Andale Mono" monospace;
+  font-size: 80%;
+  background-color: #fdc6c6; /* light red */
+  border-left: 4px solid darkred; /* dark red */
+}
+div.diff-unchanged {
+  font-family: "Andale Mono" monospace;
+  font-size: 80%;
+  border-left: 4px solid lightgrey;
+}
+span.diff-added {
+  background-color: #58ff87;
+}
+span.diff-removed {
+  background-color: #ff8686;
+  text-decoration: line-through;
+}
+
+span.diffpage-nochanges {
+  font-style: italic;
+}
+
+div.diffpage-contentdiff-title {
+  border: 1px solid gray;
+  text-align: center;
+  border-bottom: 0px;
+}
+
+div.diffpage-text-contentdiff {
+  border: 1px solid gray;
+}
+
+div.diffpage-htmlsource-contentdiff {
+  border: 1px solid gray;
+  padding: 4px;
+}
+
+div.diffpage-html-contentdiff {
+  border: 1px solid gray;
+  padding: 3px;
+}
+
+div.diffpage-html-info {
+  font-style: italic;
+  font-size: 90%;
+}
+
+span.diffpage-removedfield {
+  text-decoration: line-through;
+}
+
+div.dsydiff-prevnextnav {
+    border-top: 1px solid black;
+    margin-top: .25em;
+    padding: .25em;
+}
+
+td.dsydiff-versionbox {
+    background-color: #fffbcc;
+    border: 1px solid black;
+    vertical-align: top;
+}
+
+h1.dsydiff {
+    text-align: center;
+}
+
+h2.dsydiff {
+    text-align: center;
+    border: 0;
+}
+
+h3.dsydiff {
+    text-align: center;
+}
+
+/* a line of text on the diff page */
+.dsydiff-text {
+    text-align: center;
+}
+
+/*
+ * Styles for the Tag Diff
+ */
+span.diff-tag-html {
+  font-family: "Andale Mono" monospace;
+  font-size: 80%;
+}
+
+span.diff-tag-removed {
+  font-size: 100%;
+  text-decoration: line-through;
+  background-color: #fdc6c6; /* light red */
+}
+
+span.diff-tag-added {
+  font-size: 100%;
+  background-color: #ccffcc; /* light green */
+}
+
+/*
+ * Styles for the HTML Diff
+ */
+span.diff-html-added {
+  font-size: 100%;
+  background-color: #ccffcc; /* light green */
+  cursor: pointer;
+}
+
+span.diff-html-removed {
+  font-size: 100%;
+  text-decoration: line-through;
+  background-color: #fdc6c6; /* light red */
+    cursor: pointer;
+}
+
+span.diff-html-changed {
+  background: url(../images/diffunderline.gif) bottom repeat-x;
+  *background-color: #c6c6fd; /* light blue */
+  cursor: pointer;
+}
+
+span.diff-html-selected {
+  background-color: #FF8800; /* light orange */
+  cursor: pointer;
+}
+
+span.diff-html-selected img{
+   border: 2px solid #FF8800; /* light orange */
+}
+
+span.diff-html-added img{
+ border: 2px solid #ccffcc;
+}
+
+span.diff-html-removed img{
+ border: 2px solid #fdc6c6;
+}
+
+span.diff-html-changed img{
+ border: 2px dotted #000099;
+ 
+}
+
+div.diff-removed-image, div.diff-added-image{
+  height: 300px;
+  width: 200px;  
+  position: absolute;
+  opacity : 0.55;
+  filter: alpha(opacity=55);
+  -moz-opacity: 0.55;
+}
+
+div.diff-removed-image, div.diff-added-image {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+div.diff-removed-image {
+  background-color: #fdc6c6;
+  background-image: url(../images/diffmin.gif);
+}
+div.diff-added-image {
+  background-color: #ccffcc;
+  background-image: url(../images/diffplus.gif);
+  background-repeat: no-repeat;
+}
+
+img.diff-icon {
+  background-color: #FF8800;
+  background-image: url(../images/bg_rounded.gif);
+  width: 16px;
+  height: 16px;
+}
+
+table.diff-tooltip-link, table.diff-tooltip-link-changed {
+   width: 100%;
+   text-align: center;
+   Vertical-align: middle;
+}
+
+table.diff-tooltip-link-changed {
+    border-top: thin dashed #000000; 
+    margin-top: 3px; 
+    padding-top: 3px
+}
+td.diff-tooltip-prev {
+   text-align: left;
+}
+
+td.diff-tooltip-next {
+   text-align: right;
+}
+
+table.diffpage-html-firstlast {
+  width: 100%;
+  Vertical-align: middle;
+}
+
+.diffpage-html-firstlast a, .dsydiff-prevnextnav a {
+  text-decoration: none;
+  color: #FF8800;
+}
+
+.diffpage-html-firstlast a img, .dsydiff-prevnextnav a img {
+  vertical-align: middle;
+}
+
+ul.changelist {
+  padding-left: 15px;
+}
+
+/*
+ * Styles specific for the versions overview page.
+ */
+tr.live {
+  background-color: lightgreen;
+}
+
+/*
+ * Styles specific for the site index page.
+ */
+table.siteindex td {
+  padding: 6px;
+}
+
+a.sitelink {
+  padding-left: 10px;
+  background-image: url("../images/bullet.png");
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+}
+
+/*
+ * Styles specific for the faceted navigation
+ */
+.filter {
+}
+.filter.first {
+  border-top: none;
+}
+
+div.facetbrowser-resultcount {
+  font-weight: bold;
+  font-size: 110%;
+}
+
+div.facetbrowser-docsummary {
+  margin-top: 3px;
+  font-style: italic;
+}
+
+div.facetbrowser-facet {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+div.facetbrowser-facettitle {
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+div.facetbrowser-facetvalues {
+  margin-bottom: 1em;
+}
+
+div.facetbrowser-morevalues {
+  font-style: italic;
+}
+
+div.facetbrowser-filters {
+  border: 1px solid gray;
+  padding: 3px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-size: 90%;
+}
+
+div.facetbrowser-docdetails {
+  font-size: 90%;
+  padding-left: 1em;
+}
+
+a.facetbrowser-doclink {
+  font-weight: bold;
+}
+
+.facetbrowser-fulltext {
+  float: left;
+  clear: left;
+}
+
+.facetbrowser-paging {
+  float: right;
+  clear: right;
+}
+
+.facetbrowser-results {
+  clear: both;
+}
+
+table.filter {
+  border-spacing : 0px;
+}
+
+.facet-header th {
+  border-bottom: 1px solid black;
+}
+
+table.facetbrowser-results a.sorting {
+  text-decoration: none;
+  color: #000;
+}
+
+table.facetbrowser-results tr th {
+  border-bottom: 1px solid black;
+}
+
+div.facetbrowser-resultdoc {
+  border-bottom: 1px dotted gray;
+}
+
+/*
+ * Styles specific for the book management pages
+ */
+table.books {
+  border-spacing: 0pt;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+table.books tbody tr td {
+  padding: 2px 4px .3em 4px;
+}
+
+tr.bookgroup {
+    border-bottom: 1px solid gray;
+}
+
+tr.bookAltRow {
+    background-color: rgb(238, 238, 238);
+}
+
+/*
+ * Styles specific for the recentchanges page.
+ */
+ul.rss-feeds {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+ul.rss-feeds li {
+  list-style-type: none;
+  margin-left: 0px;
+}
+
+ul.rss-feeds a {
+  text-decoration: none;
+}
+
+/*
+ * Styles for the document basket pages.
+ */
+ul.nav2docbasket {
+    list-style-type: none;
+}
+
+a.docbasketAction:visited {
+    color: blue;
+}
+
+/*
+ * Styles for the query search page.
+ */
+.TitlePaneLabel {
+    background-color: #dcf;
+    border: 1px solid #9287a8;
+    cursor: pointer;
+    padding: .3em .5em;
+    color: blue;
+    text-decoration: underline;
+    width: 50em;
+}
+
+.TitlePaneContent {
+    background-color: #e6d9ff;
+    border: 1px solid #9287a8;
+    border-top: 0px;
+    width: 51em; /* 50em + the 2 * .5 padding of TitlePaneInnerContent */
+}
+
+.TitlePaneInnerContent {
+    padding: .3em .5em;
+    width: 50em;
+}
+
+.TitlePaneContent a, .TitlePaneLabel a {
+    color: blue;
+}
+
+#dsy-qrysuggest {
+    width: 50em;
+    max-width: 50em;
+}
+
+#dsy-qrysuggest .yui-ac-content {
+    position: absolute;
+    width: 50em;
+    border: 1px solid #404040;
+    background: #fff;
+    overflow: hidden;
+    z-index: 9050;
+}
+
+#dsy-qrysuggest ul {
+    padding: 5px 0;
+    width: 50em;
+}
+
+#dsy-qrysuggest li {
+    padding: 0 5px;
+    cursor: default;
+    white-space: nowrap;
+}
+
+#dsy-qrysuggest li.yui-ac-highlight {
+    background: #ff0;
+}
+
+#dsy-qrysuggest li.yui-ac-prehighlight {
+    background: #FFFFCC;
+}
+
+span.dsy-qrysuggest-text {
+    width: 20em;
+    min-width: 20em;
+    max-width: 20em;
+    overflow: hidden;
+}
+
+span.dsy-qrysuggest-descr {
+    color: gray;
+    position: absolute;
+    left: 20em;
+    background: white;
+    z-index: 1;
+    width: 30em;
+    overflow: hidden;
+}
+
+/**
+ * Styles specific for the versions overview page
+ */
+table.versions {
+}
+
+img.dsy-version-action {
+    vertical-align: top;
+}
+
+td.dsy-change-comment {
+    background: url(../images/expanded.gif) no-repeat 3px .3em;
+    width: 14em;
+    cursor: pointer;
+}
+
+td.dsy-change-comment div {
+    padding-left: 1em;
+}
+
+td.dsy-change-comment-collapsed {
+    background: url(../images/collapsed.gif) no-repeat 3px .3em;
+}
+
+td.dsy-change-comment div {
+    width: 14em;
+}
+
+td.dsy-change-comment-collapsed div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table.dsy-tm-overview td {
+    vertical-align: top;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.dsy-tm-overview tr.dsy-row-0 {
+    background: #eee;
+}
+.dsy-tm-overview tr.dsy-row-1 {
+}
+
+table.dsy-tm-overview {
+    border-collapse: collapse;
+}
+table.dsy-tm-overview td.dsy-tmstate {
+    text-align: center;
+    padding: 0;
+    height: 5em;
+    width: 5em;
+    border: 1px solid white;
+}
+
+td.dsy-tmstate-no-variant {
+}
+
+td.dsy-tmstate-ok {
+    background: #0c0;
+}
+
+td.dsy-tmstate-warn {
+    background: #fc0;
+}
+
+td.dsy-tmstate-error {
+    background: #f30;
+}
+
+.dsy-double-listbox-popup {
+    float: left;
+    clear: left;
+}
+
+.dsy-double-listbox-popup-compacttext {
+    padding: 2px;
+}
+
+span.dsy-double-listbox-popup-compact {
+    border: 1px transparent;
+    padding: 2px;
+    cursor: pointer;
+}
+span.dsy-double-listbox-popup-compact:hover {
+      border: 1px dotted #999;
+}
+
+.dsy-double-listbox-popup-none {
+    color: #999;
+}
+
+div.dsy-doubleList {
+   float:left;
+   clear:left; 
+}
+
+.dsy-regexpsearch-hit {
+   background: #ff0;
+}
+
+table.serp-searchresults {
+   width: 100%;
+}
+
+table.serp-searchresults tr td, table.serp-searchresults tr th {
+}
+
+.serp-searchform .info {
+   color: #999;
+}
+
+
+/** version mode picker **/
+.dsy-versionmode-type {
+  white-space: nowrap;
+  margin-right: 0; /* effect on inline mode?*/
+}
+
+.dsy-versionmode-time {
+  margin-top: 2px;
+}
+
+.dsy-versionmode-pit-details {
+  float: right; clear: both;
+}
+
+.dsy-lh-highlight {
+  background: #eef;
+}
+
+.dsy-lh-interspacing {
+  line-height: 2em;
+}
+
+.dsy-lh-spacer {
+  line-height: 1em;
+}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#siteconf" xmlns:s="http://outerx.org/daisy/1.0#siteconf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="siteconf">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="skin" type="xs:string"/>
+        <xs:element name="navigationDocId" type="xs:string"/>
+        <xs:element minOccurs="0" name="homepageDocId" type="xs:string"/>
+        <xs:element minOccurs="0" name="homepage" type="xs:string"/>
+        <xs:element minOccurs="0" name="collectionId" type="xs:long"/>
+        <xs:element minOccurs="0" name="collectionName" type="xs:string"/>
+        <xs:element name="contextualizedTree" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="navigationDepth" type="xs:int"/>
+        <xs:element minOccurs="0" name="defaultDocumentType" type="xs:string"/>
+        <xs:element minOccurs="0" name="publisherRequestSet" type="xs:string"/>
+        <xs:element minOccurs="0" name="siteSwitching">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="site" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="mode" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="branch">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="language">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="defaultReferenceLanguage">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="newVersionStateDefault">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="draft"/>
+              <xs:enumeration value="publish"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="locking">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element name="automatic">
+                <xs:complexType>
+                  <xs:attribute name="lockType" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="warn"/>
+                        <xs:enumeration value="pessimistic"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="defaultTime" type="xs:long" use="required"/>
+                  <xs:attribute name="autoExtend" type="xs:boolean" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="none"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="documentTypeFilter">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:choice>
+                <xs:element name="include">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="exclude">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

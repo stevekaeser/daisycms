@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="querysearch.search"/></pageTitle>
+  <layoutHints wideLayout="true"/>
+
+  <content>
+    <h1><i18n:text key="querysearch.search"/></h1>
+
+    <i18n:text key="querysearch.info"/>
+    <br/>
+    <br/>
+
+    <!-- Load things needed for the autocomplete popup -->
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/yui/yahoo/yahoo-min.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/yui/dom/dom-min.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/yui/event/event-min.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/yui/autocomplete/autocomplete-min.js"></script>
+
+    <script type="text/javascript">
+      dojo.addOnLoad(function() {
+        // Init the autocomplete popup
+        var myArray = [
+          <jx:forEach items="${autoCompleteEntries}" var="entry">
+            ["${entry.escapedText}", "${entry.escapedDescription}"],
+          </jx:forEach>
+        ];
+        var myDataSource = new YAHOO.widget.DS_JSArray(myArray);
+        var myAutoComp = new YAHOO.widget.AutoComplete("daisyquery:input","dsy-qrysuggest", myDataSource);
+        myAutoComp.delimChar = [" ", ",", "(", ")", ".", "'"];
+        myAutoComp.queryDelay = 0;
+        myAutoComp.formatResult = function(oResultItem, sQuery) {
+              var description = oResultItem[1];
+              if (description == "") description = "&amp;#160;";
+              return "&lt;span class='dsy-qrysuggest-text'>" + oResultItem[0] + "&lt;/span>&lt;span class='dsy-qrysuggest-descr'>" + description + "&lt;/span>";
+        };
+        
+        // enable the submit button
+        document.getElementById("send").disabled=false;
+      });
+
+      function doQuery(q) {
+        // close the samples pane
+        dojo.widget.byId("querySamples").onLabelClick();
+
+        // do the query
+        var queryField = document.getElementById("daisyquery:input");
+        queryField.value = q;
+        document.getElementById("addToDocumentBasket").value = 'false';
+        dojo.widget.byId("querysearch").submit("send");
+      }
+    </script>
+    
+
+    <ft:form-template action="${pageContext.mountPoint}/${pageContext.siteConf.name}/querySearch" method="POST" id="querysearch">
+      <ft:widget id="daisyquery">
+        <fi:styling type="textarea" rows="5" style="width: 50em; margin-bottom: .5em;" spellcheck="false"/>
+      </ft:widget>
+      <div id="dsy-qrysuggest"/>
+      <ft:widget id="addToDocumentBasket" type="hidden"/>
+      <div id="querySamples" dojoType="TitlePane" label="querysearch.samples" i18n:attr="label"
+           labelNodeClass="TitlePaneLabel" containerNodeClass="TitlePaneContent" open="false"
+           style="display: none">
+        <div class="TitlePaneInnerContent">
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name where true');"><i18n:text key="querysearch.samples.alldocs"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select name where true option style_hint = \'bullets\'');"><i18n:text key="querysearch.samples.alldocs-bullets"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name, lockType, lockOwnerName, lockTimeAcquired, lockDuration where lockType is not null');"><i18n:text key="querysearch.samples.lockeddocs"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name where HasPartWithMimeType(\'image/%\')');"><i18n:text key="querysearch.samples.images"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name where retired=\'true\' option include_retired = \'true\'');"><i18n:text key="querysearch.samples.retireddocs"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name where documentType=\'Attachment\'');"><i18n:text key="querysearch.samples.attachments"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name where documentType=\'Navigation\'');"><i18n:text key="querysearch.samples.navigationtrees"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name, versionState, versionCreationTime where versionState = \'draft\' option point_in_time = \'last\'');"><i18n:text key="querysearch.samples.unpublisheddocs"/></a><br/>
+          <a href="#" onmouseover="status=''; return true;" onclick="doQuery('select id, branch, language, name, totalSizeOfParts where true order by totalSizeOfParts desc limit 10');"><i18n:text key="querysearch.samples.largestdocs"/></a><br/>
+        </div>
+      </div>
+      <h3><i18n:text key="querysearch.context-document"/></h3>
+      <div id="documentSelection" style="min-height: 3em;">
+        <input id="contextDocument" name="contextDocument"  dojoType="daisy:LinkEditor"  contextMode="site" enableBrowseDocuments="true" openInNewWindows="true"/>
+      </div>
+      <br/>
+      <ft:widget id="send">
+        <fi:styling onclick="this.form['addToDocumentBasket'].value = 'false';" class="dsyfrm-primaryaction"/>
+      </ft:widget>
+
+      <br/>
+      <br/>
+    </ft:form-template>
+
+    <jx:if test="${pageXml != null}">
+      <div parseWidgets="false">
+        <cinclude:include src="cocoon:/internal/searchResults/querySearch"/>
+      </div>
+    </jx:if>
+  </content>
+
+</page>

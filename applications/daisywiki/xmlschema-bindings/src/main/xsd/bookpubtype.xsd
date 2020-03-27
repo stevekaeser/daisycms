@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#bookpubtype" xmlns:bookpubtype="http://outerx.org/daisy/1.0#bookpubtype" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="publicationType">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="bookpubtype:publicationProcess"/>
+        <xs:element name="label" type="xs:string"/>
+        <xs:element name="startResource" type="xs:string"/>
+        <xs:element minOccurs="0" name="backendOnly" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="requiredParts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##local" processContents="skip"/>
+            </xs:sequence>
+            <xs:attribute name="class" type="xs:string" use="optional"/>
+            <xs:anyAttribute namespace="##local" processContents="skip"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publicationProcess">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:choice>
+          <xs:element ref="bookpubtype:applyDocumentTypeStyling"/>
+          <xs:element ref="bookpubtype:shiftHeaders"/>
+          <xs:element ref="bookpubtype:assembleBook"/>
+          <xs:element ref="bookpubtype:verifyIdsAndLinks"/>
+          <xs:element ref="bookpubtype:applyPipeline"/>
+          <xs:element ref="bookpubtype:addTocAndLists"/>
+          <xs:element ref="bookpubtype:splitInChunks"/>
+          <xs:element ref="bookpubtype:writeChunks"/>
+          <xs:element ref="bookpubtype:addNumbering"/>
+          <xs:element ref="bookpubtype:addSectionTypes"/>
+          <xs:element ref="bookpubtype:addIndex"/>
+          <xs:element ref="bookpubtype:copyResource"/>
+          <xs:element ref="bookpubtype:makePDF"/>
+          <xs:element ref="bookpubtype:getDocumentPart"/>
+          <xs:element ref="bookpubtype:copyBookInstanceImages"/>
+          <xs:element ref="bookpubtype:copyBookInstanceResources"/>
+          <xs:element ref="bookpubtype:zip"/>
+          <xs:element ref="bookpubtype:custom"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="applyDocumentTypeStyling">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="shiftHeaders">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="assembleBook">
+    <xs:complexType>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="verifyIdsAndLinks">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="applyPipeline">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+      <xs:attribute name="pipe" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addTocAndLists">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addIndex">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="splitInChunks">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+      <xs:attribute name="chunkNamePrefix" type="xs:string" use="optional"/>
+      <xs:attribute name="firstChunkName" type="xs:string" use="optional"/>
+      <xs:attribute name="publishExtension" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="writeChunks">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="outputPrefix" type="xs:string" use="required"/>
+      <xs:attribute name="chunkFileExtension" type="xs:string" use="required"/>
+      <xs:attribute name="applyPipeline" type="xs:string" use="optional"/>
+      <xs:attribute name="pipelineOutputPrefix" type="xs:string" use="optional"/>
+      <xs:attribute name="chunkAfterPipelineFileExtension" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addNumbering">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addSectionTypes">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="copyResource">
+    <xs:complexType>
+      <xs:attribute name="from" type="xs:string" use="required"/>
+      <xs:attribute name="to" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="makePDF">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+      <xs:attribute name="configPath" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="copyBookInstanceImages">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+      <xs:attribute name="to" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="copyBookInstanceResources">
+    <xs:complexType>
+      <xs:attribute name="input" type="xs:string" use="required"/>
+      <xs:attribute name="output" type="xs:string" use="required"/>
+      <xs:attribute name="to" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getDocumentPart">
+    <xs:complexType>
+      <xs:attribute name="propertyName" type="xs:string" use="required"/>
+      <xs:attribute name="propertyOrigin" type="xs:string" use="required"/>
+      <xs:attribute name="partName" type="xs:string" use="required"/>
+      <xs:attribute name="saveAs" type="xs:string" use="required"/>
+      <xs:attribute name="setProperty" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="zip">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="custom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##local" processContents="skip"/>
+      </xs:sequence>
+      <xs:attribute name="class" type="xs:string" use="required"/>
+      <xs:anyAttribute namespace="##local" processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

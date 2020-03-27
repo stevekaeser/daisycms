@@ -1,0 +1,29 @@
+mapping.definition=mapping.xml
+
+jdbc.internal.driver.name=com.mysql.jdbc.Driver
+jdbc.internal.url=jdbc:mysql://localhost/syncstore
+jdbc.internal.username=syncuser
+jdbc.internal.password=syncuser
+
+jdbc.external.driver.name=com.mysql.jdbc.Driver
+jdbc.external.url=jdbc:mysql://localhost/syncstore
+jdbc.external.username=syncuser
+jdbc.external.password=syncuser
+
+daisy.credentials.username=testuser
+daisy.credentials.password=testuser
+daisy.repository.url=http://localhost:9263
+daisy.collection=testsite
+daisy.branch=main
+daisy.documentCreateState=draft
+
+log.file=sync-%g.log
+log.level=WARNING
+
+# seconds minutes hours day-of-month month day-of-week year
+# * -> every | ? -> no specific value | - -> range | , -> additional values
+# 0 0 20 * * ?  --> every day at 20h
+# more info here http://quartz.sourceforge.net/javadoc/org/quartz/CronTrigger.html
+sync.cron.expression= 0 0 20 * * ?
+sync.port=8488
+sync.host=127.0.0.1

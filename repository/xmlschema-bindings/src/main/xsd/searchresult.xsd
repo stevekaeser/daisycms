@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="searchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="titles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="1" name="title">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="name" type="xs:string" use="required"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rows">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="row">
+                <xs:complexType>
+                  <xs:complexContent>
+                    <xs:extension base="daisy:repeatedSearchResultValues">
+                      <xs:attribute name="documentId" type="xs:string" use="required"/>
+                      <xs:attribute name="branchId" type="xs:long" use="required"/>
+                      <xs:attribute name="languageId" type="xs:long" use="required"/>
+                      <xs:attribute name="access" type="xs:string" use="optional"/>
+                    </xs:extension>
+                  </xs:complexContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="resultInfo">
+          <xs:complexType>
+            <xs:attribute name="chunkOffset" type="xs:int"/>
+            <xs:attribute name="chunkLength" type="xs:int"/>
+            <xs:attribute name="requestedChunkOffset" type="xs:int"/>
+            <xs:attribute name="requestedChunkLength" type="xs:int"/>
+            <xs:attribute name="size" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="1" minOccurs="0" name="executionInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="query" type="xs:string"/>
+              <xs:element minOccurs="0" name="extraCondition" type="xs:string"/>
+              <xs:element name="locale" type="xs:string"/>
+              <xs:element minOccurs="0" name="parseAndPrepareTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="fullTextQueryTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="rdbmsQueryTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="mergeTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="aclFilterTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="sortTime" type="xs:long"/>
+              <xs:element minOccurs="0" name="outputGenerationTime" type="xs:long"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="styleHint" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="linkValueType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="documentId" type="xs:string" use="required"/>
+        <xs:attribute name="branchId" type="xs:long" use="required"/>
+        <xs:attribute name="languageId" type="xs:long" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="hierarchyValueType">
+    <xs:complexContent>
+      <xs:restriction base="daisy:repeatedSearchResultValues">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+          <xs:choice>
+            <xs:element name="value" type="xs:string"/>
+            <xs:element name="linkValue" type="daisy:linkValueType"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="repeatedSearchResultValues">
+    <xs:sequence maxOccurs="unbounded" minOccurs="1">
+      <xs:choice>
+        <xs:element name="value" type="xs:string"/>
+        <xs:element name="xmlValue" type="xs:anyType"/>
+        <xs:element name="linkValue" type="daisy:linkValueType"/>
+        <xs:element name="hierarchyValue" type="daisy:hierarchyValueType"/>
+        <xs:element name="multiValue">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:restriction base="daisy:repeatedSearchResultValues">
+                <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                  <xs:choice>
+                    <xs:element name="value" type="xs:string"/>
+                    <xs:element name="linkValue" type="daisy:linkValueType"/>
+                    <xs:element name="hierarchyValue" type="daisy:hierarchyValueType"/>
+                  </xs:choice>
+                </xs:sequence>
+              </xs:restriction>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

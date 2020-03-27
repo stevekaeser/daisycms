@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element id="role" name="role">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="description" type="xs:string" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element id="roles" name="roles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:role"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

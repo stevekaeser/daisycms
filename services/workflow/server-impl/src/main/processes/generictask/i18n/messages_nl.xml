@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<catalogue>
+    <!-- General -->
+    <message key="generictask.label">Generieke taak</message>
+    <message key="generictask.description">Een workflow voor elke soort taak die niet wordt afgehandeld door andere workflows</message>
+
+    <!-- Variables -->
+    <message key="variable.document.label">Document</message>
+    <message key="variable.document.description">Als deze taak gerelateerd is aan een document, kun je dit hier aangeven.</message>
+    <message key="variable.details.label">Gedetailleerde beschrijving</message>
+    <message key="variable.details.description">Leg uit wat hier gedaan moet worden.</message>
+    <message key="variable.workerComment.label">Commentaar bewerker</message>
+    <message key="variable.workerComment.description">Commentaar door degene die de taak uitvoert.</message>
+    <message key="variable.feedbackComment.label">Terugkoppeling</message>
+    <message key="variable.needsConfirmation.label">Bevestiging nodig</message>
+    <message key="variable.needsConfirmation.description">Vink dit aan als je een bericht wilt krijgen (via je taak inbox) als de taak beëindigd is.</message>
+    <message key="variable.worker.label">Taak bewerker</message>
+    <message key="variable.reviewSubmitComment.label">Bekijk commentaar</message>
+
+    <!-- Tasks -->
+    <message key="startTask.label">Start generieke taak</message>
+    <message key="startTask.description">Vul a.u.b. de benodigde informatie in voor de generieke taak.</message>
+    <message key="performTask.label">Generieke taak</message>
+    <message key="performTask.description">Je bent gevraagd om de taak zoals hieronder beschreven uit te voeren.</message>
+    <message key="feedbackTask.label">Feedback generieke taak</message>
+    <message key="feedbackTask.description">De volgende feedback is gegeven op de taak die je hebt gecreërd.</message>
+    <message key="finishedTask.label">Generieke taak beëindigd</message>
+    <message key="finishedTask.description">Dit is om aan te geven dat de taak die je hebt gecreërd is beëindigd.</message>
+
+    <!-- Transitions -->
+    <message key="transition.start">Taak versturen</message>
+    <message key="transition.failure">Laat commentaar achter voor de verzender van de taak</message>
+    <message key="transition.success">Beëindig taak</message>
+    <message key="transition.performAgain">Taak opnieuw versturen</message>
+    <message key="transition.end">Beëindig taak</message>
+</catalogue>

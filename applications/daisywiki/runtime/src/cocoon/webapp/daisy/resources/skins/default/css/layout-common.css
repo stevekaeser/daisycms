@@ -1,0 +1,54 @@
+/* Styles used for the various tables such as version overview table, search result table, ... */
+table.default {
+  border-spacing: 0pt;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: .3em;
+  margin-bottom: .3em;
+}
+table.default tr td {
+  border: 1px solid gray;
+  padding: .2em .3em .2em .3em;
+  vertical-align: top;
+}
+table.default tr th {
+  border: 1px solid gray;
+  background-color: #ddd;
+  padding: .2em .3em .2em .3em;
+}
+
+/* Some classes for table-layouted forms. */
+table.dsyfrm-table {
+    width: 100%;
+}
+
+table.dsyfrm-table tbody td.dsyfrm-labelcell {
+    text-align: right;
+    padding-right: .5em;
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+table.dsyfrm-table tbody td.dsyfrm-widgetcell {
+    width: 100%;
+}
+
+td.dsyfrm-primaryaction {
+    padding-top: .5em;
+}
+
+button.dsyfrm-primaryaction, input.dsyfrm-primaryaction {
+    font-weight: bold;
+}
+
+.dsy-nowrap {
+    white-space: nowrap;
+}
+
+/*
+ * Global CForms styling.
+ */
+div.forms-doubleList th {
+    font-weight: normal;
+    font-size: xx-small;
+}

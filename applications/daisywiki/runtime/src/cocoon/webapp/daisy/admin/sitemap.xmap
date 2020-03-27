@@ -1,0 +1,548 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+ <map:components>
+
+  <map:generators default="file">   
+    <map:generator name="jx" src="org.apache.cocoon.generation.JXTemplateGenerator" label="content" logger="sitemap.generator.jx"/>
+  </map:generators>
+
+  <map:transformers default="xalan">    
+    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+      <catalogues default="daisy">
+        <catalogue id="forms" name="messages" location="resource://org/apache/cocoon/forms/system/i18n"/>
+        <catalogue id="daisy" name="messages">
+          <location>../resources/i18n</location>
+          <location>resources/i18n</location>
+        </catalogue>
+        <catalogue id="skin" name="messages" location="daisyskin:i18n"/>
+      </catalogues>
+      <cache-at-startup>true</cache-at-startup>
+    </map:transformer>
+  </map:transformers>
+
+  <map:selectors default="browser">
+    <map:selector name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+  </map:selectors>
+
+  <map:actions>
+    <map:action name="ProtectAdminPages" src="org.outerj.daisy.frontend.admin.ProtectAdminPagesAction"/>
+  </map:actions>
+
+  <map:pipes default="noncaching">
+  </map:pipes>
+
+ </map:components>
+
+ <map:views>
+ </map:views>
+ 
+ <map:resources>
+ </map:resources>
+
+  <!-- indicates what flowscript to attach to this sitemap -->
+  <map:flow language="apples"/>
+
+ <map:pipelines>
+   <map:pipeline internal-only="true">
+     <map:match pattern="IndexPipe">
+       <map:generate type="jx" src="resources/xml/index.xml"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="EntitiesPipe">
+       <map:generate type="jx" src="../resources/xml/page.xml"/>
+       <map:transform src="resources/xslt/{flow-attr:entityName}_list.xsl">
+         <map:parameter name="sortKey" value="{flow-attr:sortKey}"/>
+         <map:parameter name="sortOrder" value="{flow-attr:sortOrder}"/>
+         <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+       </map:transform>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="Form-*-Pipe">
+       <map:generate type="jx" src="resources/form/{1}_template.xml">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:generate>
+       <map:transform type="browser-update"/>
+       <map:select type="ajax-request">
+         <map:when test="true">
+         </map:when>
+         <map:otherwise>
+           <map:transform src="resources/xslt/admin.xsl"/>
+           <map:transform src="daisyskin:xslt/layout.xsl"/>
+         </map:otherwise>
+       </map:select>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform src="resources/xslt/daisy-admin-forms-styling.xsl">
+         <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+         <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+         <map:parameter name="daisy-admin-resources-uri" value="{request-attr:mountPoint}/admin/resources"/>
+         <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:select type="ajax-request">
+         <map:when test="true">
+           <map:serialize type="xml"/>
+         </map:when>
+         <map:otherwise>
+           <map:serialize type="html"/>
+         </map:otherwise>
+       </map:select>
+     </map:match>
+
+     <map:match pattern="ShowAclPipe">
+       <map:generate type="jx" src="../resources/xml/page.xml"/>
+       <map:transform src="resources/xslt/display_acl.xsl">
+         <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+       </map:transform>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="TestAclPipe">
+       <map:generate type="jx" src="resources/form/testacl_template.xml">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:generate>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform src="resources/xslt/daisy-admin-forms-styling.xsl">
+         <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+         <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+         <map:parameter name="daisy-admin-resources-uri" value="{request-attr:mountPoint}/admin/resources"/>
+         <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="TestAclResultPipe">
+       <map:generate type="jx" src="../resources/xml/page.xml"/>
+       <map:transform src="resources/xslt/testaclresult.xsl"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="ConfirmationPagePipe">
+       <map:generate type="jx" src="resources/xml/confirmpage.xml"/>
+       <map:transform src="resources/xslt/confirmpage.xsl"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="LinkFieldsPopupPipe">
+       <map:generate type="jx" src="resources/xml/select_linkfield_page.xml"/>
+       <map:transform src="resources/xslt/select_linkfield.xsl"/>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="MessagePagePipe">
+       <map:generate type="jx" src="resources/xml/messagepage.xml"/>
+       <map:transform src="resources/xslt/messagepage.xsl"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="ProcessDefinitionConfirmPage">
+       <map:generate type="jx" src="../resources/xml/page.xml"/>
+       <map:transform src="resources/xslt/wfprocessdefinition_confirm.xsl"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="PoolMembersPipe">
+       <map:generate type="jx" src="resources/xml/wfpoolmembers.xml"/>
+       <map:transform src="resources/xslt/wfpoolmembers.xsl"/>
+       <map:transform src="resources/xslt/admin.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+     <!-- Note: the expires parameter also works for the non caching pipeline. -->
+     <map:parameter name="expires" value="access plus 5 hours"/>
+
+     <map:match type="regexp" pattern="^resources/(.*)(\.(js|png|gif|jpg|css|html))$">
+       <map:read src="resources/{1}{2}"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+
+     <map:act type="ProtectAdminPages"/>
+
+     <map:match pattern="">
+       <map:call function="org.outerj.daisy.frontend.admin.IndexApple"/>
+     </map:match>
+
+     <!--
+        | Part Type Administration pipelines.
+        -->
+     <map:match pattern="partType**">
+       <map:match pattern="partType">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="partType"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="partType/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="partType"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="partType/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="partType"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="partType/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Field Type Administration pipelines.
+        -->
+     <map:match pattern="fieldType**">
+       <map:match pattern="fieldType">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="fieldType"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="fieldType/linkFieldSelector">
+         <map:call function="org.outerj.daisy.frontend.admin.LinkFieldSelectionApple"/>
+       </map:match>
+
+       <map:match pattern="fieldType/new">
+         <map:call function="org.outerj.daisy.frontend.admin.FieldTypeEditorApple"/>
+       </map:match>
+
+       <map:match pattern="fieldType/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.FieldTypeEditorApple">
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="fieldType/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Document Type Administration pipelines.
+        -->
+     <map:match pattern="documentType**">
+       <map:match pattern="documentType">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="documentType"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="documentType/new">
+         <map:call function="org.outerj.daisy.frontend.admin.DocumentTypeEditorApple"/>
+       </map:match>
+
+       <map:match pattern="documentType/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.DocumentTypeEditorApple">
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="documentType/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Collection Administration pipelines.
+        -->
+     <map:match pattern="collection**">
+       <map:match pattern="collection">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="collection"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="collection/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="collection"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="collection/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="collection"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="collection/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Role Administration pipelines.
+        -->
+     <map:match pattern="role**">
+       <map:match pattern="role">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="role"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="role/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="role"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="role/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="role"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="role/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | User Administration pipelines.
+        -->
+     <map:match pattern="user**">
+       <map:match pattern="user">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="user"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="user/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="user"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="user/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="user"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="user/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Branch Administration pipelines.
+        -->
+     <map:match pattern="branch**">
+       <map:match pattern="branch">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="branch"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="branch/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="branch"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="branch/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="branch"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="branch/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Language Administration pipelines.
+        -->
+     <map:match pattern="language**">
+       <map:match pattern="language">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="language"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="language/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="language"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="language/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="language"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="language/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+     </map:match>
+
+     <!--
+        | ACL Administration pipelines.
+        -->
+     <map:match pattern="acl/*">
+       <map:call function="org.outerj.daisy.frontend.admin.ManageAclApple">
+         <map:parameter name="name" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="testacl/*">
+       <map:call function="org.outerj.daisy.frontend.admin.TestAclApple">
+         <map:parameter name="name" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="testacl/*/*">
+       <map:call continuation="{2}"/>
+     </map:match>
+
+     <map:match pattern="testacl/*/*/result">
+       <map:call continuation="{2}">
+         <map:parameter name="resource" value="result"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="acl/staging/edit">
+       <map:call function="org.outerj.daisy.frontend.admin.AclEditorApple"/>
+     </map:match>
+
+     <map:match pattern="acl/staging/edit/*">
+       <map:call continuation="{1}"/>
+     </map:match>
+
+     <!--
+        | Namespace Administration pipelines.
+        -->
+     <map:match pattern="namespace**">
+       <map:match pattern="namespace">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="namespace"/>
+         </map:call>
+       </map:match>
+     </map:match>
+
+     <!--
+        | Workflow Administration pipelines.
+        -->
+     <map:match pattern="wf**">
+       <map:match pattern="wfProcessDefinition">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="wfProcessDefinition"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="wfProcessDefinition/upload">
+         <map:call function="org.outerj.daisy.frontend.admin.WfProcessDefinitionUploadApple"/>
+       </map:match>
+
+       <map:match pattern="wfProcessDefinition/upload/*">
+         <map:call continuation="{1}"/>
+       </map:match>
+
+       <map:match pattern="wfPool">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminApple">
+           <map:parameter name="resource" value="wfPool"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="wfPool/new">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="wfPool"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="wfPool/*/edit">
+         <map:call function="org.outerj.daisy.frontend.admin.AdminEntityEditorApple">
+           <map:parameter name="resource" value="wfPool"/>
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="wfPool/*/edit/*">
+         <map:call continuation="{2}"/>
+       </map:match>
+
+       <map:match pattern="wfPool/*/members">
+         <map:call function="org.outerj.daisy.frontend.admin.WfPoolMembersApple">
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+     </map:match>
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

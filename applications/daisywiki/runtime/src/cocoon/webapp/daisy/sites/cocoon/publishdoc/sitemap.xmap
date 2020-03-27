@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources>
+  </map:resources>
+
+  <map:flow language="javascript">
+    <map:script src="publishdoc.js"/>
+  </map:flow>
+
+  <map:pipelines>
+
+   <map:pipeline internal-only="true" type="noncaching">
+     <map:match pattern="pubreq">
+       <map:generate type="jx" src="pubreq.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="result">
+       <map:generate type="jx" src="result.xml"/>
+       <map:transform src="result.xsl"/>
+       <map:transform type="DaisyIncludePreparedDocuments"/>
+       <map:transform type="DaisyExternalInclude"/>
+       <map:serialize type="html"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+
+     <map:match pattern="*">
+       <map:call function="publishDoc">
+         <map:parameter name="docId" value="{1}"/>
+       </map:call>
+     </map:match>
+
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

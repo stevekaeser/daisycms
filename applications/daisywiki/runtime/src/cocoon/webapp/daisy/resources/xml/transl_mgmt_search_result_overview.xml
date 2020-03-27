@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:set var="mountPoint" value="${pageContext.mountPoint}"/>
+  <jx:set var="siteName" value="${pageContext.siteConf.name}"/>
+  
+  <jx:set var="idPos" value="0"/>
+  <jx:set var="branchPos" value="1"/>
+  <jx:set var="langPos" value="2"/>
+  <jx:set var="langIdPos" value="3"/>
+  <jx:set var="namePos" value="4"/>
+  <jx:set var="refLangPos" value="5"/>
+  <jx:set var="refLangIdPos" value="6"/>
+  <jx:set var="versionIdPos" value="7"/>
+  <jx:set var="syncedWithLangPos" value="8"/>
+  <jx:set var="syncedWithVersionIdPos" value="9"/>
+  <jx:set var="syncedWithMajorChangePos" value="10"/>
+
+  <table class="dsy-tm-overview">
+    <tbody>
+      <tr>
+        <th>id</th>
+        <th>branch</th>
+        <th>name</th>
+        <th>reference language</th>
+        <jx:forEach items="${languages}" var="language">
+          <th>${language.name}</th>
+        </jx:forEach>
+      </tr>
+      <jx:forEach items="${tmOverviewData}" var="row" varStatus="rowStatus">
+        <jx:if test="${rowStatus.index > 0 and rowStatus.index % 10 == 0}">
+          <th colspan="4"/>
+          <jx:forEach items="${languages}" var="language">
+            <th>${language.name}</th>
+          </jx:forEach>
+        </jx:if>
+        <jx:set var="refLang" value="${row.exampleRow.valueList[refLangPos]}"/>
+        <jx:set var="refLangId" value="${row.exampleRow.valueList[refLangIdPos]}"/>
+        <tr class="dsy-row-${rowStatus.index%2}">
+          <jx:if test="${row.branchIndex == 1}">
+            <td colspan="${branchCount[row.exampleRow.documentId + '@' + row.exampleRow.branchId]}">${row.exampleRow.documentId}</td>
+          </jx:if>
+          <td>${row.exampleRow.valueList[branchPos]}</td>
+          <td style="white-space:nowrap;">${row.exampleRow.valueList[namePos]}</td>
+          <td>${refLang}</td>
+          <jx:forEach items="${languages}" var="language" varStatus="status">
+            <jx:set var="variant" value="${row.variantRows[status.index]}"/>
+            <td style="whitespace: nowrap;">
+            <jx:choose>
+              <jx:when test="${variant == null}">
+                  <jx:attribute name="class" value="dsy-tmstate"/>
+                <jx:if test="${language.id == refLangId}">
+                  <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-error"/>
+                  no <jx:if test="${CocoonFormsInstance.getChild('languageVersion').value == 'live'}">live</jx:if> ref variant
+                </jx:if>
+              </jx:when>
+              <jx:when test="${language.id == refLangId and variant.valueList[syncedWithLangPos] == ''}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-ok"/>
+              </jx:when>
+              <jx:when test="${language.id == refLangId and variant.valueList[syncedWithLangPos] != ''}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-error"/>
+                ref variant synced.
+              </jx:when>
+              <jx:when test="${refLangId != '' and language.id != refLangId and variant.valueList[syncedWithLangPos] == ''}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-warn"/>
+                not synced.
+              </jx:when>
+              <jx:when test="${refLangId != '' and language.id != refLangId and variant.valueList[syncedWithLangPos] != refLang}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-warn"/>
+                not synced with ref variant.
+              </jx:when>
+              <jx:when test="${refLangId != '' and language.id != refLangId and variant.valueList[syncedWithLangPos] != '' and variant.valueList[syncedWithMajorChangePos] == ''}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-warn"/>
+                no <jx:if test="${CocoonFormsInstance.getChild('referenceLanguageVersion').value == 'live'}">live</jx:if> major changes
+              </jx:when>
+              <jx:when test="${refLangId != '' and language.id != refLangId and variant.valueList[syncedWithLangPos] != '' and java.lang.Long.parseLong(variant.valueList[syncedWithMajorChangePos]) > java.lang.Long.parseLong(variant.valueList[syncedWithVersionIdPos])}">
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-warn"/>
+                not in sync.
+              </jx:when>
+              <jx:otherwise>
+                <jx:attribute name="class" value="dsy-tmstate dsy-tmstate-ok"/>
+              </jx:otherwise>
+            </jx:choose></td>
+          </jx:forEach>
+        </tr>
+      </jx:forEach>
+    </tbody>
+  </table>
+  
+</div>

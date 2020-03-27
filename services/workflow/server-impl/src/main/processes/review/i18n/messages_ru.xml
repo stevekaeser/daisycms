@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Общие задания</message>
+  <message key="generictask.description">Решение всех видов заданий, котрые не были решены другими вариантами решений ранее</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Документ</message>
+  <message key="variable.document.description">Если задание связано с каким- либо документом, можете задать его здесь.</message>
+  <message key="variable.details.label">Детальное описание</message>
+  <message key="variable.details.description">Опишите здесь, что должно быть сделано.</message>
+  <message key="variable.workerComment.label">Комментарии обработчика</message>
+  <message key="variable.workerComment.description">Комментарии выполняющего задание.</message>
+  <message key="variable.feedbackComment.label">Отзыв</message>
+  <message key="variable.needsConfirmation.label">Необходимо подтверждение</message>
+  <message key="variable.needsConfirmation.description">Отметить, если хотите получить информацию в Ваш ящик, что задание выполнено.</message>
+  <message key="variable.worker.label">Обработчик задания</message>
+  <message key="variable.reviewSubmitComment.label">Комментарии к просмотру</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Пуск общих заданий</message>
+  <message key="startTask.description">Пожалуйста, дайте необходимую информацию для общих заданий.</message>
+  <message key="performTask.label">Общие задания</message>
+  <message key="performTask.description">Вам предложат обработать нижеуказанные задания.</message>
+  <message key="feedbackTask.label">Отзыв к общим заданиям</message>
+  <message key="feedbackTask.description">На выполненные Вами задания будет дан следующий отзыв.</message>
+  <message key="finishedTask.label">Завершение общих заданий</message>
+  <message key="finishedTask.description">Здесь Вы будете проинформированы, что выполненные Вами задания завершены.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Рассылка заданий</message>
+  <message key="transition.failure">Отзыв к дающему задания</message>
+  <message key="transition.success">Завершить задание</message>
+  <message key="transition.performAgain">Еще раз выслать задание</message>
+  <message key="transition.end">Завершить задание</message>
+</catalogue>

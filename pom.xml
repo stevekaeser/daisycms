@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisy-parent</artifactId>
+  <version>2.4.2</version>
+  <name>Daisy</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <maven.version>2.2.1</maven.version>
+  </properties>
+
+  <scm>
+    <connection>scm:svn:http://svn.daisycms.org/repos/daisy</connection>
+    <developerConnection>scm:svn:https://svn.daisycms.org/repos/daisy</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://svn.daisycms.org/viewsvn/daisy/</url>
+  </scm>
+
+  <modules>
+    <module>bootstrap-dependencies</module>
+    <module>tools/daisybuild-maven-plugin</module>
+    <module>tools/artifacter</module>
+    <module>repository</module>
+    <module>services</module>
+    <module>install</module>
+    <module>applications</module>
+    <module>tools/daisy-maven-plugin</module>
+    <module>tools/archetypes/sample-project</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>daisycms-maven2</id>
+      <name>Daisycms maven2 repository</name>
+      <layout>default</layout>
+      <url>http://daisycms.org/maven/maven2/deploy</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>java.net</id>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>daisycms</id>
+      <name>daisycms</name>
+      <url>scp://daisycms.org/var/www/daisycms.org/maven/maven2/dev</url>
+    </repository>
+    <snapshotRepository>
+      <id>daisycms-snapshots</id>
+      <name>daisycms snapshots</name>
+      <url>scp://daisycms.org/var/www/daisycms.org/maven/maven2/dev</url>
+    </snapshotRepository>
+    <site>
+      <id>daisycms.website</id>
+      <name>daisycms.org Website</name>
+      <url>scp://daisycms.org/var/www/daisycms.org/maven-site/${project.version}/</url>
+    </site>
+  </distributionManagement>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-core</artifactId><version>4.1.2</version></dependency>
+      <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-jaas</artifactId><version>4.1.2</version></dependency>
+      <dependency><groupId>antlr</groupId><artifactId>antlr</artifactId><version>2.7.6</version></dependency>
+      <dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>asm</groupId><artifactId>asm-attrs</artifactId><version>1.5.3</version></dependency>
+      <dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>1.5.3</version></dependency>
+      <dependency>
+        <groupId>avalon-framework</groupId><artifactId>avalon-framework-api</artifactId><version>4.3</version>
+        <exclusions>
+          <exclusion><groupId>avalon-logkit</groupId><artifactId>avalon-logkit</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>avalon-framework</groupId><artifactId>avalon-framework-impl</artifactId><version>4.3</version>
+        <exclusions>
+          <exclusion><groupId>avalon-logkit</groupId><artifactId>avalon-logkit</artifactId></exclusion>
+          <exclusion><groupId>xalan</groupId><artifactId>xalan</artifactId></exclusion>
+          <exclusion><groupId>xml-apis</groupId><artifactId>xml-apis</artifactId></exclusion>
+          <exclusion><groupId>xml-apis</groupId><artifactId>xmlParserAPIs</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>backport-util-concurrent</groupId><artifactId>backport-util-concurrent</artifactId><version>2.1</version></dependency>
+      <dependency><groupId>bouncycastle</groupId><artifactId>bcmail-jdk14</artifactId><version>136</version></dependency>
+      <dependency><groupId>bouncycastle</groupId><artifactId>bcprov-jdk14</artifactId><version>136</version></dependency>
+      <dependency><groupId>bsh</groupId><artifactId>bsh</artifactId><version>1.3.0</version></dependency>
+      <dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.1_3</version></dependency>
+      <dependency><groupId>cocoon</groupId><artifactId>cocoon-wildcardhelper</artifactId><version>20031212</version></dependency>
+      <dependency><groupId>com.drewnoakes</groupId><artifactId>metadata-extractor</artifactId><version>2.3.0</version></dependency>
+      <dependency><groupId>commons-cli</groupId><artifactId>commons-cli</artifactId><version>1.1</version></dependency>
+      <dependency><groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>1.3</version></dependency>
+      <dependency><groupId>commons-collections</groupId><artifactId>commons-collections</artifactId><version>3.2</version></dependency>
+      <dependency><groupId>commons-configuration</groupId><artifactId>commons-configuration</artifactId><version>1.6</version></dependency>
+      <dependency>
+        <groupId>commons-dbcp</groupId><artifactId>commons-dbcp</artifactId><version>1.2</version>
+        <exclusions>
+          <exclusion><groupId>xml-apis</groupId><artifactId>xml-apis</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>commons-fileupload</groupId><artifactId>commons-fileupload</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>commons-httpclient</groupId><artifactId>commons-httpclient</artifactId><version>3.1</version></dependency>
+      <dependency><groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>1.4</version></dependency>
+      <dependency><groupId>commons-lang</groupId><artifactId>commons-lang</artifactId><version>2.2</version></dependency>
+      <dependency>
+        <groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1</version>
+        <exclusions>
+          <exclusion><groupId>avalon-framework</groupId><artifactId>avalon-framework</artifactId></exclusion>
+          <exclusion><groupId>logkit</groupId><artifactId>logkit</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>commons-pool</groupId><artifactId>commons-pool</artifactId><version>1.2</version></dependency>
+      <dependency><groupId>commons-primitives</groupId><artifactId>commons-primitives</artifactId><version>1.0</version></dependency>
+      <dependency>
+        <groupId>dom4j</groupId><artifactId>dom4j</artifactId><version>1.6.1</version>
+        <exclusions>
+          <exclusion><groupId>xml-apis</groupId><artifactId>xml-apis</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>commons-vfs</groupId><artifactId>commons-vfs</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>eclipse</groupId><artifactId>eclipse-core-runtime</artifactId><version>20070801</version></dependency>
+      <dependency><groupId>net.sf.ehcache</groupId><artifactId>ehcache</artifactId><version>1.2.4</version></dependency>
+      <dependency><groupId>excalibur-configuration</groupId><artifactId>excalibur-configuration</artifactId><version>1.2</version></dependency>
+      <dependency><groupId>org.apache.geronimo.specs</groupId><artifactId>geronimo-jms_1.1_spec</artifactId><version>1.1.1</version></dependency>
+      <dependency><groupId>org.apache.geronimo.specs</groupId><artifactId>geronimo-jta_1.0.1B_spec</artifactId><version>1.1.1</version></dependency>
+      <dependency><groupId>net.java.dev.javacc</groupId><artifactId>javacc</artifactId><version>4.0</version></dependency>
+      <dependency><groupId>javax.annotation</groupId><artifactId>jsr250-api</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>javax.mail</groupId><artifactId>mail</artifactId><version>1.4</version></dependency>
+      <dependency><groupId>javax.servlet</groupId><artifactId>servlet-api</artifactId><version>2.4</version></dependency>
+      <dependency>
+        <groupId>jaxen</groupId><artifactId>jaxen</artifactId><version>1.1-beta-4</version>
+        <exclusions>
+          <exclusion><groupId>xom</groupId><artifactId>xom</artifactId></exclusion>
+          <exclusion><groupId>jdom</groupId><artifactId>jdom</artifactId></exclusion>
+          <exclusion><groupId>xerces</groupId><artifactId>xmlParserAPIs</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>jbpm</groupId><artifactId>jbpm-identity</artifactId><version>3.2</version></dependency>
+      <dependency><groupId>jbpm</groupId><artifactId>jbpm-jpdl</artifactId><version>3.2</version></dependency>
+      <dependency><groupId>jbpm</groupId><artifactId>jbpm.sar.cfg</artifactId><version>3.2</version></dependency>
+      <dependency><groupId>javax.sql</groupId><artifactId>jdbc-stdext</artifactId><version>2.0</version></dependency>
+      <dependency><groupId>joda-time</groupId><artifactId>joda-time</artifactId><version>1.6</version><scope>compile</scope></dependency>
+      <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.2</version><scope>test</scope></dependency>
+      <dependency><groupId>log4j</groupId><artifactId>log4j</artifactId><version>1.2.14</version></dependency>
+      <dependency><groupId>mx4j</groupId><artifactId>mx4j-remote</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>mx4j</groupId><artifactId>mx4j-tools</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>mx4j</groupId><artifactId>mx4j</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>3.1.12</version></dependency>
+      <dependency><groupId>nekohtml</groupId><artifactId>nekodtd</artifactId><version>0.1.11</version></dependency>
+      <dependency><groupId>nekohtml</groupId><artifactId>nekohtml</artifactId><version>0.9.5</version></dependency>
+      <dependency><groupId>org.apache.cocoon</groupId><artifactId>cocoon-maven-plugin</artifactId><version>1.0.0-M3</version></dependency>
+      <dependency><groupId>org.apache.commons</groupId><artifactId>commons-compress</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>org.apache.geronimo.specs</groupId><artifactId>geronimo-j2ee-management_1.0_spec</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>org.apache.lucene</groupId><artifactId>lucene-core</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>org.apache.lucene</groupId><artifactId>lucene-highlighter</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>org.apache.lucene</groupId><artifactId>lucene-analyzers</artifactId><version>3.0.1</version></dependency>
+      <dependency><groupId>org.apache.maven.wagon</groupId><artifactId>wagon-provider-api</artifactId><version>1.0-beta-6</version></dependency>
+      <dependency><groupId>org.apache.maven.shared</groupId><artifactId>maven-common-artifact-filters</artifactId><version>1.2</version></dependency>
+      <dependency><groupId>org.apache.ant</groupId><artifactId>ant</artifactId><version>1.7.1</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact-manager</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-model</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-plugin-api</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-project</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-script-ant</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.apache.maven</groupId><artifactId>maven-settings</artifactId><version>${maven.version}</version></dependency>
+      <dependency><groupId>org.codehaus.plexus</groupId><artifactId>plexus-utils</artifactId><version>1.5.6</version></dependency>
+      <dependency><groupId>org.codehaus.plexus</groupId><artifactId>plexus-archiver</artifactId><version>1.0-alpha-12</version></dependency>
+      <dependency><groupId>org.fontbox</groupId><artifactId>fontbox</artifactId><version>0.1.0-dev</version></dependency>
+      <dependency><groupId>org.freemarker</groupId><artifactId>freemarker</artifactId><version>2.3.16</version></dependency>
+      <dependency><groupId>org.hibernate</groupId><artifactId>hibernate</artifactId><version>3.2.1.ga</version></dependency>
+      <dependency><groupId>org.mortbay.jetty</groupId><artifactId>jetty-util</artifactId><version>6.1.9</version></dependency>
+      <dependency><groupId>org.mortbay.jetty</groupId><artifactId>jetty</artifactId><version>6.1.9</version></dependency>
+      <dependency><groupId>org.samba.jcifs</groupId><artifactId>jcifs</artifactId><version>1.1.11</version></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>jcl104-over-slf4j</artifactId><version>1.4.0</version></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId><version>1.4.0</version></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jcl</artifactId><version>1.4.0</version></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-log4j12</artifactId><version>1.4.0</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>2.5</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>2.5</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>2.5</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>2.5</version></dependency>
+      <dependency><groupId>pdfbox</groupId><artifactId>pdfbox</artifactId><version>0.7.3</version></dependency>
+      <dependency><groupId>org.apache.poi</groupId><artifactId>poi-scratchpad</artifactId><version>3.0.1-FINAL</version></dependency>
+      <dependency><groupId>org.apache.poi</groupId><artifactId>poi</artifactId><version>3.0.1-FINAL</version></dependency>
+      <dependency><groupId>postgresql</groupId><artifactId>postgresql</artifactId><version>7.4-216.jdbc3</version></dependency>
+      <dependency><groupId>rhino</groupId><artifactId>js</artifactId><version>1.6R5</version></dependency>
+      <dependency><groupId>saxpath</groupId><artifactId>saxpath</artifactId><version>1.0-FCS</version></dependency>
+      <dependency><groupId>stax</groupId><artifactId>stax-api</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>torque</groupId><artifactId>torque-gen</artifactId><version>3.1.1</version></dependency>
+      <dependency><groupId>torque</groupId><artifactId>torque</artifactId><version>3.1.1</version></dependency>
+      <dependency>
+        <groupId>org.apache.xbean</groupId><artifactId>xbean-spring</artifactId><version>2.7</version>
+        <exclusions>
+          <exclusion><groupId>org.springframework</groupId><artifactId>xbean-spring</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>xerces</groupId><artifactId>xercesImpl</artifactId><version>2.9.0</version>
+        <exclusions>
+          <exclusion><groupId>xerces</groupId><artifactId>xerces</artifactId></exclusion>
+        </exclusions>
+      </dependency>
+      <dependency><groupId>xmlbeans</groupId><artifactId>xbean</artifactId><version>2.1.0</version></dependency>
+      <dependency><groupId>xmlbeans</groupId><artifactId>xmlpublic</artifactId><version>2.1.0</version></dependency>
+      <dependency><groupId>xpp3</groupId><artifactId>xpp3_min</artifactId><version>1.1.3.4-RC8</version></dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin><!-- this plugin serves no goal but to make sure ant-nodeps is downloaded. grep for MNG-1323 -->
+        <artifactId>maven-antrun-plugin</artifactId>
+        <configuration/>
+        <dependencies>
+          <dependency><groupId>org.apache.ant</groupId><artifactId>ant-nodeps</artifactId><version>1.7.1</version></dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-one-plugin</artifactId>
+          <inherited>true</inherited>
+          <executions>
+            <execution>
+              <goals>
+                <goal>install-maven-one-repository</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <configuration>
+            <buildOutputDirectory>target/eclipsebin</buildOutputDirectory>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>xmlbeans-maven-plugin</artifactId>
+          <version>2.3.3</version>
+          <executions>
+             <execution>
+                <goals>
+                   <goal>xmlbeans</goal>
+                </goals>
+             </execution>
+          </executions>
+          <inherited>true</inherited>
+          <configuration>
+             <javaSource>1.5</javaSource>
+             <sourceGenerationDirectory>${project.build.directory}/generated-sources</sourceGenerationDirectory>
+          </configuration>
+          <dependencies>
+            <dependency><groupId>xmlbeans</groupId><artifactId>xbean</artifactId><version>2.1.0</version></dependency>
+            <dependency><groupId>xmlbeans</groupId><artifactId>xmlpublic</artifactId><version>2.1.0</version></dependency>
+            <dependency><groupId>stax</groupId><artifactId>stax-api</artifactId><version>1.0</version></dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.1.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- TODO: put xmlschema-binding jars and services/util jars on classpath? -->
+          <show>public</show>
+          <doctitle>Daisy ${project.version} API</doctitle>
+          <header>&lt;a href="http://www.daisycms.org"&gt;Daisy Open Sourced CMS&lt;/a&gt;</header>
+          <footer>&lt;a href="http://www.daisycms.org"&gt;Daisy Open Sourced CMS&lt;/a&gt;</footer>
+          <maxmemory>1024m</maxmemory>
+
+          <links>
+            <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+            <link>http://java.sun.com/javaee/5/docs/api/</link>
+            <link>http://xmlbeans.apache.org/docs/2.2.0/reference/</link>
+            <link>http://excalibur.apache.org/apidocs/</link>
+          </links>
+
+          <groups>
+            <group>
+              <title>Core repository</title>
+              <packages>org.outerj.daisy.repository:org.outerj.daisy.repository.acl:org.outerj.daisy.repository.comment:org.outerj.daisy.repository.namespace:org.outerj.daisy.repository.query:org.outerj.daisy.repository.schema:org.outerj.daisy.repository.user:org.outerj.daisy.repository.variant</packages>
+            </group>
+
+            <group>
+              <title>Plugin registry</title>
+              <packages>org.outerj.daisy.plugin</packages>
+            </group>
+
+            <group>
+              <title>Repository extensions</title>
+              <packages>org.outerj.daisy.workflow:org.outerj.daisy.publisher:org.outerj.daisy.navigation:org.outerj.daisy.doctaskrunner:org.outerj.daisy.emailer:org.outerj.daisy.emailnotifier</packages>
+            </group>
+
+            <group>
+              <title>Utilities</title>
+              <packages>org.outerj.daisy.htmlcleaner:org.outerj.daisy.tools.importexport</packages>
+            </group>
+
+            <group>
+              <title>Repository SPI (Service Provider Interface)</title>
+              <packages>org.outerj.daisy.repository.spi</packages>
+            </group>
+
+            <group>
+              <title>Server SPI (= SPI only available inside repository JVM)</title>
+              <packages>org.outerj.daisy.authentication.spi:org.outerj.daisy.backuplock.spi:org.outerj.daisy.httpconnector.spi:org.outerj.daisy.repository.spi.local</packages>
+            </group>
+
+            <group>
+              <title>Components that could be relevant to plugins</title>
+              <packages>org.outerj.daisy.linkextraction:org.outerj.daisy.textextraction:org.outerj.daisy.configuration:org.outerj.daisy.jms</packages>
+            </group>
+          </groups>
+        </configuration>
+       
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

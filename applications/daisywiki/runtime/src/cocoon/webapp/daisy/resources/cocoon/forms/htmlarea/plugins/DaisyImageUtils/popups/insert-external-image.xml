@@ -1,0 +1,89 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>externalimage.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+        DaisyImageUtils = window.opener.DaisyImageUtils;
+        i18n = DaisyImageUtils.I18N;
+
+        function Init() {
+            daisy.dialog.translate(i18n);
+            daisy.dialog.sizeAndPosition();
+        }
+
+        dojo.addOnLoad(Init);
+
+        function preview() {
+            var imageURL = document.getElementById("imageURL").value;
+            if (imageURL == "") {
+                alert(i18n["externalimage.empty-url"]);
+                return;
+            }
+            window.daisyImagePreview.location.replace(imageURL);
+        }
+
+        function insertImage() {
+            var imageURL = document.getElementById("imageURL").value;
+            if (imageURL == "") {
+                alert(i18n["externalimage.empty-url"]);
+                return;
+            }
+            var params = new Object();
+            params.imageURL = imageURL;
+            daisy.dialog.close(params);
+        }
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">externalimage.title</div>
+
+    <table class="dsyfrm-table">
+      <tbody>
+        <tr>
+          <td class="dsyfrm-labelcell dsy-nowrap">externalimage.enter-url</td>
+          <td class="dsyfrm-widgetcell"><input id="imageURL" name="imageURL" style="width:280px"/></td>
+        </tr>
+        <tr>
+          <td/>
+          <td class="dsyfrm-widgetcell">
+            <button type="button" onclick="preview()">externalimage.preview</button>&#160;
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br/>
+    <br/>
+    <span>externalimage.image-preview</span>
+    <br/>
+    <iframe name="daisyImagePreview" id="daisyImagePreview" frameborder="0" style="border : 1px solid gray; background-color: white;" height="300" width="100%" src=""></iframe>
+
+    <div class="dsydlg-buttons">
+      <button type="button" onclick="insertImage()" class="dsyfrm-primaryaction">externalimage.insert-image</button>
+      &#160;
+      <button type="button" onclick="daisy.dialog.close(null); return false;">cancel</button>
+    </div>
+  </content>
+</page>

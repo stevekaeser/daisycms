@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Generic task</message>
+  <message key="generictask.description">A workflow for any sort of task not covered by other workflows</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Document</message>
+  <message key="variable.document.description">If this task is related to a document, you can specify it here.</message>
+  <message key="variable.details.label">Detailed description</message>
+  <message key="variable.details.description">Explain here what should be done.</message>
+  <message key="variable.workerComment.label">Worker comment</message>
+  <message key="variable.workerComment.description">Some comments by the person who performs the task.</message>
+  <message key="variable.feedbackComment.label">Feedback</message>
+  <message key="variable.needsConfirmation.label">Needs confirmation</message>
+  <message key="variable.needsConfirmation.description">Enable this if you want to be notified (via your task inbox) when the task is finished.</message>
+  <message key="variable.worker.label">Task worker</message>
+  <message key="variable.reviewSubmitComment.label">Review comment</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Start generic task</message>
+  <message key="startTask.description">Please provide the required information for the generic task.</message>
+  <message key="performTask.label">Generic task</message>
+  <message key="performTask.description">You are requested to perform the task outlined below.</message>
+  <message key="feedbackTask.label">Generic task feedback</message>
+  <message key="feedbackTask.description">The following feedback is provided on the task you created.</message>
+  <message key="finishedTask.label">Generic task finished</message>
+  <message key="finishedTask.description">This is to inform you that the task you created has been finished.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Submit task</message>
+  <message key="transition.failure">Provide feedback to task submitter</message>
+  <message key="transition.success">End task</message>
+  <message key="transition.performAgain">Submit task again</message>
+  <message key="transition.end">End task</message>
+</catalogue>

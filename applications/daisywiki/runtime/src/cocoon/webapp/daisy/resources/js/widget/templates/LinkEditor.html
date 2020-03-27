@@ -1,0 +1,64 @@
+<span>
+    <input style="display:none" dojoAttachPoint="input"/>
+
+    <span style="white-space: nowrap;">
+        <span dojoAttachPoint="documentLabel" style='cursor: pointer;'>&#160;</span>
+        <img src="${this.dropdownIcon}" alt="[v]" dojoAttachPoint="dropdownButton"
+                style='vertical-align: middle; cursor: pointer;'/>
+    </span>
+
+    <span style="white-space: nowrap;">
+        <span dojoAttachPoint="versionLabel" style="cursor: pointer">&#160;</span>
+        <img src="${this.dropdownIcon}" alt="[v]" dojoAttachPoint="versionButton"
+                style='vertical-align: middle; cursor: pointer;'/>
+    </span>
+
+    <span style="white-space: nowrap;">
+        <span dojoAttachPoint="fragmentIdLabel" style="cursor: pointer">&#160;</span>
+        <img src="${this.dropdownIcon}" alt="[v]" dojoAttachPoint="fragmentIdButton"
+                style='vertical-align: middle; cursor: pointer;'/>
+    </span>
+
+    <div dojoAttachPoint="docPopupContent" class="LinkEditorPopup" style="display: none;">
+        <div>
+            <input style="width: 15em;" dojoAttachPoint="linkInput"/>&#160;<button dojoAttachPoint="inputOkButton">OK</button>
+        </div>
+        <div class="LinkEditorPopupActions">
+            <span dojoAttachPoint="browseButtonSpan">
+                <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="browseButton">Browse for document</a>
+                |
+            </span>
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="viewButton">View</a>
+            |
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="editButton">Edit</a>
+        </div>
+        <div class="LinkEditorDocumentInfo" dojoAttachPoint="documentInfo">
+        </div>
+    </div>
+
+    <div dojoAttachPoint="versionsPopupContent" class="LinkEditorVersionsPopup" style="display: none">
+        <div class="LinkEditorVersionsPopupActions">
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="noVersionButton">None</a>
+            |
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="liveVersionButton">Live</a>
+            |
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="dateVersionButton">@Date</a>
+            |
+            <a href="javascript:void(0)" class="LinkEditorActionLink" dojoAttachPoint="lastVersionButton">Last</a>
+        </div>
+        <div class="LinkEditorVersionsList" dojoAttachPoint="versionsList">
+
+        </div>
+        <div class="LinkEditorDatePicker" dojoAttachPoint="datePickerContent">
+        </div>
+    </div>
+    
+    <div dojoAttachPoint="fragmentIdPopupContent" class="LinkEditorFragmentIdPopup" style="display: none">
+        <div style="white-space: nowrap">
+            <input name="boe" style="width: 15em;" dojoAttachPoint="fragmentIdInput"/>&#160;<button dojoAttachPoint="fragmentIdOkButton">OK</button>
+        </div>
+        <div class="LinkEditorFragmentIdList" dojoAttachPoint="fragmentIdList">
+
+        </div>
+    </div>
+</span>

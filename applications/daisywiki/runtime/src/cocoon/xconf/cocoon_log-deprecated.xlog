@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<xlog xpath="/logkit/targets/cocoon[@id='deprecation']/filename"
+      remove="/logkit/targets/cocoon[@id='deprecation']/filename/text()"
+      >$${daisywiki.data}/logs/deprecation.log</xlog>

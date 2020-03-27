@@ -1,0 +1,25 @@
+@import url("layout.css");
+@import url("navigation.css");
+@import url("extras.css");
+@import url("docstyle.css");
+@import url("workflow.css");
+
+/* 
+When printing:
+- hide the navigation, wiki-menu and 
+- reposition the content
+*/
+@media print
+{
+  #header, #documentNavigation, #generalNavigation
+  {
+    display: none !important;
+  }
+
+  #content
+  {
+    margin-left: 1em;
+    padding: 0em;
+    border-left: none;
+  }
+}

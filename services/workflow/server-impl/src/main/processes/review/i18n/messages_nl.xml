@@ -1,0 +1,50 @@
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="review.label">Beoordeling</message>
+  <message key="review.description">Een workflow om een document te beoordelen</message>
+
+    <!-- Variables -->
+    <message key="variable.document.label">Document om na te kijken</message>
+    <message key="variable.reviewSubmitComment.label">Commentaar beoordeling nakijken</message>
+    <message key="variable.reviewSubmitComment.description">Commentaar voor de beoordelaar</message>
+    <message key="variable.reviewer.label">Beoordelaar</message>
+    <message key="variable.fixComment.label">Commentaar na aanpassing</message>
+    <message key="variable.fixComment.description">Commentaar van de workflow auteur na aanpassing van het document gebaseerd op het commentaar van de beoordelaar.</message>
+    <message key="variable.reviewComment.label">Commentaar beoordeling</message>
+    <message key="variable.reviewComment.description">Commentaar van de beoordelaar</message>
+    
+    <!-- Tasks -->
+    <message key="startReviewTask.label">Start beoordeling</message>
+    <message key="startReviewTask.description">Geef a.u.b. de parameters die nodig zijn om het document te beoordelen.</message>
+    <message key="reviewTask.label">Beoordeling</message>
+    <message key="reviewTask.description">Je bent uitgenodigd om een document te beoordelen.</message>
+    <message key="requestChangesTask.label">Beoordeel wijzigingsvoorstel</message>
+    <message key="requestChangesTask.description">Je wordt verzocht om het document aan te passen en opnieuw ter beoordeling aan te bieden.</message>
+    <message key="rejectedTask.label">Beoordeling afgewezen</message>
+    <message key="rejectedTask.description">Dit is om aan te geven dat het verzoek om een document te beoordelen is afgewezen.</message>
+    
+    <!-- Transitions -->
+    <message key="transition.request-review">Verzoek om beoordeling</message>
+    <message key="transition.publish">Publiceer document</message>
+    <message key="transition.endReview">Beëindig beoordeling</message>
+    <message key="transition.request-changes">Verzoek om wijzigingen</message>
+    <message key="transition.reject">Afwijzen</message>
+    <message key="transition.request-new-review">Verzoek nieuwe beoordeling</message>
+    <message key="transition.give-up">Opgeven</message>
+    <message key="transition.confirm">Bevestig</message>
+    
+</catalogue>

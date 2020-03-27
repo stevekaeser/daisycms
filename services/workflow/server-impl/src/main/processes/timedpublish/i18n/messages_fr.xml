@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="timedpublish.label">Publication temporisée</message>
+  <message key="timedpublish.description">Un workflow pour mettre un document automatiquement en ligne à une échéance déterminée.</message>
+
+  <message key="startTimedPublishTask.label">Démarrer publication temporisée</message>
+  <message key="startTimedPublishTask.description">Le document spécifié sera mis en ligne à l'échance choisie.</message>
+  <message key="transition.start-timer">Démarrer le temporisateur</message>
+
+  <message key="variable.daisy_document.description">Le document à mettre en ligne. Il est recommandé de préciser une version; si elle n'est pas précisée, c'est la dernière version qui sera mise en ligne.</message>
+
+  <message key="variable.publishTime.label">Echéance de la publication</message>
+  <message key="variable.publishTime.description">Date et heure à laquelle le document doit être mis en ligne. Il devrait bien sûr s'agir d'une date future.</message>
+</catalogue>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+     xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+     xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+     xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:if test='${CocoonFormsInstance.getChild("additionalParts").getSize() &gt; 0}'>
+    <br/>
+    <h3><i18n:text key="editdoc.extra-parts"/></h3>
+    <table class="default">
+      <tr>
+        <th><ft:repeater-widget-label id="additionalParts" widget-id="typeId"/></th>
+        <th><ft:repeater-widget-label id="additionalParts" widget-id="label"/></th>
+        <th><ft:repeater-widget-label id="additionalParts" widget-id="mimeType"/></th>
+        <th><ft:repeater-widget-label id="additionalParts" widget-id="size"/></th>
+        <th><ft:repeater-widget-label id="additionalParts" widget-id="delete"/></th>
+      </tr>
+      <ft:repeater-widget id="additionalParts">
+        <tr>
+          <td><ft:widget id="typeId"/></td>
+          <td><ft:widget id="label"/></td>
+          <td><ft:widget id="mimeType"/></td>
+          <td><ft:widget id="size"/></td>
+          <td><ft:widget id="delete"/></td>
+        </tr>
+      </ft:repeater-widget>
+    </table>
+    <br/>
+  </jx:if>
+
+  <jx:if test='${CocoonFormsInstance.getChild("additionalFields").getSize() &gt; 0}'>
+    <br/>
+    <h3><i18n:text key="editdoc.extra-fields"/></h3>
+    <table class="default">
+      <tr>
+        <th><ft:repeater-widget-label id="additionalFields" widget-id="typeId"/></th>
+        <th><ft:repeater-widget-label id="additionalFields" widget-id="label"/></th>
+        <th><ft:repeater-widget-label id="additionalFields" widget-id="value"/></th>
+        <th><ft:repeater-widget-label id="additionalFields" widget-id="delete"/></th>
+      </tr>
+      <ft:repeater-widget id="additionalFields">
+        <tr>
+          <td><ft:widget id="typeId"/></td>
+          <td><ft:widget id="label"/></td>
+          <td><ft:widget id="value"/></td>
+          <td><ft:widget id="delete"/></td>
+        </tr>
+      </ft:repeater-widget>
+    </table>
+    <br/>
+  </jx:if>
+
+</div>

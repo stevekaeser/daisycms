@@ -1,0 +1,432 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>tablesettings.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+
+        DaisyMisc = window.opener.DaisyMisc;
+        i18n = DaisyMisc.I18N;
+
+        var valueWithUnitRegExp = /^([0-9.]*)([a-z%*]*)$/;
+        var valueRegExp = /^[0-9.]*$/
+
+        function Init() {
+            daisy.dialog.translate(i18n);
+            daisy.dialog.init();
+
+            // initialize content
+            var params = window.dialogArguments;
+            initAlign(params.align);
+            setDimension("printTableWidth", params.printWidth);
+            setDimension("screenTableWidth", params.screenWidth);
+            initColumns("printColumnNumber", params.columnCount);
+            initColumns("screenColumnNumber", params.columnCount);
+
+            parseColumnWidths(params.printColumnWidths, "print", params.columnCount);
+            initColumn("print");
+            if (params.printColumnWidths == null || params.printColumnWidths == "") {
+                setUseDefaultWidths("print", true);
+            } else {
+                setUseDefaultWidths("print", false);
+            }
+
+            parseColumnWidths(params.screenColumnWidths, "screen", params.columnCount);
+            initColumn("screen");
+            if (params.screenColumnWidths == null || params.screenColumnWidths == "") {
+                setUseDefaultWidths("screen", true);
+            } else {
+                setUseDefaultWidths("screen", false);
+            }
+
+            if (params.tableCaption != undefined && params.tableCaption != "") {
+              document.getElementById("tableCaption").value = params.tableCaption;
+            }
+            if (params.tableType != undefined && params.tableType != "") {
+              document.getElementById("tableType").value = params.tableType;
+            }
+
+            if (params.classes != null)
+              dojo.widget.byId("classes").setValue(params.classes);
+
+            daisy.dialog.sizeAndPosition();
+         }
+
+         dojo.addOnLoad(Init);
+
+         function initAlign(align) {
+             if (align == "left")
+                document.getElementById("tableAlignLeft").checked = true;
+             else if (align == "center")
+                 document.getElementById("tableAlignCenter").checked = true;
+             else if (align == "right")
+                 document.getElementById("tableAlignRight").checked = true;
+             else
+                 document.getElementById("tableAlignDefault").checked = true;
+         }
+
+         function initColumns(selectId, columnCount) {
+             var select = document.getElementById(selectId);
+             for (var i = 0; i < columnCount; i++) {
+                 var value = String(i + 1);
+                 select.options[i] = new Option(value, value);
+             }
+         }
+
+         function setUseDefaultWidths(what, value) {
+             document.getElementById(what + "UseDefaultWidths").checked = value;
+             document.getElementById(what + "ColumnNumber").disabled = value;
+             document.getElementById(what + "ColumnWidth").disabled = value;
+             document.getElementById(what + "ColumnWidthUnit").disabled = value;
+         }
+
+         function parseColumnWidths(columnWidths, name, columnCount) {
+             if (columnWidths == null)
+                columnWidths = "";
+             var widths = columnWidths.split(";", columnCount);
+
+             for (var i = 0; i < widths.length; i++) {
+                if (!widths[i].match(valueWithUnitRegExp)) {
+                    widths[i] = null;
+                }
+             }
+
+             var prop = name + "ColumnWidths";
+             this[prop] = widths;
+         }
+
+         function initColumn(name) {
+             var prop = name + "ColumnWidths";
+             var value = this[prop][0];
+             this[name + "SelectedColumn"] = 1;
+
+             var inputName = name + "ColumnWidth";
+             setDimension(inputName, value);
+
+             document.getElementById(name + "ColumnNumber").selectedIndex = 0;
+         }
+
+        function switchColumn(name) {
+            if (document.getElementById(name + "UseDefaultWidths").disabled)
+                return true;
+
+            var inputName = name + "ColumnWidth";
+            var input = document.getElementById(inputName);
+            var unitSelect = document.getElementById(name + "ColumnWidthUnit");
+            var columnSelect = document.getElementById(name + "ColumnNumber");
+            var oldSelectedColumn = this[name + "SelectedColumn"];
+
+            // check value
+            if (input.value != null && !input.value.match(valueRegExp)) {
+                alert(DaisyMisc.I18N["tablesettings.invalid-column-width"]);
+                columnSelect.selectedIndex = oldSelectedColumn - 1;
+                input.focus();
+                return false;
+            }
+
+            // store value
+            this[name + "ColumnWidths"][oldSelectedColumn - 1] = getDimension(inputName, name == "screen");
+
+            // retrieve value
+            setDimension(inputName, this[name + "ColumnWidths"][columnSelect.selectedIndex]);
+            this[name + "SelectedColumn"] = columnSelect.selectedIndex + 1;
+        }
+
+        function validateColumnWidth(name) {
+            if (document.getElementById(name + "UseDefaultWidths").disabled)
+                return true;
+
+            var input = document.getElementById(name + "ColumnWidth");
+            if (input.value != null && !input.value.match(valueRegExp)) {
+                alert(DaisyMisc.I18N["tablesettings.invalid-column-width"]);
+                input.focus();
+                return false;
+            }
+            return true;
+        }
+
+        function validateTableWidth(name) {
+            var input = document.getElementById(name + "TableWidth");
+            if (input.value != null && !input.value.match(valueRegExp)) {
+                alert(DaisyMisc.I18N["tablesettings.invalid-table-width"]);
+                input.focus();
+                return false;
+            }
+            return true;
+        }
+
+        function ok() {
+            if (!validateColumnWidth("screen"))
+                return;
+            if (!validateColumnWidth("print"))
+                return;
+            if (!validateTableWidth("screen"))
+                return;
+            if (!validateTableWidth("print"))
+                return;
+
+            // make sure latest edited column values are stored
+            switchColumn("print");
+            switchColumn("screen");
+
+            var params = new Object();
+            params.printColumnWidths = getColumnWidths("print");
+            params.screenColumnWidths = getColumnWidths("screen");
+            if (params.screenColumnWidths != null)
+                params.screenColumnWidthsArray = this.screenColumnWidths;
+
+            params.printWidth = getDimension("printTableWidth", false);
+            params.screenWidth = getDimension("screenTableWidth", true);
+
+            var captionInput = document.getElementById("tableCaption");
+            if (captionInput.value != null && captionInput.value != "")
+                params.tableCaption = captionInput.value;
+
+            var typeInput = document.getElementById("tableType");
+            if (typeInput.value != null && typeInput.value != "")
+                params.tableType = typeInput.value;
+
+            if (document.getElementById("tableAlignLeft").checked)
+                params.align = "left";
+            else if (document.getElementById("tableAlignCenter").checked)
+                params.align = "center";
+            else if (document.getElementById("tableAlignRight").checked)
+                params.align = "right";
+
+            params.classes = dojo.widget.byId("classes").getValue();
+
+            daisy.dialog.close(params);
+        }
+
+        function getColumnWidths(name) {
+            if (document.getElementById(name + "UseDefaultWidths").checked)
+                return null;
+            else
+                return this[name + "ColumnWidths"].join(";");
+        }
+
+        function setDimension(name, value) {
+            value = new String(value);
+            if (value != null && value.match(valueWithUnitRegExp)) {
+                document.getElementById(name).value = RegExp.$1;
+                var unit = RegExp.$2;
+                if (unit == null || unit == "")
+                    unit = "px";
+                setSelectValue(name + "Unit", RegExp.$2);
+            } else {
+                document.getElementById(name).value = "";
+                document.getElementById(name + "Unit").selectedIndex = 0;
+            }
+        }
+
+        function setSelectValue(selectId, value) {
+          var select = document.getElementById(selectId);
+          for (var i = 0; i < select.options.length; i++) {
+            var option = select.options[i];
+            if (option.value == value) {
+              option.selected = true;
+            }
+          }
+        }
+
+        function checkDimension(name) {
+          var value = document.getElementById(name).value;
+          if (value != "" && !value.match(valueRegExp)) {
+            alert(DaisyMisc.I18N["tablesettings.invalid-size-value"]);
+            document.getElementById(name).focus();
+            return false;
+          }
+          return true;
+        }
+
+        function getDimension(name, isHtml) {
+          var value = document.getElementById(name).value;
+          if (value != null && value != "") {
+            var unit = getSelectValue(name + "Unit");
+            if (isHtml && unit == "px")
+               return value;
+            else
+              return value + unit;
+          }
+          return null;
+        }
+
+        function getSelectValue(name) {
+          var select = document.getElementById(name);
+          for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].selected)
+             return select.options[i].value;
+          }
+        }
+
+        function onCancel() {
+          daisy.dialog.close(null);
+          return false;
+        }
+
+        dojo.require("dojo.widget.ComboBox");
+        dojo.declare(
+          "daisy.editor.tableClassesProvider",
+          dojo.widget.basicComboBoxDataProvider,
+
+        	function(/*Object*/ options, /*DomNode*/ node) {
+            this._data = [];
+            this.searchLimit = 30;
+            this.searchType = "STARTSTRING";
+            this.caseSensitive = false;
+            this._getData();
+        	},
+
+        	{
+        	    _getData: function() {
+                dojo.io.bind({
+                  url: daisy.mountPoint + "/resources/skins/" + daisy.skin + "/table-classes.xml",
+                  load: dojo.lang.hitch(this, function(type, data, evt) {
+                    var newData = [];
+
+                    var classEl = dojo.dom.firstElement(data.documentElement, "class");
+                    while (classEl != null) {
+                        var className = dojo.dom.textContent(classEl);
+                        newData.push([className]);
+                        classEl = dojo.dom.nextElement(classEl, "class");
+                    }
+
+                    this.setData(newData);
+                  }),
+                  mimetype: "text/xml"
+                });
+        	    },
+
+              startSearch: function(/*String*/ searchStr, /*Function*/ callback) {
+      		      daisy.editor.tableClassesProvider.superclass.startSearch.apply(this, arguments);
+      		    }
+		      }
+        );
+
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">tablesettings.title</div>
+
+    <form>
+      <div class="dsydlg-subtitle">tablesettings.alignment-title</div>
+      <div style="white-space: nowrap">
+        <span>tablesettings.alignment</span>
+        <input type="radio" name="tableAlign" id="tableAlignDefault" value=""/> <label for="tableAlignDefault"><span>tablesettings.align-default</span></label>
+        <input type="radio" name="tableAlign" id="tableAlignLeft" value="left"/> <label for="tableAlignLeft"><span>tablesettings.align-left</span></label>
+        <input type="radio" name="tableAlign" id="tableAlignCenter" value="center"/> <label for="tableAlignCenter"><span>tablesettings.align-center</span></label>
+        <input type="radio" name="tableAlign" id="tableAlignRight" value="right"/> <label for="tableAlignRight"><span>tablesettings.align-right</span></label>
+      </div>
+      <br/>
+
+      <div class="dsydlg-subtitle">tablesettings.print-sizes</div>
+      <div style="white-space: nowrap">
+        <span>tablesettings.table-width</span>:
+        <input id="printTableWidth" size="4"/>
+        <select id="printTableWidthUnit">
+          <option value="cm">cm</option>
+          <option value="mm">mm</option>
+          <option value="in">in</option>
+          <option value="pt">pt</option>
+          <option value="pc">pc</option>
+          <option value="px">px</option>
+          <option value="em">em</option>
+          <option value="%">%</option>
+        </select>
+      </div>
+      <br/>
+      <input type="checkbox" id="printUseDefaultWidths" onclick="setUseDefaultWidths('print', this.checked);"/><label for="printUseDefaultWidths"><span>tablesettings.use-default-column-widths</span></label>
+      <br/>
+      <span>tablesettings.column</span>
+      <select id="printColumnNumber" onchange="switchColumn('print')">
+      </select>
+      : <input type="text" size="4" id="printColumnWidth"/>
+      <select id="printColumnWidthUnit">
+        <option value="cm">cm</option>
+        <option value="mm">mm</option>
+        <option value="in">in</option>
+        <option value="pt">pt</option>
+        <option value="pc">pc</option>
+        <option value="px">px</option>
+        <option value="em">em</option>
+        <option value="%">%</option>
+        <option value="*">*</option>
+      </select>
+      <br/>
+      <br/>
+
+      <div class="dsydlg-subtitle">tablesettings.screen-sizes</div>
+        <span>tablesettings.table-width</span>:
+        <input id="screenTableWidth" size="4"/>
+        <select id="screenTableWidthUnit">
+          <option value="px">px</option>
+          <option value="%">%</option>
+        </select>
+        <br/>
+        <br/>
+        <input type="checkbox" id="screenUseDefaultWidths" onclick="setUseDefaultWidths('screen', this.checked);"/><label for="screenUseDefaultWidths"><span>tablesettings.use-default-column-widths</span></label>
+        <br/>
+        <span>tablesettings.column</span>
+        <select id="screenColumnNumber" onchange="switchColumn('screen')">
+        </select>
+        : <input type="text" size="4" id="screenColumnWidth"/>
+        <select id="screenColumnWidthUnit">
+          <option value="px">px</option>
+          <option value="%">%</option>
+            <option value="*">*</option>
+        </select>
+      <br/>
+      <br/>
+
+      <div class="dsydlg-subtitle">tablesettings.misc</div>
+      <table class="dsyfrm-table">
+        <tbody>
+          <tr>
+            <td class="dsyfrm-labelcell dsy-nowrap">tablesettings.table-caption</td>
+            <td class="dsyfrm-widgetcell">
+              <textarea id="tableCaption" rows="2" style="width: 25em;"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td class="dsyfrm-labelcell dsy-nowrap">tablesettings.table-type</td>
+            <td class="dsyfrm-widgetcell"><input type="text" id="tableType"  style="width: 15em;"/></td>
+          </tr>
+          <tr>
+            <td class="dsyfrm-labelcell dsy-nowrap">tablesettings.classes</td>
+            <td class="dsyfrm-widgetcell">
+              <input id="classes" name="classes" style="width: 15em;" dojoType="ComboBox" dataProviderClass="daisy.editor.tableClassesProvider"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="dsydlg-buttons">
+        <button type="button" onclick="ok()" class="dsyfrm-primaryaction">tablesettings.ok</button>
+        &#160;
+        <button type="button" onclick="onCancel()">tablesettings.cancel</button>
+      </div>
+    </form>
+  </content>
+</page>

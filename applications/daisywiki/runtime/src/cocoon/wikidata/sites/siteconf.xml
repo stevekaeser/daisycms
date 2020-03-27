@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<siteconf xmlns="http://outerx.org/daisy/1.0#siteconf">
+  <skin>default</skin>
+  <!--
+  <publisherRequestSet>default</publisherRequestSet>
+  -->
+</siteconf>

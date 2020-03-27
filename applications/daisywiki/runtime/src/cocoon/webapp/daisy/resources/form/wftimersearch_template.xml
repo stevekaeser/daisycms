@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="wfsearch.timer-search-title"/></pageTitle>
+  <layoutHints wideLayout="true"/>
+
+  <content>
+    <h1><i18n:text key="wfsearch.timer-search-title"/></h1>
+
+    <a href="tasks"><i18n:text key="wf.section.my-tasks"/></a>
+    | <a href="taskSearch"><i18n:text key="wf.section.search-tasks"/></a>
+    | <a href="processSearch"><i18n:text key="wf.section.search-processes"/></a>
+    | <i18n:text key="wf.section.search-timers"/>
+    <br/>
+    <br/>
+
+    <ft:form-template name="wfSearch" action="timerSearch" method="GET">
+      <fi:group>
+        <fi:styling layout="daisy-columns"/>
+        <fi:items>
+          <ft:widget id="processOwner" dojoType="daisy:UserSelector"/>
+          <ft:widget id="suspended"/>
+          <ft:widget id="failed"/>
+          <ft:widget id="document" fi:dojoType="daisy:LinkEditor"/>
+          <fi:widget-entry class="dsyfrm-primaryaction">
+            <ft:widget id="send" fi:class="dsyfrm-primaryaction"/>
+          </fi:widget-entry>
+        </fi:items>
+      </fi:group>
+    </ft:form-template>
+
+    <jx:if test="${wfSearchResultDataUrl != null}">
+      <br/>
+      <div id="timerSearchResult" dojoType="dojo:ContentPane"/>
+
+      <script>
+        dojo.require("daisy.workflow");
+
+        dojo.addOnLoad(function() {
+          new daisy.workflow.SearchResultController("timerSearchResult", "${wfSearchResultDataUrl}", "${pageContext.requestURI}", "<i18n:text key="wfsearch.return-to-timer-search"/>");
+        });
+      </script>
+    </jx:if>
+  </content>
+
+</page>

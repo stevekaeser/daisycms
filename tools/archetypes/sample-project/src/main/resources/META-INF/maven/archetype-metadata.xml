@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<archetype-descriptor name="multi-module">
+  <requiredProperties>
+    <requiredProperty key="project-namespace"/>
+    <requiredProperty key="project-namespace-fingerprint"><defaultValue>${groupId}:${artifactId}:project</defaultValue></requiredProperty>
+    <requiredProperty key="app-namespace"/>
+    <requiredProperty key="app-namespace-fingerprint"><defaultValue>${groupId}:${artifactId}:app</defaultValue></requiredProperty>
+    <requiredProperty key="test-namespace"/>
+    <requiredProperty key="test-namespace-fingerprint"><defaultValue>${groupId}:${artifactId}:test</defaultValue></requiredProperty>
+  </requiredProperties>
+  <fileSets>
+    <fileSet filtered="true">
+      <directory></directory>
+      <includes><include>README.txt</include></includes>
+    </fileSet>
+  </fileSets>
+  <modules>
+    <module id="${rootArtifactId}-daisy-main" dir="daisy-main" name="${rootArtifactId}-daisy-main">
+      <fileSets>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/</directory>
+          <includes><include>**/*</include></includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${rootArtifactId}-daisy-extensions-parent" dir="daisy-extensions" name="${rootArtifactId}-daisy-extensions">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory></directory>
+          <includes><include>dummy</include></includes>
+        </fileSet>
+      </fileSets>
+      <modules>
+        <module id="${rootArtifactId}-daisy-extensions-before" dir="before-repo" name="${rootArtifactId}-daisy-extensions-before">
+          <fileSets>
+            <fileSet filtered="true" packaged="true" encoding="UTF-8">
+              <directory>src/main/java</directory>
+              <includes><include>**/*.java</include></includes>
+            </fileSet>
+            <fileSet filtered="true" packaged="false" encoding="UTF-8">
+              <directory>src/main/resources</directory>
+              <includes><include>**/*.xml</include></includes>
+            </fileSet>
+          </fileSets>
+        </module>
+        <module id="${rootArtifactId}-daisy-extensions-after" dir="after-repo" name="${rootArtifactId}-daisy-extensions-after">
+          <fileSets>
+            <fileSet filtered="true" packaged="true" encoding="UTF-8">
+              <directory>src/main/java</directory>
+              <includes><include>**/*.java</include></includes>
+            </fileSet>
+            <fileSet filtered="true" packaged="false" encoding="UTF-8">
+              <directory>src/main/resources</directory>
+              <includes><include>**/*.xml</include></includes>
+            </fileSet>
+          </fileSets>
+        </module>
+      </modules>
+    </module>
+    <module id="${rootArtifactId}-daisywiki-extensions" dir="daisywiki-extensions" name="${rootArtifactId}-daisywiki-extensions">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes><include>**/*.java</include></includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <includes><include>**/*</include></includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${rootArtifactId}-daisy-workflow" dir="daisy-workflow" name="${rootArtifactId}-daisy-workflow">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes><include>**/*.java</include></includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main</directory>
+          <includes>
+           <include>resources/**/*</include>
+           <include>assembly/**/*</include>
+           <include>dsy-wiki/**/*</include>
+           <include>dsy-data/**/*</include>
+           <include>dsy-wf/**/*</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+  </modules>
+</archetype-descriptor>

@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources>
+  </map:resources>
+
+  <map:flow language="javascript">
+    <map:script src="rss.js"/>
+  </map:flow>
+
+  <map:pipelines>
+
+   <map:pipeline internal-only="true" type="noncaching">
+     <map:match pattern="*-rss-pubreq">
+       <map:generate type="jx" src="{1}_rss_pubreq.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="*-rss-result">
+       <map:generate type="jx" src="rss_result.xml"/>
+       <map:transform src="{1}_rss.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform type="DaisyIncludePreparedDocuments"/>
+       <map:transform type="DaisyExternalInclude"/>
+       <map:transform type="serializer"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+
+     <map:match pattern="editors-rss-direct.xml">
+       <map:call function="editorsRss"/>
+     </map:match>
+
+     <map:match pattern="editors-rss.xml">
+       <map:read type="DaisyCaching" src="cocoon:/editors-rss-direct.xml">
+         <!-- The expires parameter is in seconds -->
+         <map:parameter name="expires" value="1200"/>
+       </map:read>
+     </map:match>
+
+     <map:match pattern="normal-rss-direct.xml">
+       <map:call function="normalRss"/>
+     </map:match>
+
+     <map:match pattern="normal-rss.xml">
+       <map:read type="DaisyCaching" src="cocoon:/normal-rss-direct.xml">
+         <!-- The expires parameter is in seconds -->
+         <map:parameter name="expires" value="1200"/>
+       </map:read>
+     </map:match>
+
+     <map:match pattern="minimal-rss-direct.xml">
+       <map:call function="minimalRss"/>
+     </map:match>
+
+     <map:match pattern="minimal-rss.xml">
+       <map:read type="DaisyCaching" src="cocoon:/minimal-rss-direct.xml">
+         <!-- The expires parameter is in seconds -->
+         <map:parameter name="expires" value="1200"/>
+       </map:read>
+     </map:match>
+
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

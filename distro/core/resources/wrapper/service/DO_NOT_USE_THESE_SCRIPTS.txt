@@ -1,0 +1,23 @@
+
+ +-------------------------------------------+
+ | Do not use the scripts in this directory. |
+ |                                           |
+ | For instructions on using the wrapper     |
+ | scripts, see the Daisy documentation.     |
+ +-------------------------------------------+
+
+
+Short summary:
+
+To configure the service scripts, use:
+
+<DAISY_HOME>/install/daisy-service-install
+
+This will put configured scripts in the 'service' sub directories of the
+data directories, hence:
+
+<daisyrepodata dir>/service/...
+
+and
+
+<daisywikidata dir>/service/...

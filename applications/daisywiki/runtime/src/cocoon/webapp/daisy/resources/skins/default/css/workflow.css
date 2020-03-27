@@ -1,0 +1,53 @@
+/*
+ * Styles specific to workflow screens.
+ */
+
+/* A div containing buttons and label */
+.wfTaskGeneralActions {
+    border-top: 1px solid #D7AE56;
+    background-color: #FFF7CF;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* A dojo dialog */
+.wfTaskTransitions {
+    padding: 1em;
+}
+
+.wfActionsLabel {
+    font-size: x-small;
+    font-weight: bold;
+    padding: .5em 0em 0em .5em;
+}
+
+.wfButtons {
+    padding: .5em 1em 1em 1em;
+}
+
+/* The buttons themselves */
+.wfAction {
+    margin-right: 1em;
+}
+
+/* The default action button */
+.wfDefaultAction {
+    background-color: #FFEA82;
+    font-weight: bold;
+}
+
+.wfInput {
+    margin-bottom: 1em;
+}
+
+.wfInput .fieldLabel, .wfInputLabel {
+    font-weight: bold;
+}
+
+/* Some visible separation between logical groups of input fields. */
+.wfInputGroupSeparator {
+    border-top: 1px solid #C6C3C6;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    height: 1px;
+}

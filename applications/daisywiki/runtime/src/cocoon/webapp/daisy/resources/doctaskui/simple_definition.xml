@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<jx:if test="true" 
+  xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  <fd:group id="simple">
+    <fd:attributes>
+      <fd:attribute name="parametersHandler" value="org.outerj.daisy.frontend.SimpleActionsParametersHandler"/>
+    </fd:attributes>
+    <fd:widgets>
+      <fd:repeater id="actions">
+        <fd:widgets>
+          <fd:field id="actiontype" required="true">
+            <fd:datatype base="string"/>
+            <fd:selection-list>
+              <fd:item value="createVariant"><fd:label><i18n:text key="createtaskspec.actiontype.create-variant"/></fd:label></fd:item>
+              <fd:item value="deleteVariant"><fd:label><i18n:text key="createtaskspec.actiontype.delete-variant"/></fd:label></fd:item>
+              <fd:item value="addToCollection"><fd:label><i18n:text key="createtaskspec.actiontype.add-to-collection"/></fd:label></fd:item>
+              <fd:item value="removeFromCollection"><fd:label><i18n:text key="createtaskspec.actiontype.remove-from-collection"/></fd:label></fd:item>
+            </fd:selection-list>
+            <fd:on-value-changed>
+              <fd:javascript>
+                if (event.getNewValue() == "createVariant") {
+                  var startVersionWidget = event.getSourceWidget().getParent().getChild("actionsUnion").getChild("createVariant").getChild("startVersion");
+                  if (startVersionWidget.getValue() == null) {
+                    startVersionWidget.setValue("last");
+                  }
+                }
+              </fd:javascript>
+            </fd:on-value-changed>
+          </fd:field>
+          <fd:union id="actionsUnion" default="createVariant" case="actiontype">
+            <fd:datatype base="string"/>
+            <fd:widgets>
+              <fd:group id="createVariant">
+                <fd:widgets>
+                  <fd:field id="newBranchId" required="true">
+                    <fd:label><i18n:text key="createtaskspec.simpleaction.create-variant.branch"/>:</fd:label>
+                    <fd:datatype base="long"/>
+                    <fd:selection-list type="flow-jxpath" list-path="branchesArray" value-path="id" label-path="name"/>
+                  </fd:field>
+                  <fd:field id="newLanguageId" required="true">
+                    <fd:label><i18n:text key="createtaskspec.simpleaction.create-variant.language"/>:</fd:label>
+                    <fd:datatype base="long"/>
+                    <fd:selection-list type="flow-jxpath" list-path="languagesArray" value-path="id" label-path="name"/>
+                  </fd:field>
+                  <fd:field id="startVersion" required="true">
+                    <fd:label><i18n:text key="createtaskspec.simpleaction.create-variant.start-version"/>:</fd:label>
+                    <fd:datatype base="string"/>
+                    <fd:validation>
+                      <fd:regexp pattern="last|LAST|live|LIVE|[0-9]+">
+                        <fd:failmessage><i18n:text key="createvariant-versionnumber-error"/></fd:failmessage>
+                      </fd:regexp>
+                    </fd:validation>
+                  </fd:field>
+                </fd:widgets>
+              </fd:group>
+              <fd:group id="deleteVariant">
+                <fd:widgets>
+                  <!-- needs no parameters -->
+                </fd:widgets>
+              </fd:group>
+              <fd:group id="addToCollection">
+                <fd:widgets>
+                  <fd:field id="collection">
+                    <fd:label><i18n:text key="createtaskspec.simpleaction.collection"/>:</fd:label>
+                    <fd:datatype base="long"/>
+                    <fd:selection-list type="flow-jxpath" list-path="collectionsArray" value-path="id" label-path="name"/>
+                  </fd:field>
+                </fd:widgets>
+              </fd:group>
+              <fd:group id="removeFromCollection">
+                <fd:widgets>
+                  <fd:field id="collection">
+                    <fd:label><i18n:text key="createtaskspec.simpleaction.collection"/>:</fd:label>
+                    <fd:datatype base="long"/>
+                    <fd:selection-list type="flow-jxpath" list-path="collectionsArray" value-path="id" label-path="name"/>
+                  </fd:field>
+                </fd:widgets>
+              </fd:group>
+            </fd:widgets>
+          </fd:union>
+          <fd:row-action id="delete" command="delete">
+            <fd:label><i18n:text key="createtaskspec.simpleactions.delete"/></fd:label>
+          </fd:row-action>
+          <fd:row-action id="moveUp" command="move-up">
+            <fd:label><i18n:text key="createtaskspec.simpleactions.move-up"/></fd:label>
+          </fd:row-action>
+          <fd:row-action id="moveDown" command="move-down">
+            <fd:label><i18n:text key="createtaskspec.simpleactions.move-down"/></fd:label>
+          </fd:row-action>
+        </fd:widgets>
+        <fd:validation>
+          <fd:javascript>
+            if (widget.getSize() == 0) {
+              var message = new Packages.org.apache.cocoon.forms.util.I18nMessage("createtaskspec.simpleaction.need-at-least-one");
+              widget.getForm().getChild("messages").addMessage(message);
+              return false;
+            }
+            return true;
+          </fd:javascript>
+        </fd:validation>
+      </fd:repeater>
+      <fd:action id="addAction">
+        <fd:label><i18n:text key="createtaskspec.simpleaction.add"/></fd:label>
+        <fd:on-action>
+          <javascript>
+            var row = event.getSource().getParent().getChild("actions").addRow();
+            row.getChild("actiontype").setValue("createVariant");
+          </javascript>
+        </fd:on-action>
+      </fd:action>
+      <fd:booleanfield id="validateOnSave">
+        <fd:label><i18n:text key="createtaskspec.simpleaction.validate-on-save"/></fd:label>
+      </fd:booleanfield>
+    </fd:widgets>
+  </fd:group>
+</jx:if>

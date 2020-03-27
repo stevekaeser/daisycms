@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="internalDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>${jdbc.internal.driver.name}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.internal.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.internal.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.internal.password}</value>
+        </property>
+    </bean>
+    
+    <!-- The external data can be found on another database, so provide a different datasource -->
+    <bean id="externalDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+      <property name="driverClassName">
+        <value>${jdbc.external.driver.name}</value>
+      </property>
+      <property name="url">
+        <value>${jdbc.external.url}</value>
+      </property>
+      <property name="username">
+        <value>${jdbc.external.username}</value>
+      </property>
+      <property name="password">
+        <value>${jdbc.external.password}</value>
+      </property>
+    </bean>
+
+    <!-- Needed for the sync dao so only use the internalDataSource -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="internalDataSource"/>
+    </bean>
+    
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <bean id="internalJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg ref="internalDataSource"/>
+    </bean>
+    
+    <bean id="externalJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+      <constructor-arg ref="externalDataSource"/>
+    </bean>
+
+    <bean id="daisyCredentials" class="org.outerj.daisy.repository.Credentials">
+        <!-- username -->
+        <constructor-arg>
+            <value>${daisy.credentials.username}</value>
+        </constructor-arg>
+        <!-- password -->
+        <constructor-arg>
+            <value>${daisy.credentials.password}</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="repositoryManager"
+        class="org.outerj.daisy.repository.clientimpl.RemoteRepositoryManager">
+        <!-- repo url -->
+        <constructor-arg>
+            <value>${daisy.repository.url}</value>
+        </constructor-arg>
+        <constructor-arg ref="daisyCredentials"/>
+    </bean>
+
+    <bean id="externalDBEntityDao" class="org.outerj.daisy.sync.dao.ExternalDBEntityDao">
+        <constructor-arg ref="externalJdbcTemplate"/>
+        <property name="logger" ref="dao-logger"/>
+    </bean>
+
+    <bean id="syncDBEntityDao" class="org.outerj.daisy.sync.dao.SyncDBEntityDao">
+        <constructor-arg ref="internalJdbcTemplate"/>
+        <constructor-arg ref="transactionTemplate"/>
+        <property name="logger" ref="dao-logger"/>
+    </bean>
+
+    <bean id="internalDaisyEntityDao" class="org.outerj.daisy.sync.dao.DaisyEntityDao">
+        <constructor-arg ref="repositoryManager"/>
+        <constructor-arg ref="daisyCredentials"/>
+        <constructor-arg value="${daisy.collection}"/>
+        <constructor-arg value="${daisy.branch}"/>        
+        <constructor-arg value="${daisy.documentCreateState}"/> <!-- Draft or publish -->
+        <property name="logger" ref="dao-logger"/>
+    </bean>
+    
+    <!-- The external store may also need to check the lockstatus -->
+    <bean id="locker" class="org.outerj.daisy.sync.dao.LockerDBImpl">
+      <constructor-arg ref="externalJdbcTemplate"/>
+    </bean>
+</beans>

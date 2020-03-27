@@ -1,0 +1,4 @@
+jquery: version 1.4.2
+jquery-ui: version 1.8
+
+jquery.utils*.js: version 8.5, patched to fix this bug: http://code.google.com/p/jquery-utils/issues/detail?id=54

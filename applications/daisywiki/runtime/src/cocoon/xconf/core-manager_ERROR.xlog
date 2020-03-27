@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!--
+  ExcaliburComponentManager logs warnings when a certain component has not 
+  been found.  These warnings usually pop up after checking the parentComponentManager.
+  They are normally found a little later when the component manager checks the components
+  that have not been created using some sort of xconf.  Anyway since these warnings just 
+  clutter the logs they can be ignored.
+-->
+
+<xlog xpath="/logkit/categories/category[@name='' and @log-level='WARN']"
+      unless="category[@name='core.manager']"
+>
+  <category log-level="ERROR" name="core.manager">
+    <log-target id-ref="main"/>
+  </category>      
+</xlog>
+

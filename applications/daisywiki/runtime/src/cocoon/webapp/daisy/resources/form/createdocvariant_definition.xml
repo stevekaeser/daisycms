@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="newBranchId" required="true">
+      <fd:label><i18n:text key="createdocvariant.new-branch"/>:</fd:label>
+      <fd:datatype base="long"/>
+      <fd:selection-list type="flow-jxpath" list-path="branchesArray" value-path="id" label-path="name" />
+    </fd:field>
+    <fd:field id="newLanguageId" required="true">
+      <fd:label><i18n:text key="createdocvariant.new-language"/>:</fd:label>
+      <fd:datatype base="long"/>
+      <fd:selection-list type="flow-jxpath" list-path="languagesArray" value-path="id" label-path="name" />
+    </fd:field>
+    <fd:field id="startVersion" required="true">
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:regexp pattern="last|LAST|live|LIVE|[0-9]+">
+          <fd:failmessage><i18n:text key="createdocvariant.startversion-failmessage"/></fd:failmessage>
+        </fd:regexp>
+      </fd:validation>
+    </fd:field>
+    <fd:booleanfield id="copyContent">
+    </fd:booleanfield>
+    <fd:booleanfield id="goToEditor">
+      <fd:label><i18n:text key="createdocvariant.goto-editor"/></fd:label>
+    </fd:booleanfield>
+    <fd:repeater id="resources">
+      <fd:widgets>
+        <fd:output id="id">
+          <fd:datatype base="string"/>
+          <fd:label><i18n:text key="createdocvariant.image-id"/></fd:label>
+        </fd:output>
+        <fd:output id="name">
+          <fd:datatype base="string"/>
+          <fd:label><i18n:text key="createdocvariant.image-name"/></fd:label>
+        </fd:output>
+        <fd:booleanfield id="createvariant">
+          <fd:label><i18n:text key="createdocvariant.image-create-variant"/></fd:label>
+        </fd:booleanfield>
+      </fd:widgets>
+    </fd:repeater>
+  </fd:widgets>
+
+</fd:form>

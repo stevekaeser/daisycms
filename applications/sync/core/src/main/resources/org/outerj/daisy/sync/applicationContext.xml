@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+  <bean id="propertyConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+      <value>file:${sync.conf}/sync.properties</value>
+    </property>
+  </bean>
+
+  <import resource="loggingContext.xml"/>
+  <import resource="dao/dataContext.xml"/>
+
+  <bean id="mappingConfiguration" class="org.outerj.daisy.sync.mapping.MappingConfiguration">
+    <constructor-arg value="${mapping.definition}"/>
+    <constructor-arg ref="externalDBEntityDao"/>
+    <constructor-arg ref="syncDBEntityDao"/>
+    <property name="logger" ref="mapping-logger"/>
+  </bean>
+
+  <bean name="externalEntityDao" class="org.outerj.daisy.sync.mapping.MappingExternalEntityDao">
+    <constructor-arg ref="mappingConfiguration"/>
+    <constructor-arg ref="externalDBEntityDao"/>
+  </bean>
+
+  <bean name="syncEntityDao" class="org.outerj.daisy.sync.mapping.MappingSyncEntityDao">
+    <constructor-arg ref="mappingConfiguration"/>
+    <constructor-arg ref="syncDBEntityDao"/>
+  </bean>
+
+  <bean name="internalEntityDao" class="org.outerj.daisy.sync.mapping.MappingInternalEntityDao">
+    <constructor-arg ref="mappingConfiguration"/>
+    <constructor-arg ref="internalDaisyEntityDao"/>
+  </bean>
+
+  <bean id="synchronizer" class="org.outerj.daisy.sync.Synchronizer">
+    <constructor-arg ref="mappingConfiguration"/>
+    <constructor-arg ref="externalEntityDao"/>
+    <constructor-arg ref="syncEntityDao"/>
+    <constructor-arg ref="internalEntityDao"/>
+    <constructor-arg ref="locker"/>
+  </bean>
+
+  <bean id="syncService" class="org.outerj.daisy.sync.service.SyncServiceImpl">
+    <constructor-arg ref="synchronizer"/>
+  </bean>
+
+  <bean name="/SyncService"
+    class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+    <property name="service" ref="syncService"/>
+    <property name="serviceInterface" value="org.outerj.daisy.sync.service.SyncService"/>
+  </bean>
+
+  <bean id="syncJob"
+    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="synchronizer"/>
+    <property name="targetMethod" value="startSync"/>
+    <property name="concurrent" value="false"/>
+  </bean>
+
+  <bean id="syncCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <property name="jobDetail" ref="syncJob"/>
+    <property name="cronExpression" value="${sync.cron.expression}"/>
+  </bean>
+
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+      <list>
+        <ref bean="syncCronTrigger"/>
+      </list>
+    </property>
+  </bean>
+
+</beans>

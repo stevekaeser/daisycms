@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#doctaskrunner" xmlns:daisy="http://outerx.org/daisy/1.0#doctaskrunner" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="task">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="action" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="parameters" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="type" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="details" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:long" use="required"/>
+      <xs:attribute name="description" type="xs:string" use="required"/>
+      <xs:attribute name="ownerId" type="xs:long" use="required"/>
+      <xs:attribute name="state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="initialising"/>
+            <xs:enumeration value="running"/>
+            <xs:enumeration value="finished"/>
+            <xs:enumeration value="finished_with_errors"/>
+            <xs:enumeration value="finished_with_failures"/>
+            <xs:enumeration value="interrupted_by_error"/>
+            <xs:enumeration value="interrupted_by_user"/>
+            <xs:enumeration value="interrupted_by_shutdown"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="progress" type="xs:string" use="required"/>
+      <xs:attribute name="startedAt" type="xs:dateTime" use="required"/>
+      <xs:attribute name="finishedAt" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="stopOnFirstError" type="xs:boolean" use="optional"/>
+      <xs:attribute name="tryCount" type="xs:int" use="required"/>
+      <xs:attribute name="maxTries" type="xs:int" use="required"/>
+      <xs:attribute name="retryInterval" type="xs:int" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tasks">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="daisy:task"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="taskDocDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="1" minOccurs="0" name="details" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="documentId" type="xs:string"/>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+      <xs:attribute name="state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="waiting"/>
+            <xs:enumeration value="done"/>
+            <xs:enumeration value="error"/>
+            <xs:enumeration value="fail"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="tryCount" use="required" type="xs:int"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="taskDocDetails">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="daisy:taskDocDetail"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

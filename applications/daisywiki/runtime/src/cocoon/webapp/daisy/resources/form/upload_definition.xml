@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="name" required="true">
+      <fd:label><i18n:text key="upload.name"/></fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:upload id="file" required="true">
+      <fd:label><i18n:text key="upload.file"/></fd:label>
+    </fd:upload>
+
+    <fd:field id="mimetype" required="true">
+      <fd:datatype base="string"/>
+      <fd:label>Mime type</fd:label>
+      <fd:validation>
+        <fd:length max="255"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="filename">
+      <fd:datatype base="string"/>
+      <fd:label>File name</fd:label>
+      <fd:validation>
+        <fd:length max="255"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:multivaluefield id="collections">
+      <fd:label><i18n:text key="upload.collections"/></fd:label>
+      <fd:datatype base="long"/>
+      <fd:selection-list/>
+    </fd:multivaluefield>
+
+    <fd:field id="branchId" required="true">
+      <fd:datatype base="long"/>
+      <fd:selection-list type="flow-jxpath" list-path="branchesArray" value-path="id" label-path="name" />
+    </fd:field>
+
+    <fd:field id="languageId" required="true">
+      <fd:datatype base="long"/>
+      <fd:selection-list type="flow-jxpath" list-path="languagesArray" value-path="id" label-path="name" />
+    </fd:field>
+  </fd:widgets>
+
+</fd:form>

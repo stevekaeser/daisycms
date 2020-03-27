@@ -1,0 +1,95 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page>
+  ${pageContext}
+  <pageTitle>Daisy Administration</pageTitle>
+  <content>
+    <h1>Daisy Administration</h1>
+    <table class="plainTable" width="100%">
+      <col width="50%"/>
+      <col width="20px"/>
+      <col width="50%"/>
+      <tr>
+        <td valign="top">
+          <h2>Repository Schema</h2>
+          <ul>
+            <li><a href="documentType">Manage Document Types</a></li>
+            <li><a href="partType">Manage Part Types</a></li>
+            <li><a href="fieldType">Manage Field Types</a></li>
+          </ul>
+          <h2>Users</h2>
+          <ul>
+            <li><a href="user">Manage users</a></li>
+            <li><a href="role">Manage roles</a></li>
+          </ul>
+          <h2>Access Control</h2>
+          <!-- put the table inside an ul to make sure it is nicely indented with the other items -->
+          <ul>
+            <li style="list-style-type: none">
+              <table class="default" style="width: 100%;">
+                <col width="50%"/>
+                <col width="50%"/>
+                <tr>
+                  <th>Staging ACL</th>
+                  <th>Live ACL</th>
+                </tr>
+                <tr>
+                  <td align="center"><a href="acl/staging">View</a></td>
+                  <td align="center"><a href="acl/live">View</a></td>
+                </tr>
+                <tr>
+                  <td align="center"><a href="acl/staging/edit">Edit</a></td>
+                  <td align="center">(edit staging, test, then put live)</td>
+                </tr>
+                <tr>
+                  <td align="center"><a href="testacl/staging">Test</a></td>
+                  <td align="center"><a href="testacl/live">Test</a></td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="center"><a href="acl/staging?action=putLive">==> put live ==></a></td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="center"><a href="acl/staging?action=revertChanges">&lt;== revert changes &lt;==</a></td>
+                </tr>
+              </table>
+            </li>
+          </ul>
+        </td>
+        <td></td>
+        <td valign="top">
+          <h2>Collections</h2>
+          <ul>
+            <li><a href="collection">Manage collections</a></li>
+          </ul>
+          <h2>Variants</h2>
+          <ul>
+            <li><a href="branch">Manage branches</a></li>
+            <li><a href="language">Manage languages</a></li>
+          </ul>
+          <h2>Namespaces</h2>
+          <ul>
+            <li><a href="namespace">Manage namespaces</a></li>
+          </ul>
+          <h2>Workflow</h2>
+          <ul>
+            <li><a href="wfProcessDefinition">Manage process definitions</a></li>
+            <li><a href="wfPool">Manage pools</a></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </content>
+</page>

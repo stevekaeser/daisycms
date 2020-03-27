@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -ne 3 ] ; then
+  echo "usage : transdiffer <old-revision> <new-revision> <out-file>"
+  exit 1;
+fi
+
+oldrev=$1
+newrev=$2
+outfile=$3
+
+svnbase="http://dev.outerthought.org/svn/outerthought_daisy/trunk/daisy/"
+
+echo -e "Diffs\n\n" > $outfile
+
+while read oldfile newfile  ; do
+
+  diff=`svn diff ${svnbase}${oldfile}@${oldrev} ${svnbase}${newfile}@${newrev}`
+
+  if [ -n "$diff" ]; then
+
+    echo -e "$diff" >> $outfile
+
+  fi
+done
+
+cd $olddir

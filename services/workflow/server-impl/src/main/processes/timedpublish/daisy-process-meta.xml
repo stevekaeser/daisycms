@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<workflowMeta xmlns="http://outerx.org/daisy/1.0#workflowmeta"
+    xmlns:wf="http://outerx.org/daisy/1.0#workflow">
+
+  <resourceBundles>
+    <resourceBundle>messages</resourceBundle>
+    <resourceBundle>common</resourceBundle>
+  </resourceBundles>
+
+  <label i18n="true">timedpublish.label</label>
+  <description i18n="true">timedpublish.description</description>
+
+  <!-- Resuable variable definitions -->
+  <variables>
+    <variable name="daisy_document" type="daisy-link" scope="global">
+      <label i18n="true">variable.daisy_document.label</label>
+      <description i18n="true">variable.daisy_document.description</description>
+    </variable>
+    <variable name="daisy_description" type="string" scope="global">
+      <label i18n="true">variable.daisy_description.label</label>
+      <description i18n="true">variable.daisy_description.label</description>
+      <styling width="25em"/>
+    </variable>
+    <variable name="publishTime" type="datetime" scope="global">
+      <label i18n="true">variable.publishTime.label</label>
+      <description i18n="true">variable.publishTime.description</description>
+    </variable>
+    <variable name="daisy_site_hint" type="string" scope="global" required="false" hidden="true"/>
+  </variables>
+
+  <nodes>
+    <node path="startTimedPublish">
+      <transition name="start-timer">
+        <label i18n="true">transition.start-timer</label>
+      </transition>
+    </node>
+  </nodes>
+
+  <tasks>
+    <task name="startTimedPublishTask">
+      <label i18n="true">startTimedPublishTask.label</label>
+      <description i18n="true">startTimedPublishTask.description</description>
+      <variables>
+        <variable base="daisy_description" required="true"/>
+        <variable base="daisy_document" required="true"/>
+        <variable base="publishTime" required="true"/>
+        <variable base="daisy_site_hint"/>
+      </variables>
+    </task>
+  </tasks>
+</workflowMeta>

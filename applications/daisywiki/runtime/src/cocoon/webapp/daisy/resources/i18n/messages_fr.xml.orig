@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="org.outerj.daisy.repository.LockType.WARN">Avertissement</message>
+  <message key="org.outerj.daisy.repository.LockType.PESSIMISTIC">Pessimiste</message>
+
+  <!-- shared -->
+  <message key="back-to-document">Retour au document</message>
+  <message key="hide-navigation">Masquer navigation</message>
+  <message key="warning-upper">ATTENTION</message>
+  <message key="mv-available">Disponible</message>
+  <message key="mv-selected">Sélectionné</message>
+  <message key="ok">Ok</message>
+  <message key="cancel">Annuler</message>
+  <message key="draft">brouillon</message>
+  <message key="publish">publié</message>
+  <message key="major">majeur</message>
+  <message key="minor">mineur</message>
+  <message key="createvariant-versionnumber-error">Entrée invalide: entrez LAST (dernière version), LIVE (version en ligne) ou un numéro de version.</message>
+  <message key="branch">Branche</message>
+  <message key="language">Langue</message>
+  <message key="reference-language">Langue de référence</message>
+  <message key="branch_lc">branche</message>
+  <message key="language_lc">langue</message>
+  <message key="variant">Variante</message>
+  <message key="version_lc">version</message>
+  <message key="version">Version</message>
+  <message key="collection">Collection</message>
+  <message key="help">Aide</message>
+  <message key="select-any">--- Quelconque ---</message>
+  <message key="please-wait-uploading">Veuillez patienter, téléchargement en cours du fichier...</message>
+  <message key="delete">Supprimer</message>
+  <message key="add">Ajouter</message>
+  <message key="add-new">Nouveau</message>
+  <message key="move-up">Vers le haut</message>
+  <message key="move-down">Vers le bas</message>
+  <message key="name">Nom</message>
+  <message key="value">Valeur</message>
+  <message key="live">En ligne</message>
+  <message key="last">Dernière</message>
+  <!-- For search navigation -->
+  <message key="prev">Préc.</message>
+  <message key="next">Suiv.</message>
+  <message key="collections">Collections</message>
+
+  <!-- login.xsl -->
+  <message key="login.title">Connexion</message>
+  <message key="login.user-label">Utilisateur:</message>
+  <message key="login.password-label">Mot de passe:</message>
+  <message key="login.login-button">Connexion</message>
+  <message key="login.switchrole">Changer de rôle</message>
+  <message key="login.switchrole-button">Changer rôle</message>
+  <message key="login.forgot-password">Mot de passe oublié?</message>
+  <message key="login.use-all-roles">Utiliser tous les rôles</message>
+  <message key="login.excl-administrator">(Administrateur exclu)</message>
+
+  <!-- deletedocument.xsl -->
+  <message key="deletedocument.title">Supprimer {0} (ID: {1})</message>
+  <message key="deletedocument.headtitle">Supprimer document</message>
+  <message key="deletedocument.choose-action">Sélectionnez l'une des actions suivantes:</message>
+  <message key="deletedocument.document-variant-retired">Cette variante de document a été rétirée (archivée).</message>
+  <message key="deletedocument.retire-document-variant">Retirer (archiver) cette variante de document.</message>
+  <message key="deletedocument.retire-document-variant-info">Cette variante de document a été virtuellement supprimée, mais elle peut être réactivée.</message>
+  <message key="deletedocument.delete-variant-permanently">Supprimer définitivement cette variante de document.</message>
+  <message key="deletedocument.delete-variant-permanently-info">Cette variante de document va être définitivement supprimée, cette opération ne peut pas être annulée.</message>
+  <message key="deletedocument.delete-permanently">Supprimer définitivement ce document.</message>
+  <message key="deletedocument.delete-permanently-info">Ce document (et toutes ses variantes) va être définitivement supprimé, cette opération ne peut pas être annulée.</message>
+  <message key="deletedocument.retire-note">Note: l'état de 'document retiré' peut également être modifié (activé ou désactivé) sur la page d'édition du document.</message>
+  <message key="deletedocument.links-title">Documents qui renvoient à ce document</message>
+  <message key="deletedocument.links-info">Les documents suivants possèdent des liens qui renvoient à cette variante de document (soit dans leur dernière version, soit dans leur version en ligne):</message>
+  <message key="deletedocument.links-consider-updating">Veuillez actualiser ces documents.</message>
+
+  <!-- diff.xsl -->
+  <message key="diff.title">Etat des différences</message>
+  <message key="diff.reverse-diff-warning">ATTENTION: vous avez demandé le différentiel inverse!</message>
+  <message key="diff.general">Général</message>
+  <message key="diff.version">Version</message>
+  <message key="diff.document-name">Nom du document</message>
+  <message key="diff.not-changed">(non modifié)</message>
+  <message key="diff.creation-time">Date de création</message>
+  <message key="diff.created-by">Créé par</message>
+  <message key="diff.state">Etat</message>
+  <message key="diff.part-changes">Changements aux fragments de document</message>
+  <message key="diff.no-changes-detected">Pas de changements</message>
+  <message key="diff.part-has-changed">Le fragment {0} a été modifié</message>
+  <message key="diff.mime-type">Type MIME</message>
+  <message key="diff.filename">Nom fichier</message>
+  <message key="diff.size">Taille (octets)</message>
+  <message key="diff.content-diff">Différence de contenu</message>
+  <message key="diff.part-removed">Le fragment {0} a été supprimé</message>
+  <message key="diff.part-added">Le fragment {0} a été ajouté</message>
+  <message key="diff.part-unchanged">Le fragment {0} est resté identique</message>
+  <message key="diff.part-mightbe-changed">Le fragment {0} excède la limite de taille pour rechercher les modifications</message>
+  <message key="diff.field-changes">Changements aux champs</message>
+  <message key="diff.deleted-field">(champ supprimé)</message>
+  <message key="diff.new-field">(nouveau champ)</message>
+  <message key="diff.link-changes">Changements aux liens</message>
+  <message key="diff.removed-links">Liens supprimés</message>
+  <message key="diff.added-links">Liens ajoutés</message>
+
+  <message key="diff.compare-settings">Paramètres de la comparaison</message>
+  <message key="diff.changes-from">Changements de:</message>
+  <message key="diff.changes-to">à:</message>
+  <message key="diff.txt-compare">Comparaison texte</message>
+  <message key="diff.html-compare">Comparaison HTML</message>
+  <message key="diff.text-xml-compare">Comparaison HTML/balises XML</message>
+  <message key="diff.compare-versions">Comparer les versions {0} et {1}</message>
+  <message key="diff.type">Type:</message>
+  <message key="diff.click-on-changed">Cliquez sur les fragments qui ont été changés pour lire une description détaillée.</message>
+  <message key="diff.use-arrows">Utilisez les flèches gauche ou droite pour naviguer d'une modification à l'autre.</message>
+  <message key="diff.go-to-first">Aller au premier changement.</message>
+  <message key="diff.go-to-last">Aller au dernier changement.</message>
+  <message key="diff.first">premier</message>
+  <message key="diff.last">dernier</message>
+  <message key="diff.compare">Comparer</message>
+  <message key="diff.version">Version</message>
+  <message key="diff.by">par</message>
+  <message key="diff.on">le</message>
+  <message key="diff.name">Nom:</message>
+  <message key="diff.variant">Variante:</message>
+  <message key="diff.state">Etat:</message>
+
+  <!-- documentlayout.xsl / documentlayout-xslfo.xsl -->
+  <message key="doclayout.edit">Editer</message>
+  <message key="doclayout.delete">Supprimer</message>
+  <message key="doclayout.duplicate">Dupliquer</message>
+  <message key="doclayout.docinfo">Info document</message>
+  <message key="doclayout.unsubscribe">Se désabonner</message>
+  <message key="doclayout.subscribe">S'abonner</message>
+  <message key="doclayout.change-owner">Changer propriétaire</message>
+  <message key="doclayout.changes">Changements</message>
+  <message key="doclayout.versions">Versions</message>
+  <message key="doclayout.referrers">Renvois</message>
+  <message key="doclayout.pdf">PDF</message>
+  <message key="doclayout.add-to-basket">Ajouter au panier</message>
+  <message key="doclayout.related-workflows">Workflows associés</message>
+  <message key="doclayout.in-preparation">En préparation</message>
+  <message key="doclayout.retired">Retiré</message>
+  <message key="doclayout.in-preparation-info">Ce document n'a pas encore été publié.</message>
+  <message key="doclayout.retired-info">Ce document a été retiré.</message>
+<!--
+  <message key="doclayout.not-last-version-warning">vous consultez la version en ligne de ce document, qui n'est cependant pas la {0}.</message>
+  <message key="doclayout.last-version">dernière version</message>
+  <message key="doclayout.not-live-version-warning">vous ne consultez pas la {0} mais la {1}.</message>
+  <message key="doclayout.live-version">version en ligne</message>
+  <message key="doclayout.at-the-last-version">à la dernière version</message>
+  <message key="doclayout.at-a-more-recent-version">à une version plus récente</message>
+  <message key="doclayout.at-an-older-version">à une version plus ancienne</message>
+-->
+  <message key="doclayout.make-version-live">Placer en ligne.</message>
+  <message key="doclayout-xslfo.id">ID</message>
+  <message key="doclayout-xslfo.version">Version</message>
+  <message key="doclayout-xslfo.date">Date</message>
+  <message key="comments.title">Commentaires</message>
+  <message key="comments.no-comments">Il n'y a pas de commentaires.</message>
+  <message key="comments.add-comment">Ajouter un commentaire</message>
+  <message key="comments.log-in-to-add-comments">Veuillez vous connecter pour ajouter un commentaire.</message>
+  <message key="comments.visible-to">Commentaire visible:</message>
+  <message key="comments.visibility-everyone">à tout le monde</message>
+  <message key="comments.visibility-editors">seulement aux éditeurs</message>
+  <message key="comments.visibility-private">seulement à moi</message>
+  <message key="comments.add">Ajouter commentaire</message>
+  <message key="comments.created-by">Créé par</message>
+  <message key="comments.created-on">le</message>
+  <message key="comments.private-comment">COMMENTAIRE PRIVÉ</message>
+  <message key="comments.editors-comment">COMMENTAIRE ÉDITEUR</message>
+  <message key="comments.delete">Effacer</message>
+  <message key="comments.show">Commentaires</message>
+  <message key="comments.hide">Masquer</message>
+
+  <!-- docinfo.xsl -->
+  <message key="docinfo.pageTitle">Info Document</message>
+  <message key="docinfo.title">Info document</message>
+  <message key="docinfo.name">Nom</message>
+  <message key="docinfo.id">ID</message>
+  <message key="docinfo.id-based-link">Lien basé sur l'ID</message>
+  <message key="docinfo.navigation-based-link">Lien basé sur la navigation</message>
+  <message key="docinfo.doctype">Type du document</message>
+  <message key="docinfo.owner">Propriétaire</message>
+  <message key="docinfo.created">Créé le</message>
+  <message key="docinfo.last-modified">Dern. modif. le</message>
+  <message key="docinfo.versioninfo.title">Info version</message>
+  <message key="docinfo.version">Version affichée</message>
+  <message key="docinfo.version-of">de</message>
+  <message key="docinfo.version-state">Etat</message>
+  <message key="docinfo.version-synced-with">Synchro. avec</message>
+  <message key="docinfo.version-abbrev">v.</message>
+  <message key="docinfo.version-change-type">Changer type</message>
+  <message key="docinfo.version-change-comment">Changer commentaire</message>
+  <message key="docinfo.version-created">Créée le</message>
+  <message key="docinfo.version-last-modified">Dern. modif. le</message>
+  <message key="docinfo.by">par</message>
+
+  <message key="docinfo.close">Fermer</message>
+
+  <!-- error.xsl -->
+  <message key="error.title">Erreur</message>
+  <message key="error.login-info">Vous êtes actuellement connecté en tant qu'utilisateur <em>{0}</em> dans le(s) rôle(s) <em>{1}</em>.</message>
+  <message key="error.change-login">Changer de connexion...</message>
+  <message key="error.show-details">Afficher détails</message>
+  <message key="error.hide-details">Masquer détails</message>
+
+  <!-- fulltext_searchresult.xsl -->
+  <message key="fulltextresult.no-docs-found">Pas trouvé de documents.</message>
+  <message key="fulltextresult.infoline">Publié: {0}, ID document: {1}</message>
+  <message key="fulltextresult.results">Résultats {0} de {1}</message>
+  <message key="fulltextresult.resultspage">Page de résultats:</message>
+
+  <!-- indexpage.xsl -->
+  <message key="index.available-sites">Sites disponibles:</message>
+  <message key="index.no-sites-available">Il n'y a aucun site disponible pour vous.</message>
+
+  <!-- referrers.xsl -->
+  <message key="referrers.referrers-for">Renvois pour</message>
+  <message key="referrers.title">Documents référants</message>
+  <message key="referrers.infoline">Afficher les documents dont la version {0} ou la {1} version renvoie à ce document.</message>
+  <message key="referrers.live">en ligne</message>
+  <message key="referrers.last">dernière</message>
+  <message key="referrers.no-referring-docs">Il n'y a pas de documents référants.</message>
+  <message key="referrers.show-button">Afficher</message>
+
+  <!-- searchresult.xsl -->
+  <message key="searchresult.title">Résultats de recherche</message>
+  <message key="searchresult.actions">Actions</message>
+  <message key="searchresult.action-show">afficher</message>
+  <message key="searchresult.action-edit">éditer</message>
+  <message key="searchresult.nothing-found">La requête ne retourne aucun résultat.</message>
+  <message key="searchresult.add-to-basket">Ajouter les résultats de recherche au panier</message>
+
+  <!-- select_doctype.xsl -->
+  <message key="doctype.title">Sélectionnez le type de document</message>
+  <message key="doctype.select">Sélectionnez le type de document pour le nouveau document:</message>
+  <message key="doctype.non-available">(aucun n'est disponible pour vous)</message>
+  <message key="doctype.create-on-branch">Créer le document sur la branche</message>
+  <message key="doctype.create-in-language">dans la langue</message>
+  <message key="doctype.default-doctype">Type de document par défaut de ce site</message>
+  <message key="doctype.other-doctype">Autres types de document</message>
+
+  <!-- select_locale.xsl -->
+  <message key="locale.title">Changer de langue</message>
+  <message key="locale.select">Sélectionnez votre langue:</message>
+
+  <!-- select_role.xsl -->
+  <message key="selectrole.title">Changer de rôle</message>
+  <message key="selectrole.id">ID</message>
+  <message key="selectrole.name">Nom</message>
+  <message key="selectrole.description">Description</message>
+
+  <!-- select_user.xsl -->
+  <message key="selectuser.title">Changer d'utilisateur</message>
+  <message key="selectuser.id">ID</message>
+  <message key="selectuser.login">Connexion</message>
+  <message key="selectuser.name">Nom</message>
+
+  <!-- version_overview.xsl -->
+  <message key="versions.for">Versions pour</message>
+  <message key="versions.overview">Vue d'ensemble des versions</message>
+  <message key="versions.nr">No.</message>
+  <message key="versions.time">Date</message>
+  <message key="versions.creator">Créateur</message>
+  <message key="versions.state">Etat</message>
+  <message key="versions.synced-with">Synchro. avec</message>
+  <message key="versions.synced-with-none">aucune</message>
+  <message key="versions.version-abbreviated">v.</message>
+  <message key="versions.change-type">Chang.</message>
+  <message key="versions.change-comment">Commentaire</message>
+  <message key="versions.diff">Différences</message>
+  <message key="versions.diff-to-previous">à la précédente</message>
+  <message key="versions.diff-to-last">à la dernière</message>
+  <message key="versions.diff-to-next">à la suivante</message>
+  <message key="versions.compare-selected">Comparer les versions sélectionnées</message>
+  <message key="versions.live">EN LIGNE</message>
+  <message key="versions.created-from">Cette variante a été créée à partir de</message>
+  <message key="versions.actions">Actions</message>
+  <message key="versions.edit">Editer</message>
+  <message key="versions.edit.version">Editer les propriétés de la version</message>
+  <message key="versions.revert">Rétablir celle-ci</message>
+  <message key="versions.revert-info">Avant de confirmer le rétablissement de cette version, l'éditeur de document vous permettra d'effectuer des changements.</message>
+  <message key="versions.confirm-change-to-publish">Changer l'état courant en 'publié'?</message>
+  <message key="versions.confirm-change-to-draft">Changer l'état courant en 'brouillon'?</message>
+  <message key="versions.editor.save">Enregistrer</message>
+  <message key="versions.editor.cancel">Annuler</message>
+
+  <!-- upload_*.xml, upload_finish.xml -->
+  <message key="upload.name">Nom:</message>
+  <message key="upload.file">Fichier:</message>
+  <message key="upload.title">Télécharger un fichier</message>
+  <message key="upload.collections">Collections</message>
+  <message key="upload.upload">Télécharger</message>
+  <message key="upload.completing">Téléchargement du fichier en cours</message>
+
+  <!-- changeowner_*.xml -->
+  <message key="changeowner.newowner">Nouveau propriétaire (ID):</message>
+  <message key="changeowner.title">Changer le propriétaire du document</message>
+  <message key="changeowner.heading">Changer le propriétaire de {0} (ID: {1})</message>
+  <message key="changeowner.currentowner">Propriétaire actuel: {0} (ID: {1}).</message>
+  <message key="changeowner.change-owner">Changer propriétaire</message>
+
+  <!-- fulltextsearch_*.xml -->
+  <message key="fulltext.query">Recherche plein texte:</message>
+  <message key="fulltext.help">
+     Vous pouvez utiliser ici la <a href="http://lucene.apache.org/java/2_2_0/queryparsersyntax.html">syntaxe des requêtes</a> de Lucene.
+     <br/><strong>Référence rapide:</strong><br/>
+     Jokers: ? et * (pas au début d'un mot)<br/>
+     Recherche floue: ajouter <span style='font-family: "Andale Mono" monospace;'>~</span> à la fin d'un mot<br/>
+     Opérateurs booléens: AND, OR, NOT (en majuscules),<br/>
+     +/- avant un mot requis/prohibé<br/>
+     Regroupement avec ( ).
+  </message>
+  <message key="fulltext.search-in">Rechercher dans:</message>
+  <message key="fulltext.query-type">Type de requête</message>
+  <message key="fulltext.literal-string">Chaîne littérale</message>
+  <message key="fulltext.lucene-query">Requête Lucene</message>
+  <message key="fulltext.current-site-collection">Collection courante du site</message>
+  <message key="fulltext.all-documents">Tous les documents</message>
+  <message key="fulltext.name">nom</message>
+  <message key="fulltext.content">contenu</message>
+  <message key="fulltext.fields">champs</message>
+  <message key="fulltext.title">Recherche plein texte</message>
+  <message key="fulltext.search">Recherche</message>
+
+  <!-- querysearch_*.xml -->
+  <message key="querysearch.query">Requête:</message>
+  <message key="querysearch.search">Rechercher</message>
+  <message key="querysearch.info">Rechercher avec le langage de requête de Daisy.</message>
+  <message key="querysearch.execute-query">Exécuter la requête</message>
+  <message key="querysearch.samples">Exemples de requêtes</message>
+  <message key="querysearch.samples.alldocs">Tous les documents</message>
+  <message key="querysearch.samples.alldocs-bullets">Tous les documents sous forme de liste à puces</message>
+  <message key="querysearch.samples.lockeddocs">Tous les documents verrouillés</message>
+  <message key="querysearch.samples.images">Tous les documents ayant un fragment contenant une image</message>
+  <message key="querysearch.samples.retireddocs">Tous les documents retirés</message>
+  <message key="querysearch.samples.attachments">Toutes les pièces jointes</message>
+  <message key="querysearch.samples.navigationtrees">Tous les arbres de la navigation</message>
+  <message key="querysearch.samples.unpublisheddocs">Document dont la dernière version n'a pas encore été publiée</message>
+  <message key="querysearch.samples.largestdocs">Les dix documents les plus volumineux</message>
+
+  <!-- recentchanges_*.xml -->
+  <message key="recentchanges.changes-during">Changements faits durant</message>
+  <message key="recentchanges.last-24-hours">les dernières 24h</message>
+  <message key="recentchanges.last-week">la semaine passée</message>
+  <message key="recentchanges.last-month">le mois passé</message>
+  <message key="recentchanges.maximim-results">Nbre max. résultats:</message>
+  <message key="recentchanges.search-in">Rechercher dans:</message>
+  <message key="recentchanges.current-site-collection">Collection courante du site</message>
+  <message key="recentchanges.all-documents">Tous les documents</message>
+  <message key="recentchanges.title">Changements récents</message>
+  <message key="recentchanges.search">Recherche</message>
+
+  <!-- usersettings_*.xml -->
+  <message key="usersettings.current-password">Mot de passe courant:</message>
+  <message key="usersettings.new-password">Nouveau mot de passe:</message>
+  <message key="usersettings.new-password-confirm">Nouveau mot de passe:</message>
+  <message key="usersettings.passwords-must-be-equal">Les deux mots de passe ne correspondent pas.</message>
+  <message key="usersettings.email">Courriel:</message>
+  <message key="usersettings.first-name">Prénom:</message>
+  <message key="usersettings.last-name">Nom:</message>
+  <message key="usersettings.receive-document-events">Recevoir des notifications de changement des documents par courrier électronique.</message>
+  <message key="usersettings.receive-user-events">Recevoir des notifications de changement des utilisateurs par courrier électronique (seulement dans le rôle Administrateur).</message>
+  <message key="usersettings.recieve-schema-events">Recevoir des notifications de changement du schéma par courrier électronique.</message>
+  <message key="usersettings.receive-collection-events">Recevoir des notification de changement des collections par courrier électronique.</message>
+  <message key="usersettings.receive-acl-events">Recevoir des notifications de changement aux ACLs par courrier électronique.</message>
+  <message key="usersettings.receive-comment-events">Recevoir des notifications lorsque des commentaires sont ajoutés ou supprimés.</message>
+  <message key="usersettings.notifications-locale">Choix de la langue et du pays pour les notifications:</message>
+  <message key="usersettings.title">Paramètres utilisateur</message>
+  <message key="usersettings.change-password">Changer le mot de passe (optionnel)</message>
+  <message key="usersettings.user-data">Données utilisateur</message>
+  <message key="usersettings.email-notifications">Notifications par courrier électronique</message>
+  <message key="usersettings.document-notification-options">Options de notification pour les documents</message>
+  <message key="usersettings.notification-documents">Recevoir des notifications pour les documents suivants:</message>
+  <message key="usersettings.notification-documents-info">
+    Ajoutez des entrées au format "ID de document,branche,langue", une par ligne. Vous pouvez utilisez * comme joker pour chacune des composantes.<br/>
+    Quelques exemples:<br/>
+    <ul>
+      <li><b>15,main,en</b><br/>recevoir des notifications pour le document 15 sur la branche <em>main</em> (principale) et dans la langue <em>en</em> (anglais)</li>
+      <li><b>15,*,*</b><br/>recevoir des notifications pour le document 15, quelqu'en soit la branche et la langue</li>
+      <li><b>*,*,en</b><br/>recevoir des notifications pour tous les documents dans la langue <em>en</em></li>
+      <li><b>*,*,*</b><br/>recevoir des notifications pour tous les documents, de toutes les branches et dans toutes les langues (si vous saisissez cette entrée, aucune autre n'est nécessaire)</li>
+    </ul>
+  </message>
+  <message key="usersettings.notification-collections">Recevoir des notifications pour les documents qui appartiennent aux collections suivantes:</message>
+  <message key="usersettings.notification-collections-info">
+    Ajoutez des entrées au format "collection,branche,langue", une par ligne. Vous pouvez utiliser * comme joker pour la branche et la langue.<br/>
+    Par exemple:<br/>
+    <b>macollection,*,en</b><br/>
+    recevoir des notifications pour tous les documents de la collection <em>macollection</em> dans la langue <em>en</em><br/>
+  </message>
+  <message key="usersettings.save-changes">Enregistrer les changements</message>
+
+  <!-- documentbrowser(_docs).xml -->
+  <message key="docbrowser.invalid-link">Veuillez saisir un lien valide.</message>
+  <message key="docbrowser.title">Insérer un lien</message>
+  <message key="docbrowser.doc-name-like">Nom de document comme</message>
+  <message key="docbrowser.doc-name-like-info">(laisser vide pour obtenir tous les documents, utiliser % comme caractère joker)</message>
+  <message key="docbrowser.containing-text">Contenant le texte</message>
+  <message key="docbrowser.containing-text-optional">(optionnel)</message>
+  <message key="docbrowser.search-in">Rechercher dans</message>
+  <message key="docbrowser.current-site-collection">Collection courante du site</message>
+  <message key="docbrowser.all-documents">Tous les documents</message>
+  <message key="docbrowser.exclude-doctypes">Exclure</message>
+  <message key="docbrowser.doctype-image">images</message>
+  <message key="docbrowser.doctype-attachment">pièces jointes</message>
+  <message key="docbrowser.search">Rechercher</message>
+  <message key="docbrowser.documents">Documents</message>
+  <message key="docbrowser.preview">Aperçu</message>
+  <message key="docbrowser.insert-link">Insérer&#160;lien</message>
+  <message key="docbrowser.nothing-found">(rien trouvé)</message>
+  <message key="docbrowser.current-selection">Sélection actuelle</message>
+  <message key="docbrowser.clear-selection">vider</message>
+  
+  <!-- heartbeat.xml -->
+  <message key="heartbeat.could-not-extend-lock">Attention: votre verrou n'a pas pu être prolongé, l'utilisateur suivant a maintenant verrouillé le document:</message>
+
+  <!-- imagebrower(_*).xml -->
+  <message key="imagebrowser.title">Insérer une image</message>
+  <message key="imagebrowser.images-in-collection">Images dans les collections sélectionnées:</message>
+  <message key="imagebrowser.image-preview">Aperçu de l'image:</message>
+  <message key="imagebrowser.link">Insérer lien vers l'image</message>
+  <message key="imagebrowser.insert-image">Insérer image</message>
+  <message key="imagebrowser.no-collections">(pas de collections)</message>
+  <message key="imagebrowser.no-images">(pas d'images)</message>
+
+  <!-- locked.xml -->
+  <message key="locked.title">Document verrouillé</message>
+  <message key="locked.info-warn">L'utilisateur "{0}" édite également ce document.</message>
+  <message key="locked.ignore-and-edit">Ignorer et commencer l'édition malgré tout (sans verrou)</message>
+  <message key="locked.info-pessimistic">L'utilisateur "{0}" a verrouillé ce document, de sorte que vous ne pouvez pas l'éditer maintenant.</message>
+
+  <!-- parteditor_daisyhtml_template.xml -->
+  <message key="htmleditor.switch-to-html">Basculer vers la vue HTML</message>
+  <message key="htmleditor.cleanup-html">Nettoyer code HTML</message>
+
+  <!-- parteditor_noedit_template.xml -->
+  <message key="noedit.noneditable"><p>Ce fragment n'est pas éditable</p></message>
+
+  <!-- documenteditor.xml -->
+  <message key="editdoc.title">Editer document</message>
+  <message key="editdoc.new">nouveau</message>
+  <message key="editdoc.document-type">Type du document</message>
+  <message key="editdoc.document-name">Nom/titre du document:</message>
+  <message key="editdoc.document-name-help">Un nom (titre) pour le document, qui ne doit pas nécessairement être unique.</message>
+  <message key="editdoc.new-document-name">Nouveau document</message>
+  <message key="editdoc.name-warning">Vous avez conservé 'Nouveau document' dans le nom du document, enregistrer tout de même?</message>
+  <message key="editdoc.publish-changes-immediately">Publier immédiatement.</message>
+  <message key="editdoc.validate">Valider selon le type de document.</message>
+  <message key="editdoc.validate-help">Vous devriez habituellement laisser cette case cochée.<br/><br/>
+            Il peut cependant être utile de désactiver la validation dans certains cas:
+            <ul>
+              <li>Si vous voulez marquer un document comme 'retiré', sans avoir à vous préoccuper de le
+              mettre en conformité, lorsque le type de document serait modifié.</li>
+              <li>Si le type de document a été modifié alors que vous éditiez le document, et qu'il
+              est impossible de valider le document (étant donné que l'éditeur de document correspond
+              à l'état du type de document au moment où vous avez commencé l'édition)</li>
+              <li>Si vous êtes conscient qu'il y a des erreurs, mais souhaitez terminer l'édition ultérieurement.</li>
+            </ul>
+  </message>
+  <message key="editdoc.reference-variant">Variante de référence</message>
+  <message key="editdoc.major-change">Changement majeur.</message>
+  <message key="editdoc.change-comment">Modifier commentaire</message>
+  <message key="editdoc.save">Enregistrer</message>
+  <message key="editdoc.cancel">Annuler l'édition (lève le verrou)</message>
+  <message key="editdoc.change-editor-height">Changer la hauteur de l'éditeur...</message>
+  <!-- These are the labels of the tabs in the document editor -->
+  <message key="doceditor.parts">Fragments</message>
+  <message key="editdoc.fields">Champs</message>
+  <message key="editdoc.links">Liens</message>
+  <message key="doceditor.misc">Divers</message>
+  <message key="doceditor.additional-parts-and-fields">Fragments supplémentaires &amp; champs</message>
+  <message key="doceditor.confirm-leave-editor">Le document suivant est toujours ouvert dans l'éditeur Daisy:</message>
+
+  <!-- doceditor_additionalPartsAndField_*.xml -->
+  <message key="editdoc.extra-parts">Vous trouverez ci-dessous les fragments de document présents dans votre document, mais qui ne sont plus autorisés par le type de document.</message>
+  <message key="editdoc.extra-fields">Vous trouverez ci-dessous les champs présents dans votre document, mais qui ne sont plus autorisés par le type de document.</message>
+  <message key="editdoc.extra-parts.id">ID de type de fragment</message>
+  <message key="editdoc.extra-parts.label">Libellé de fragment</message>
+  <message key="editdoc.extra-parts.size">Taille (octets)</message>
+  <message key="editdoc.extra-parts.mime-type">Type MIME</message>
+  <message key="editdoc.extra-parts.delete">Supprimer</message>
+  <message key="editdoc.extra-fields.id">ID de type de champ</message>
+  <message key="editdoc.extra-fields.label">Libellé de champ</message>
+  <message key="editdoc.extra-fields.value">Valeur</message>
+  <message key="editdoc.extra-fields.delete">Supprimer</message>
+  <message key="doceditor.extra-fields.error">Ce champ doit être supprimé, ou la validation selon le type de document doit être désactivée.</message>
+  <message key="doceditor.extra-parts.error">Ce fragment doit être supprimé, ou la validation selon le type de document doit être désactivée.</message>
+  <message key="editdoc.link-no-valid-docid">ID de document invalide: {0}</message>
+  <message key="editdoc.link-no-valid-namespace">Espace de noms invalide: {0}</message>
+  <message key="editdoc.link-no-valid-branch">Branche invalide dans le lien: {0}</message>
+  <message key="editdoc.link-no-valid-language">Langue invalide dans le lien: {0}</message>
+  <message key="editdoc.link-not-valid">Lien invalide: {0}</message>
+
+  <!-- doceditor_misc_*.xml -->
+  <message key="editdoc.custom-fields">Champs libres</message>
+  <message key="editdoc.collections">Collections</message>
+  <message key="editdoc.options">Options</message>
+  <message key="editdoc.global-document-options-title">Options globales du document</message>
+  <message key="editdoc.global-document-options-help">Ces options sont partagées par toutes les variantes de ce document.</message>
+  <message key="editdoc.private">Privé</message>
+  <message key="editdoc.private-help">Un document marqué comme privé n'est accessible qu'à son propriétaire,
+            indépendamment des règles de contrôle d'accès (ACLs).<br/><br/>Notez cependant que les administrateurs
+            sont toujours en mesure de voir et de consulter le document, quand bien même il serait privé.</message>
+  <message key="editdoc.retired">Retiré</message>
+  <message key="editdoc.customfields.name">Nom</message>
+  <message key="editdoc.customfields.value">Valeur</message>
+  <message key="editdoc.customfields.delete">Supprimer</message>
+  <message key="editdoc.add-custom-field">Ajouter champ libre</message>
+  <message key="editdoc.translation-management">Gestion des traductions</message>
+  <message key="editdoc.reference-language">Langue de référence</message>
+  <message key="editdoc.reference-language-none">(Aucune)</message>
+  <message key="editdoc.actions">Actions</message>
+
+  <!-- doceditor_links_*.xml -->
+  <message key="editdoc.links.title">Titre</message>
+  <message key="editdoc.links.target">Cible</message>
+  <message key="editdoc.links.delete">Supprimer</message>
+  <message key="editdoc.links.move-up">Vers le haut</message>
+  <message key="editdoc.links.lookupdocument">Rechercher document...</message>
+  <message key="editdoc.links.openlink">Ouvrir le lien (dans une nouvelle fenêtre)</message>
+  <message key="editdoc.links.move-down">Vers le bas</message>
+  <message key="editdoc.add-link">Ajouter lien</message>
+
+  <!-- parteditor_upload_*.xml -->
+  <message key="editdoc.filename">Nom de fichier</message>
+  <message key="editdoc.mime-type">Type MIME</message>
+  <message key="editdoc.upload-data">Télécharger les données</message>
+
+  <!-- fieldtype_to_widgettemplate.xsl -->
+  <message key="editdoc.clear-field-value">Effacer valeur du champ</message>
+  <message key="editdoc.select-from-list">Choisir valeur à partir de la liste...</message>
+
+  <!-- DocumentEditorApple.java -->
+  <message key="editdoc.part-required">Ce fragment est requis.</message>
+  <message key="editdoc.field-required">Ce champ est requis.</message>
+
+  <!-- DocumentApple.java -->
+  <message key="subscription-added">Abonnement souscrit: vous recevrez dès maintenant des notifications de changement par courrier électronique, lorsque le document sera modifié.</message>
+  <message key="subscription-missing-email"><br/><strong>Attention:</strong> vous n'avez pas défini d'adresse de courrier électronique dans les paramètres utilisateur.</message>
+  <message key="subscription-deleted">Abonnement annulé.</message>
+  <message key="document-in-basket">Document ajouté au panier de documents.</message>
+
+  <!-- document-to-html.xsl, document-to-xslfo.xsl -->
+  <message key="document.links-title">Liens</message>
+  <message key="document.fields-title">Champs</message>
+  <message key="document.fields.name">Nom</message>
+  <message key="document.fields.value">Valeur</message>
+  <message key="document.part.title">Fragment</message>
+  <message key="document.part.size">taille</message>
+  <message key="document.warning">AVERTISSEMENT</message>
+  <message key="document.note">NOTE</message>
+  <message key="document.fixme">FIXME</message>
+  <message key="document.error">ERREUR</message>
+  <message key="document.unprocessed-include-directive">DIRECTIVE INCLUDE NON TRAITÉE</message>
+  <message key="document.info-link">info</message> <!-- this is the (info) link after links pointing directly to a part -->
+  <message key="document.click-to-enlarge">Cliquez pour agrandir</message> <!-- text put below previews of large images -->
+  <message key="document.edit-included-doc">éditer</message> <!-- edit link shown for included docs -->
+
+  <!-- mycomments.xsl -->
+  <message key="mycomments.title">Mes commentaires</message>
+  <message key="mycomments.intro">Cette page affiche tous vos commentaires privés.</message>
+  <message key="mycomments.createdon">Créé le</message>
+  <message key="mycomments.document">Pour le document</message>
+  <message key="mycomments.delete">Effacer</message>
+
+  <!-- userregistration_*.xml -->
+  <message key="userregistration.title">Inscription d'un nouvel utilisateur</message>
+  <message key="userregistration.email">Votre courrier électronique:</message>
+  <message key="userregistration.login">Nom d'utilisateur souhaité:</message>
+  <message key="userregistration.first-name">Votre prénom:</message>
+  <message key="userregistration.last-name">Votre nom:</message>
+  <message key="userregistration.password">Mot de passe:</message>
+  <message key="userregistration.password-confirm">Confirmez le mot de passe:</message>
+  <message key="userregistration.passwords-must-be-equal">Les deux mots de passe ne correspondent pas.</message>
+  <message key="userregistration.register">Inscription</message>
+
+  <!-- registrationsuccess.xml -->
+  <message key="registrationsuccess.title">Inscription réussie</message>
+  <message key="registrationsuccess.text">Votre inscription a été enregistrée. Avant que vous ne puissiez vous connecter, vous devez confirmer l'inscription en activant le lien qui vous sera adressé par courrier électronique à l'adresse:</message>
+  <message key="registrationsuccess.continue">Continuer</message>
+
+  <!-- registrationconfirmed.xml -->
+  <message key="registrationconfirmed.title">Inscription confirmée</message>
+  <message key="registrationconfirmed.text">Votre nouveau compte d'utilisateur a été activé.</message>
+
+  <!-- passwordreminder_*.xml -->
+  <message key="passwordreminder.title">Réinitialisation du mot de passe</message>
+  <message key="passwordreminder.intro">Saisissez votre nom d'utilisateur ci-dessous et un courrier électronique vous sera adressé vous permettant de réinitialiser votre mot de passe.</message>
+  <message key="passwordreminder.login">Nom d'utilisateur</message>
+  <message key="passwordreminder.mail">Réclamer nouveau mot de passe</message>
+  <message key="passwordreminder.forgot-login">Oublié votre nom d'utilisateur?</message>
+
+  <!-- pwdremindersuccess.xml -->
+  <message key="pwdremindersuccess.title">Message de réinitialisation envoyé</message>
+  <message key="pwdremindersuccess.text">Un lien vous permettant de réinitialiser votre mot de passe vous a été adressé par courrier électronique.</message>
+
+  <!-- newpassword.xml -->
+  <message key="newpassword.title">New password</message>
+  <message key="newpassword.text">Your new password is</message>
+
+  <!-- loginreminder_*.xml -->
+  <message key="loginreminder.email">Courrier électronique</message>
+  <message key="loginreminder.title">Rappel du nom d'utilisateur</message>
+  <message key="loginreminder.intro">Saisissez votre adresse de courrier électronique ci-dessous et votre nom (ou vos noms) d'utilisateur vous seront envoyés.</message>
+  <message key="loginreminder.mail">Réclamer nom d'utilisateur</message>
+
+  <!-- loginremindersuccess.xml -->
+  <message key="loginremindersuccess.title">Noms d'utilisateur envoyés</message>
+  <message key="loginremindersuccess.text">Votre ou vos nom(s) d'utilisateur ont été envoyés à votre adresse de courrier électronique.</message>
+
+  <!-- altvariants.xsl -->
+  <message key="altvariants.title">Variante Non Trouvée</message>
+  <message key="altvariants.intro">Le document demandé n'est pas disponible dans la variante courante ou requise. Veuillez sélectionner une autre variante:</message>
+
+  <!-- doctask_taskspec_*.xml -->
+  <message key="createtaskspec.description">Description</message>
+  <message key="createtaskspec.type-of-task">Type de tâche</message>
+  <message key="createtaskspec.actiontype.create-variant">Créer variante</message>
+  <message key="createtaskspec.actiontype.delete-variant">Supprimer variante</message>
+  <message key="createtaskspec.actiontype.add-to-collection">Ajouter à la collection</message>
+  <message key="createtaskspec.actiontype.remove-from-collection">Enlever de la collection</message>
+  <message key="createtaskspec.simpleaction.create-variant.branch">Nouvelle branche</message>
+  <message key="createtaskspec.simpleaction.create-variant.language">Nouvelle langue</message>
+  <message key="createtaskspec.simpleaction.create-variant.start-version">Nouvelle version</message>
+  <message key="createtaskspec.simpleaction.collection">Collection</message>
+  <message key="createtaskspec.simpleaction.add">Ajouter</message>
+  <message key="createtaskspec.simpleaction.validate-on-save">Valider à la sauvegarde</message>
+  <message key="createtaskspec.title">Créer une tâche, étape 2: Définissez la tâche</message>
+  <message key="createtaskspec.subtitle">Spécifiez la tâche à exécuter sur chacun des documents sélectionnés</message>
+  <message key="createtaskspec.info">Cette tâche vous permet d'exécuter du code Javascript sur chacun des documents sélectionnés.</message>
+  <message key="createtaskspec.simpleaction.delete">Supprimer</message>
+  <message key="createtaskspec.simpleaction.move-up">Vers le haut</message>
+  <message key="createtaskspec.simpleaction.move-down">Vers le bas</message>
+  <message key="createtaskspec.simpleaction.no-params">(aucun paramètre nécessaire)</message>
+  <message key="createtaskspec.stop-on-first-error">Interrompre à la première erreur</message>
+  <message key="createtaskspec.tasktype-javascript">Javascript</message>
+  <message key="createtaskspec.tasktype-simple">Actions simples</message>
+  <message key="createtaskspec.simpleaction.need-at-least-one">Une action simple au minimum doit être ajoutée.</message>
+  <message key="createtaskspec.start">Démarrer</message>
+  <message key="createtaskspec.back">&lt; Retour</message>
+
+  <!-- documenttask_list.xsl -->
+  <message key="doctasklist.title">Tâches de documents</message>
+  <message key="doctasklist.info">Les tâches de documents peuvent être exécutées sur un ensemble de documents et sont exécutées en tâche de fond.</message>
+  <message key="doctasklist.create-doctask">Créer une nouvelle tâche de document</message>
+  <message key="doctasklist.confirm-delete">Êtes-vous certain de vouloir supprimer la tâche avec l'ID $id ?</message>
+  <message key="doctasklist.confirm-interrupt">Êtes-vous certain de vouloir interrompre la tâche avec l'ID $id ?</message>
+  <message key="doctasklist.id">ID</message>
+  <message key="doctasklist.owner">Propriétaire</message>
+  <message key="doctasklist.state">Etat</message>
+  <message key="doctasklist.progress">Progression</message>
+  <message key="doctasklist.started-at">Démarrée à</message>
+  <message key="doctasklist.finished-at">Terminée à</message>
+  <message key="doctasklist.description">Description</message>
+  <message key="doctasklist.script">Script</message>
+  <message key="doctasklist.details">Détails (erreur)</message>
+  <message key="doctasklist.actions">Actions</message>
+  <message key="doctasklist.no-tasks">(Pas de tâches)</message>
+  <message key="doctasklist.show">Afficher</message>
+  <message key="doctasklist.delete">Effacer</message>
+  <message key="doctasklist.interrupt">Interrompre</message>
+  <message key="doctasklist.show-details">Détails</message>
+
+  <!-- shared between task pages -->
+  <message key="taskstate.initialising">Initialisation</message>
+  <message key="taskstate.running">En cours d'exécution</message>
+  <message key="taskstate.finished">Terminée</message>
+  <message key="taskstate.finished_with_errors">Terminée avec erreurs</message>
+  <message key="taskstate.interrupted_by_error">Interrompue par une erreur</message>
+  <message key="taskstate.interrupted_by_user">Interrompue par l'utilisateur</message>
+  <message key="taskstate.interrupted_by_shutdown">Interrompue par l'arrêt du serveur</message>
+
+  <!-- documenttaskdetails.xsl -->
+  <message key="doctaskdetails.title">Détails de la tâche de document</message>
+  <message key="doctaskdetails.to-task-overview">Vers la vue d'ensemble</message>
+  <message key="doctaskdetails.taskid">ID de tâche</message>
+  <message key="doctaskdetails.taskdescription">Description</message>
+  <message key="doctaskdetails.state">Etat</message>
+  <message key="doctaskdetails.doc-id">ID de document</message>
+  <message key="doctaskdetails.execution-state">Etat d'exécution</message>
+  <message key="doctaskdetails.details">Détails (erreur)</message>
+  <message key="documentexecutionstate.waiting">En attente</message>
+  <message key="documentexecutionstate.done">Terminé</message>
+  <message key="documentexecutionstate.error">Erreur</message>
+  <message key="doctaskdetails.show">Afficher</message>
+
+  <!-- KeySetParser.java -->
+  <message key="keylist.entry-invalid">L'entrée sur la ligne {0} n'est pas dans le format attendu.</message>
+  <message key="keylist.branch-does-not-exist">La branche spécifiée sur la ligne {0} n'existe pas.</message>
+  <message key="keylist.branch-retrieval-error">Problème en tentant d'accéder à la branche spécifiée sur la ligne {0}: {1}</message>
+  <message key="keylist.lang-does-not-exist">La langue spécifiée sur la ligne {0} n'existe pas.</message>
+  <message key="keylist.lang-retrieval-error">Problème en tantant d'accéder à la langue spécifiée sur la ligne {0}: {1}</message>
+  <message key="keylist.need-at-least-one-entry">Un document au moins doit être spécifié.</message>
+  <message key="keylist.invalid-docid">ID de document invalide sur la ligne {0}.</message>
+  <message key="keylist.collection-does-not-exist">La collection spécifiée sur la ligne {0} n'existe pas.</message>
+  <message key="keylist.collection-retrieval-error">Problème en tentant d'accéder à la collection spécifiée sur la ligne {0}: {1}</message>
+
+  <!-- doctask_docselection_*.xml -->
+  <message key="createdocsel.execute-query">Exécuter la requête et ajouter les résultats</message>
+  <message key="createdocsel.title">Créer une tâche, étape 1: Sélectionner les documents</message>
+  <message key="createdocsel.subtitle">Sélectionnez les documents sur lesquels la tâche doit être exécutée</message>
+  <message key="createdocsel.info">Saisissez les documents, un par ligne. Chaque ligne doit être au format suivant:
+    <i>ID de document, branche, langue</i>. La branche et la langue ne doivent sont optionnelles, la branche principale
+    et la langue par défaut seront utilisées si elles sont omises. La branche et la langue peuvent être spécifiée
+    par ID ou par nom. Des commentaires peuvent être ajoutés en fin de ligne ou sur des lignes séparées en les
+    faisant précéder du symbole #.</message>
+  <message key="createdocsel.add-docs-from-query">Ajouter les documents résultants d'une requête</message>
+  <message key="createdocsel.enter-query">Saisissez la requête (select name where ...)</message>
+  <message key="createdocsel.no-query-entered">Aucune requête n'a été saisie.</message>
+  <message key="createdocsel.error-performing-query">Erreur lors de l'exécution de la requête.</message>
+  <message key="createdocsel.query-executed">Requête exécutée, {0} résultats ont été ajoutés.</message>
+  <message key="createdocsel.query-no-result">La requête n'a retourné aucun résultat.</message>
+  <message key="createdocsel.next">Suivant ></message>
+
+  <!-- taskcreatedpage.xml -->
+  <message key="taskcreated.title">Tâche créée</message>
+  <message key="taskcreated.info">La tâche a été créée, ID = {0}.</message>
+  <message key="taskcreated.show-execution-details">Afficher les détails de l'exécution de cette tâche</message>
+  <message key="taskcreated.go-to-task-overview">Aller à la vue d'ensemble des tâches</message>
+  <message key="taskcreated.create-another-task">Créer une nouvelle tâche</message>
+
+  <!-- createdocvariant_*.xml -->
+  <message key="createdocvariant.title">Créer une variante de document</message>
+  <message key="createdocvariant.start-from">A partir de</message>
+  <message key="createdocvariant.new">Nouveau</message>
+  <message key="createdocvariant.variant-already-exists">Cette variante existe déjà!</message>
+  <message key="createdocvariant.start-from-current">Créer une nouvelle variante à partir de la version suivante de la variante courante:</message>
+  <message key="createdocvariant.version-info">(entrez <i>LAST</i> (dernière), <i>LIVE</i> (en ligne) or un numéro de version)</message>
+  <message key="createdocvariant.start-from-current-info">
+    Il est recommandé d'utiliser cette option lors de la création d'une nouvelle branche.
+    Ainsi, la branche de départ et la langue seront mémorisées comme point de départ de cette
+    variante, et la première version sera créée à partir du contenu de la version sélectionnée.
+  </message>
+  <message key="createdocvariant.embedded-images">Créer des variantes des images embarquées</message>
+  <message key="createdocvariant.embedded-images-info">
+    Ce document contient des références vers les images suivantes, pour lesquelles
+    une nouvelle variante peut également être créée. Sera silencieusement ignoré si
+    les images existent déjà dans la nouvelle variante.
+  </message>
+  <message key="createdocvariant.new-branch">Nouvelle branche</message>
+  <message key="createdocvariant.new-language">Nouvelle langue</message>
+  <message key="createdocvariant.startversion-failmessage">Entrée invalide: entrez LAST (dernière), LIVE (en ligne) ou un numéro de version.</message>
+  <message key="createdocvariant.goto-editor">Aller à l'éditeur après la création de la variante du document.</message>
+  <message key="createdocvariant.image-id">ID</message>
+  <message key="createdocvariant.image-name">Nom</message>
+  <message key="createdocvariant.image-create-variant">Créer variante</message>
+
+  <!-- placeholder_*.xml -->
+  <message key="placeholder.name">Nom du document</message>
+  <message key="placeholder.documentType">Type de document</message>
+  <message key="placeholder.collections">Collections</message>
+  <message key="placeholder.title">Lien vers nouveau document</message>
+  <message key="placeholder.create">Créer</message>
+  <message key="placeholder.completing">En cours, veuillez patienter...</message>
+
+  <!-- book messages shared by multiple files -->
+  <message key="book.edit-mode">Mode d'édition</message>
+  <message key="book.edit-mode-xml">XML</message>
+  <message key="book.edit-mode-graphical">Graphique</message>
+  <message key="bookwizard.back">&lt; Retour</message>
+  <message key="bookwizard.continue">Suite ></message>
+  <message key="bookwizard.step1">Publier le livre - étape 1</message>
+  <message key="bookwizard.step1.name">Paramètres généraux</message>
+  <message key="bookwizard.step2">Publier le livre - étape 2</message>
+  <message key="bookwizard.step2.name">Sélectionnez les types de publication de livre</message>
+  <message key="bookwizard.step3">Publier le livre - étape 3</message>
+  <message key="bookwizard.step3.name">Régles de contrôle d'accès (ACL)</message>
+  <message key="bookwizard.start">Démarrer la publication du livre</message>
+  <message key="book.books">Livres</message>
+  <message key="book.book-definitions">Définitions de livres</message>
+
+  <!-- bookacl_*.xml -->
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.EVERYONE">tous</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.USER">utilisateur</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.ROLE">rôle</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.GRANT">autoriser</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.DENY">refuser</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.NOTHING">neutre</message>
+  <message key="bookacl.subject">Sujet</message>
+  <message key="bookacl.permissions">Permissions</message>
+  <message key="bookacl.actions">Actions</message>
+  <message key="bookacl.subject-type">Type</message>
+  <message key="bookacl.subject-value">Valeur</message>
+  <message key="bookacl.perm-read">Lire</message>
+  <message key="bookacl.perm-manage">Gérer</message>
+  <message key="bookacl.no-entries">(aucune entrée)</message>
+  <message key="bookacl.add-entry">Nouvelle entrée</message>
+  <message key="bookacl.append-entry">Ajouter entrée</message>
+  <message key="bookacl.value-required">Vous devez sélectionner une valeur.</message>
+  <message key="bookacl.error-cannot-exclude-yourself">Les règles de contrôle d'accès (ACL) que vous avez spécifiées vous refuseraient les droits de gestion, ce qui n'est pas autorisé.</message>
+  <message key="bookacl.title">Editer règles de contrôle d'accès (ACL) au livre</message>
+  <message key="bookacl.save">Enregistrer</message>
+  <message key="bookacl.select">sélectionner...</message>
+
+  <!-- bookinstanceparams_*.xml -->
+  <message key="bookip.id">ID</message>
+  <message key="bookip.book-instance-name">Nom de l'instance de livre</message>
+  <message key="bookip.book-instance-label">Désignation de l'instance de livre</message>
+  <message key="bookip.content-branch">Branche du contenu</message>
+  <message key="bookip.content-language">Langue du contenu</message>
+  <message key="bookip.content-version">Version du contenu</message>
+  <message key="bookip.locale">Locale</message>
+  <message key="bookip.book-definition">Définition du livre</message>
+  <message key="bookip.book-instance">Instance du livre</message>
+  <message key="pubtypes.no-properties-yet">(aucune propriété pour l'instant)</message>
+  <message key="pubtypes.default-properties">Propriétés par défaut</message>
+  <message key="pubtypes.add-pubtype">Ajouter un type de publication</message>
+  <message key="bookip.duplicate-instance-name">Il existe déjà une instance de livre portant ce nom.</message>
+  <message key="bookip.book-instance-name-help">Ne sont autorisés que les caractères minuscule a-z, les caractères numériques, les espaces, ainsi que les caractères -, _, : et la virgule.</message>
+
+  <!-- selectpublicationtypes_*.xml -->
+  <message key="pubtypes.need-at-least-one">Une publication au moins doit être ajoutée.</message>
+  <message key="pubtypes.duplicate-output-name">Il existe déjà une publication portant ce nom.</message>
+  <message key="pubtypes.output-name">Nom du fichier produit</message>
+  <message key="pubtypes.output-label">Désignation du fichier produit</message>
+  <message key="pubtypes.add-property">Ajouter propriété</message>
+  <message key="pubtypes.publication-properties">Propriétés de publication</message>
+
+  <!-- bookpublished.xml -->
+  <message key="bookpublished.started">La publication du livre a démarré</message>
+  <message key="bookpublished.info">Le livre est en cours de publication. L'état de la publication figure dans la zone ci-après; il est mis à jour toutes les 5 secondes.</message>
+
+  <!-- edit_bookinstance.xml -->
+  <message key="ebi.title">Editer instance du livre</message>
+  <message key="ebi.enter-new-label">Entrez la nouvelle désignation:</message>
+  <message key="ebi.enter-new-name">Entrez le nouveau nom:</message>
+  <message key="ebi.general">Général</message>
+  <message key="ebi.publications">Publications</message>
+  <message key="ebi.change">changer</message>
+  <message key="ebi.label">Désignation</message>
+  <message key="ebi.back-to-published-books">Retour aux livres publiés</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="publishtaskstate.finished">Terminé</message>
+  <message key="publishtaskstate.view-publication-log">Consulter journal de publication</message>
+  <message key="publishtaskstate.view-link-error-log">Consulter journal des erreurs dans les liens</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="bookstate.starting">Démarrage en cours</message>
+  <message key="bookstate.initializing">Initialisation en cours</message>
+  <message key="bookstate.retrieving-data">Elaboration du contenu du livre</message>
+  <message key="bookstate.publishing">Publication de "{2}"</message>
+  <message key="bookstate.finished">Terminé</message>
+
+  <!-- parteditor_bookmeta_*.xml -->
+  <message key="bookmeta.no-fields-yet">Aucun champ de méta-donnée.</message>
+
+  <!-- publishtasks.xsl -->
+  <message key="publishtasks.title">Tâches de publication de livre en cours d'exécution</message>
+  <message key="publishtasks.book-instance">Instance de livre</message>
+  <message key="publishtasks.started-by-user">Démarrée par utilisateur</message>
+  <message key="publishtasks.started-on">Démarrée le</message>
+  <message key="publishtasks.state">Etat</message>
+  <message key="publishtasks.hidden">masqué</message>
+  <message key="publishtasks.no-tasks-running">Aucune tâche en cours d'exécution.</message>
+
+  <!-- bookmanagement.xsl -->
+  <message key="bookmgmt.title">Définitions de livres</message>
+  <message key="bookmgmt.published-books">Livres publiés</message>
+  <message key="bookmgmt.publish">Publier</message>
+  <message key="bookmgmt.no-bookdefs">Aucune définition de livre n'est disponible. Pour en créer une, créez simplement un document de type "Définition de livre".</message>
+
+  <!-- bookinstancemanagement.xsl -->
+  <message key="bookinstancemgmt.title">Livres</message>
+  <message key="bookinstancemgmt.no-books">Aucun livre disponible.</message>
+  <message key="bookinstacemgmt.publish-a-book">Publier un livre</message>
+  <message key="bookinstancemgmt.view-running-tasks">Consulter les tâches de publication en cours d'exécution</message>
+  <message key="bookinstancemgmt.edit-acl">éditer ACL</message>
+  <message key="bookinstancemgmt.delete">supprimer</message>
+  <message key="bookinstancemgmt.change-names">changer noms</message>
+  <message key="bookinstancemgmt.link-log">journal des erreurs de lien</message>
+  <message key="bookinstancemgmt.publication-log">journal de publication</message>
+  <message key="bookinstancemgmt.confirm-delete">Voulez-vous vraiment supprimer l'instance de livre "{0}"? Une fois effacée, elle est perdue!</message>
+
+  <!-- documentbasket.xsl -->
+  <message key="docbasket.title">Panier de documents</message>
+  <message key="docbasket.empty">Votre panier de documents est vide.</message>
+  <message key="docbasket.content-title">Contenu de votre panier</message>
+  <message key="docbasket.contains-one">Votre panier contient <b>un</b> document.</message>
+  <message key="docbasket.contains-documents">Votre panier contient <b>{0}</b> documents.</message>
+  <message key="docbasket.refresh">Rafraîchir</message>
+  <message key="docbasket.doc-name">Nom de document</message>
+  <message key="docbasket.op-select-all">Sélectionner tous</message>
+  <message key="docbasket.op-unselect-all">Désélectionner tous</message>
+  <message key="docbasket.op-remove-selected">Enlever les élément choisis</message>
+  <message key="docbasket.rop-remove-all">Enlever tous</message>
+  <message key="docbasket.actions-title">Tâches du panier de documents</message>
+  <message key="docbasket.action-aggr-html">Agréger tous les documents en un document HTML</message>
+  <message key="docbasket.action-aggr-html-plain">Agréger tous les documents en un document HTML, sans la navigation</message>
+  <message key="docbasket.action-aggr-pdf">Agréger tous les documents en un document PDF</message>
+  <message key="docbasket.action-start-doctask">Démarrer une tâche de document sur ces documents</message>
+  <message key="docbasket.adding-title">Pour ajouter des documents au panier</message>
+  <message key="docbasket.adding-manual">En consultant le document, sélectionnez l'entrée de menu Actions, Ajouter au panier</message>
+  <message key="docbasket.adding-with-query">Ajouter des documents à l'aide d'une requête</message>
+  <message key="docbasket.adding-from-nav">Sélectionner des documents à partir de l'arbre de navigation</message>
+
+  <!-- docbasket_aggr_html.xsl -->
+  <message key="docbasket.aggr-title">Contenu agrégé du panier de documents</message>
+
+  <!-- docbasket_select_from_nav.xsl -->
+  <message key="docbaset-nav.title">Panier de documents: ajouter des documents de l'arbre de navigation</message>
+  <message key="docbasket-nav.return-to-docbasket">Retourner au panier de documents</message>
+  <message key="docbasket-nav.add-selected-docs">Ajouter les documents sélectionnés</message>
+
+  <!-- includepreviews.xsl -->
+  <message key="includepreview.error">Une erreur est survenue lors de l'élaboration de l'aperçu de l'inclusion.</message>
+
+  <!-- daisy-forms-styling.xsl -->
+  <message key="formstyling.load-options">Afficher options...</message>
+
+  <!-- documentinfo.xsl / DocumentInfoApple -->
+  <message key="documentinfo.result.document-not-found">Document non trouvé</message>
+  <message key="documentinfo.result.document-variant-not-found">Variante de document non trouvée</message>
+  <message key="documentinfo.result.access-denied">Accès refusé</message>
+  <message key="documentinfo.result.version-not-found">Version non trouvée</message>
+  <message key="documentinfo.result.branch-not-found">Branche non trouvée</message>
+  <message key="documentinfo.result.language-not-found">Langue non trouvée</message>
+  <message key="documentinfo.result.error">Erreur inattendue</message>
+
+  <!-- Workflow general -->
+  <message key="wf.actor-user">Utilisateur</message>
+  <message key="wf.actor-pools">Pools d'utilisateurs</message>
+  <message key="wf.actor">Acteur</message>
+  <message key="wf.login">Nom (login)</message>
+  <message key="wf.section.my-tasks">Mes tâches</message>
+  <message key="wf.section.search-tasks">Rechercher tâches</message>
+  <message key="wf.section.search-processes">Rechercher processus</message>
+  <message key="wf.section.search-timers">Rechercher temporisateurs</message>
+  <message key="wf.console">Console de workflow</message>
+  <message key="wf.site-home">Accueil</message>
+  <message key="wf.priority-highest">Très haute</message>
+  <message key="wf.priority-high">Haute</message>
+  <message key="wf.priority-normal">Normale</message>
+  <message key="wf.priority-low">Faible</message>
+  <message key="wf.priority-lowest">Très faible</message>
+
+  <!-- wf_assign_*.xml -->
+  <message key="wfassign.scope-task">Cette tâche uniquement</message>
+  <message key="wfassign.scope-swimlane">Toutes les tâches futures associées au même rôle de processus</message>
+  <message key="wfassign.assign">Assigner tâche</message>
+  <message key="wfassign.cancel">Annuler</message>
+  <message key="wfassign.title">Assigner tâche de workflow</message>
+  <message key="wfassign.scope">Portée</message>
+
+  <!-- wfprocesssearch_*.xml -->
+  <message key="wfsearch.process-search-title">Rechercher des processus de workflow</message>
+  <message key="wfsearch.task-search-title">Rechercher des tâches de workflow</message>
+  <message key="wfsearch.timer-search-title">Rechercher des temporisateurs de workflow</message>
+
+  <message key="wfsearch.process-state">Etat</message>
+  <message key="wfsearch.process-state-open">Ouvert</message>
+  <message key="wfsearch.process-state-finished">Terminé</message>
+  <message key="wfsearch.process-state-any">Quelconque</message>
+  <message key="wfsearch.description-like">Description comme</message>
+  <message key="wfsearch.description-like-help">Utilisez % comme caractère joker.</message>
+  <message key="wfsearch.process-owner">Propriétaire du processus</message>
+  <message key="wfsearch.process-definition">Définition du processus</message>
+  <message key="wfsearch.related-to-doc">En lien avec le document</message>
+  <message key="wfsearch.search">Rechercher</message>
+  <message key="wfsearch.task-state">Etat</message>
+  <message key="wfsearch.task-state-open">Ouverte</message>
+  <message key="wfsearch.task-state-closed">Close</message>
+  <message key="wfsearch.task-state-any">Quelconque</message>
+  <message key="wfsearch.task-assigned-to">Assignée à</message>
+  <message key="wfsearch.task-assigned-to-me">Moi</message>
+  <message key="wfsearch.task-assigned-to-anyone">N'importe qui</message>
+  <message key="wfsearch.task-assigned-to-noone">Personne</message>
+  <message key="wfsearch.priority-at-least">Priorité au moins</message>
+  <message key="wfsearch.process-definition">Définition de processus</message> <!-- FIXME: present twice, see line 903 -->
+  <message key="wfsearch.process-owner">Propriétaire du processus</message> <!-- FIXME: present twice, see line 902 -->
+  <message key="wfsearch.suspended">Suspendu</message>
+  <message key="wfsearch.suspended-yes">Oui</message>
+  <message key="wfsearch.suspended-no">Non</message>
+  <message key="wfsearch.suspended-either">Peu importe</message>
+  <message key="wfsearch.timer-failed">En échec</message>
+  <message key="wfsearch.timer-failed-yes">Oui</message>
+  <message key="wfsearch.timer-failed-no">Non</message>
+  <message key="wfsearch.timer-failed-either">Peu importe</message>
+  <message key="wfsearch.no-processes-found">Aucun processus de workflow ne correspond au critère spécifié.</message>
+  <message key="wfsearch.no-tasks-found">Aucune tâche de workflow ne correspond au critère spécifié.</message>
+  <message key="wfsearch.no-timers-found">Aucun temporisateur de workflow ne correspond au critère spécifié.</message>
+  <message key="wfsearch.alt-title.description">Description</message>
+  <message key="wfsearch.alt-title.owner">Propriétaire</message>
+  <message key="wfsearch.alt-title.suspension">Suspension</message>
+  <message key="wfsearch.action.resume">Reprendre</message>
+  <message key="wfsearch.action.suspend">Suspendre</message>
+  <message key="wfsearch.action.view">Consulter</message>
+  <message key="wfsearch.action.delete">Supprimer</message>
+  <message key="wfsearch.action-confirm.suspend">Suspendre le processus "{0}"?</message>
+  <message key="wfsearch.action-confirm.resume">Reprendre le processus "{0}"?</message>
+  <message key="wfsearch.action-confirm.delete">Voulez-vous vraiment supprimer le processus "{0}"?</message>
+  <message key="wfsearch.action.open">ouvert</message>
+  <message key="wfsearch.action.pool">pool</message>
+  <message key="wfsearch.action-confirm.assign-to-pool">Réassigner la tâche au pool?</message>
+  <message key="wfsearch.action.assign-to-me">me l'assigner</message>
+  <message key="wfsearch.action.assign">assigner</message>
+  <message key="wfsearch.nav.first">Premier</message>
+  <message key="wfsearch.nav.prev">Préc.</message>
+  <message key="wfsearch.nav.next">Suivant</message>
+  <message key="wfsearch.nav.last">Dernier</message>
+  <message key="wfsearch.return-to-tasks">Retour aux tâches</message>
+  <message key="wfsearch.return-to-process-search">Retour à la recherche des processus</message>
+  <message key="wfsearch.return-to-task-search">Retour à la recherche des tâches</message>
+  <message key="wfsearch.return-to-timer-search">Retour à la recherche des temporisateurs</message>
+  <message key="wfsearch.timers-info">
+    <p>Ne figurent dans cette liste que les temporisateurs actifs ou qui sont en échec. Les temporisateurs arrivés à leur terme
+    sont supprimés après exécution.</p><p>Pour interrompre l'exécution d'un temporisateur, suspendez le processus auquel il est
+    associé. Vous pouvez le faire depuis la page de détail des processus, accessible en cliquant sur l'ID du processus.</p>
+  </message>
+
+  <!-- wf_process_delete_success.xml -->
+  <message key="wfdelscs.title">Processus supprimé</message>
+  <message key="wfdelscs.info">Le processus de workflow a été supprimé.</message>
+
+  <!-- wf_process_resume_success.xml -->
+  <message key="wfresumescs.title">Reprise du processus</message>
+  <message key="wfresumescs.info">Le processus de workflow a repris son exécution.</message>
+
+  <!-- wf_process_started.xml -->
+  <message key="wfpstarted.title">Processus démarré</message>
+  <message key="wfpstarted.info">L'exécution du processus de workflow a démarré.</message>
+  <message key="wfpstarted.process-id">ID du processus</message>
+
+  <!-- wf_process_suspended_success.xml -->
+  <message key="wfpsusp.title">Processus suspendu</message>
+  <message key="wfpsusp.info">L'exécution du processus de workflow a été mise en suspens.</message>
+
+  <!-- wftask_to_*.xsl -->
+  <message key="wfuptsk.save">Enregistrer</message>
+  <message key="wfuptsk.cancel">Annuler</message>
+  <message key="wfuptsk.start-title">Démarrer le workflow</message>
+  <message key="wfuptsk.perform-title">Exécuter la tâche de workflow</message>
+  <message key="wfuptsk.actions-label.continue">Poursuivre l'édition de la tâche ultérieurement</message>
+  <message key="wfuptsk.actions-label.startprocess">Démarrer le processus de workflow</message>
+  <message key="wfuptsk.actions-label.transition">Terminer la tâche par une transition</message>
+  <message key="wfuptsk.due-date">Echéance</message>
+  <message key="wfuptsk.priority">Priorité</message>
+
+  <!-- wf_processdef_selection.xsl -->
+  <message key="wfpsel.title">Démarrer un nouveau workflow</message>
+  <message key="wfpsel.intro">Sélectionnez le type de workflow:</message>
+  <message key="wfpsel.no-workflows-available">Aucun workflow disponible.</message>
+
+  <!-- wf_tasks(_list).xsl -->
+  <message key="wftasks.title">Tâches de workflow</message>
+  <message key="wftasks.my-tasks">Mes tâches</message>
+  <message key="wftasks.pooled-tasks">Tâches associées au pool</message>
+  <message key="wftasks.none-assigned-to-you">Aucune tâche ne vous est assignée.</message>
+  <message key="wftasks.none-pooled">Il n'y a aucune tâche associée au pool d'utilisateurs pour vous.</message>
+
+  <!-- wf_timer(_searchresult).xsl -->
+  <message key="wftimer.title">Temporisateurs de workflow</message>
+  <message key="wftimer.id">ID</message>
+  <message key="wftimer.due-date">Echéance</message>
+  <message key="wftimer.suspended">Suspendu</message>
+  <message key="wftimer.owner-process-id">ID propriétaire processus</message>
+  <message key="wftimer.execution-path">Chemin d'exécution précédant la création du temporisateur</message>
+  <message key="wftimer.transition">Transition suivant l'action de temporisation</message>
+  <message key="wftimer.exception">Exception</message>
+
+  <!-- variables_index.xsl -->
+  <message key="varsindex.title">Variables</message>
+  <message key="varsindex.vardocsintro">Les documents suivants de définition de variables sont actifs pour ce site:</message>
+  <message key="varsindex.novarsdefined">Aucun jeu de variables n'est défini pour ce site. Le mécanisme
+          de substitution peut être activé par votre administrateur. Si vous êtes un administrateur,
+          consultez la <a href="http://www.daisycms.org/">documentation Daisy</a> sur la façon de
+          configurer les variables.</message>
+  <message key="varsindex.view">consulter</message>
+  <message key="varsindex.edit">éditer</message>
+
+    <!-- transl_mgmt_* -->
+  <message key="tmsearch.title">Gestion des traductions | Recherche</message>
+  <message key="tmsearch.reference-language">Langue de référence</message>
+  <message key="tmsearch.language">Langue</message>
+  <message key="tmsearch.search">Recherche</message>
+  <message key="tmsearch.live-version">Version en ligne</message>
+  <message key="tmsearch.last-version">Dernière version</message>
+  <message key="tmsearch.query">Afficher</message>
+  <message key="tmsearch.in-sync">Traductions qui sont à jour (synchronisées)</message>
+  <message key="tmsearch.not-in-sync">Traductions qui ne sont pas à jour (pas synchronisées)</message>
+  <message key="tmsearch.no-major-changes">Documents de référence sans modification majeure</message>
+  <message key="tmsearch.no-reference-language">Documents pour lesquels la langue de référence n'est pas définie</message>
+  <message key="tmsearch.translation-does-not-exist">Traductions qui n'existent pas</message>
+  <message key="tmsearch.not-synced-with-reference-language">Documents synchronisés avec une langue qui n'est pas celle de référence</message>
+  <message key="tmsearch.only-translation-exists">Documents pour lesquels il n'existe que la traduction</message>
+  <message key="tmsearch.overview">Aperçu</message>
+  <message key="tmsearch.required-for-current-query">Ce champ est requis pour la requête sélectionnée</message>
+  <message key="tmsearch.lang-reflang-conflict">La langue doit différer de la langue de référence.</message>
+
+  <message key="tmsearch.result.ref-variant-missing">variante de référence manquante.</message>
+  <message key="tmsearch.result.never-synced">jamais synchronisé.</message>
+  <message key="tmsearch.result.not-synced-with-reflang">non synchronisé avec langue de référence.</message>
+  <message key="tmsearch.result.not-in-sync">non synchronisé.</message>
+
+  <message key="tm.select-with-preview">Sélection avec aperçu</message>
+  <message key="tm.select-synced-with.title">Sélection synchronisée avec</message>
+  <message key="tm.synced-with">Synchronisé avec</message>
+  <message key="tm.synced-with-language">Synchro. avec</message>
+  <message key="tm.synced-with-version">version</message>
+
+  <!-- facetedbrowser.xsl -->
+  <message key="facetedbrowser.pagetitle">Navigation à facettes</message>
+  <message key="facetedbrowser.title">Navigation à facettes</message>
+  <message key="facetedbrowser.docs-found">Trouvé {0} document(s).</message>
+  <message key="facetedbrowser.open-query">Ouvrir cette requête dans la page des requêtes</message>
+  <message key="facetedbrowser.limit-to-site-collection">Restreindre à la collection du site ({0})</message>
+  <message key="facetedbrowser.limit-to-site-variant">Restreindre à la variante du site (branche {0}, langue {1})</message>
+  <message key="facetedbrowser.order-by">Trier par:</message>
+  <message key="facetedbrowser.name">nom</message>
+  <message key="facetedbrowser.asc">asc</message>
+  <message key="facetedbrowser.desc">desc</message>
+  <message key="facetedbrowser.filters">Filtres:</message>
+  <message key="facetedbrowser.remove-all">Suppr. tous</message>
+  <message key="facetedbrowser.by">par</message>
+  <message key="facetedbrowser.more">{0} de plus</message>
+  <message key="facetedbrowser.previous">Précédent</message>
+  <message key="facetedbrowser.of">de</message>
+  <message key="facetedbrowser.next">Suivant</message>
+
+</catalogue>

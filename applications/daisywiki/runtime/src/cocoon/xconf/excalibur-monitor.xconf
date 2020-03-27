@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.apache.avalon.excalibur.monitor.Monitor']">
+
+  <!--+
+      | The Monitor keeps track on changes to a Resource.
+      +-->
+  <component
+      class="org.apache.avalon.excalibur.monitor.ActiveMonitor"
+      role="org.apache.avalon.excalibur.monitor.Monitor"
+      logger="daisy">
+    <thread frequency="10000" priority="5"/>
+  </component>
+
+</xconf>

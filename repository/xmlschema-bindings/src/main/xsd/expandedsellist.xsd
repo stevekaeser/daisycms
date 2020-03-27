@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="fieldtype.xsd"/>
+  <xs:element name="expSelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:expListItem"/>
+      </xs:sequence>
+      <xs:attribute name="fieldTypeId" type="xs:long"/>
+      <xs:attribute name="fieldTypeName" type="xs:string"/>
+      <xs:attribute name="valueType" type="xs:string"/>
+      <xs:attribute name="multiValue" type="xs:boolean"/>
+      <xs:attribute name="hierarchical" type="xs:boolean"/>
+      <xs:attribute name="label" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="expListItem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="value" type="daisy:fieldValuesType"/>
+        <xs:element name="label" type="xs:string"/>
+        <!--In hierarchical selection lists, a listItem can again contain listItems-->
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:expListItem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

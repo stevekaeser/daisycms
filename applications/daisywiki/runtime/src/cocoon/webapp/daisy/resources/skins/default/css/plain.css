@@ -1,0 +1,10 @@
+@import url("layout.css");
+@import url("navigation.css");
+@import url("extras.css");
+@import url("docstyle.css");
+@import url("workflow.css");
+@import url("doceditor.css");
+
+body {
+    margin: 0 .5em;
+}

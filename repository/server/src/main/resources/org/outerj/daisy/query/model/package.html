@@ -1,0 +1,18 @@
+<html>
+<body>
+The query model.
+
+<p>The query model should be stateless for expression evaluation, but
+is not stateless for SQL generation.
+
+<p>That is, if expressions are precompiled they can be evaluated multiple
+times, by multiple threads concurrently (for example, this is used
+for evaluating the ACL expressions).
+
+<p>The SQL generation is however not threadsafe, as sometimes state
+needs to be kept between the 'generate sql' and 'bind sql' phases.
+(This could of course be changed to retain that state in some
+context object, but this is how the situation currently is).
+
+</body>
+</html>

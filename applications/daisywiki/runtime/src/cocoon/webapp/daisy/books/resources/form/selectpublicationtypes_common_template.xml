@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  
+  <ft:widget id="messages"/>
+
+  <ft:repeater-widget id="publications">
+    <div style="border: 1px solid black; margin: 1em;">
+      <div style="background-color: #7f7f7f; color: white; padding: .5em;">
+        <table class="plainTable" width="100%">
+          <tr>
+            <td><b><ft:widget id="typeLabel"/></b></td>
+            <td style="text-align: right">
+              <ft:widget id="delete">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="delete" i18n:attr="title"/>
+              </ft:widget>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin: .5em; padding: .5em;">
+        <ft:widget-label id="outputName"/>:
+        <ft:widget id="outputName"/>
+        <ft:widget-label id="outputLabel"/>:
+        <ft:widget id="outputLabel"/>
+        <br/>
+        <br/>
+        <i18n:text key="pubtypes.publication-properties"/>:
+        <table class="default">
+          <tbody>
+            <tr>
+              <th><i18n:text key="name"/></th>
+              <th><i18n:text key="value"/></th>
+            </tr>
+            <jx:if test="${widget.getChild('properties').getSize() == 0}">
+              <tr>
+                <td colspan="3"><i18n:text key="pubtypes.no-properties-yet"/></td>
+              </tr>
+            </jx:if>
+            <ft:repeater-widget id="properties">
+              <tr>
+                <td>
+                  <ft:widget id="name">
+                    <fi:styling size="35"/>
+                  </ft:widget>
+                </td>
+                <td>
+                  <ft:widget id="value">
+                    <fi:styling size="45"/>
+                  </ft:widget>
+                </td>
+                <td>
+                  <ft:widget id="delete">
+                    <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="delete" i18n:attr="title"/>
+                  </ft:widget>
+                </td>
+              </tr>
+            </ft:repeater-widget>
+          </tbody>
+        </table>
+        <ft:widget id="addProperty"/>
+        <br/>
+        <i18n:text key="pubtypes.default-properties"/>:
+        <br/>
+        <ft:widget id="defaultProperties"/>
+        <ft:widget id="addDefaultProperty"/>
+      </div>
+    </div>
+  </ft:repeater-widget>
+
+  <br/>
+  <br/>
+  <i18n:text key="pubtypes.add-pubtype"/>:
+  <ft:widget id="availablePublicationTypes"/>
+  <ft:widget id="addPublicationType"/>
+
+</div>

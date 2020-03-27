@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<jx:if test="true" xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+     xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+     xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+     xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+<div>
+
+  <jx:set var="partEditor" value="${widget.getAttribute('partEditor')}"/>
+  <jx:set var="partType" value="${partEditor.partTypeUse.partType}"/>
+  <jx:set var="lastUploaded" value="${widget.lookupWidget('last-upload-part').value}"/>
+  
+  <jx:if test="${lastUploaded != null}">
+      <jx:choose>
+        <jx:when test="${lastUploaded != null &amp;&amp; !empty lastUploaded.uploadName}">
+          <jx:set var="lastUploadedFileName" value="${Packages.org.outerj.daisy.frontend.RequestUtil.removePathFromUploadFileName(lastUploaded.uploadName)}"/>
+        </jx:when>
+        <jx:otherwise>
+          <jx:set var="lastUploadedFileName" value="data"/>
+        </jx:otherwise>
+      </jx:choose>
+
+      <jx:choose>
+        <jx:when test="${documentEditorContext.documentId == null}">
+          <jx:set var="docId" value="new"/>
+        </jx:when>
+        <jx:otherwise>
+          <jx:set var="docId" value="${documentEditorContext.documentId}"/>
+        </jx:otherwise>
+      </jx:choose>
+
+      <jx:set var="lastUploadedPath" value="${pageContext.mountPoint.concat('/').concat(pageContext.siteConf.name).concat('/').concat(docId).concat('/edit/').concat(cocoon.continuation.id).concat('/part/').concat(partType.name).concat('/data/').concat(lastUploadedFileName)}"/>
+
+      <!-- testing
+      <applet codebase="${pageContext.mountPoint}/resources/parteditor-applet"
+          archive="daisywiki-parteditor-applet-${daisyVersion}.jar"
+          width="400"
+          height="200"
+          mayscript="mayscript"
+          CODE="org.outerj.daisy.frontend.editor.PartEditorApplet">
+
+            <PARAM name="image" value="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/edit-applet-loading.png"/>
+            <PARAM name="mayscript" value="mayscript"/>
+            <PARAM name="jsessionid" value="${cocoon.session.id}"/>
+            <PARAM name="mountPoint" value="${pageContext.mountPoint}"/>
+            <PARAM name="siteName" value="${pageContext.siteConf.name}"/>
+            <PARAM name="skin" value="${pageContext.skin}"/>
+            <PARAM name="widgetId" value="${widget.fullName}"/>
+            <PARAM name="documentId" value="${docId}"/>
+            <PARAM name="branch" value="${documentEditorContext.branch}"/>
+            <PARAM name="language" value="${documentEditorContext.language}"/>
+            <PARAM name="partTypeName" value="${partType.name}"/>
+            <PARAM name="partTypeId" value="${partType.id}"/>
+            <PARAM name="mimeType" value="${lastUploaded.mimeType}"/>
+            <PARAM name="iconPaths" value="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/mimetypes/${lastUploaded.mimeType}.gif ${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/mimetypes/unknown.gif"/>
+            <PARAM name="imagesPath" value="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images"/>
+            <PARAM name="formPath" value="${pageContext.mountPoint}/${pageContext.siteConf.name}/${docId}/edit/${cocoon.continuation.id}/part-${partType.name}"/>
+            <PARAM name="resourcesPath" value="${pageContext.mountPoint}/resources"/>
+            <PARAM name="downloadPath" value="${lastUploadedPath}"/>
+            <PARAM name="fileName" value="${lastUploadedFileName}"/>
+            <PARAM name="uploadPath" value="${pageContext.mountPoint}/${pageContext.site.name}/${docId}/edit/${cocoon.continuation.id}/part-${partType.name}"/>
+            <PARAM name="mimeTypeDefaultsPath" value="${pageContext.mountPoint}/resources/parteditor-applet/defaultMimeTypeRegistry.ini"/>
+
+      </applet>
+      -->
+              
+      <!-- stuff to support upload+edit widgets -->
+      <script language="javascript">
+    
+        var appletConf = {};
+        var editDialogConf = { appletConf: appletConf };
+        appletConf.parameters = {
+            "mayscript":    "mayscript",
+            "image":        "${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/edit-applet-loading.png",
+            "jsessionid":   "${cocoon.session.id}",
+            "mountPoint":   "${pageContext.mountPoint}",
+            "siteName":     "${pageContext.siteConf.name}",
+            "skin":         "${pageContext.skin}",
+            "widgetId":     "${widget.fullName}",
+            "documentId":   "${docId}",
+            "branch":       "${branch}",
+            "language":     "${language}",
+            "partTypeName": "${partType.name}",
+            "partTypeId":   "${partType.id}",
+            "mimeType":     "${lastUploaded.mimeType}",
+            "iconPaths":    "${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/mimetypes/${lastUploaded.mimeType}.gif ${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/mimetypes/unknown.gif",
+            "imagesPath":   "${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images",
+            "formPath":     "${pageContext.mountPoint}/${pageContext.siteConf.name}/${docId}/edit/${cocoon.continuation.id}/part-${partType.name}",
+            "resourcesPath":"${pageContext.mountPoint}/resources",
+            "downloadPath": "${lastUploadedPath}",
+            "fileName":     "${lastUploadedFileName}",
+            "uploadPath":   "${pageContext.mountPoint}/${pageContext.siteConf.name}/${docId}/edit/${cocoon.continuation.id}/part-${partType.name}",
+            "mimeTypeDefaultsPath":"${pageContext.mountPoint}/resources/parteditor-applet/defaultMimeTypeRegistry.ini"
+        };
+        appletConf.attributes = {
+          'codebase':'${pageContext.mountPoint}/resources/parteditor-applet',
+          'archive':'daisywiki-parteditor-applet-${daisyVersion}.jar',
+          'width':'400',
+          'height':'200',
+          'mayscript':'mayscript',
+          'CODE':'org.outerj.daisy.frontend.editor.PartEditorApplet'
+        };
+      </script>
+    
+      <div dojoType="dialog" id="parteditor-applet-dialog" widgetId="parteditor-applet-dialog" bgColor="#666" fgColor="#fff" style="display: none">
+        <div id="editAppletContainer_${widget.fullName}.upload-part">
+        </div>
+      </div>
+  </jx:if>  
+
+  <div id="part-uploader-${widget.lookupWidget('upload-part').fullName}">
+    <fi:group>
+      <fi:styling layout="daisy-columns"/>
+      <fi:items>
+        <ft:widget id="upload-part">
+          <fi:styling type="daisy-part"
+            dataPath="${lastUploadedPath}" mimeTypes="${partTypeUse.partType.mimeTypes}"/>
+        </ft:widget>
+        <ft:widget id="upload-part-filename">
+          <fi:styling size="45"/>
+        </ft:widget>
+        <ft:widget id="upload-part-mimetype">
+          <fi:styling size="45"/>
+        </ft:widget>
+      </fi:items>
+    </fi:group>
+  </div>
+  <div id="part-upload-notification-${widget.lookupWidget('upload-part').fullName}" style="display: none; background-color: red; color: white; font-weight: bold;"><i18n:text key="please-wait-uploading"/></div>
+
+
+</div>
+</jx:if>

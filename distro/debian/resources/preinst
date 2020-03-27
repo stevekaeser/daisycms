@@ -1,0 +1,88 @@
+#!/bin/bash
+
+export DAISY_HOME=/usr/lib/daisy
+
+. /usr/lib/java-wrappers/java-wrappers.sh
+find_java_runtime
+export JAVA_HOME
+
+stop_services () {
+  if [ -x /etc/init.d/daisy-wiki ] ; then
+    /etc/init.d/daisy-wiki stop
+  fi
+  
+  if [ -x /etc/init.d/daisy-repository-server ]; then
+    /etc/init.d/daisy-repository-server stop
+  fi
+}
+
+create_user () {
+  # Create daisy_user
+  if [ -z `grep daisy_user /etc/group` ]; then 
+    groupadd daisy_user
+  fi
+  
+  if [ -z `grep daisy_user /etc/passwd` ]; then
+    useradd daisy_user -g daisy_user
+  fi
+}
+
+do_upgrade () {
+  temp_var=$2  	
+  PREVIOUS_VERSION=${temp_var:=new}  
+	
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ] || [ -z "${PREVIOUS_VERSION/1.5-M1/}" ]; then
+    DB_USER=debian-sys-maint
+    DB_PASSWORD=`cat /etc/mysql/debian.cnf | grep password | head -1 | sed 's/password = //'`
+    OPENJMS_DB=`cat $DAISY_HOME/openjms-init.properties | grep dbUrl= | sed -e 's/.*\///' -e 's/\?.*//'`
+    
+    echo "The current version no longer requires openjms.  Removing openjms configuration."    
+    rm -fr ${DAISY_HOME}/openjms    
+    
+    rm /etc/daisy/daisy-openjms.conf
+    rm /etc/init.d/daisy-openjms
+    update-rc.d daisy-openjms remove > /dev/null
+    
+    openjmsdb_exists=`mysql --user=$DB_USER --password=$DB_PASSWORD -e "show databases" | grep $OPENJMS_DB`
+    if [ -n "${openjmsdb_exists}" ]; then
+      echo "Removing db ${OPENJMS_DB}"
+      /usr/bin/mysqladmin -f --user=$DB_USER --password=$DB_PASSWORD drop $OPENJMS_DB
+    else
+      echo "${OPENJMS_DB} not found."
+    fi
+    
+    #Move user modifiable wiki dirs to the daisywiki.data dir ( /var/daisydata_deb/wiki )
+    WEBAPP=${DAISY_HOME}/daisywiki/webapp
+    WIKI_DATA=/var/daisydata_deb/wiki
+    if [ ! -d $WIKI_DATA ] ; then
+      mkdir $WIKI_DATA
+    fi 
+    mv ${WEBAPP}/daisy/sites $WIKI_DATA
+    mv ${WEBAPP}/daisy/resources/skins $WIKI_DATA
+    mv ${WEBAPP}/daisy/resources/document-styling $WIKI_DATA
+    mv ${WEBAPP}/daisy/resources/query-styling $WIKI_DATA
+    mv ${WEBAPP}/daisy/resources/parteditors $WIKI_DATA
+    mv ${WEBAPP}/daisy/bookstore $WIKI_DATA
+     
+  fi
+}
+
+
+case "$1" in 
+  upgrade)
+  stop_services
+  do_upgrade
+  ;;
+  
+  install)
+  #you never know
+  stop_services
+  create_user
+  ;;
+  
+  *)
+  echo "I don't know how to $1"
+  exit1
+  ;;
+esac
+

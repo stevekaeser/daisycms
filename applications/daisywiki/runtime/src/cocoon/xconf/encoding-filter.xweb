@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xweb xpath="/web-app"
+      insert-before="servlet"
+      unless="/web-app/filter[filter-name = 'encoding-filter']">
+
+  <filter>
+    <filter-name>encoding-filter</filter-name>
+    <filter-class>org.outerj.daisy.frontend.util.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>encoding-filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+</xweb>

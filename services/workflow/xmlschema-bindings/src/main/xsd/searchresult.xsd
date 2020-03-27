@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="searchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="titles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="title">
+                <xs:complexType>
+                  <xs:complexContent>
+                    <xs:extension base="xs:anyType">
+                      <xs:attribute name="name" type="xs:string" use="required"/>
+                      <xs:attribute name="source" type="xs:string" use="required"/>
+                    </xs:extension>
+                  </xs:complexContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rows">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="row" type="wf:repeatedSearchResultValues"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="resultInfo">
+          <xs:complexType>
+            <xs:attribute name="chunkOffset" type="xs:int"/>
+            <xs:attribute name="chunkLength" type="xs:int"/>
+            <xs:attribute name="requestedChunkOffset" type="xs:int"/>
+            <xs:attribute name="requestedChunkLength" type="xs:int"/>
+            <xs:attribute name="size" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="repeatedSearchResultValues">
+    <xs:sequence maxOccurs="unbounded" minOccurs="1">
+      <xs:choice>
+        <xs:element name="value">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="raw" type="xs:anyType"/>
+              <xs:element minOccurs="0" name="label" type="xs:anyType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<xweb xpath="/web-app/servlet[servlet-name = 'Cocoon']"
+      insert-before="init-param[param-name = 'show-cocoon-version']"
+        unless="init-param[param-name = 'parent-component-manager']">
+
+  <init-param>
+      <param-name>parent-component-manager</param-name>
+      <param-value>org.outerj.daisy.frontend.components.DaisyComponentManager/$${daisywiki.data}/daisy.xconf</param-value>
+    </init-param>
+</xweb>

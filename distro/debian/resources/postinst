@@ -1,0 +1,259 @@
+#!/bin/bash
+
+make_password () {
+	az=({a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z})
+	rand=""
+	for (( i=0; i<8; i++ )); do
+	  rand=${rand}${az[$RANDOM%26]};
+	done
+	PASSWD_REPLY=${rand}
+}
+
+create_activemq () {
+	make_password
+	AMQ_DB_URL=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^jmsDbUrl=" | sed -e 's/jmsDbUrl=//'`
+	AMQ_DB=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^jmsDbUrl=" | sed -e 's/.*\///' -e 's/\?.*//'`
+	AMQ_DB_USER=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^jmsDbUser=" | sed 's/jmsDbUser=//'`
+	AMQ_DB_PASSWD=${PASSWD_REPLY}
+	echo "jmsDbUserPassword=${AMQ_DB_PASSWD}" >> $DAISY_HOME/daisy-repository-init.properties
+	
+	jmsdb_exists=`mysql --user=$DB_USER --password=$DB_PASSWORD -e "show databases" | grep $AMQ_DB`
+	if [ -n "${jmsdb_exists}" ]; then 
+		echo "ActiveMQ db exists"; 
+	else	
+          echo "Creating ActiveMQ Database"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="create database $AMQ_DB character set 'utf8';"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.user SET Host='%', User='$AMQ_DB_USER', Password=PASSWORD('$AMQ_DB_PASSWD');"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.user SET Host='localhost', User='$AMQ_DB_USER', Password=PASSWORD('$AMQ_DB_PASSWD');"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.db SET Host='%', Db='$AMQ_DB', User='$AMQ_DB_USER', Select_priv='Y', Insert_priv='Y', Update_priv='Y', Delete_priv='Y', Create_priv='Y', Drop_priv='Y', Grant_priv='Y', References_priv='Y', Index_priv='Y', Alter_priv='Y', Create_tmp_table_priv='Y', Lock_tables_priv='Y', Create_view_priv='Y', Show_view_priv='Y', Create_routine_priv='Y', Alter_routine_priv='Y', Execute_priv='Y';"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.db SET Host='localhost', Db='$AMQ_DB', User='$AMQ_DB_USER', Select_priv='Y', Insert_priv='Y', Update_priv='Y', Delete_priv='Y', Create_priv='Y', Drop_priv='Y', Grant_priv='Y', References_priv='Y', Index_priv='Y', Alter_priv='Y', Create_tmp_table_priv='Y', Lock_tables_priv='Y', Create_view_priv='Y', Show_view_priv='Y', Create_routine_priv='Y', Alter_routine_priv='Y', Execute_priv='Y';"
+          /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="FLUSH PRIVILEGES;"
+	fi
+}
+
+wait_for_server_start () {
+  port=$1
+  counter=0
+  serverstatus=`netstat -l  | grep -e "^tcp.*:${port}"`
+  while [[ -z "${serverstatus}" &&  ${counter} -lt 45 ]]; do
+    sleep 2s
+    serverstatus=`netstat -l  | grep -e "^tcp.*:${port}"`
+    let counter=counter+1
+  done
+  if [ -z "${serverstatus}" ]; then
+    echo "Not listening to port $port .  Exiting ..."
+    exit 1
+  else
+    echo "Repository is up and listening to port $port"
+  fi
+}
+
+export DAISY_HOME=/usr/lib/daisy
+
+VERSION=2.4.2
+
+PREVIOUS_VERSION=$2
+
+DAISY_DATA=`cat $DAISY_HOME/daisy-repository-init.properties | grep dataDirLocation= | sed 's/dataDirLocation=//'`
+DAISY_DB=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^dbUrl=" | sed -e 's/.*\///' -e 's/\?.*//'`
+
+DAISY_WIKI_DATA=${DAISY_DATA}/wiki
+
+DB_USER=debian-sys-maint
+DB_PASSWORD=`cat /etc/mysql/debian.cnf | grep password | head -1 | sed -e 's/password = //'`
+DB_PRIVILEGES="SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES";
+
+DAISY_DB_USER=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^dbUser=" | sed 's/dbUser=//'`
+make_password
+DAISY_DB_PASSWD=${PASSWD_REPLY}
+echo "dbUserPassword=${DAISY_DB_PASSWD}" >> $DAISY_HOME/daisy-repository-init.properties
+chmod go-rwx $DAISY_HOME/daisy-repository-init.properties
+
+# include java-wrappers
+. /usr/lib/java-wrappers/java-wrappers.sh
+
+if [ -z "$JAVA_HOME" ] ; then
+  find_java_runtime
+  export JAVA_HOME
+fi
+
+# Classpath as found in daisy-wiki-init script
+# TODO : Classpath should be generated somehow
+export DAISY_VERSION=2.4.2
+export CLASSPATH="$DAISY_HOME/lib/avalon-framework/avalon-framework-api/4.3/avalon-framework-api-4.3.jar:$DAISY_HOME/lib/commons-cli/commons-cli/1.1/commons-cli-1.1.jar:$DAISY_HOME/lib/commons-codec/commons-codec/1.3/commons-codec-1.3.jar:$DAISY_HOME/lib/commons-collections/commons-collections/3.2/commons-collections-3.2.jar:$DAISY_HOME/lib/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar:$DAISY_HOME/lib/commons-logging/commons-logging/1.1/commons-logging-1.1.jar:$DAISY_HOME/lib/log4j/log4j/1.2.14/log4j-1.2.14.jar:$DAISY_HOME/lib/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:$DAISY_HOME/lib/daisy/daisy-impexp/$DAISY_VERSION/daisy-impexp-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-htmlcleaner/$DAISY_VERSION/daisy-htmlcleaner-$DAISY_VERSION.jar:$DAISY_HOME/lib/nekohtml/nekohtml/0.9.5/nekohtml-0.9.5.jar:$DAISY_HOME/lib/xerces/xercesImpl/2.9.0/xercesImpl-2.9.0.jar:$DAISY_HOME/lib/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar:$DAISY_HOME/lib/nekohtml/nekodtd/0.1.11/nekodtd-0.1.11.jar:$DAISY_HOME/lib/daisy/daisy-util/$DAISY_VERSION/daisy-util-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-jmsclient-api/$DAISY_VERSION/daisy-jmsclient-api-$DAISY_VERSION.jar:$DAISY_HOME/lib/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1.jar:$DAISY_HOME/lib/daisy/daisy-linkextractors-api/$DAISY_VERSION/daisy-linkextractors-api-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-linkextractors-impl/$DAISY_VERSION/daisy-linkextractors-impl-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-pluginregistry-api/$DAISY_VERSION/daisy-pluginregistry-api-$DAISY_VERSION.jar:$DAISY_HOME/lib/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar:$DAISY_HOME/lib/daisy/daisy-repository-api/$DAISY_VERSION/daisy-repository-api-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-repository-xmlschema-bindings/$DAISY_VERSION/daisy-repository-xmlschema-bindings-$DAISY_VERSION.jar:$DAISY_HOME/lib/xmlbeans/xbean/2.1.0/xbean-2.1.0.jar:$DAISY_HOME/lib/xmlbeans/xmlpublic/2.1.0/xmlpublic-2.1.0.jar:$DAISY_HOME/lib/stax/stax-api/1.0/stax-api-1.0.jar:$DAISY_HOME/lib/joda-time/joda-time/1.6/joda-time-1.6.jar:$DAISY_HOME/lib/daisy/daisy-repository-client-impl/$DAISY_VERSION/daisy-repository-client-impl-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-repository-common-impl/$DAISY_VERSION/daisy-repository-common-impl-$DAISY_VERSION.jar:$DAISY_HOME/lib/daisy/daisy-repository-spi/$DAISY_VERSION/daisy-repository-spi-$DAISY_VERSION.jar:$DAISY_HOME/lib/jaxen/jaxen/1.1-beta-4/jaxen-1.1-beta-4.jar:$DAISY_HOME/lib/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:$DAISY_HOME/lib/saxpath/saxpath/1.0-FCS/saxpath-1.0-FCS.jar:$DAISY_HOME/lib/daisy/daisy-install/$DAISY_VERSION/daisy-install-$DAISY_VERSION.jar"
+"
+
+if [ -z "$PREVIOUS_VERSION" ]; then
+  # -------------
+  # Fresh Install
+  # -------------  
+  
+  # Configure dir rights
+  chgrp -R daisy_user /usr/lib/daisy
+  chmod -R g+w /usr/lib/daisy
+  
+  #Configure DB
+    #ACTIVEMQ
+    create_activemq
+    
+    # DAISY REPOSITORY  
+  
+  daisydb_exists=`mysql --user=$DB_USER --password=$DB_PASSWORD -e "show databases" | grep $DAISY_DB`
+  if [ -n "${daisydb_exists}" ]; then 
+    echo "Daisy db exists"; 
+  else
+    echo "Creating Daisy Repository Database"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="create database $DAISY_DB character set 'utf8';"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.user SET Host='%',User='$DAISY_DB_USER', Password=PASSWORD('$DAISY_DB_PASSWD');"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.user SET Host='localhost',User='$DAISY_DB_USER', Password=PASSWORD('$DAISY_DB_PASSWD');"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.db SET Host='%', Db='$DAISY_DB', User='$DAISY_DB_USER', Select_priv='Y', Insert_priv='Y', Update_priv='Y', Delete_priv='Y', Create_priv='Y', Drop_priv='Y', Grant_priv='Y', References_priv='Y', Index_priv='Y', Alter_priv='Y', Create_tmp_table_priv='Y', Lock_tables_priv='Y', Create_view_priv='Y', Show_view_priv='Y', Create_routine_priv='Y', Alter_routine_priv='Y', Execute_priv='Y';"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="INSERT INTO mysql.db SET Host='localhost', Db='$DAISY_DB', User='$DAISY_DB_USER', Select_priv='Y', Insert_priv='Y', Update_priv='Y', Delete_priv='Y', Create_priv='Y', Drop_priv='Y', Grant_priv='Y', References_priv='Y', Index_priv='Y', Alter_priv='Y', Create_tmp_table_priv='Y', Lock_tables_priv='Y', Create_view_priv='Y', Show_view_priv='Y', Create_routine_priv='Y', Alter_routine_priv='Y', Execute_priv='Y';"
+    /usr/bin/mysql --user=$DB_USER --password=$DB_PASSWORD --exec="FLUSH PRIVILEGES;"
+
+    # Configure the Daisy repository  
+    "$JAVA_HOME/bin/java" -Ddaisy.home=$DAISY_HOME org.outerj.daisy.install.RepositoryServerInit --conf $DAISY_HOME/daisy-repository-init.properties
+    
+    # Install repository service wrapper scripts
+    echo "Installing repository wrapper script"
+    /usr/bin/daisy-service-install -r $DAISY_DATA
+
+    # Create init.d scripts for repository
+    ln -s $DAISY_DATA/service/daisy-repository-server-service /etc/init.d/daisy-repository-server
+
+    # Give datadir proper rights
+    chown -R daisy_user:daisy_user $DAISY_DATA
+  fi
+  
+  # Start repository (needed by daisy-wiki setup)
+  if [ -x /etc/init.d/daisy-repository-server ]; then
+    #Add daisy-repository to startup scripts
+    update-rc.d daisy-repository-server defaults 41 18 > /dev/null
+    if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+      invoke-rc.d daisy-repository-server start
+    else
+      /etc/init.d/daisy-repository-server start
+    fi
+  fi
+
+  #Configure Daisy Wiki if it hasn't been configured before
+  if [ -z "${daisydb_exists}" ]; then     
+    # wait until repository server is up and running
+    echo "Waiting for repository to start up ..."
+    wait_for_server_start 9263
+    
+    "$JAVA_HOME/bin/java" -Ddaisy.home=$DAISY_HOME org.outerj.daisy.install.DaisyWikiInit --conf $DAISY_HOME/daisy-wiki-init.properties
+    "$JAVA_HOME/bin/java" -Ddaisy.home=$DAISY_HOME org.outerj.daisy.install.DaisyWikiInitDataDirectory -d ${DAISY_WIKI_DATA} --conf $DAISY_HOME/daisy-wiki-init.properties
+  fi
+  
+    # Install service wrapper scripts for Daisy Wiki
+    echo "Installing wiki wrapper script"
+    /usr/bin/daisy-service-install -w ${DAISY_WIKI_DATA}
+
+  # Create init.d scripts for wiki
+  ln -s ${DAISY_WIKI_DATA}/service/daisy-wiki-service /etc/init.d/daisy-wiki
+
+  #Start DaisyWiki
+  if [ -x /etc/init.d/daisy-wiki ]; then
+    #Add wiki to startup services
+    update-rc.d daisy-wiki defaults 42 17 > /dev/null
+    if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+      invoke-rc.d daisy-wiki start || exit 0
+    else
+      /etc/init.d/daisy-wiki start || exit 0
+    fi
+  fi
+
+else
+
+  # ------------------
+   echo Update from ${PREVIOUS_VERSION}
+  # ------------------
+  
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ] || [ -z "${PREVIOUS_VERSION/1.5-M1/}" ]; then
+  # Update myconfig.xml    
+    java org.outerj.daisy.install.XmlConfUpdater --source=${DAISY_DATA}/conf/myconfig.xml --target=${DAISY_DATA}/conf/myconfig.xml --xpaths=${DAISY_HOME}/misc/myconfig.xml-update.xpath
+  fi
+
+  if [ "$PREVIOUS_VERSION" == "1.4-M2" ]; then
+    # Update Database
+    mysql --user=$DB_USER --password=$DB_PASSWORD -D$DAISY_DB < $DAISY_HOME/misc/daisy-1_4_M2-to-1_4_M3.sql
+  fi
+  
+  if [ "$PREVIOUS_VERSION" == "2.1" ]; then
+    # Update Database
+    mysql --user=$DB_USER --password=$DB_PASSWORD -D$DAISY_DB < $DAISY_HOME/misc/daisy-2_1-to-2_2.sql
+  fi
+  
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ]; then
+    daisy-blobstore-convertor $DAISY_DATA/blobstore
+    mysql --user=$DB_USER --password=$DB_PASSWORD -D$DAISY_DB < $DAISY_HOME/misc/daisy-1_4-to-1_5_M1.sql
+    mkdir $DAISY_DATA/pubreqs    
+  fi
+  
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ] || [ -z "${PREVIOUS_VERSION/1.5-M1/}" ]; then    
+    create_activemq
+    
+    JMSPASSWD=`cat ${DAISY_DATA}/conf/myconfig.xml | grep -e "credentials.*admin" | sed -e s/.*password=\"// -e s/\".*//`
+    echo jmsAdminPassword=${JMSPASSWD} >> $DAISY_HOME/daisy-repository-init.properties
+    #AMQ_CONF_DATADIR_UPDATE="[amq:http://activemq.org/config/1.0] /amq:beans/amq:broker/amq:persistenceAdapter/amq:journaledJDBC <<>> <journaledJDBC journalLogFiles=\"5\" dataDirectory=\"${DAISY_DATA}/activemq\" dataSource=\"#dataSource\" statements=\"#statements\"/>"
+    AMQ_CONF_DB_UPDATE="[amq:http://activemq.org/config/1.0] /amq:beans/amq:bean[@id='dataSource']/amq:property[@name='password'] <<>> <property name=\"password\" value=\"${AMQ_DB_PASSWD}\"/>\n[amq:http://activemq.org/config/1.0] /amq:beans/amq:bean[@id='dataSource']/amq:property[@name='username'] <<>> <property name=\"username\" value=\"${AMQ_DB_USER}\"/>\n[amq:http://activemq.org/config/1.0] /amq:beans/amq:bean[@id='dataSource']/amq:property[@name='url'] <<>> <property name=\"url\" value=\"${AMQ_DB_URL}&amp;relaxAutoCommit=true\"/>"
+    
+    cp ${DAISY_HOME}/repository-server/conf/activemq-conf.xml.template ${DAISY_DATA}/conf/activemq-conf.xml
+    cp ${DAISY_HOME}/repository-server/conf/login.config ${DAISY_DATA}/conf/
+    cp ${DAISY_HOME}/repository-server/conf/groups.properties ${DAISY_DATA}/conf/  
+    echo "admin=${JMSPASSWD}" > ${DAISY_DATA}/conf/users.properties 
+    
+    # Update activemq-conf.xml  
+    #echo $AMQ_CONF_DATADIR_UPDATE | java org.outerj.daisy.install.XmlConfUpdater --source=${DAISY_DATA}/conf/activemq-conf.xml --target=${DAISY_DATA}/conf/activemq-conf.xml --xpaths=-
+    echo -e $AMQ_CONF_DB_UPDATE | java org.outerj.daisy.install.XmlConfUpdater --source=${DAISY_DATA}/conf/activemq-conf.xml --target=${DAISY_DATA}/conf/activemq-conf.xml --xpaths=-
+    
+  fi
+  
+  
+  #Restart the servers
+  invoke-rc.d daisy-repository-server start
+  wait_for_server_start 9263
+  
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ]; then
+    # Update wiki schema
+    "$JAVA_HOME/bin/java" -Ddaisy.home=$DAISY_HOME org.outerj.daisy.install.DaisyWikiInit --conf $DAISY_HOME/daisy-wiki-init.properties
+  fi
+  
+  if [ -z "${PREVIOUS_VERSION/1.4*/}" ] || [ -z "${PREVIOUS_VERSION/1.5-M1/}" ]; then
+  
+  # Daisy Wiki Data Directory
+  
+    registrarpassword=`cat /usr/lib/daisy/daisywiki/webapp/WEB-INF/cocoon.xconf.update-this | grep "login=\"registrar\"" | sed -e 's/.*password=\"//' -e 's/\".*//'`
+    echo $registrarpassword | "$JAVA_HOME/bin/java" -Ddaisy.home=$DAISY_HOME org.outerj.daisy.install.DaisyWikiInitDataDirectory -d ${DAISY_WIKI_DATA} -c $DAISY_HOME/daisy-wiki-init.properties
+    
+    wikidir="${DAISY_HOME}/daisywiki/webapp/daisy"
+        
+    find ${wikidir}/sites/* -maxdepth 0 -path "${wikidir}/sites/cocoon" -prune -o -exec mv {} ${DAISY_WIKI_DATA}/sites \; 
+    
+    find  ${wikidir}/books/publicationtypes/* -maxdepth 0 \( -path "${wikidir}/books/publicationtypes/common" -prune -o \
+      -path "${wikidir}/books/publicationtypes/common-html" -prune -o \
+      -path "${wikidir}/books/publicationtypes/document-styling" -prune -o \
+      -path "${wikidir}/books/publicationtypes/html-chunked" -prune -o \
+      -path "${wikidir}/books/publicationtypes/html-one-page" -prune -o \
+      -path "${wikidir}/books/publicationtypes/pdf" \) \
+      -prune -o -exec mv {} ${DAISY_WIKI_DATA}/books/publicationtypes \;
+     
+    if [ -d ${wikidir}/bookstore ]; then
+       mv ${wikidir}/bookstore/* ${DAISY_WIKI_DATA}/bookstore
+       rmdir ${wikidir}/bookstore
+    fi
+          
+    find ${wikidir}/resources/skins/* -maxdepth 0 -path "${wikidir}/resources/skins/default" -prune -o -exec mv {} ${DAISY_WIKI_DATA}/resources/skins \;
+     
+    for docstyle in `find ${wikidir}/resources/document-styling/* -maxdepth 0 -path "${wikidir}/resources/document-styling/default" -prune -o -print`; do
+      skinname=`echo ${docstyle} | sed 's/.*\///'`
+      mkdir ${DAISY_WIKI_DATA}/resources/skins/${skinname}/document-styling
+      mv ${docstyle}/* ${DAISY_WIKI_DATA}/resources/skins/${skinname}/document-styling
+    done
+    
+    echo "Optionally you can also run daisy-docid-convertor"
+  fi
+  
+  
+  invoke-rc.d daisy-wiki start
+fi

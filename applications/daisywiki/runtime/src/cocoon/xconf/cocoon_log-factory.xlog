@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<xlog xpath="/logkit/factories"
+      remove="/logkit/factories/factory[@type='cocoon']"
+>
+      <factory class="org.outerj.daisy.frontend.components.log.DaisyTargetFactory" type="cocoon"/>
+</xlog>

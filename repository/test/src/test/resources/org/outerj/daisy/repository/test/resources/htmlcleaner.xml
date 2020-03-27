@@ -1,0 +1,71 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<htmlcleaner>
+  <cleanup>
+    <allowed-elements>
+      <element name="html"/>
+      <element name="body"/>
+
+      <element name="p"/>
+      <element name="br"/>
+
+      <element name="a">
+        <attribute name="href"/>
+      </element>
+
+      <element name="strong"/>
+      <element name="em"/>
+
+      <!-- lists -->
+      <!--
+      <element name="ul">
+        <attribute name="id"/>
+      </element>
+      <element name="ol">
+        <attribute name="id"/>
+        <attribute name="start"/>
+      </element>
+      <element name="li">
+        <attribute name="id"/>
+      </element>
+
+      <element name="img">
+        <attribute name="src"/>
+        <attribute name="align"/>
+        <attribute name="id"/>
+        <attribute name="width"/>
+        <attribute name="height"/>
+        <attribute name="print-width"/>
+        <attribute name="print-height"/>
+        <attribute name="daisy-caption"/>
+        <attribute name="daisy-image-type"/>
+      </element>
+      -->
+
+    </allowed-elements>
+  </cleanup>
+
+  <serialization>
+    <linewidth value="80"/>
+    <elements>
+      <element name="html" afterOpen="1" beforeClose="1"/>
+      <element name="body" afterOpen="1" beforeClose="1"/>
+      <element name="p" beforeOpen="1" afterClose="1"/>
+      <element name="br" afterClose="1"/>
+    </elements>
+  </serialization>
+
+</htmlcleaner>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans              xmlns = "http://www.springframework.org/schema/beans"
+                xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:daisy = "http://outerx.org/daisy/1.0#runtime-springext"
+               xmlns:conf = "http://outerx.org/daisy/1.0#config-springext"
+            xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+                             http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                             http://outerx.org/daisy/1.0#runtime-springext
+                             http://daisycms.org/schemas/daisyruntime-springext.xsd
+                             http://outerx.org/daisy/1.0#config-springext
+                             http://daisycms.org/schemas/config-springext.xsd">
+
+  <context:annotation-config/>
+
+  <daisy:import-service id="configurationManager" service="org.outerj.daisy.configuration.ConfigurationManager"/>
+  <daisy:import-service id="dataSource" service="javax.sql.DataSource"/>
+  <daisy:import-service id="pluginRegistry" service="org.outerj.daisy.plugin.PluginRegistry"/>
+  <daisy:import-service id="repositoryManager" service="org.outerj.daisy.repository.RepositoryManager"/>
+  <daisy:import-service id="credentialsProvider" service="org.outerj.daisy.credentialsprovider.CredentialsProvider"/>
+  
+  <bean id="documentTaskManager"
+        class="org.outerj.daisy.doctaskrunner.serverimpl.CommonDocumentTaskManager">
+    <constructor-arg>
+      <conf:configuration group="extra" name="documenttasks" source="configurationManager">
+        <conf:default xmlns="">
+          <!-- default values:
+                - maxAge: 14 days * 24 * 60 * 60 * 1000 (to give result in millis)
+                - runInterval: 2 hours * 60 * 60 * 1000
+          -->
+          <taskJanitor maxAge="1209600000" runInterval="7200000"/>
+          <allowedTasks>
+            <task name="search">
+              <role>User</role>
+            </task>
+            <task name="replace">
+              <role>User</role>
+            </task>
+            <!-- only administrators 
+            <task name="javascript">
+            </task>
+ 			-->
+            <task name="simple">
+              <role>User</role>
+            </task>
+          </allowedTasks>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="dataSource"/>
+    <constructor-arg ref="pluginRegistry"/>
+    <constructor-arg ref="repositoryManager"/>
+    <constructor-arg ref="credentialsProvider"/>
+  </bean>
+
+  <bean id="documentTaskManagerHttpConnector"
+        class="org.outerj.daisy.doctaskrunner.serverimpl.DocumentTaskManagerHttpConnector">
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+  
+</beans>

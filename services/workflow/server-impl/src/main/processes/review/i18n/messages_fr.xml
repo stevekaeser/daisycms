@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="review.label">Révision</message>
+  <message key="review.description">Un workflow de révision d'un document</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Document à réviser</message>
+  <message key="variable.reviewSubmitComment.label">Commentaire pour le réviseur</message>
+  <message key="variable.reviewSubmitComment.description">Commentaire de la requête pour le réviseur</message>
+  <message key="variable.reviewer.label">Réviseur</message>
+  <message key="variable.fixComment.label">Commentaire de clôture</message>
+  <message key="variable.fixComment.description">Commentaire fourni par le créateur du workflow, après avoir mis à jour le document, sur la base des commentaires des réviseurs.</message>
+  <message key="variable.reviewComment.label">Commentaire du réviseur</message>
+  <message key="variable.reviewComment.description">Commentaire fourni par le réviseur</message>
+
+  <!-- Tasks -->
+  <message key="startReviewTask.label">Démarrer la révision</message>
+  <message key="startReviewTask.description">Veuillez saisir les paramètres requis pour la révision.</message>
+  <message key="reviewTask.label">Révision</message>
+  <message key="reviewTask.description">Vous êtes prié(e) de réviser un document.</message>
+  <message key="requestChangesTask.label">Requête de changement du réviseur</message>
+  <message key="requestChangesTask.description">Vous êtes prié(e) de corriger un document et de le soumettre à nouveau pour révision.</message>
+  <message key="rejectedTask.label">Révision rejetée</message>
+  <message key="rejectedTask.description">Votre requête de révision du document a été rejetée.</message>
+
+  <!-- Transitions -->
+  <message key="transition.request-review">Requête de révision</message>
+  <message key="transition.publish">Publier le document</message>
+  <message key="transition.endReview">Terminer la révision</message>
+  <message key="transition.request-changes">Demander des changements</message>
+  <message key="transition.reject">Rejeter</message>
+  <message key="transition.request-new-review">Demander une nouvelle révision</message>
+  <message key="transition.give-up">Abandonner</message>
+  <message key="transition.confirm">Confirmer</message>
+</catalogue>

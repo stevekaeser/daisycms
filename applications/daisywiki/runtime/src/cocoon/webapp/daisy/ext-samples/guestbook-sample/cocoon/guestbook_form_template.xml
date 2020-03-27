@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+  #{navigationTree}
+
+  <pageTitle>Guestbook</pageTitle>
+
+  <content>
+    <h1>Leave a message for our guestbook</h1>
+
+    <ft:form-template action="${submitPath}" method="POST">
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="name"/>
+          <ft:widget id="age"/>
+        </fi:items>
+      </fi:group>
+
+      <ft:widget-label id="message"/>
+      <ft:widget id="message">
+        <fi:styling type="textarea" rows="5" cols="80"/>
+      </ft:widget>
+      <br/>
+      <br/>
+
+      <input type="submit" value="Submit"/>
+    </ft:form-template>
+  </content>
+</page>

@@ -1,0 +1,1107 @@
+options {
+    LOOKAHEAD=1;
+    STATIC=false;
+    UNICODE_INPUT=true;
+//    DEBUG_PARSER=true;
+}
+
+PARSER_BEGIN(QueryParser)
+
+package org.outerj.daisy.query;
+import org.outerj.daisy.repository.query.SortOrder;
+import org.outerj.daisy.query.model.*;
+import org.outerj.daisy.query.model.functions.*;
+import java.util.*;
+import org.outerj.daisy.linkextraction.LinkType;
+
+public class QueryParser
+{
+  private Literal createLiteral(Token token) {
+    String text = token.image;
+    if (text.charAt(0) == '\'')
+      text = QueryParserUtils.unEscapeStringLiteral(text);
+    Literal literal = new Literal(text, token.image);
+    literal.setLocation(token.beginLine, token.beginColumn);
+    return literal;
+  }
+
+  private String normalizeLiteral(String text) {
+    if (text.charAt(0) == '\'')
+      text = QueryParserUtils.unEscapeStringLiteral(text);
+    return text;
+  }
+
+  private int convertLimitInt(String text) throws ParseException {
+    try {
+      return Integer.parseInt(text);
+    } catch (NumberFormatException e) {
+      throw new ParseException("Invalid integer specified in limit clause: " + text);
+    }
+  }
+
+  private LinkType[] parseLinkTypes(String linkTypesParam) {
+    StringTokenizer tokenizer = new StringTokenizer(linkTypesParam, " \t\n\r\f,");
+    List<LinkType> linkTypes = new ArrayList<LinkType>(4);
+    while (tokenizer.hasMoreTokens()) {
+      String token = tokenizer.nextToken().trim();
+      LinkType linkType = LinkType.fromString(token);
+      linkTypes.add(linkType);
+    }
+    return (LinkType[])linkTypes.toArray(new LinkType[0]);
+  }
+
+  private void updateLocation(Expression loc1, Expression loc2) {
+    loc1.setLocation(loc2.getLine(), loc2.getColumn());
+  }
+}
+PARSER_END(QueryParser)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+| "\u00a0" /* non-breaking space */
+}
+
+TOKEN:
+{
+    <AND: "and" | "AND">
+  | <OR: "or" | "OR">
+  | <IN: "in" | "IN">
+  | <LPAREN: "(">
+  | <RPAREN: ")">
+  | <LSQBRACKET: "[">
+  | <RSQBRACKET: "]">
+  | <COMMA: ",">
+  | <EQ: "=">
+  | <NOTEQ: "!=">
+  | <LT: "<">
+  | <LTEQ: "<=">
+  | <GT: ">">
+  | <GTEQ: ">=">
+  | <ADD: "+">
+  | <DEREFERENCE: "=>">
+  | <SUBSTRACT: "-">
+  | <MULTIPLY: "*">
+  | <DIVIDE: "/">
+  | <BETWEEN: "between" | "BETWEEN">
+  | <LIKE: "like" | "LIKE">
+  | <NOT: "not" | "NOT">
+  | <SELECT: "select" | "SELECT">
+  | <ORDER_BY: "order by" | "ORDER BY">
+  | <ASC: "asc" | "ASC">
+  | <DESC: "desc" | "DESC">
+  | <LIMIT: "limit" | "LIMIT">
+  | <WHERE: "where" | "WHERE">
+  | <IN_COLLECTION : "InCollection">
+  | <FULL_TEXT : "FullText">
+  | <LINKS_TO : "LinksTo">
+  | <LINKS_TO_VARIANT : "LinksToVariant">
+  | <LINKS_FROM : "LinksFrom">
+  | <LINKS_FROM_VARIANT : "LinksFromVariant">
+  | <IS_LINKED : "IsLinked">
+  | <IS_NOT_LINKED : "IsNotLinked">
+  | <HAS_PART_WITH_MIMETYPE : "HasPartWithMimeType">
+  | <HAS_PART : "HasPart">
+  | <DOES_NOT_HAVE_VARIANT : "DoesNotHaveVariant">
+  | <LANG_IN_SYNC : "LangInSync">
+  | <LANG_NOT_IN_SYNC : "LangNotInSync">
+  | <REVERSE_LANG_IN_SYNC : "ReverseLangInSync">
+  | <REVERSE_LANG_NOT_IN_SYNC : "ReverseLangNotInSync">
+  | <MATCHES_PATH : "matchesPath">
+  | <OPTION : "option" | "OPTION">
+  | <IS_NULL: "IS NULL" | "is null">
+  | <IS_NOT_NULL: "IS NOT NULL" | "is not null">
+  | <TRUE: "TRUE" | "true">
+  | <HAS_NONE: "HAS NONE" | "has none">
+  | <HAS_ALL: "HAS ALL" | "has all">
+  | <HAS_EXACTLY: "HAS EXACTLY" | "has exactly">
+  | <HAS_ANY: "HAS ANY" | "has any" | "HAS SOME" | "has some">
+}
+
+TOKEN : /* names and functions */
+{
+    <ID: <FIELDNAME> | <PARTNAME> | <CUSTOMFIELDNAME> | <NAME> >
+  | <NAME: ( <LETTER> )+ ( <DIGIT> | <LETTER> | <OTHERS>)* >
+  | <#LETTER: ["a"-"z", "A"-"Z"] >
+  | <#OTHERS: ["-", "_"] >
+  | <#DIGIT: ["0" - "9"] >
+  | <FIELDNAME: "$" <NAME>>
+  | <PARTNAME: "%" <NAME>>
+  | <CUSTOMFIELDNAME: "#" <NAME> >
+}
+
+TOKEN: /* literals */
+{
+    <LITERAL: <TEXT> | <INTEGER> | <NUMBER> >
+  | <#TEXT: "'" (~["'"])* ( "''" (~["'"])* )* "'">
+  | <#INTEGER: ("-")? ( <DIGIT> )+ >
+  | <#NUMBER: ("-")? <INTEGER> | <INTEGER> ( "." <INTEGER> )? | "." <INTEGER> >
+}
+
+Expression whereClause() :
+{
+  Expression expr;
+}
+{
+ (expr = orExpression())
+ {
+   return expr;
+ }
+}
+
+PredicateExpr standAloneWhereClause() :
+{
+  Expression expr;
+}
+{
+ (expr = orExpression())
+ <EOF>
+ {
+   if (!(expr instanceof PredicateExpr))
+      throw new ParseException("The expression is not a predicate expression.");
+   return (PredicateExpr)expr;
+ }
+}
+
+Expression orExpression() :
+{
+  Expression firstExpr;
+  Expression expr;
+  Or or = new Or();
+}
+{
+  firstExpr = andExpression()
+  ( <OR> expr = andExpression()
+  {
+      if (firstExpr != null) {
+        if (!(firstExpr instanceof PredicateExpr))
+          throw new ParseException("Encountered a non-predicate-expression used with the OR operator, at " + firstExpr.getLocation());
+        or.add((PredicateExpr)firstExpr);
+        updateLocation(or, firstExpr);
+        firstExpr = null;
+      }
+      if (!(expr instanceof PredicateExpr))
+        throw new ParseException("Encountered a non-predicate-expression used with the OR operator, at " + expr.getLocation());
+      or.add((PredicateExpr)expr);
+  }
+  )*
+  {
+    if (firstExpr != null)
+        return firstExpr;
+    else
+        return or;
+  }
+}
+
+Expression andExpression() :
+{
+  Expression firstExpr;
+  Expression expr;
+  And and = new And();
+}
+{
+  (
+  firstExpr = expression()
+  )
+  (
+    <AND>
+      (
+        expr = expression()
+        {
+          if (firstExpr != null) {
+            if (!(firstExpr instanceof PredicateExpr))
+              throw new ParseException("Encountered a non-predicate-expression used with the AND operator, at " + firstExpr.getLocation());
+            and.add((PredicateExpr)firstExpr);
+            updateLocation(and, firstExpr);
+            firstExpr = null;
+          }
+          if (!(expr instanceof PredicateExpr))
+            throw new ParseException("Encountered a non-predicate-expression used with the AND operator, at " + expr.getLocation());
+          and.add((PredicateExpr)expr);
+        }
+      )
+  )*
+  {
+    if (firstExpr != null)
+        return firstExpr;
+    else
+        return and;
+  }
+}
+
+Expression expression() :
+{
+  Expression expr1;
+  Expression expr2;
+  Expression expr = null;
+  Token not = null;
+  Token token;
+  Token op;
+}
+{
+  (
+    token = <TRUE>
+    {
+      PredicateExpr newExpr = new AlwaysSatisfiedPredicate();
+      newExpr.setLocation(token.beginLine, token.beginColumn);
+      return newExpr;
+    }
+  )
+  |
+  (
+    expr1 = valueExpr()
+    (
+      (
+         ( (op = <EQ> | op = <NOTEQ> | op = <LT> | op = <LTEQ> | op = <GT> | op = <GTEQ>) expr2 = valueExpr() )
+         {
+            if (!(expr1 instanceof ValueExpr))
+                throw new ParseException("Expected a value expression at the left-hand side of comparison operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+            if (!(expr2 instanceof ValueExpr))
+                throw new ParseException("Expected a value expression at the right-hand side of comparison operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+
+            ValueExpr valueExpr1 = (ValueExpr)expr1;
+            ValueExpr valueExpr2 = (ValueExpr)expr2;
+            if (op.kind == EQ) {
+              expr = new Eq(valueExpr1, valueExpr2);
+            } else if (op.kind == NOTEQ) {
+              expr = new NotEq(valueExpr1, valueExpr2);
+            } else if (op.kind == LT) {
+              expr = new Lt(valueExpr1, valueExpr2);
+            } else if (op.kind == LTEQ) {
+              expr = new LtEq(valueExpr1, valueExpr2);
+            } else if (op.kind == GT) {
+              expr = new Gt(valueExpr1, valueExpr2);
+            } else if (op.kind == GTEQ) {
+              expr = new GtEq(valueExpr1, valueExpr2);
+            } else {
+              throw new RuntimeException("Unexpected unary operator: " + op.image);
+            }
+         }
+      )
+      |
+      (  (not = <NOT>)?
+           (
+             expr = multiArgPredicate(not != null, expr1)
+           | expr = betweenExpression(not != null, expr1)
+           | expr = likeExpression(not != null, expr1)
+           )
+        )
+      |
+      (
+        expr = isNull(expr1)
+      )
+      |
+      (
+        expr = isNotNull(expr1)
+      )
+      |
+      (
+        expr = matchesPath(expr1)
+      )
+    )?
+    {
+      if (expr != null)
+        return expr;
+      else
+        return expr1;
+    }
+  )
+  |
+  (
+    expr = inCollection()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = linksToOrFrom()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = linksToOrFromVariant()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = isLinked()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = isNotLinked()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = hasPartWithMimeType()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = hasPart()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = doesNotHaveVariant()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = langInOrNotInSync()
+    {
+      return expr;
+    }
+  )
+  |
+  (
+    expr = reverseLangInOrNotInSync()
+    {
+      return expr;
+    }
+  )
+}
+
+Expression valueExpr() :
+{
+  Expression expr = null;
+}
+{
+  (
+    expr = dereferenceExpression()
+  )
+  {
+    return expr;
+  }
+}
+
+Expression dereferenceExpression() :
+{
+  Token op = null;
+  Expression expr;
+  List exprs = new ArrayList();
+}
+{
+  expr = anyValueExprExceptDereference()
+  {
+    exprs.add(expr);
+  }
+  (
+    op = <DEREFERENCE>
+    expr = anyValueExprExceptDereference()
+    {
+      exprs.add(expr);
+    }
+  )*
+  {
+    Expression prevExpr = (Expression)exprs.get(exprs.size() - 1);
+    for (int i = exprs.size() - 2; i >= 0; i--) {
+      Expression currentExpr = (Expression)exprs.get(i);
+
+      if (!(currentExpr instanceof ValueExpr))
+        throw new ParseException("Right-hand side of the dereference operator (=>) should be a value expression at " + currentExpr.getLocation());
+
+      if (!(prevExpr instanceof ValueExpr))
+        throw new ParseException("Left-hand side of the dereference operator (=>) should be a value expression at " + prevExpr.getLocation());
+
+      prevExpr = new Dereference((ValueExpr)currentExpr, (ValueExpr)prevExpr);
+      prevExpr.setLocation(currentExpr.getLine(), currentExpr.getColumn());
+    }
+    return prevExpr;
+  }
+}
+
+Expression anyValueExprExceptDereference() :
+{
+  Expression expr = null;
+}
+{
+  expr = sumValueExpr()
+  {
+    return expr;
+  }
+}
+
+Expression sumValueExpr() :
+{
+  Token op = null;
+  Expression expr1 = null;
+  Expression expr2 = null;
+}
+{
+    expr1 = multValueExpr()
+    ( LOOKAHEAD(2)
+      (op = <ADD> | op = <SUBSTRACT>) expr2 = multValueExpr()
+      {
+          if (!(expr1 instanceof ValueExpr))
+              throw new ParseException("Expected a value expression at the left-hand side of mathematical operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+          if (!(expr2 instanceof ValueExpr))
+              throw new ParseException("Expected a value expression at the right-hand side of mathematical operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+
+          Function function;
+          if (op.kind == ADD) {
+            function = new AddFunction();
+          } else if (op.kind == SUBSTRACT) {
+            function = new SubstractFunction();
+          } else {
+            throw new ParseException("Unexpected math operator: " + op.image);
+          }
+          function.addParam((ValueExpr)expr1);
+          function.addParam((ValueExpr)expr2);
+          updateLocation(function, expr1);
+          expr1 = function;
+          expr2 = null;
+      }
+    )*
+    {
+      return expr1;
+    }
+}
+
+Expression multValueExpr() :
+{
+  Token op = null;
+  Expression expr1 = null;
+  Expression expr2 = null;
+}
+{
+    (expr1 = grouping() | expr1 = subValueExpr())
+    ( LOOKAHEAD(2)
+      (op = <MULTIPLY> | op = <DIVIDE>) (expr2 = grouping() | expr2 = subValueExpr())
+      {
+          if (!(expr1 instanceof ValueExpr))
+              throw new ParseException("Expected a value expression at the left-hand side of mathematical operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+          if (!(expr2 instanceof ValueExpr))
+              throw new ParseException("Expected a value expression at the right-hand side of mathematical operator \"" + op.image + "\" at line " + op.beginLine + ", column " + op.beginColumn);
+
+          Function function;
+          if (op.kind == MULTIPLY) {
+            function = new MultiplyFunction();
+          } else if (op.kind == DIVIDE) {
+            function = new DivideFunction();
+          } else {
+            throw new ParseException("Unexpected math operator: " + op.image);
+          }
+          function.addParam((ValueExpr)expr1);
+          function.addParam((ValueExpr)expr2);
+          updateLocation(function, expr1);
+          expr1 = function;
+          expr2 = null;
+      }
+    )*
+    {
+      return expr1;
+    }
+}
+
+Expression grouping() :
+{
+  Expression expr;
+}
+{
+ <LPAREN> expr = orExpression() <RPAREN>
+ {
+   return expr;
+ }
+}
+
+ValueExpr subValueExpr() :
+{
+  Token literal;
+  ValueExpr expr;
+}
+{
+   literal = <LITERAL>
+   {
+     return createLiteral(literal);
+   }
+   | (LOOKAHEAD(2)
+        expr = functionCall()
+        |
+        expr = identifier()
+     )
+     {
+       return expr;
+     }
+}
+
+Identifier identifier() :
+{
+  Token id;
+  Token subId = null;
+  Expression multiValueIndex = null;
+  Expression hierarchyIndex = null;
+}
+{
+  id = <ID>
+        (  (
+              LOOKAHEAD(2)
+              (<LSQBRACKET> multiValueIndex = valueExpr() <RSQBRACKET>)
+              |
+              (<LSQBRACKET> "*" <RSQBRACKET>)
+           )
+           ( <LSQBRACKET> hierarchyIndex = valueExpr() <RSQBRACKET> )?
+        )?
+        ("." subId = <ID>)?
+  {
+    if (multiValueIndex != null && !(multiValueIndex instanceof ValueExpr))
+      throw new ParseException("Encountered a non-value-expression as multi-value index for identifier " + id.image + " at " + multiValueIndex.getLocation());
+    if (hierarchyIndex != null && !(hierarchyIndex instanceof ValueExpr))
+      throw new ParseException("Encountered a non-value-expression as hierarchy index for identifier " + id.image + " at " + hierarchyIndex.getLocation());
+
+    Identifier identifier = new Identifier(id.image, subId != null ? subId.image : null, (ValueExpr)multiValueIndex, (ValueExpr)hierarchyIndex);
+    identifier.setLocation(id.beginLine, id.beginColumn);
+    return identifier;
+  }
+}
+
+Function functionCall() :
+{
+  Token functionName;
+  Function function;
+  Expression expr;
+}
+{
+    functionName = <ID> <LPAREN>
+      {
+        function = FunctionFactory.createFunction(functionName.image);
+        function.setLocation(functionName.beginLine, functionName.beginColumn);
+      }
+      (
+        expr = expression()
+        {
+          if (!(expr instanceof ValueExpr))
+            throw new ParseException("Encountered a non-value-expression as argument for the function " + functionName.image + " at " + expr.getLocation());
+          function.addParam((ValueExpr)expr);
+        }
+        (
+          <COMMA> expr = expression()
+          {
+            if (!(expr instanceof ValueExpr))
+              throw new ParseException("Encountered a non-value-expression as argument for the function " + functionName.image + " at " + expr.getLocation());
+            function.addParam((ValueExpr)expr);
+          }
+        )*
+      )?
+      <RPAREN>
+      {
+        return function;
+      }
+}
+
+PredicateExpr isNull(Expression expr) :
+{
+}
+{
+  <IS_NULL>
+  {
+    if (!(expr instanceof ValueExpr))
+        throw new ParseException("Expected a value expression for IS NULL operator at " + expr.getLocation());
+    return new IsNull((ValueExpr)expr);
+  }
+}
+
+PredicateExpr isNotNull(Expression expr) :
+{
+}
+{
+  <IS_NOT_NULL>
+  {
+    if (!(expr instanceof ValueExpr))
+        throw new ParseException("Expected an identifier for IS NOT NULL operator at " + expr.getLocation());
+    return new IsNotNull((ValueExpr)expr);
+  }
+}
+
+PredicateExpr multiArgPredicate(boolean not, Expression testExpr) :
+{
+  MultiArgPredicate predicate = null;
+  Token condition;
+  Expression expr;
+}
+{
+  (condition = <HAS_NONE>
+    | condition = <HAS_ALL>
+    | condition = <HAS_EXACTLY>
+    | condition = <HAS_ANY>
+    | condition = <IN>
+  )
+ <LPAREN>
+  {
+    if (not && condition.kind != IN) {
+      throw new ParseException("NOT cannot be used before " + condition.image);
+    }
+
+    String name = condition.image;
+    if (not)
+        name = Character.isUpperCase(name.charAt(0)) ? "NOT " + name : "not " + name;
+
+    if (!(testExpr instanceof ValueExpr))
+        throw new ParseException("Expected a value expression for " + condition.image + " operator at " + testExpr.getLocation());
+
+    MultiArgPredicate.Type multiArgType;
+    switch (condition.kind) {
+        case HAS_NONE:
+            multiArgType = MultiArgPredicate.Type.HAS_NONE;
+            break;
+        case HAS_ALL:
+            multiArgType = MultiArgPredicate.Type.HAS_ALL;
+            break;
+        case HAS_EXACTLY:
+            multiArgType = MultiArgPredicate.Type.HAS_EXACTLY;
+            break;
+        case HAS_ANY:
+            multiArgType = MultiArgPredicate.Type.HAS_ANY;
+            break;
+        case IN:
+            multiArgType = not ? MultiArgPredicate.Type.NOT_IN : MultiArgPredicate.Type.IN;
+            break;
+        default:
+            throw new ParseException("Unhandled multi arg type case: " + condition.image);
+    }
+    predicate = new MultiArgPredicate(multiArgType, name, (ValueExpr)testExpr);
+    updateLocation(predicate, testExpr);
+  }
+  (
+    expr = expression()
+    {
+      if (!(expr instanceof ValueExpr))
+        throw new ParseException("Encountered a non-value-expression as argument for " + condition.image + " at " + expr.getLocation());
+      predicate.addParam((ValueExpr)expr);
+    }
+    (
+      <COMMA> expr = expression()
+      {
+        if (!(expr instanceof ValueExpr))
+          throw new ParseException("Encountered a non-value-expression as argument for " + condition.image + " at " + expr.getLocation());
+        predicate.addParam((ValueExpr)expr);
+      }
+    )*
+  )
+  <RPAREN>
+  {
+    return predicate;
+  }
+}
+
+PredicateExpr betweenExpression(boolean not, Expression testValueExpr) :
+{
+  Expression expr1;
+  Expression expr2;
+}
+{
+  <BETWEEN> expr1 = valueExpr() <AND> expr2 = valueExpr()
+  {
+    if (!(testValueExpr instanceof ValueExpr))
+       throw new ParseException("Expected an value expression for between operator at " + testValueExpr.getLocation());
+
+    if (!(expr1 instanceof ValueExpr))
+       throw new ParseException("Expected a value expression at " + expr1.getLocation());
+
+    if (!(expr2 instanceof ValueExpr))
+       throw new ParseException("Expected a value expression at " + expr2.getLocation());
+
+    Between between = new Between(not, (ValueExpr)testValueExpr, (ValueExpr)expr1, (ValueExpr)expr2);
+    updateLocation(testValueExpr, between);
+    return between;
+  }
+}
+
+PredicateExpr likeExpression(boolean not, Expression expr) :
+{
+  Token literal;
+}
+{
+  <LIKE> literal = <LITERAL>
+  {
+    if (!(expr instanceof ValueExpr))
+        throw new ParseException("Expected a value expression before the like operator at " + expr.getLocation());
+    Like like = new Like(not, (ValueExpr)expr, createLiteral(literal));
+    updateLocation(like, expr);
+    return like;
+  }
+}
+
+InCollection inCollection() :
+{
+  Token inCollToken;
+  InCollection inCollection = new InCollection();
+  Token literal;
+}
+{
+  inCollToken = <IN_COLLECTION> <LPAREN> literal = <LITERAL>
+  {
+    inCollection.add(createLiteral(literal));
+  }
+  (
+  <COMMA> literal = <LITERAL>
+  {
+    inCollection.add(createLiteral(literal));
+  }
+  )* <RPAREN>
+  {
+    inCollection.setLocation(inCollToken.beginLine, inCollToken.beginColumn);
+    return inCollection;
+  }
+}
+
+
+Query query() :
+{
+  ValueExprList select;
+  Expression whereClause = null;
+  FullTextQuery fullTextQuery = null;
+  Object[] orderByIdentifiersAndDirections = null;
+  int limit = -1;
+  Map<String, String> queryOptions = null;
+}
+{
+  select = selectClause()
+  <WHERE>
+  (
+    (
+      fullTextQuery = fullTextClause()
+      ( <AND> whereClause = whereClause() )?
+    )
+    |
+    whereClause = whereClause()
+  )
+  (orderByIdentifiersAndDirections = orderByClause()) ?
+  (limit = limitClause()) ?
+  (queryOptions = optionClause()) ?
+  <EOF>
+  {
+   // Note: this is checked here rather than in the whereClause() production
+   // so that the parser would continue parsing after the where clause
+   // e.g. a query like "select name where boe bie" would otherwise give this exception rather then
+   // saying that 'bie' was not expected.
+   if (!(whereClause instanceof PredicateExpr) && !(fullTextQuery != null && whereClause == null)) {
+      if (fullTextQuery != null)
+        throw new ParseException("Expected a predicate expression at " + whereClause.getLocation());
+      else
+        throw new ParseException("The where clause of the query is not a predicate expression.");
+   }
+
+    Query query;
+    if (orderByIdentifiersAndDirections == null)
+        query = new Query(select, (PredicateExpr)whereClause, fullTextQuery, null, null, limit);
+    else
+        query = new Query(select, (PredicateExpr)whereClause, fullTextQuery, (ValueExprList)orderByIdentifiersAndDirections[0], (List)orderByIdentifiersAndDirections[1], limit);
+
+    if (queryOptions != null) {
+      query.setOptions(queryOptions);
+    }
+    return query;
+  }
+}
+
+ValueExprList selectClause() :
+{
+  ValueExprList expressions = new ValueExprList();
+  Expression expr;
+}
+{
+  <SELECT>
+  expr = valueExpr()
+  {
+    if (!(expr instanceof ValueExpr))
+        throw new ParseException("Encountered a non-value-expression in the select clause at " + expr.getLocation());
+    expressions.add((ValueExpr)expr);
+  }
+  (
+    <COMMA>
+    expr = valueExpr()
+    {
+      if (!(expr instanceof ValueExpr))
+          throw new ParseException("Encountered a non-value-expression in the select clause at " + expr.getLocation());
+      expressions.add((ValueExpr)expr);
+    }
+  )*
+  {
+    return expressions;
+  }
+}
+
+ValueExprList valueExprList() :
+{
+  ValueExprList expressions = new ValueExprList();
+}
+{
+  {
+    return expressions;
+  }
+}
+
+Object[] orderByClause() :
+{
+  ValueExprList expressions = new ValueExprList();
+  List<SortOrder> directions = new ArrayList<SortOrder>();
+}
+{
+  <ORDER_BY> orderByItem(expressions, directions)
+  (
+    <COMMA> orderByItem(expressions, directions)
+  )*
+  {
+    return new Object[] {expressions, directions};
+  }
+}
+
+void orderByItem(ValueExprList identifiers, List<SortOrder> directions) :
+{
+  Expression expr;
+  Token dir = null;
+}
+{
+  expr = valueExpr() (dir = <ASC> | dir = <DESC>)?
+  {
+    if (!(expr instanceof ValueExpr))
+        throw new ParseException("Encountered a non-value-expression in the order by clause at " + expr.getLocation());
+    identifiers.add((ValueExpr)expr);
+    if (dir != null && dir.kind == DESC)
+      directions.add(SortOrder.DESCENDING);
+    else
+      directions.add(SortOrder.ASCENDING);
+  }
+}
+
+int limitClause() :
+{
+  Token value;
+}
+{
+  <LIMIT> value = <LITERAL>
+  {
+    return convertLimitInt(value.image);
+  }
+}
+
+Map<String, String> optionClause() :
+{
+  Token name;
+  Token value;
+  Map<String, String> queryOptions = new HashMap<String, String>();
+}
+{
+  <OPTION> name = <ID> <EQ> value = <LITERAL>
+  {
+    queryOptions.put(name.image, normalizeLiteral(value.image));
+  }
+  (
+    <COMMA> name = <ID> <EQ> value = <LITERAL>
+    {
+      queryOptions.put(name.image, normalizeLiteral(value.image));
+    }
+  )*
+  {
+    return queryOptions;
+  }
+}
+
+FullTextQuery fullTextClause() :
+{
+  Token fullTextQuery;
+  Token searchName = null;
+  Token searchContent = null;
+  Token searchFields = null;
+  Token branch = null;
+  Token language = null;
+}
+{
+  <FULL_TEXT>
+  <LPAREN> fullTextQuery = <LITERAL>
+  (
+    <COMMA> searchName = <LITERAL>
+    <COMMA> searchContent = <LITERAL>
+    <COMMA> searchFields = <LITERAL>
+    (
+      <COMMA> branch = <LITERAL>
+      <COMMA> language = <LITERAL>
+    )?
+  )?
+  <RPAREN>
+  {
+    FullTextQuery ftQuery = new FullTextQuery(normalizeLiteral(fullTextQuery.image));
+    ftQuery.setSearchName(searchName != null ? Long.parseLong(normalizeLiteral(searchName.image)) != 0 : true);
+    ftQuery.setSearchContent(searchContent != null ? Long.parseLong(normalizeLiteral(searchContent.image)) != 0 : true);
+    ftQuery.setSearchFields(searchFields != null ? Long.parseLong(normalizeLiteral(searchFields.image)) != 0 : true);
+    if (branch != null)
+        ftQuery.setBranch(normalizeLiteral(branch.image));
+    if (language != null)
+        ftQuery.setLanguage(normalizeLiteral(language.image));
+
+    return ftQuery;
+  }
+}
+
+LinksToOrFrom linksToOrFrom() :
+{
+  Token toOrFrom;
+  Token doc;
+  Token linkTypesToken = null;
+}
+{
+  (toOrFrom = <LINKS_TO> | toOrFrom = <LINKS_FROM>) <LPAREN> doc = <LITERAL> (<COMMA> linkTypesToken = <LITERAL>)? <RPAREN>
+  {
+    String docId = normalizeLiteral(doc.image);
+    LinkType[] linkTypes = null;
+    if (linkTypesToken != null)
+        linkTypes = parseLinkTypes(normalizeLiteral(linkTypesToken.image));
+
+    return new LinksToOrFrom(docId, linkTypes, toOrFrom.kind == LINKS_FROM);
+  }
+}
+
+LinksToOrFrom linksToOrFromVariant() :
+{
+  Token toOrFrom;
+  Token doc;
+  Token branchToken;
+  Token languageToken;
+  Token linkTypesToken = null;
+}
+{
+  (toOrFrom = <LINKS_FROM_VARIANT> | toOrFrom = <LINKS_TO_VARIANT>) <LPAREN> doc = <LITERAL> <COMMA> branchToken = <LITERAL> <COMMA> languageToken = <LITERAL> (<COMMA> linkTypesToken = <LITERAL>)? <RPAREN>
+  {
+    String docId = normalizeLiteral(doc.image);
+    String branch = normalizeLiteral(branchToken.image);
+    String language = normalizeLiteral(languageToken.image);
+    LinkType[] linkTypes = null;
+    if (linkTypesToken != null)
+        linkTypes = parseLinkTypes(normalizeLiteral(linkTypesToken.image));
+
+    return new LinksToOrFrom(docId, branch, language, linkTypes, toOrFrom.kind == LINKS_FROM_VARIANT);
+  }
+}
+
+IsLinked isLinked() :
+{}
+{
+  <IS_LINKED> <LPAREN> <RPAREN>
+  {
+    return new IsLinked(true);
+  }
+}
+
+IsLinked isNotLinked() :
+{}
+{
+  <IS_NOT_LINKED> <LPAREN> <RPAREN>
+  {
+    return new IsLinked(false);
+  }
+}
+
+HasPartWithMimeType hasPartWithMimeType() :
+{
+  Token mimeType;
+}
+{
+  <HAS_PART_WITH_MIMETYPE> <LPAREN> mimeType = <LITERAL> <RPAREN>
+  {
+    return new HasPartWithMimeType(normalizeLiteral(mimeType.image));
+  }
+}
+
+HasPart hasPart() :
+{
+  Token partTypeName;
+}
+{
+  <HAS_PART> <LPAREN> partTypeName = <LITERAL> <RPAREN>
+  {
+    return new HasPart(normalizeLiteral(partTypeName.image));
+  }
+}
+
+DoesNotHaveVariant doesNotHaveVariant() :
+{
+  Token branch;
+  Token language;
+}
+{
+  <DOES_NOT_HAVE_VARIANT> <LPAREN> branch = <LITERAL> <COMMA> language = <LITERAL> <RPAREN>
+  {
+    return new DoesNotHaveVariant(normalizeLiteral(branch.image), normalizeLiteral(language.image));
+  }
+}
+
+LangInOrNotInSync langInOrNotInSync() :
+{
+  Token conditionToken;
+  Token liveLastToken = null;
+}
+{
+  (conditionToken = <LANG_IN_SYNC> | conditionToken = <LANG_NOT_IN_SYNC>) <LPAREN> (liveLastToken = <LITERAL>)? <RPAREN>
+  {
+    String liveLast = "last";
+    if (liveLastToken != null)
+        liveLast = normalizeLiteral(liveLastToken.image);
+
+    if (conditionToken.kind == LANG_IN_SYNC) {
+        return new LangInOrNotInSync(liveLast, true);
+    } else {
+        return new LangInOrNotInSync(liveLast, false);
+    }
+  }
+}
+
+ReverseLangInOrNotInSync reverseLangInOrNotInSync() :
+{
+  Token conditionToken;
+  Token langToken;
+  Token liveLastToken = null;
+}
+{
+  (conditionToken = <REVERSE_LANG_IN_SYNC> | conditionToken = <REVERSE_LANG_NOT_IN_SYNC>)
+  <LPAREN>
+    langToken = <LITERAL>
+    (<COMMA> liveLastToken = <LITERAL>)?
+  <RPAREN>
+  {
+    String language = normalizeLiteral(langToken.image);
+    String liveLast = "last";
+    if (liveLastToken != null)
+        liveLast = normalizeLiteral(liveLastToken.image);
+
+    if (conditionToken.kind == REVERSE_LANG_IN_SYNC) {
+        return new ReverseLangInOrNotInSync(language, liveLast, true);
+    } else {
+        return new ReverseLangInOrNotInSync(language, liveLast, false);
+    }
+  }
+}
+
+MatchesPath matchesPath(Expression testValueExpr) :
+{
+  Expression pathSpec;
+}
+{
+  <MATCHES_PATH> <LPAREN> pathSpec = valueExpr() <RPAREN>
+  {
+    if (!(testValueExpr instanceof ValueExpr))
+        throw new ParseException("Expected a value expression for matchesPath operator at " + testValueExpr.getLocation());
+    if (!(pathSpec instanceof ValueExpr))
+        throw new ParseException("Expected a value expression as argument for matchesPath operator at " + pathSpec.getLocation());
+    return new MatchesPath((ValueExpr)pathSpec, (ValueExpr)testValueExpr);
+  }
+}

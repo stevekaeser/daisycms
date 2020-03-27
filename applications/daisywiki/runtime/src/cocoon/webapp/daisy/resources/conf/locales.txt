@@ -1,0 +1,15 @@
+# This file lists the locales the users will be able to select on
+# the "change locale" page. One entry per line
+en-US
+en-GB
+en-AU
+nl-BE
+nl-NL
+ru
+fr-FR
+fr-BE
+fr-CH
+de
+cs-CZ
+#pl
+es-ES

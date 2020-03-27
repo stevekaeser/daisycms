@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:repeater id="additionalParts">
+      <fd:widgets>
+        <fd:output id="typeId">
+          <fd:label><i18n:text key="editdoc.extra-parts.id"/></fd:label>
+          <fd:datatype base="long"/>
+        </fd:output>
+        <fd:output id="label">
+          <fd:label><i18n:text key="editdoc.extra-parts.label"/></fd:label>
+          <fd:datatype base="string"/>
+        </fd:output>
+        <fd:output id="size">
+          <fd:label><i18n:text key="editdoc.extra-parts.size"/></fd:label>
+          <fd:datatype base="long"/>
+        </fd:output>
+        <fd:output id="mimeType">
+          <fd:label><i18n:text key="editdoc.extra-parts.mime-type"/></fd:label>
+          <fd:datatype base="string"/>
+        </fd:output>
+        <fd:booleanfield id="delete">
+          <fd:label><i18n:text key="editdoc.extra-parts.delete"/></fd:label>
+        </fd:booleanfield>
+      </fd:widgets>
+    </fd:repeater>
+
+    <fd:repeater id="additionalFields">
+      <fd:widgets>
+        <fd:output id="typeId">
+          <fd:label><i18n:text key="editdoc.extra-fields.id"/></fd:label>
+          <fd:datatype base="long"/>
+        </fd:output>
+        <fd:output id="label">
+          <fd:label><i18n:text key="editdoc.extra-fields.label"/></fd:label>
+          <fd:datatype base="string"/>
+        </fd:output>
+        <fd:output id="value">
+          <fd:label><i18n:text key="editdoc.extra-fields.value"/></fd:label>
+          <fd:datatype base="string"/>
+        </fd:output>
+        <fd:booleanfield id="delete">
+          <fd:label><i18n:text key="editdoc.extra-fields.delete"/></fd:label>
+        </fd:booleanfield>
+      </fd:widgets>
+    </fd:repeater>
+
+    <!--
+        | Dummy action used to cause a server roundtrip without ending the use case or validation.
+        | This is required by the document editor.
+        -->
+    <fd:action id="dummy">
+      <fd:label>dummy action</fd:label>
+    </fd:action>
+  </fd:widgets>
+
+  <fd:validation>
+    <fd:javascript>
+      <![CDATA[
+      var form = widget.getForm();
+      var documentEditorForm = form.getAttribute("documentEditorForm");
+      var validateOnSave = documentEditorForm.getValidateOnSave();
+      if (!validateOnSave)
+        return true;
+
+      var success = true;
+
+      var checkAll = function(repeater, message) {
+        for (var i = 0; i < repeater.getSize(); i++) {
+          var deleteField = repeater.getRow(i).getChild("delete");
+          if (deleteField.getValue() != true) {
+            success = false;
+            deleteField.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError(message));
+          }
+        }
+      }
+
+      // parts
+      var partsRepeater = form.getChild("additionalParts");
+      checkAll(partsRepeater, new Packages.org.apache.cocoon.forms.util.I18nMessage("doceditor.extra-parts.error"));
+
+      // fields
+      var fieldsRepeater = form.getChild("additionalFields");
+      checkAll(fieldsRepeater, new Packages.org.apache.cocoon.forms.util.I18nMessage("doceditor.extra-fields.error"));
+
+      return success;
+      ]]>
+    </fd:javascript>
+  </fd:validation>
+
+</fd:form>

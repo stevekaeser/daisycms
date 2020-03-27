@@ -1,0 +1,151 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>link.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/daisy_edit.js"></script>
+  </extraHeadContent>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+        dojo.require("daisy.util");
+
+        DaisyLinkUtils = window.opener.DaisyLinkUtils;
+        i18n = DaisyLinkUtils.I18N;
+
+        function Init() {
+          daisy.dialog.translate(i18n);
+          daisy.dialog.init();
+
+          var params = window.dialogArguments;
+          window.editor = params.editor;
+          var url = params.url;
+
+          var daisyLinkWidget = dojo.widget.byId("daisyLink");
+          dojo.event.connect(daisyLinkWidget, "onchange", selectDaisyLinkType);
+          daisyLinkWidget.setCustomContext(params.daisyDocumentBranchId, params.daisyDocumentLanguageId);
+
+          var focusElement;
+          if (url.match(daisy.util.urlRegexp)) {
+            daisyLinkWidget.setValue(url);
+          } else {
+            dojo.byId("url").value = url;
+            selectOtherLinkType();
+            focusElement = dojo.byId("url");
+          }
+
+
+          daisy.dialog.sizeAndPosition();
+
+          // focus after sizeAndPosition, otherwise firefox gets mixed up
+          if (focusElement != null)
+            focusElement.focus();
+        };
+
+        dojo.addOnLoad(Init);
+
+        function onOK() {
+          var url;
+          if (document.getElementById("linktype_daisy").checked) {
+            var url = dojo.byId("daisyLink").value;
+            if (url == "") {
+              alert(DaisyLinkUtils.I18N["link.link-required"]);
+              return;
+            }
+          } else if (document.getElementById("linktype_id").checked) {
+              var idSelect = document.getElementById("ids");
+              if (idSelect.selectedIndex == -1) {
+                  alert(DaisyLinkUtils.I18N["link.id-required"]);
+                  return;
+              }
+              url = "#" + idSelect.options[idSelect.selectedIndex].value;
+          } else {
+            url = document.getElementById("url").value;
+          }
+
+          var param = {"url" : url};
+
+          daisy.dialog.close(param);
+          return false;
+        };
+
+        function onCancel() {
+          daisy.dialog.close(null);
+          return false;
+        };
+
+        function selectDaisyLinkType() {
+            document.getElementById('linktype_daisy').checked = true;
+        }
+
+        function selectOtherLinkType() {
+            document.getElementById('linktype_other').checked = true;
+        }
+
+        function selectIdLinkType() {
+            document.getElementById('linktype_id').checked = true;
+        }
+
+        function popuplateIds() {
+            if (window.idsLoaded != "yes") {
+                var ids = extractIdsFromDoc(editor._doc);
+                var idSelect = document.getElementById("ids");
+                for (var i = 0; i < ids.length; i++) {
+                    idSelect.options[i] = new Option(ids[i], ids[i]);
+                }
+                document.getElementById('ids').disabled = false;
+                window.idsLoaded = "yes";
+            }
+        }
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">link.title</div>
+
+    <form action="" method="get">
+      <input type="radio" name="linktype" id="linktype_daisy"/><label for="linktype_daisy"><span>link.daisy-link</span></label>
+      <div style="padding-left: 2em;">
+        <input name="daisyLink" id="daisyLink" dojoType="daisy:LinkEditor" enableFragmentId="true" contextMode="custom" openInNewWindows="true"/>
+      </div>
+
+      <input type="radio" name="linktype" id="linktype_other"/><label for="linktype_other"><span>link.other-link</span></label>
+      <div style="padding-left: 2em; white-space: nowrap">
+        <span>link.url</span>: <input name="url" id="url" size="100" onkeypress="selectOtherLinkType();"/>
+      </div>
+
+      <input type="radio" name="linktype" id="linktype_id" onclick="popuplateIds();"/><label for="linktype_id"><span>link.target-in-this-doc</span></label>
+      <div style="padding-left: 2em;">
+        <span>link.id</span>: <select id="ids" disabled="disabled" onchange="selectIdLinkType();"> </select>
+      </div>
+
+    </form>
+
+    <div class="dsydlg-buttons">
+      <button type="button" onclick="return onOK()" class="dsyfrm-primaryaction">link.ok</button>
+      &#160;
+      <button type="button" onclick="return onCancel()">link.cancel</button>
+    </div>
+  </content>
+</page>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Tâche générique</message>
+  <message key="generictask.description">Un workflow pour toute tâche qui n'est pas couverte par les autres workflows</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Document</message>
+  <message key="variable.document.description">Si cette tâche est liée à un document, vous pouvez le spécifier ici.</message>
+  <message key="variable.details.label">Description détaillée</message>
+  <message key="variable.details.description">Détaillez ici ce qu'il s'agit de faire.</message>
+  <message key="variable.workerComment.label">Commentaire exécutant</message>
+  <message key="variable.workerComment.description">Commentaires de la personne qui exécute la tâche.</message>
+  <message key="variable.feedbackComment.label">Feedback</message>
+  <message key="variable.needsConfirmation.label">Nécessite confirmation</message>
+  <message key="variable.needsConfirmation.description">Cochez cette case si vous souhaitez recevoir une notification (sur votre console des tâches) lorsque la tâche sera terminée.</message>
+  <message key="variable.worker.label">Exécutant de la tâche</message>
+  <message key="variable.reviewSubmitComment.label">Commentaire de révision</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Démarrer tâche générique</message>
+  <message key="startTask.description">Veuillez saisir les informations requises pour la tâche générique.</message>
+  <message key="performTask.label">Tâche générique</message>
+  <message key="performTask.description">Vous êtes prié(e) d'exécuter la tâche décrite ci-dessous.</message>
+  <message key="feedbackTask.label">Feedback de la tâche générique</message>
+  <message key="feedbackTask.description">Le feedback suivant a été fourni sur la tâche que vous avez créée.</message>
+  <message key="finishedTask.label">Tâche générique terminée</message>
+  <message key="finishedTask.description">L'exécution de la tâche que vous avez créée est terminée.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Soumettre la tâche</message>
+  <message key="transition.failure">Communiquer un feedback au créateur de la tâche</message>
+  <message key="transition.success">Terminer la tâche</message>
+  <message key="transition.performAgain">Soumettre la tâche à nouveau</message>
+  <message key="transition.end">Terminer la tâche</message>
+</catalogue>

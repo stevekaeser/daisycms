@@ -1,0 +1,67 @@
+@import url("layout.css");
+
+html, body {
+    background: ButtonFace;
+    color: ButtonText;
+    font: 11px Tahoma,Verdana,sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+#dialogcontent {
+    padding: 5px;
+}
+
+select, input, button {
+    font: 11px Tahoma,Verdana,sans-serif;
+}
+
+.dsydlg-title {
+    background: #ddf;
+    color: #000;
+    font-weight: bold;
+    font-size: 120%;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+.dsydlg-subtitle {
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+    margin-bottom: 5px;
+}
+
+.dsydlg-buttons {
+    margin-top: 1em; border-top: 1px solid #999;
+    padding: 2px; text-align: right;
+}
+
+.searchlist {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    width:383px;
+}
+.searchlist li {
+    margin:10px;
+    padding:0;
+}
+div.searchbody{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.expanded{
+    background:transparent url(../images/expanded2.png) no-repeat scroll 0 0;
+    padding-left: 18px;
+    
+}
+.collapsed{
+    background:transparent url(../images/collapsed2.png) no-repeat scroll 0 0;
+    padding-left: 18px;
+}

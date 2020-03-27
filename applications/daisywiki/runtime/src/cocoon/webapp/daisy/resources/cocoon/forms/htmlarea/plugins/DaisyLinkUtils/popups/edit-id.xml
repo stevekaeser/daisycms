@@ -1,0 +1,144 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>editid.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+        DaisyLinkUtils = window.opener.DaisyLinkUtils;
+        i18n = DaisyLinkUtils.I18N;
+
+        function Init() {
+            daisy.dialog.translate(i18n);
+            daisy.dialog.init();
+            var params = window.dialogArguments;
+            window.elements = params.elements;
+            window.editorDocument = params.editorDocument;
+            reloadList();
+            document.getElementById("elementsSelect").selectedIndex = window.elements.length - 1;
+            elementChanged();
+
+            daisy.dialog.sizeAndPosition();
+        }
+
+        dojo.addOnLoad(Init);
+
+        function reloadList() {
+            var elementsSelect = document.getElementById("elementsSelect");
+            var options = elementsSelect.options;
+            options.length = 0;
+            for (var i = 0; i < elements.length; i++) {
+                var name = getName(elements[i]);
+                options[options.length] = new Option(name, name);
+            }
+        }
+
+        function getName(element) {
+            var name = element.tagName.toLowerCase();
+            var id = element.getAttribute("id");
+            if (id != null && id != "")
+                name = name + " [id = " + id + "]";
+            var parent = element.parentNode;
+            while (parent != null && parent.nodeType == 1) {
+                name = parent.tagName.toLowerCase() + " > " + name;
+                parent = parent.parentNode;
+            }
+            return name;
+        }
+
+        function onOK() {
+            var param = {};
+            daisy.dialog.close(param);
+            return false;
+        }
+
+        function onCancel() {
+            daisy.dialog.close(null);
+            return false;
+        }
+
+        function changeId() {
+            var id = document.getElementById("elementId").value;
+            id = id == null || id.length == 0 ? null : id;
+            var currentIndex = document.getElementById("elementsSelect").selectedIndex;
+            var element = window.elements[currentIndex];
+
+            if (id != null) {
+                var existingEl = window.editorDocument.getElementById(id);
+                if (existingEl != null && existingEl != element) {
+                    alert(DaisyLinkUtils.I18N["editid.id-in-use"]);
+                    return;
+                }
+            }
+
+            if (id == null)
+                element.removeAttribute("id");
+            else
+                element.setAttribute("id", id);
+            reloadList();
+            document.getElementById("elementsSelect").selectedIndex = currentIndex;
+
+            daisy.dialog.sizeAndPosition();
+        }
+
+        function elementChanged() {
+            var index = document.getElementById("elementsSelect").selectedIndex;
+            var id = window.elements[index].getAttribute("id");
+            document.getElementById("elementId").value = id;
+        }
+    ]]>
+    </script>
+
+    <div class="dsydlg-title">editid.title</div>
+
+    <form action="" method="get">
+      <table class="dsyfrm-table">
+        <tbody>
+          <tr>
+            <td class="dsyfrm-labelcell dsy-nowrap">
+              <label for="elementsSelect"><span>editid.select-element</span>:</label>
+            </td>
+            <td class="dsyfrm-widgetcell">
+              <select id="elementsSelect" onchange="elementChanged();">
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="dsyfrm-labelcell dsy-nowrap">
+              <label for="elementId"><span>editid.id-of-selected-element</span>:</label>
+            </td>
+            <td class="dsyfrm-widgetcell dsy-nowrap">
+              <input id="elementId" size="20"/>
+              &#160;
+              <button type="button" onclick="changeId(); return false;"><span>editid.apply</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+        <div class="dsydlg-buttons">
+            <button type="button" onclick="return onCancel()">editid.close</button>
+        </div>
+    </form>
+  </content>
+</page>

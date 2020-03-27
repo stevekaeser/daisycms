@@ -1,0 +1,6 @@
+#set ($indexcounter=0)
+#foreach ($index in $table.Indices)
+#set ($indexcounter=$indexcounter + 1)
+CREATE#if ($index.Unique)UNIQUE#end INDEX ${table.Name}_I_${indexcounter} ON $table.Name ($index.ColumnList)
+/
+#end

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="version">
+    <xs:annotation>
+      <xs:documentation>The childelements fields, parts and links are not required to be present. This is useful for when only an overview of the versions is needed, and not their full content.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all maxOccurs="1" minOccurs="0">
+        <xs:element ref="daisy:fields"/>
+        <xs:element ref="daisy:parts"/>
+        <xs:element ref="daisy:links"/>
+        <xs:element maxOccurs="1" minOccurs="0" name="changeComment" type="xs:string"/>
+        <xs:element maxOccurs="1" minOccurs="0" name="summary" type="xs:string"/>
+      </xs:all>
+      <xs:attribute name="id" type="xs:long"/>
+      <xs:attribute name="created" type="xs:dateTime"/>
+      <xs:attribute name="creator" type="xs:long"/>
+      <xs:attribute name="documentName" type="xs:string"/>
+      <xs:attribute name="state" type="xs:string"/>
+      <xs:attribute name="lastModified" type="xs:dateTime"/>
+      <xs:attribute name="lastModifier" type="xs:long"/>
+      <xs:attribute name="totalSizeOfParts" type="xs:long"/>
+      <xs:attribute name="syncedWithLanguageId" type="xs:long"/>
+      <xs:attribute name="syncedWithVersionId" type="xs:long"/>
+      <xs:attribute name="changeType" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="versions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:version"/>
+      </xs:sequence>
+      <xs:attribute name="documentId" type="xs:string"/>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<searchconf>
+  <!--
+  <documentName show="true" autoWildcards="false"/>
+  -->
+
+  <fullText show="true" required="true"/>
+
+  <collections show="true" useSiteCollection="true">
+    <!-- eg: <collection>testsite</collection> -->
+  </collections>
+
+  <!-- note: @showExclude and @exclude only have effect if @show="true" -->
+  <!--
+  <documentTypes show="true" showExclude="true" exclude="true">
+    <documentType>SimpleDocument</documentType>
+  </documentTypes>
+  -->
+
+  <!--
+  <partTypes show="true">
+    <partType>NavigationPart</partType>
+  </partTypes>
+  -->
+  
+  <!-- This option makes use of a different stylesheet to render the search result
+  <stylesheetPath>daisyskin:xslt/fulltext_searchresult.xsl</stylesheetPath> 
+   -->
+   
+   <!-- Adds expressions to the select clause. To render the extra expressions changes should be 
+   made to the search result stylesheet
+   
+     <additionalSelectExpressions>
+  	   <expr>variantLastModifier</expr>
+     </additionalSelectExpressions>
+    -->
+</searchconf>

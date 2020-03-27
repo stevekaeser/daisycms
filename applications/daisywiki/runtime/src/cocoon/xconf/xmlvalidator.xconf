@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon/forms-validators"
+       unless="validator[@name='xml']">
+  <validator name="xml" class="org.outerj.daisy.frontend.components.misc.XmlValidatorBuilder"/>
+</xconf>

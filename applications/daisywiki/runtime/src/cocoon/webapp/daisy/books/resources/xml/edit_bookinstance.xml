@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  ${pageContext}
+
+  <pageTitle><i18n:text key="ebi.title"/></pageTitle>
+
+  <content>
+
+    <form style="display: none" method="POST" id="actionForm">
+      <input type="hidden" name="action"/>
+      <input type="hidden" name="newLabel"/>
+      <input type="hidden" name="newName"/>
+      <input type="hidden" name="publicationName"/>
+      <input type="hidden" name="returnTo"/>
+    </form>
+
+    <script type="text/javascript">
+      function changeBookInstanceLabel(oldLabel, bookInstanceName) {
+        var label = prompt("<i18n:text key="ebi.enter-new-label"/>", oldLabel);
+        if (label == null || label.match(/^\s*$/) || oldLabel == label)
+          return;
+
+        var form = document.getElementById("actionForm");
+        form.elements["action"].value = "changeLabel";
+        form.elements["newLabel"].value = label;
+        form.elements["returnTo"].value = "${pageContext.mountPoint}/books/" + bookInstanceName + "/edit";
+        form.action = "${pageContext.mountPoint}/books/" + bookInstanceName;
+        form.submit();
+      }
+
+      function changeBookInstanceName(bookInstanceName) {
+        var name = prompt("<i18n:text key="ebi.enter-new-name"/>", bookInstanceName);
+        if (name == null || name.match(/^\s*$/) || bookInstanceName == name)
+          return;
+
+        var form = document.getElementById("actionForm");
+        form.elements["action"].value = "changeName";
+        form.elements["newName"].value = name;
+        form.elements["returnTo"].value = "${pageContext.mountPoint}/books/" + name + "/edit";
+        form.action = "${pageContext.mountPoint}/books/" + bookInstanceName;
+        form.submit();
+      }
+
+      function changePublicationLabel(oldLabel, publicationName, bookInstanceName) {
+        var label = prompt("<i18n:text key="ebi.enter-new-label"/>", oldLabel);
+        if (label == null || label.match(/^\s*$/) || oldLabel == label)
+          return;
+
+        var form = document.getElementById("actionForm");
+        form.elements["action"].value = "changePublicationLabel";
+        form.elements["publicationName"].value = publicationName;
+        form.elements["newLabel"].value = label;
+        form.elements["returnTo"].value = "${pageContext.mountPoint}/books/" + bookInstanceName + "/edit";
+        form.action = "${pageContext.mountPoint}/books/" + bookInstanceName;
+        form.submit();
+      }
+
+      function changePublicationName(publicationName, bookInstanceName) {
+        var name = prompt("<i18n:text key="ebi.enter-new-name"/>", publicationName);
+        if (name == null || name.match(/^\s*$/) || publicationName == name)
+          return;
+
+        var form = document.getElementById("actionForm");
+        form.elements["action"].value = "changePublicationName";
+        form.elements["publicationName"].value = publicationName;
+        form.elements["newName"].value = name;
+        form.elements["returnTo"].value = "${pageContext.mountPoint}/books/" + bookInstanceName + "/edit";
+        form.action = "${pageContext.mountPoint}/books/" + bookInstanceName;
+        form.submit();
+      }
+    </script>
+
+    <h1><i18n:text key="ebi.title"/></h1>
+
+    <h2><i18n:text key="ebi.general"/></h2>
+    <table class="default">
+      <tr>
+        <th><i18n:text key="name"/>:</th>
+        <td>${bookInstanceName} <a href="#" onclick='return changeBookInstanceName("${daisyutil.escape(bookInstanceName)}"); return false;' onmouseover="window.status=''; return true;">(<i18n:text key="ebi.change"/>)</a></td>
+      </tr>
+      <tr>
+        <th><i18n:text key="ebi.label"/>:</th>
+        <td>${metaData.label} <a href="#" onclick='return changeBookInstanceLabel("${daisyutil.escape(metaData.label)}", "${daisyutil.escape(bookInstanceName)}"); return false;' onmouseover="window.status=''; return true;">(<i18n:text key="ebi.change"/>)</a></td>
+      </tr>
+    </table>
+
+    <h2><i18n:text key="ebi.publications"/></h2>
+    <table class="default">
+      <tr>
+        <th><i18n:text key="name"/></th>
+        <th><i18n:text key="ebi.label"/></th>
+      </tr>
+      <jx:forEach items="${publicationInfos}" var="publicationInfo">
+        <tr>
+          <td>${publicationInfo.name} <a href="#" onclick='return changePublicationName("${daisyutil.escape(publicationInfo.name)}", "${daisyutil.escape(bookInstanceName)}"); return false;' onmouseover="window.status=''; return true;">(<i18n:text key="ebi.change"/>)</a></td>
+          <td>${publicationInfo.label} <a href="#" onclick='return changePublicationLabel("${daisyutil.escape(publicationInfo.label)}", "${daisyutil.escape(publicationInfo.name)}", "${daisyutil.escape(bookInstanceName)}"); return false;' onmouseover="window.status=''; return true;">(<i18n:text key="ebi.change"/>)</a></td>
+        </tr>
+      </jx:forEach>
+    </table>
+
+    <p>Note: changing the order of the publications, or changing the hierarchical path, is not (yet?) possible
+    through this GUI, but if needed can always be done by directly editing the publications_info.xml and
+    metadata.xml files in the book instance directory.</p>
+
+    <p><a href="${pageContext.mountPoint}/books"><i18n:text key="ebi.back-to-published-books"/></a></p>
+
+  </content>
+</page>

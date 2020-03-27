@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- layout.xsl -->
+  <message key="layout.user">Utilisateur:</message>
+  <message key="layout.role">Rôle:</message>
+  <message key="layout.changelogin">Changer de connexion</message>
+  <message key="layout.logout">Se déconnecter</message>
+  <message key="layout.user-settings">Paramètres utilisateur</message>
+  <message key="layout.change-locale">Changer de langue</message>
+  <message key="layout.query-search">Requêtes</message>
+  <message key="layout.recent-changes">Changements récents</message>
+  <message key="layout.new-document">Nouveau document</message>
+  <message key="layout.hide">Masquer</message>
+  <message key="layout.search">Rechercher</message>
+  <message key="layout.navigationdoc">Docum. de la navigation:</message>
+  <message key="layout.navigationdoc-view">consulter</message>
+  <message key="layout.navigationdoc-edit">éditer</message>
+  <message key="layout.my-comments">Mes commentaires</message>
+  <message key="layout.registration">Inscription</message>
+  <message key="layout.administration">Administration</message>
+  <message key="layout.doctask">Tâches de documents</message>
+  <message key="layout.variants">Variantes</message>
+  <message key="layout.branch-language">(branche - langue)</message>
+  <message key="layout.add-variant">Ajouter variante ...</message>
+  <message key="layout.use-all-roles">Utiliser tous les rôles</message>
+  <message key="layout.excl-administrator">(Admin. exclu)</message>
+  <message key="layout.multiple-roles">Multiple</message>
+  <message key="layout.page-actions">Actions sur la page</message>
+  <message key="layout.tools">Outils</message>
+  <message key="layout.books">Publication de livres</message>
+  <message key="layout.basket">Panier de documents</message>
+  <message key="layout.new-workflow">Démarrer un workflow</message>
+  <message key="layout.workflow-console">Console de workflow</message>
+  <message key="layout.variables">Variables</message>
+  <message key="layout.translation-management">Gestion des traduct.</message>
+  <message key="minimal-feed">Flux minimal (ne contient que les noms des documents)</message>
+  <message key="normal-feed">Flux normal (contenu complet des documents)</message>
+  <message key="editors-feed">Flux d'éditeur (contenu complet des documents et différences à la précédente version)</message>
+  <message key="layout.versionmode-live">EN LIGNE</message>
+  <message key="layout.versionmode-last">ÉBAUCHE</message>
+  <message key="layout.versionmode-live-label">en ligne</message>
+  <message key="layout.versionmode-last-label">ébauche</message>
+  <message key="layout.versionmode-point-in-time"></message>
+  <message key="layout.switch-to-live-hint">Cliquer pour basculer à la version en ligne</message>
+  <message key="layout.switch-to-last-hint">Cliquer pour basculer à l'ébauche (dernière version)</message>
+  <message key="image.show-referrers">Rechercher les occurrences de cette image</message>
+</catalogue>

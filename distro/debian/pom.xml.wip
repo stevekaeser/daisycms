@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisy-distro-debian</artifactId>
+  <version>2.5-dev</version>
+  <name>Daisy: Debian Package Build</name>
+  <properties>
+    <dist.debian.maintainer>Paul Focke &lt;paul@outerthought.org>, Andreas Deininger &lt;andreas@deininger.net></dist.debian.maintainer>
+    <dist.debian.depends>mysql-client-4.1, mysql-server-4.1, java-common, java2-runtime, java2-compiler</dist.debian.depends>
+  </properties>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>evolvis-release-repository</id>
+      <name>evolvis.org release repository</name>
+      <url>http://maven-repo.evolvis.org/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+  <build>
+   <plugins>
+     <plugin>
+        <groupId>de.tarent.maven.plugins</groupId>
+        <artifactId>maven-pkg-plugin</artifactId>
+        <version>2.1.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>pkg</goal></goals>
+          </execution>
+        </executions>
+        <configuration>
+          <defaultDistro>debian_etch</defaultDistro>
+          <defaultTarget>all</defaultTarget>
+          <shortDescription>Daisy is a content management system that offers rich out-of-the-box functionality combined with solid foundations for extensibility and integration.</shortDescription>
+          <maintainer>Paul Focke &lt;paul@outerthought.org>, Andreas Deininger &lt;andreas@deininger.net></maintainer>
+          <depends>mysql-client-4.1, mysql-server-4.1, java-common, java2-runtime, java2-compiler</depends>
+
+          <auxfiles>
+            <auxfile>daisy-js.1</auxfile>
+            <auxfile>daisy-add-site.1</auxfile>
+            <auxfile>daisy-repository-init.properties</auxfile>
+            <auxfile>daisy-wiki-init.properties</auxfile>
+            <auxfile>myconfig.xml-update.xpath</auxfile>
+            <auxfile>wiki_backup_settings.xml</auxfile>
+          </auxfiles>
+          <srcAuxFilesDir>resources</srcAuxFilesDir>
+          <preinstScript>preinst</preinstScript>
+          <postinstScript>postinst</postinstScript>
+          <prermScript>prerm</prermScript>
+          <postrmScript>postrm</postrmScript>
+
+          <defaults>
+            <section>libs</section>
+            <bundleDependencies/>
+            <advancedStarter>false</advancedStarter>
+ 
+            <!-- For historical reason we put our stuff in resources -->
+            <srcAuxFilesDir>resources</srcAuxFilesDir>
+ 
+            <systemProperties/>
+          </defaults>
+ 
+          <distroConfigurations>
+            <distroConfiguration>
+              <distros>
+                <distro>debian_etch</distro>
+                <distro>debian_lenny</distro>
+              </distros>
+              <datarootFiles/>
+              <jniFiles/>
+            </distroConfiguration>
+          </distroConfigurations>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

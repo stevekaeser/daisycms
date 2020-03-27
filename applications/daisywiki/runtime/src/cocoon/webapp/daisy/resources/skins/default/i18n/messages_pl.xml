@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- layout.xsl -->
+  <message key="layout.user">Użytkownik:</message>
+  <message key="layout.role">Funkcja:</message>
+  <message key="layout.changelogin">Zmień użytkownika</message>
+  <message key="layout.logout">Wyloguj się</message>
+  <message key="layout.user-settings">Preferencje użytkownika</message>
+  <message key="layout.change-locale">Ustawienia językowe</message>
+  <message key="layout.query-search">Szukanie przez zapytanie</message>
+  <message key="layout.recent-changes">Ostatnie zmiany</message>
+  <message key="layout.new-document">Nowy dokument</message>
+  <message key="layout.hide">Ukryj</message>
+  <message key="layout.search">Szukaj</message>
+  <message key="layout.goto-navigation">Nawigacja</message>
+  <message key="layout.my-comments">Moje komentarze</message>
+  <message key="layout.registration">Rejestracja</message>
+  <message key="layout.administration">Administracja</message>
+  <message key="layout.doctask">Zadania na dokumentach</message>
+  <message key="layout.variants">Warianty</message>
+  <message key="layout.branch-language">(gałąź - język)</message>
+  <message key="layout.add-variant">Dodaj wariant...</message>
+  <message key="layout.use-all-roles">Połącz wszystkie funkcje</message>
+  <message key="layout.excl-administrator">(wyłączając Administratora)</message>
+  <message key="layout.multiple-roles">Wiele</message>
+  <message key="layout.page-actions">Operacje na stronie</message>
+</catalogue>

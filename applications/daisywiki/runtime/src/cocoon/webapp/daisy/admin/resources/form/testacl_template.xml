@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle>Test ACL</pageTitle>
+
+  <content>
+    <h1>Test ACL</h1>
+
+    This page allows you to test the result of the ACL evaluation for some user having some role for some document.
+    <br/>
+    <br/>
+
+    <ft:form-template action="${submitPath}" method="POST">
+      <table class="plainTable">
+        <tr>
+          <td><ft:widget-label id="userId"/></td>
+          <td>
+            <ft:widget id="userId">
+              <fi:styling style="width: 15em"/>
+            </ft:widget>
+            <button type="button" onclick="selectUser(); return false;">Lookup...</button>
+          </td>
+        </tr>
+        <tr>
+          <td><ft:widget-label id="roleId"/></td>
+          <td>
+            <ft:widget id="roleId">
+              <fi:styling style="width: 15em"/>
+            </ft:widget>
+            <button type="button" onclick="selectRole(); return false;">Lookup...</button>
+          </td>
+        </tr>
+      </table>
+
+      <fieldset>
+        <legend>
+          <b>Test on: </b><ft:widget id="testOn"/>
+        </legend>
+
+        <ft:union id="document">
+          <ft:case id="existing">
+            <ft:group id="existing">
+              <table class="plainTable">
+                <tr>
+                  <td><ft:widget-label id="documentId"/></td>
+                  <td>
+                    <ft:widget id="documentId">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ft:widget-label id="branchId"/></td>
+                  <td>
+                    <ft:widget id="branchId">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ft:widget-label id="languageId"/></td>
+                  <td>
+                    <ft:widget id="languageId">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+              </table>
+            </ft:group>
+          </ft:case>
+
+          <ft:case id="conceptual">
+            <ft:group id="conceptual">
+              <table class="plainTable">
+                <tr>
+                  <td><ft:widget-label id="documentType"/></td>
+                  <td>
+                    <ft:widget id="documentType">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ft:widget-label id="branchId"/></td>
+                  <td>
+                    <ft:widget id="branchId">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ft:widget-label id="languageId"/></td>
+                  <td>
+                    <ft:widget id="languageId">
+                      <fi:styling style="width: 15em"/>
+                    </ft:widget>
+                  </td>
+                </tr>
+              </table>
+              <div>
+                About the "conceptual document": when saving a document, the ACL is always evaluated
+                twice:
+                <ul>
+                  <li>once on the actual content being saved, to see if the user is allowed to save
+                  the document.</li>
+                  <li>once on the previous document state (the last version stored in the repository) to
+                  determine the fine-grained write permissions. For new documents, where there is no
+                  previous document state, the "conceptual document" is used instead, which is
+                  an empty document for which the "conceptual" field in the ACL expressions is true.</li>
+                </ul>
+                See the Daisy documentation for more on this.
+              </div>
+            </ft:group>
+          </ft:case>
+        </ft:union>
+      </fieldset>
+
+
+      <br/>
+      Note that it is not checked whether the user and role actually exist,
+      or that the specified user has the specified role.
+      <br/>
+      <br/>
+
+      <input type="submit" value="Test it"/>
+      <input type="submit" value="Cancel" onclick="window.location='../../'; return false;"/>
+
+      <script type="text/javascript">
+        function selectUser() {
+          var popup = window.open("${pageContext.mountPoint}/selectUser", "selectuser", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+          popup.onUserSelected = function(id, name) {
+            document.getElementById("userId:input").value = id;
+          }
+        }
+
+        function selectRole() {
+          var popup = window.open("${pageContext.mountPoint}/selectRole", "selectrole", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+          popup.onRoleSelected = function(id, name) {
+            document.getElementById("roleId:input").value = id;
+          }
+        }
+      </script>
+    </ft:form-template>
+  </content>
+
+</page>

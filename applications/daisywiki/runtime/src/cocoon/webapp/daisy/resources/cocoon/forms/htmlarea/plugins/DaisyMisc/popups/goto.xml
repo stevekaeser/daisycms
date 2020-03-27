@@ -1,0 +1,145 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>goto.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+  </extraHeadContent>
+  
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+
+        DaisyMisc = window.opener.DaisyMisc;
+        i18n = DaisyMisc.I18N;
+
+        function Init() {
+            daisy.dialog.init();
+            daisy.dialog.translate(i18n);
+
+            var params = window.dialogArguments;
+            window.elementsWithIds = params.elementsWithIds;
+            window.headerElements = params.headerElements;
+            window.editorWindow = params.editorWindow;
+            fillLists();
+
+            // sizeAndPosition must be called after filling the select lists.
+            daisy.dialog.sizeAndPosition();
+        }
+
+        dojo.addOnLoad(Init);
+
+        function fillLists() {
+            var elementsWithIdsSelect = document.getElementById("elementsWithIds");
+            var elementsWithIdsOptions = elementsWithIdsSelect.options;
+            for (var i = 0; i < window.elementsWithIds.length; i++) {
+                var id = window.elementsWithIds[i].getAttribute("id");
+                elementsWithIdsOptions[elementsWithIdsOptions.length] = new Option(id, id);
+            }
+
+            var headersSelect = document.getElementById("headers");
+            var headersOptions = headersSelect.options;
+            for (var i = 0; i < window.headerElements.length; i++) {
+                var text = getHeaderText(window.headerElements[i]);
+                headersOptions[headersOptions.length] = new Option(text, text);
+            }
+        }
+
+        function getHeaderText(header) {
+            if (!header.tagName.toLowerCase().match(/^h([0-9])$/))
+                return "not a header?";
+            var level = parseInt(RegExp.$1);
+            var text = daisyElementText(header);
+            if (text.length > 105) {
+                text = text.substring(0, 100) + "...";
+            }
+            var spaces = "";
+            for (var i = 1; i < level; i++)
+                spaces += "\u00A0\u00A0";
+            return spaces + text;
+        }
+
+        function onCancel() {
+            daisy.dialog.close(null);
+            return false;
+        }
+
+        function gotoElementWithId() {
+            var index = document.getElementById("elementsWithIds").selectedIndex;
+            if (index == -1)
+                return;
+
+            var element = window.elementsWithIds[index];
+            var top = 0;
+            while (element != null) {
+                top += element.offsetTop;
+                element = element.offsetParent;
+            }
+            window.editorWindow.scrollTo(0, top);
+            daisy.dialog.close(null);
+            return false;
+        }
+
+        function gotoHeader() {
+            var index = document.getElementById("headers").selectedIndex;
+            if (index == -1)
+                return;
+
+            var element = window.headerElements[index];
+            var top = 0;
+            while (element != null) {
+                top += element.offsetTop;
+                element = element.offsetParent;
+            }
+            window.editorWindow.scrollTo(0, top);
+            daisy.dialog.close(null);
+            return false;
+        }
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">goto.title</div>
+
+    <form action="" method="get">
+        <div style="white-space: nowrap">
+          <label for="elementsWithIds"><span>goto.element</span>:</label>
+          <br/>
+          <select id="elementsWithIds"></select>
+          &#160;
+          <button type="button" onclick="return gotoElementWithId();">goto.goto</button>
+          <br/>
+          <br/>
+          <label for="headers"><span>goto.header</span>:</label>
+          <br/>
+          <select id="headers"></select>
+          &#160;
+          <button type="button" onclick="return gotoHeader();">goto.goto</button>
+        </div>
+
+        <div class="dsydlg-buttons">
+            <button type="button" onclick="return onCancel()">goto.close</button>
+        </div>
+
+    </form>
+  </content>
+</page>

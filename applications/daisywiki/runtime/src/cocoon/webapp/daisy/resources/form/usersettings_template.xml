@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="usersettings.title"/></pageTitle>
+
+  <content>
+    <h1><i18n:text key="usersettings.title"/></h1>
+
+    <ft:form-template action="${submitPath}" method="POST" autocomplete="off">
+      <jx:if test="${user.authenticationScheme == 'daisy'}">
+        <h2><i18n:text key="usersettings.change-password"/></h2>
+        <fi:group>
+          <fi:styling layout="columns"/>
+          <fi:items>
+            <ft:widget id="currentPassword">
+              <fi:styling type="password"/>
+            </ft:widget>
+            <ft:widget id="newPassword">
+              <fi:styling type="password"/>
+            </ft:widget>
+            <ft:widget id="newPasswordConfirm">
+              <fi:styling type="password"/>
+            </ft:widget>
+          </fi:items>
+        </fi:group>
+      </jx:if>
+
+      <h2><i18n:text key="usersettings.user-data"/></h2>
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="email">
+            <fi:styling size="60"/>
+          </ft:widget>
+          <ft:widget id="firstName"/>
+          <ft:widget id="lastName"/>
+        </fi:items>
+      </fi:group>
+
+      <h2><i18n:text key="usersettings.email-notifications"/></h2>
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="receiveDocumentEvents"/>
+          <ft:widget id="receiveCommentEvents"/>
+          <ft:widget id="receiveUserEvents"/>
+          <ft:widget id="receiveSchemaEvents"/>
+          <ft:widget id="receiveCollectionEvents"/>
+          <ft:widget id="receiveAclEvents"/>
+          <ft:widget id="locale"/>
+        </fi:items>
+      </fi:group>
+
+      <h3><i18n:text key="usersettings.document-notification-options"/></h3>
+
+      <i18n:text key="usersettings.notification-documents"/> <a href="#" onmouseover="status=''; return true;" onclick="toggleDisplay('docs-info'); return false;"><i18n:text key="help"/></a><br/>
+      <div id="docs-info" style="display: none; background-color: #fffcaa; border: 1px solid black; padding: 8px; margin: 4px;">
+        <i18n:text key="usersettings.notification-documents-info"/>
+      </div>
+      <ft:widget id="subscribedDocuments">
+        <fi:styling type="textarea" rows="6" cols="60" spellcheck="false"/>
+      </ft:widget>
+
+      <br/><br/><i18n:text key="usersettings.notification-collections"/>  <a href="#" onmouseover="status=''; return true;" onclick="toggleDisplay('collections-info'); return false;"><i18n:text key="help"/></a><br/>
+      <div id="collections-info" style="display: none; background-color: #fffcaa; border: 1px solid black; padding: 8px; margin: 4px;">
+        <i18n:text key="usersettings.notification-collections-info"/>
+      </div>
+      <ft:widget id="subscribedCollections">
+        <fi:styling type="textarea" rows="6" cols="60" spellcheck="false"/>
+      </ft:widget>
+      <br/>
+      <i18n:text key="collection"/>:
+      <select id="collsub-collection">
+        <jx:forEach var="collection" items="${collectionsArray}">
+          <option value="${collection.name}">${collection.name}</option>
+        </jx:forEach>
+      </select>
+      <i18n:text key="branch"/>:
+      <select id="collsub-branch">
+        <option value="*"><i18n:text key="select-any"/></option>
+        <jx:forEach var="branch" items="${branchesArray}">
+          <option value="${branch.name}">${branch.name}</option>
+        </jx:forEach>
+      </select>
+      <i18n:text key="language"/>:
+      <select id="collsub-language">
+        <option value="*"><i18n:text key="select-any"/></option>
+        <jx:forEach var="language" items="${languagesArray}">
+          <option value="${language.name}">${language.name}</option>
+        </jx:forEach>
+      </select>
+      <button type="button" onclick="addCollectionSubscription(); return false;">Add</button>
+
+      <br/>
+      <br/>
+      <ft:widget id="save" fi:class="dsyfrm-primaryaction"/>
+      <input type="submit" value="cancel" i18n:attr="value" onclick="window.location='${returnTo}'; return false;"/>
+    </ft:form-template>
+
+    <script type="text/javascript">
+      function addCollectionSubscription() {
+        var collectionSelect = document.getElementById("collsub-collection");
+        var collection = collectionSelect.options[collectionSelect.selectedIndex].value;
+
+        var branchSelect = document.getElementById("collsub-branch");
+        var branch = branchSelect.options[branchSelect.selectedIndex].value;
+
+        var languageSelect = document.getElementById("collsub-language");
+        var language = languageSelect.options[languageSelect.selectedIndex].value;
+
+        var subscribedCollections = document.getElementById("subscribedCollections:input");
+        subscribedCollections.value = subscribedCollections.value
+            + (subscribedCollections.value.length > 0 ? "\n" : "")
+            + collection + "," + branch + "," + language;
+      }
+    </script>
+
+  </content>
+
+</page>

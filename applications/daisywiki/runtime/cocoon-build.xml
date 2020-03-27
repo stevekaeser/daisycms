@@ -1,0 +1,407 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<project>
+
+  <property file="build.properties"/> <!-- build.properties can be used for overriding properties -->
+  <property name="daisywiki.resource.parteditor-applet.symlink" value="false"/>
+  <property file="project.properties"/>
+
+  <taskdef name="recode" classname="org.outerj.daisy.tools.recode.RecodeTask" classpath="${plugin_classpath}"/>
+  <taskdef name="propertyfile" classname="org.apache.tools.ant.taskdefs.optional.PropertyFile" classpath="${plugin_classpath}"/>
+
+  <tstamp/>
+
+  <target name="init">
+    <condition property="cocoon.download.flag">
+      <equals arg1="${cocoon.download}" arg2="true"/>
+    </condition>
+    <condition property="cocoon.get.flag">
+      <equals arg1="${cocoon.get}" arg2="true"/>
+    </condition>
+    <condition property="webapp.flag">
+      <not><equals arg1="${webapp}" arg2="false"/></not>
+    </condition>
+    <condition property="deployResources.flag">
+      <equals arg1="${deployResources}" arg2="true"/>
+    </condition>
+  </target>
+
+  <target name="all">
+    <antcall target="cocoon.download"/>
+    <antcall target="cocoon.get"/>
+    <antcall target="webapp" inheritRefs="true"/>
+    <antcall target="deployResources"/>
+  </target>
+
+  <target name="webapp" depends="init" if="webapp.flag">
+    <antcall target="-cocoon.check"/>
+    <antcall target="prepare-xconf"/>
+    <antcall target="cocoon.xconf"/>
+    <antcall target="endorsedlibs"/>
+  </target>
+
+  <target name="prepare-xconf" depends="-cocoon.test" if="cocoon.ok" >
+    <mkdir dir="${cocoon.xconf.dir}" />
+
+    <!-- laat toe om tokens te filteren in the xconf files -->
+    <copy todir="${cocoon.xconf.dir}" filtering="on" overwrite="true">
+        <fileset dir="${src.xconf}" />
+    </copy>
+  </target>
+
+  <target name="deployResources" depends="init, -cocoon.test" if="deployResources.flag">
+    <antcall target="-cocoon.check"/>
+
+    <!-- laat toe om tokens te filteren in de sitemap.xmap file -->
+    <copy todir="${cocoon.webapp}" filtering="on" overwrite="true">
+      <fileset dir="${src.cocoon}/webapp" includes="**/sitemap.xmap"/>
+    </copy>
+    <copy todir="${cocoon.webapp}" overwrite="true">
+      <fileset dir="${src.cocoon}/webapp" excludes="**/sitemap.xmap" />
+    </copy>
+
+    <condition property="useSymlink">
+      <equals arg1="${daisywiki.resource.parteditor-applet.symlink}" arg2="true"/>
+    </condition>
+    <antcall target="deployResources-parteditor-symlink"/>
+    <antcall target="deployResources-parteditor-copy"/>
+  </target>
+
+  <!-- TODO: we don't really need this separation, get rid of it? -->
+  <target name="deployResources-parteditor-symlink" if="useSymlink">
+    <delete dir="${cocoon.webapp}/daisy/resources/parteditor-applet"/>
+    <mkdir dir="${cocoon.webapp}/daisy/resources/parteditor-applet"/>
+
+    <symlink resource="${basedir}/../parteditor-applet/target/daisywiki-parteditor-applet-${project.version}.jar"
+             link="${cocoon.webapp}/daisy/resources/parteditor-applet/daisywiki-parteditor-applet-${project.version}.jar"/>
+
+    <symlink resource="${basedir}/../parteditor-applet/target/defaultMimeTypeRegistry.ini"
+             link="${cocoon.webapp}/daisy/resources/parteditor-applet/defaultMimeTypeRegistry.ini"/>
+  </target>
+
+  <target name="deployResources-parteditor-copy" unless="useSymlink">
+    <delete dir="${cocoon.webapp}/daisy/resources/parteditor-applet"/>
+    <mkdir dir="${cocoon.webapp}/daisy/resources/parteditor-applet"/>
+    <copy todir="${cocoon.webapp}/daisy/resources/parteditor-applet">
+      <fileset dir="${basedir}/../parteditor-applet/target">
+        <include name="daisywiki-parteditor-applet-${project.version}.jar"/>
+        <include name="defaultMimeTypeRegistry.ini"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="cforms-resources">
+    <mkdir dir="${cocoon.webapp}/daisy/resources/cforms"/>
+    <copy todir="${cocoon.webapp}/daisy/resources/cforms">
+      <fileset dir="${cocoon.dist.home}/src/blocks/forms/samples/resources"/>
+    </copy>
+    <copy todir="${cocoon.webapp}/daisy/resources/cocoon/forms">
+      <fileset dir="${cocoon.dist.home}/src/blocks/forms/resources/org/apache/cocoon/forms/resources"/>
+    </copy>
+    <copy todir="${cocoon.webapp}/daisy/resources/cocoon/ajax">
+      <fileset dir="${cocoon.dist.home}/src/blocks/ajax/resources/org/apache/cocoon/ajax/resources"/>
+    </copy>
+    <recode file="${cocoon.webapp}/daisy/resources/cocoon/forms/htmlarea/lang/fr.js" encoding="ISO-8859-1" outputencoding="UTF-8"/>
+    <recode file="${cocoon.webapp}/daisy/resources/cocoon/forms/htmlarea/lang/nl.js" encoding="ISO-8859-1" outputencoding="UTF-8"/>
+    <recode file="${cocoon.webapp}/daisy/resources/cocoon/forms/htmlarea/lang/pl.js" encoding="ISO-8859-1" outputencoding="UTF-8"/>
+    <recode file="${cocoon.webapp}/daisy/resources/cocoon/forms/htmlarea/lang/de.js" encoding="ISO-8859-1" outputencoding="UTF-8"/>
+  </target>
+
+  <!-- copy endorsed libraries, this is so the distro builder can find them -->
+  <target name="endorsedlibs">
+    <mkdir dir="${maven.build.dir}/cocoon-endorsed-libs"/>
+    <copy todir="${maven.build.dir}/cocoon-endorsed-libs">
+      <fileset dir="${cocoon.dist.home}/lib/endorsed" includes="*.jar"/>
+    </copy>
+  </target>
+
+
+  <!-- sets some essesntial properties for these targets -->
+  <target name="cocoon.init">
+    <mkdir dir="${cocoon.tool.dir}" />
+  </target>
+
+  <target name="shbat.test">
+    <condition property="isWindows">
+      <contains string="${os.name}" substring="windows" casesensitive="false" />
+    </condition>
+    <condition property="shbat" value="bat">
+      <contains string="${os.name}" substring="windows" casesensitive="false" />
+    </condition>
+    <property name="shbat" value="sh"/>
+  </target>
+    
+  <target name="-cocoon.shbat" depends="cocoon.init,shbat-windows,shbat-unix">
+  </target>
+  
+  <target name="shbat-windows" depends="shbat.test" if="isWindows">
+    <echo>Building batch files for support on windows OS</echo>
+    <property name="shbat" value="bat"/>
+
+    <echo file="${cocoon.tool.dir}/getc2clean.${shbat}"><![CDATA[
+@echo off  
+set COCOON_HOME=${cocoon.dist.home}
+set PROJECT_PROPERTIES=${cocoon.build.properties}
+set PROJECT_WEBAPP=${cocoon.webapp}
+set PROJECT_TASKDEFS=${cocoon.tasks}
+set CUSTOM_LIB_CORE=${cocoon.custom.lib.core}
+set CUSTOM_LIB_OPTIONAL=${cocoon.custom.lib.optional}
+cd /d %COCOON_HOME%
+build.bat -propertyfile "%PROJECT_PROPERTIES%" clean webapp "-Dbuild.webapp=%PROJECT_WEBAPP%" "-Dtools.tasks.dest=%PROJECT_TASKDEFS%" "-Dlib.core=%CUSTOM_LIB_CORE%" "-Dlib.optional=%CUSTOM_LIB_OPTIONAL%"
+]]></echo>
+
+    <echo file="${cocoon.tool.dir}/runc2.${shbat}"><![CDATA[
+@echo off
+set DAISY_DEV_WIKIDATA=${daisywiki.data}
+echo
+echo Using wikidata dir: %DAISY_DEV_WIKIDATA
+echo
+set COCOON_HOME=${cocoon.dist.home}
+set PROJECT_WEBAPP=${cocoon.webapp}
+set JETTY_WEBAPP=%PROJECT_WEBAPP%
+set JAVA_OPTIONS=-Dorg.mortbay.util.URI.charset=UTF-8 -Ddaisywiki.data=%DAISY_DEV_WIKIDATA% %DAISY_WIKI_OPTIONS%
+cd /d %COCOON_HOME%
+cocoon.bat servlet-debug
+]]></echo>
+  </target>
+
+  <target name="shbat-unix" depends="shbat.test" unless="isWindows">
+    <echo>Building shell scripts for support on non-windows</echo>
+    <property name="shbat" value="sh"/>
+
+    <echo file="${cocoon.tool.dir}/getc2clean.${shbat}"><![CDATA[#!/bin/sh
+COCOON_HOME="${cocoon.dist.home}"
+PROJECT_PROPERTIES="${cocoon.build.properties}"
+PROJECT_WEBAPP="${cocoon.webapp}"
+PROJECT_TASKDEFS="${cocoon.tasks}"
+CUSTOM_LIB_CORE="${cocoon.custom.lib.core}"
+CUSTOM_LIB_OPTIONAL="${cocoon.custom.lib.optional}"
+export COCOON_HOME PROJECT_PROPERTIES PROJECT_WEBAPP PROJECT_TASKDEFS CUSTOM_LIB_CORE CUSTOM_LIB_OPTIONAL
+cd "$$COCOON_HOME"
+./build.sh -propertyfile "$$PROJECT_PROPERTIES" clean webapp "-Dbuild.webapp=$$PROJECT_WEBAPP" "-Dtools.tasks.dest=$$PROJECT_TASKDEFS" "-Dlib.core=$$CUSTOM_LIB_CORE" "-Dlib.optional=$$CUSTOM_LIB_OPTIONAL"
+]]></echo>
+    <chmod file="${cocoon.tool.dir}/getc2clean.${shbat}" perm="u+x"/>
+
+    <echo file="${cocoon.tool.dir}/runc2.${shbat}"><![CDATA[#!/bin/sh
+DAISY_DEV_WIKIDATA="${daisywiki.data}"
+echo
+echo Using wikidata dir: $$DAISY_DEV_WIKIDATA
+echo
+
+COCOON_HOME="${cocoon.dist.home}"
+PROJECT_WEBAPP="${cocoon.webapp}"
+COCOON_WEBAPP_HOME="$$PROJECT_WEBAPP"
+JAVA_OPTIONS="-Dorg.mortbay.util.URI.charset=UTF-8 -Ddaisywiki.data=$$DAISY_DEV_WIKIDATA $$DAISY_WIKI_OPTIONS"
+export COCOON_HOME PROJECT_WEBAPP COCOON_WEBAPP_HOME JAVA_OPTIONS
+cd "$$COCOON_HOME"
+./cocoon.sh servlet-debug
+]]></echo>
+    <chmod file="${cocoon.tool.dir}/runc2.${shbat}" perm="u+x"/>
+  </target>
+
+  <target name="-cocoon.test">
+    <condition property="cocoon.ok" value="true">
+      <and>
+        <available type="dir" file="${cocoon.lib}" />
+        <available classname="XConfToolTask" 
+          classpath="${cocoon.tasks}"/>
+      </and>
+    </condition>
+  </target>
+
+  <!-- fails the build if the cocoon dependency is not met -->
+  <target name="-cocoon.check" depends="-cocoon.test" unless="cocoon.ok">
+    <fail message="No cocoon available. Run 'mvn process-resources -Pcocoon.get first."/>
+  </target>
+
+  <target name="internal.mystuff">
+    <echo>Patching ${target} with ${cocoon.xconf.dir}/*.${ext} ...</echo>
+    <xpatch 
+      file="${target}"
+      srcdir="${cocoon.xconf.dir}" 
+      includes="**/*.${ext}"/>
+  </target>
+
+  <!-- applies the patch files in the ${cocoon.xconf.dir} 
+       on the various cocoon conf files -->
+  <target name="cocoon.xconf" depends="-cocoon.test" if="cocoon.ok">
+    <path id="cocoon-tasks.cp">
+      <pathelement path="${cocoon.tasks}" />
+      <path>
+        <fileset dir="${cocoon.lib}">
+          <include name="xalan*.jar" />
+          <include name="xerces*.jar" />
+          <include name="xml*.jar" />
+        </fileset>
+      </path>
+    </path>
+
+    <!-- Set the context class loader:
+           Maven 1(.1) does include the xml-apis.jar from Apache in its endorsed
+           libs. This one uses Xalan as default TranformerFactory, however
+           Xalan is not included with Maven. This way the Java-default
+           TransformerFactory is also unavailable. Therefore, make Xalan available
+           via the context classloader.
+    -->
+    <!-- TODO: m2 conversion if needed 
+    <j:invokeStatic var="thread" className="java.lang.Thread" method="currentThread"/>
+    <j:set var="currentContextClassLoader" value="${thread.getContextClassLoader()}"/>
+    ${thread.setContextClassLoader(pom.getContext().getClassLoader())}
+    -->
+    <taskdef name="xpatch" classname="XConfToolTask" classpathref="cocoon-tasks.cp"/>  
+
+    <antcall target="internal.mystuff">
+      <param name="target" value="${cocoon.webapp}/WEB-INF/cocoon.xconf"/>
+      <param name="ext" value="xconf"/>
+    </antcall>
+    <antcall target="internal.mystuff">
+      <param name="target" value="${cocoon.webapp}/WEB-INF/logkit.xconf"/>
+      <param name="ext" value="xlog"/>
+    </antcall>
+    <antcall target="internal.mystuff">
+      <param name="target" value="${cocoon.webapp}/sitemap.xmap"/>
+      <param name="ext" value="xmap"/>
+    </antcall>
+    <antcall target="internal.mystuff">
+      <param name="target" value="${cocoon.webapp}/WEB-INF/web.xml"/>
+      <param name="ext" value="xweb"/>
+    </antcall>
+
+    <!-- TODO: m2 conversion if needed
+    ${thread.setContextClassLoader($currentContextClassLoader)}
+    -->
+
+  </target>
+
+  <!--
+     This target allows to replace versions of jar included in Cocoon 2.1's lib/core and lib/optional
+     directory.
+  -->
+  <target name="-cocoon.custom-libs">
+    <mkdir dir="${cocoon.custom.lib.core}"/>
+    <copy todir="${cocoon.custom.lib.core}">
+      <fileset dir="${cocoon.dist.home}/lib/core"/>
+    </copy>
+
+    <mkdir dir="${cocoon.custom.lib.optional}"/>
+    <copy todir="${cocoon.custom.lib.optional}">
+      <fileset dir="${cocoon.dist.home}/lib/optional"/>
+    </copy>
+
+    <!-- Replace commons-httpclient. Required by Daisy. -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="commons-httpclient-*.jar"/>
+    </delete>
+    <copy file="${commons-httpclient.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace commons-io. Required by FOP 0.94 for custom font config (cfr. mail Scott Warren, 2007/11/30) -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="commons-io-*.jar"/>
+    </delete>
+    <copy file="${commons-io.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace batik.  Dependency increased to version 1.7 by FOP 0.95beta -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.optional}" includes="batik-all-*.jar"/>
+    </delete>
+    <copy file="${batik-all.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace commons-cli.  (No reason except having matching dependencies between repo and wiki) -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="commons-cli-*.jar"/>
+    </delete>
+    <copy file="${commons-cli.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace commons-logging.  (No reason except having matching dependencies between repo and wiki) -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="commons-logging-*.jar"/>
+    </delete>
+    <copy file="${commons-logging.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace ehcache.  (No reason except having matching dependencies between repo and wiki) -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="ehcache-*.jar"/>
+    </delete>
+    <copy file="${ehcache.jar}" todir="${cocoon.custom.lib.core}"/>
+
+    <!-- Replace log4j.  (No reason except having matching dependencies between repo and wiki) -->
+    <delete>
+      <fileset dir="${cocoon.custom.lib.core}" includes="log4j-*.jar"/>
+    </delete>
+    <copy file="${log4j.jar}" todir="${cocoon.custom.lib.core}"/>
+
+  </target>
+
+  <!-- gets cocoon-webapp into this project -->
+  <target name="cocoon.get" depends="init,-cocoon.shbat,-cocoon.custom-libs" if="cocoon.get.flag">
+    <exec executable="${cocoon.tool.dir}/getc2clean.${shbat}" >
+      <env key="COCOON_HOME" file="${cocoon.dist.home}" />
+      <env key="PROJECT_PROPERTIES" file="${cocoon.build.properties}" />
+      <env key="PROJECT_WEBAPP" file="${cocoon.webapp}" />
+      <env key="PROJECT_TASKDEFS" file="${cocoon.tasks}" />
+    </exec>
+    <antcall target="cforms-resources"/>
+    <antcall target="adjust-cocoon-properties"/>
+    <!-- delete any daisy jars that may ship with cocoon, e.g. the htmlcleaner -->
+    <delete>
+      <fileset dir="${cocoon.webapp}/WEB-INF/lib/" includes="daisy-*.jar"/>
+    </delete>
+  </target>
+
+  <target name="adjust-cocoon-properties">
+    <propertyfile file="${cocoon.webapp}/WEB-INF/properties/core.properties">
+      <!-- Daisy's scripts assign by default 128 MB of heap space -->
+      <entry key="store-janitor.heapsize" value="133000000"/>
+      <entry key="xslt-transformer.pool-max" value="50"/>
+      <entry key="xalan-transformer.pool-max" value="50"/>
+    </propertyfile>
+  </target>
+
+  <!-- runs cocoon on the built in jetty to test -->
+  <target name="cocoon.run" depends="-cocoon.shbat, -cocoon.check">
+    <exec executable="${cocoon.tool.dir}/runc2.${shbat}"/>
+  </target>
+
+  <target name="-cocoon.download.test">
+    <condition property="cocoon.download.ok">
+      <not><available file="${cocoon.dist.targetlocation}/${cocoon.dist.file}.tar.gz"/></not>
+    </condition>
+  </target>
+
+  <target name="cocoon.download" depends="init" if="cocoon.download.flag">
+    <antcall target="cocoon.download.yes"/>
+    <antcall target="cocoon.download.no"/>
+  </target>
+
+  <target name="cocoon.download.yes" depends="-cocoon.download.test" if="cocoon.download.ok">
+    <mkdir dir="${cocoon.dist.targetlocation}"/>
+    <echo>Downloading Cocoon Distribution</echo>
+    <get src="${cocoon.dist.downloadlocation}${cocoon.dist.file}.tar.gz"
+         dest="${cocoon.dist.targetlocation}/${cocoon.dist.file}.tar.gz"
+         verbose="false"/>
+    <untar src="${cocoon.dist.targetlocation}/${cocoon.dist.file}.tar.gz" dest="${cocoon.dist.targetlocation}" compression="gzip"/>
+    <!-- Ant untar doesn't preserve the executable bits -->
+    <chmod perm="ug+x" file="${cocoon.dist.targetlocation}/${cocoon.dist.file}/build.sh"/>
+    <chmod perm="ug+x" file="${cocoon.dist.targetlocation}/${cocoon.dist.file}/cocoon.sh"/>
+  </target>
+
+  <target name="cocoon.download.no" depends="-cocoon.download.test" unless="cocoon.download.ok">
+    <echo>Cocoon already available in ${cocoon.dist.targetlocation}</echo>
+    <echo>Delete that directory if you want a fresh download.</echo>
+  </target>
+
+</project>

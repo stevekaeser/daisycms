@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+
+  <fd:widgets>
+    <fd:field id="login" required="true">
+      <fd:label>Login:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="thepassword">
+      <fd:label>Password:</fd:label>
+      <fd:help>Only required if authentication scheme is "Daisy built-in".</fd:help>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="firstName">
+      <fd:label>First name:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="lastName">
+      <fd:label>Last name:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="email">
+      <fd:label>Email:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="100"/>
+        <fd:email/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:booleanfield id="updateableByUser">
+      <fd:label>Updateable by user</fd:label>
+      <fd:help>Indicates whether this user can update its user info itself (except for role information).</fd:help>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="confirmed">
+      <fd:label>Registration confirmed</fd:label>
+      <fd:help>Indicates whether this user's registration is confirmed. When manually creating a user, set this flag on or the user won't be able to log in.</fd:help>
+    </fd:booleanfield>
+
+    <fd:field id="confirmKey">
+      <fd:label>Registration confirm key:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="defaultRole">
+      <fd:label>Default role:</fd:label>
+      <fd:datatype base="long">
+      </fd:datatype>
+    </fd:field>
+
+    <fd:multivaluefield id="roles">
+      <fd:label>Roles:</fd:label>
+      <fd:datatype base="long">
+      </fd:datatype>
+      <fd:selection-list/>
+      <fd:validation>
+        <fd:value-count min="1"/>
+      </fd:validation>
+    </fd:multivaluefield>
+
+    <fd:field id="authenticationScheme" required="true">
+      <fd:label>Authentication Scheme:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+    </fd:field>
+  </fd:widgets>
+
+</fd:form>

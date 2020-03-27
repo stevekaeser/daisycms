@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisy-distro-core</artifactId>
+  <version>2.4.2</version>
+  <name>Daisy: Binary Distribution Build</name>
+
+  <parent>
+    <groupId>daisy</groupId>
+    <artifactId>daisy-parent</artifactId>
+    <version>2.4.2</version>
+    <relativePath>../..</relativePath>
+  </parent>
+
+  <properties>
+    <dist.jetty.location>http://daisycms.org/maven/maven1/deploy/jetty/resources/</dist.jetty.location>
+    <dist.jetty.file>jetty-6.1.9.zip</dist.jetty.file>
+    <dist.jetty.dir>jetty-6.1.9</dist.jetty.dir>
+  </properties>
+
+  <dependencies>
+    <!-- foundations -->
+    <dependency><groupId>daisy</groupId><artifactId>daisy-repository-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-runtime</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-launcher</artifactId><version>${project.version}</version></dependency>
+
+    <!-- all services -->
+    <dependency><groupId>daisy</groupId><artifactId>daisy-auth-ldap</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-auth-ntlm</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-auth-spnego</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-auth-trusted</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-user-maintainer</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-credentials-provider-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-configuration-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-configuration-spring</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-datasource</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-diff</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-spi</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-driverregistrar</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailer-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailer-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailnotifier-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailnotifier-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-htmlcleaner</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-image-presavehook</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-jmsclient-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-jmx</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-linkextractors-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-navigation-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-navigation-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-pluginregistry-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-publisher-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-publisher-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-replication-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-repo-util</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-textextraction-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-util</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-workflow-client-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-workflow-server-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-repository-revision-server-impl</artifactId><version>${project.version}</version></dependency>
+
+    <!-- other daisy stuff that needs to be included in the distribution -->
+    <dependency><groupId>daisy</groupId><artifactId>daisy-install</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-backup</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-impexp</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-docid-convertor</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-blobstoreconvertor</artifactId><version>${project.version}</version></dependency>
+
+    <!-- runtime dependencies -->
+    <dependency><groupId>daisy</groupId><artifactId>daisy-bootstrap-dependencies</artifactId><version>${project.version}</version></dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals><goal>run</goal></goals>
+          </execution>
+        </executions>
+        <configuration>
+          <tasks>
+            <property name="project.version" value="${project.version}"/>
+            <property name="dist.jetty.location" value="${dist.jetty.location}"/>
+            <property name="dist.jetty.file" value="${dist.jetty.file}"/>
+            <property name="dist.jetty.dir" value="${dist.jetty.dir}"/>
+            <ant antfile="build.xml" inheritAll="true" inheritRefs="true" target="build-binary-dist"/>
+          </tasks>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+              <goal>copy</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>${project.build.directory}/daisy/lib</outputDirectory>
+          <useRepositoryLayout>true</useRepositoryLayout>
+          <excludeGroupIds>junit,jmock,javax.transaction,net.java.dev.javacc,org.jempbox</excludeGroupIds>
+          <excludeArtifactIds>daisy-bootstrap-dependencies</excludeArtifactIds>
+          <artifactItems>
+            <artifactItem>
+              <groupId>daisy</groupId><artifactId>daisy-launcher</artifactId><version>${project.version}</version>
+              <outputDirectory>${project.build.directory}/daisy/lib/daisy</outputDirectory>
+              <destFileName>daisy-launcher.jar</destFileName>
+            </artifactItem>
+            <artifactItem>
+              <groupId>xml-apis</groupId><artifactId>xml-apis</artifactId><version>1.0.b2</version>
+              <outputDirectory>${project.build.directory}/daisy/lib/xml-apis/xml-apis/1.0.b2</outputDirectory>
+            </artifactItem>
+          </artifactItems>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="role.xsd"/>
+  <xs:element id="user" name="user">
+    <xs:complexType>
+      <xs:all>
+        <!-- all the roles to which this user belongs -->
+        <xs:element ref="daisy:roles"/>
+        <!-- the default role of this user -->
+        <xs:element minOccurs="0" ref="daisy:role"/>
+      </xs:all>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="login" type="xs:string" use="required"/>
+      <xs:attribute name="firstName" type="xs:string" use="optional"/>
+      <xs:attribute name="lastName" type="xs:string" use="optional"/>
+      <xs:attribute name="email" type="xs:string" use="optional"/>
+      <xs:attribute name="password" type="xs:string" use="optional"/>
+      <xs:attribute name="updateableByUser" type="xs:boolean" use="required"/>
+      <xs:attribute name="confirmed" type="xs:boolean" use="required"/>
+      <xs:attribute name="confirmKey" type="xs:string" use="optional"/>
+      <xs:attribute name="authenticationScheme" type="xs:string" use="required"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="users">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:user"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="userCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:user"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="userUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:user"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:user"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="userDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:user"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="roleCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newRole">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:role"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="roleUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldRole">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:role"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newRole">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:role"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="roleDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedRole">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:role"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publicUserInfo">
+    <!--A limited variant of user, containing only information that everyone is allowed to see.-->
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:long" use="required"/>
+      <xs:attribute name="displayName" type="xs:string" use="required"/>
+      <xs:attribute name="login" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publicUserInfos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:publicUserInfo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

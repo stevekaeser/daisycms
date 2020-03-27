@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page>
+  ${pageContext}
+  #{navigationTree}
+
+  <pageTitle>Registration</pageTitle>
+
+  <content>
+    <p>${name}, thanks for your message.</p>
+  </content>
+</page>

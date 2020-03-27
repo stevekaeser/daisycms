@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+
+  <fd:widgets>
+    <fd:field id="name" required="true">
+      <fd:label>Your name:</fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:field id="age" required="true">
+      <fd:label>Your age:</fd:label>
+      <fd:datatype base="long"/>
+    </fd:field>
+
+    <fd:field id="message" required="true">
+      <fd:label>What you have to say:</fd:label>
+      <fd:datatype base="string"/>
+    </fd:field>
+  </fd:widgets>
+
+</fd:form>

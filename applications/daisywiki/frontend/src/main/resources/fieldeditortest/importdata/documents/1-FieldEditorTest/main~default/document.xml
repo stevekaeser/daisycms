@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<document type="LinkTestAnimal">
+  <name>Cat</name>
+  <fields>
+    <field type="LinkTestAnimalColorLink">
+      <value>daisy:100-FieldEditorTest</value>
+      <value>daisy:101-FieldEditorTest</value>
+    </field>
+  </fields>
+</document>

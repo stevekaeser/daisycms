@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="lock.xsd"/>
+  <xs:include schemaLocation="fieldtype.xsd"/>
+  <xs:element name="document">
+    <xs:complexType>
+      <xs:all minOccurs="0">
+        <xs:element ref="daisy:fields"/>
+        <xs:element ref="daisy:parts"/>
+        <xs:element ref="daisy:links"/>
+        <xs:element name="customFields">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="customField">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                  <xs:attribute name="value" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="daisy:lockInfo"/>
+        <xs:element ref="daisy:collectionIds"/>
+        <xs:element maxOccurs="1" minOccurs="0" name="summary" type="xs:string"/>
+        <xs:element maxOccurs="1" minOccurs="0" name="newChangeComment" type="xs:string"/>
+        <xs:element ref="daisy:timeline"/>
+      </xs:all>
+      <!--The attributes below apply to the document-->
+      <xs:attribute name="id" type="xs:string" use="optional"/>
+      <!--For new documents, requestedId specifies the ID to be used (only for foreign namespaces)-->
+      <xs:attribute name="requestedId" type="xs:string" use="optional"/>
+      <xs:attribute name="owner" type="xs:long" use="optional"/>
+      <xs:attribute name="private" type="xs:boolean" use="required"/>
+      <xs:attribute name="created" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+      <!--The attributes below apply to the document variant-->
+      <xs:attribute name="branchId" type="xs:long" use="optional"/>
+      <xs:attribute name="languageId" type="xs:long" use="optional"/>
+      <xs:attribute name="typeId" type="xs:long" use="optional"/>
+      <xs:attribute name="fullVersionAccess" type="xs:boolean" use="optional"/>
+      <xs:attribute name="createdFromBranchId" type="xs:long" use="optional"/>
+      <xs:attribute name="createdFromLanguageId" type="xs:long" use="optional"/>
+      <xs:attribute name="createdFromVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="lastMajorChangeVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="liveMajorChangeVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="optional"/>
+      <xs:attribute name="retired" type="xs:boolean" use="optional"/>
+      <xs:attribute name="variantLastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="variantLastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="variantUpdateCount" type="xs:long" use="optional"/>
+      <xs:attribute name="lastVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="liveVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="requestedLiveVersionId" type="xs:long" use="optional"/>
+      <!--dataVersionId indicates what version of the version-specific data is included.
+A value of -1 indicates the "current data", which is the latest version with
+any unsaved modifications currently in the object.-->
+      <xs:attribute name="dataVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="newVersionState" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="draft"/>
+            <xs:enumeration value="publish"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <!--validateOnSave = should document be validated against the document type when saving-->
+      <xs:attribute name="validateOnSave" type="xs:boolean" use="optional"/>
+      <!--documentTypeChecksEnabled = should document type be checked when adding fields and parts to know if they are allowed
+ (field datatype checking is unavoidable, it will always be performed)-->
+      <xs:attribute name="documentTypeChecksEnabled" type="xs:boolean" use="optional"/>
+      <xs:attribute name="referenceLanguageId" type="xs:long" use="optional"/>
+      <xs:attribute name="newSyncedWithLanguageId" type="xs:long" use="optional"/>
+      <xs:attribute name="newSyncedWithVersionId" type="xs:long" use="optional"/>
+      <xs:attribute name="newChangeType" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="major"/>
+            <xs:enumeration value="minor"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="newLiveStrategy" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="default"/>
+            <xs:enumeration value="always"/>
+            <xs:enumeration value="never"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fields">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:field"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="field">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="daisy:fieldValuesType">
+          <xs:attribute name="typeId" type="xs:long"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:part"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="part">
+    <xs:complexType>
+      <xs:attribute name="typeId" type="xs:long" use="required"/>
+      <xs:attribute name="mimeType" type="xs:string" use="required"/>
+      <xs:attribute name="fileName" type="xs:string" use="optional"/>
+      <xs:attribute name="size" type="xs:long" use="required"/>
+      <xs:attribute name="dataChangedInVersion" type="xs:long" use="optional"/>
+      <xs:attribute name="dataRef" type="xs:string" use="optional">
+        <xs:annotation>
+          <xs:documentation>This attribute should only be used if the data of the part changed. In that case the value of the attribute identifies where the data should be retrieved from. (In case of the HTTP interface this is the name of a field in the multipart/form-data uploaded data)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="links">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="link">
+          <xs:complexType>
+            <xs:attribute name="title" type="xs:string" use="required"/>
+            <xs:attribute name="target" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="collectionIds">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="collectionId" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldDocument">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newDocument">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newDocument">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedDocument">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentVariantUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldDocumentVariant">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newDocumentVariant">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentVariantCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newDocumentVariant">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentVariantDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedDocumentVariant">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:document"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="versionUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldVersion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:version"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newVersion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:version"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="documentId" type="xs:string"/>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

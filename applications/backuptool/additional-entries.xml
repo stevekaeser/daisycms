@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<backup-entries>
+  <backup-entry name="daisywiki" basedir="/usr/lib/daisy">
+    <paths>
+      <path>daisywiki/conf</path>
+      <path>daisywiki/webapp/WEB-INF/cocoon.xconf</path>
+      <path>daisywiki/webapp/WEB-INF/web.xml</path>
+      <path>daisywiki/webapp/daisy/external-include-rules.xml</path>
+      <path>daisywiki/webapp/daisy/books/publicationtypes</path>
+      <path>daisywiki/webapp/daisy/bookstore</path>
+      <path>daisywiki/webapp/daisy/resources/skins</path>
+      <path>daisywiki/webapp/daisy/resources/document-styling</path>
+      <path>daisywiki/webapp/daisy/resources/query-styling</path>
+      <path>daisywiki/webapp/daisy/resources/parteditors</path>
+      <path>daisywiki/webapp/daisy/sites</path>
+    </paths>
+  </backup-entry>
+</backup-entries>

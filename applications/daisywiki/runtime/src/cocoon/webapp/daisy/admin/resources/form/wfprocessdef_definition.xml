@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+
+  <fd:widgets>
+    <fd:upload id="processDefinition" required="true">
+      <fd:label>Process definition (XML or archive)</fd:label>
+    </fd:upload>
+
+    <fd:field id="processType">
+      <fd:label>Process type</fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="auto"><fd:label>Determine automatically</fd:label></fd:item>
+        <fd:item value="zip"><fd:label>Process archive (zip file)</fd:label></fd:item>
+        <fd:item value="xml"><fd:label>Process definition (XML file)</fd:label></fd:item>
+      </fd:selection-list>
+      <fd:validation>
+        <fd:javascript>
+          <![CDATA[
+          var selectedType = widget.getValue();
+          if (selectedType != null && selectedType != "auto") {
+            // a specific type has been selected, don't need to check further
+            return true;
+          }
+
+          var upload = widget.lookupWidget("../processDefinition");
+          var part = upload.getValue();
+          if (part != null) {
+            var mimeType = part.getMimeType();
+            if (mimeType != "application/zip" && mimeType != "application/x-zip" && mimeType != "application/x-zip-compressed" && mimeType != "text/xml") {
+              var error = new Packages.org.apache.cocoon.forms.validation.ValidationError("Process type could not be determined automatically, please select one.", false);
+              widget.setValidationError(error);
+              return false;
+            }
+          }
+          return true;
+          ]]>
+        </fd:javascript>
+      </fd:validation>
+    </fd:field>
+  </fd:widgets>
+
+</fd:form>

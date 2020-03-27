@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>link.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/daisy_edit.js"></script>
+  </extraHeadContent>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+        dojo.require("daisy.util");
+
+        DaisyLinkUtils = window.opener.DaisyLinkUtils;
+        i18n = DaisyLinkUtils.I18N;
+
+        function Init() {
+          daisy.dialog.translate(i18n);
+          daisy.dialog.init();
+
+          var params = window.dialogArguments;
+          var shiftHeadings = params.shiftHeadings;
+
+          if (shiftHeadings == null || shiftHeadings == "") {
+            dojo.byId("shiftHeadingsNone").checked = true;
+          } else if (shiftHeadings == "child") {
+            dojo.byId("shiftHeadingsChild").checked = true;
+          } else if (shiftHeadings == "sibling") {
+            dojo.byId("shiftHeadingsSibling").checked = true;
+          } else {
+            dojo.byId("shiftHeadingsCustom").checked = true;
+            dojo.byId("shiftHeadingsAmount").value = shiftHeadings;
+          }
+
+          daisy.dialog.sizeAndPosition();
+        };
+
+        dojo.addOnLoad(Init);
+
+        function onOK() {
+          var shiftHeadings = null;
+
+          if (dojo.byId("shiftHeadingsNone").checked) {
+            shiftHeadings = null;
+          } else if (dojo.byId("shiftHeadingsChild").checked) {
+            shiftHeadings = "child";
+          } else if (dojo.byId("shiftHeadingsSibling").checked) {
+            shiftHeadings = "sibling";
+          } else if (dojo.byId("shiftHeadingsCustom").checked) {
+            shiftHeadings = dojo.byId("shiftHeadingsAmount").value;
+          }
+
+          var param = { "shiftHeadings" : shiftHeadings };
+          daisy.dialog.close(param);
+          return false;
+        };
+
+        function onCancel() {
+          daisy.dialog.close(null);
+          return false;
+        };
+
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">include.title</div>
+
+    <form action="" method="get">
+      <fieldset>
+        <legend><span>include.shiftHeadings</span></legend>
+        <div style="white-space: nowrap">
+          <input type="radio" name="shiftHeadingsType" id="shiftHeadingsChild"/><label for="shiftHeadingsChild"><span>include.shiftHeadingsChild</span></label>
+        </div>
+        <div style="white-space: nowrap">
+          <input type="radio" name="shiftHeadingsType" id="shiftHeadingsSibling"/><label for="shiftHeadingsSibling"><span>include.shiftHeadingsSibling</span></label>
+        </div>
+        <div style="white-space: nowrap">
+          <input type="radio" name="shiftHeadingsType" id="shiftHeadingsCustom"/><label for="shiftHeadingsCustom"><span>include.shiftHeadingsCustom</span></label>
+        </div>
+        <div style="padding-left: 2em; white-space: nowrap">
+          <span>include.shiftHeadingsAmount</span>: <input name="shiftHeadingsAmount" id="shiftHeadingsAmount" size="4" dojoType="IntegerSpinner"/>
+        </div>
+        <div style="white-space: nowrap">
+          <input type="radio" name="shiftHeadingsType" id="shiftHeadingsNone"/><label for="shiftHeadingsNone"><span>include.shiftHeadingsNone</span></label>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="dsydlg-buttons">
+      <button type="button" onclick="return onOK()" class="dsyfrm-primaryaction">link.ok</button>
+      &#160;
+      <button type="button" onclick="return onCancel()">link.cancel</button>
+    </div>
+  </content>
+</page>

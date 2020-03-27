@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="createtaskspec.title"/></pageTitle>
+
+  <content>
+    <h1><i18n:text key="createtaskspec.title"/></h1>
+    <h3><i18n:text key="createtaskspec.subtitle"/></h3>
+    <ft:form-template action="" method="POST">
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="description">
+            <fi:styling size="40"/>
+          </ft:widget>
+          <ft:widget id="tasktype">
+            <fi:styling list-type="dropdown" submit-on-change="true"/>
+          </ft:widget>
+        </fi:items>
+      </fi:group>
+      
+      <ft:widget id="messages"/>
+
+      <div style="padding: 10px; margin: 10px; background-color: #cdcdcd;">
+        <ft:union id="taskParamsUnion">
+
+          <jx:forEach items="${actions}" var="action">
+            <ft:case id="${action}">
+		  	  <jx:import uri="wikidata:/resources/doctaskui/${action}_template.xml"/>
+		  	</ft:case>
+          </jx:forEach>
+          
+        </ft:union>
+      </div>
+
+      <ft:widget id="stopOnFirstError"/><label for="stopOnFirstError:input"><ft:widget-label id="stopOnFirstError"/></label>
+      <div>
+        <ft:widget-label id="maxTries"/>
+        <ft:widget id="maxTries">        
+          <fi:styling size="3"/>
+        </ft:widget>
+        <ft:widget-label id="retryInterval"/>
+        <ft:widget id="retryInterval">
+          <fi:styling size="3"/>
+        </ft:widget>
+      </div>
+      <br/>
+      <input type="submit" value="cancel" i18n:attr="value" onclick="window.location='../../../doctask'; return false;"/>
+      <ft:widget id="back"/>
+      <input type="submit" value="createtaskspec.start" i18n:attr="value"/>
+    </ft:form-template>
+
+    <script type="text/javascript">
+      function showJavascriptWarning() {
+        alert("The Javascript code will be executed within the repository server process. If the"
+            + " script goes into an infinite loop it will not be interruptable without stopping the repository server."
+            + " In the script you are also able to do other nasty stuff such as calling System.exit(), therefore"
+            + " this functionality is only enabled for Administrators.");
+      }
+
+      function showJavascriptInfo() {
+        alert("The script has access to an object 'repository' and an object 'variantKey'. The repository object"
+          + " (of type org.outerj.daisy.repository.Repository) gives access to all repository functionality, while"
+          + " the variantKey object (of type org.outerj.daisy.repository.VariantKey) identifies the current document"
+          + " for which the script runs. See the API documentation included with Daisy for more information.");
+      }
+    </script>
+  </content>
+</page>

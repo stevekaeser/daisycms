@@ -1,0 +1,154 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  ${pageContext}
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/daisy_edit.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+  </extraHeadContent>
+
+  <pageTitle><i18n:text key="docbrowser.title"/></pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      dojo.require("daisy.dialog");
+      dojo.require("daisy.util");
+
+      window.daisyContextBranch = "${branch}";
+      window.daisyContextLanguage = "${language}";
+
+      // Make sure progress indicator image gets loaded
+      var progressIndicatorImage = new Image();
+      progressIndicatorImage.src = daisy.mountPoint + "/resources/skins/" + daisy.skin + "/images/progress_indicator_flat.gif";
+
+      function Init() {
+          daisy.dialog.init();
+          
+          var availableLanguageVariants = [
+            <jx:forEach var="variant" items="${availableLanguageVariants}" varStatus="status">
+              <jx:if test="${!status.first}">,</jx:if> { 
+                languageId: ${variant.languageId},
+                languageName: "${variant.language.name}",
+                lastVersionId: ${variant.lastVersionId},
+                liveVersionId: ${variant.liveVersionId}
+              }
+            </jx:forEach>
+          ];
+        
+          
+          var tmEditorHelper = new daisy.tm.EditorHelper(
+            ${languageId},
+            ${referenceLanguageId},
+            availableLanguageVariants
+          );
+          
+          updatePreview();
+          dojo.event.connect(tmEditorHelper, "onChange", dojo.lang.hitch(this, function() {updatePreview();}));
+
+          dojo.event.connect(dojo.byId("selectSyncedWith"), "onclick", selectSyncedWith);
+
+          daisy.dialog.sizeAndPosition({"minWidth": 750});
+      }
+      
+      function updatePreview() {
+          var languageId = dojo.byId('syncedWithLanguageId').value;
+          var versionId = dojo.byId('syncedWithVersionId').value;
+          if  (languageId == -1) {
+              clearPreview();
+          } else {
+              setLink("${documentId}", "${branchId}", languageId, versionId);
+          } 
+      }
+
+      dojo.addOnLoad(Init);
+
+      /**
+       * Called when selecting a version.
+       */
+      function setLink(documentId, branch, language, versionMode) {
+          // Show the document preview
+          var documentURL = daisy.mountPoint + "/" + daisy.site.name + "/" + documentId + "/version/" + versionMode + "?layoutType=plain&amp;branch=" + branch + "&amp;language=" + language;
+
+          showProgress(dojo.byId("preview"));
+
+          if (window.top.preview.location.href == documentURL) {
+            window.top.preview.location.reload();
+          } else {
+            window.top.preview.location.replace(documentURL);
+          }
+      }
+      
+      function clearPreview() {
+          window.top.preview.location.replace('about:blank');
+      }
+
+      function selectSyncedWith() {
+          var params = {
+            syncedWithLanguageId: dojo.byId('syncedWithLanguageId').value,
+            syncedWithVersionId: dojo.byId('syncedWithVersionId').value
+          }
+      
+          daisy.dialog.close(params);
+      }
+
+      function showProgress(frame) {
+        var doc = frame.contentWindow.document;
+        doc.body.style.margin = "0px";
+        doc.body.style.padding = "0px";
+        doc.body.innerHTML = "&lt;p style='padding-left: 1em; margin-top: 1em;'>&lt;img src='" + progressIndicatorImage.src + "' alt='...'/>&lt;/p>";
+      }
+    </script>
+
+    <div class="dsydlg-title"><i18n:text key="tm.select-synced-with.title"/></div>
+
+    <form style="display:inline;" target="documents" method="GET" action="${mountPoint}/${siteConf.getName()}/editing/documentBrowser/documents">
+      <table class="dsyfrm-table">
+       <tr>
+         <td class="dsyfrm-labelcell"><i18n:text key="tm.synced-with"/>:</td>
+         <td class="dsyfrm-widgetcell dsy-nowrap">
+          <input type="hidden" id="syncedWithLanguageId" value="${syncedWithLanguageId}"/>
+          <input type="hidden" id="syncedWithVersionId" value="${syncedWithVersionId}"/>
+          <select id="syncedWithLanguage">
+          </select>
+          
+          <i18n:text key="tm.synced-with-version"/>
+          <!-- note: no name attribute: this should not be submitted -->
+          <select id="syncedWithVersion">
+            <!--  filled during onLoad -->
+          </select>
+         </td>
+       </tr>
+     </table>
+    </form>
+
+    <table width="100%">
+      <tr>
+        <td valign="top">
+          <i18n:text key="docbrowser.preview"/>:<br/>
+          <iframe name="preview" id="preview" frameborder="0" style="border : 1px solid gray; background-color: white;" height="360" width="100%" src=""></iframe>
+        </td>
+      </tr>
+    </table>
+
+    <div class="dsydlg-buttons">
+      <button type="button" id="selectSyncedWith" class="dsyfrm-primaryaction"><i18n:text key="ok"/></button>
+      &#160;
+      <button type="button" onclick="daisy.dialog.close(null); return false;"><i18n:text key="cancel"/></button>
+    </div>
+  </content>
+</page>

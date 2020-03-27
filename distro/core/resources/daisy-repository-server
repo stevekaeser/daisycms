@@ -1,0 +1,23 @@
+#! /bin/sh
+
+if [ -z "$DAISY_HOME" ] ; then
+  echo "DAISY_HOME not set!"
+  exit 1
+fi
+
+REPOSERVER_HOME="$DAISY_HOME/repository-server"
+DATADIR=$1
+
+if [ "$1" = "" ] ; then
+  echo "Specify the daisy data directory as argument."
+  exit 1
+fi
+
+# See DSY-266 for why we need to add -Duser.language etc.
+DAISY_JVM_OPTS="-Xmx128m -Ddaisy.logdir=$DATADIR/logs -Ddaisy.datadir=$DATADIR -Ddaisy.configLocation=$DATADIR/conf/myconfig.xml -Ddaisy.home=$DAISY_HOME -Dfile.encoding=UTF-8 -Djava.awt.headless=true -Djava.security.auth.login.config=${DATADIR}/conf/login.config -Duser.language=en -Duser.country=US -Duser.variant="
+
+DAISY_RUNTIME_OPTS="--config $REPOSERVER_HOME/conf/runtime-config.xml --repository $DAISY_HOME/lib --log-configuration $REPOSERVER_HOME/conf/repository-log4j.properties"
+
+DAISY_LAUNCHER="$DAISY_HOME/lib/daisy/daisy-launcher.jar"
+
+$JAVA_HOME/bin/java $DAISY_JVM_OPTS -Ddaisy.launcher.repository=$DAISY_HOME/lib -jar $DAISY_LAUNCHER $DAISY_RUNTIME_OPTS $@

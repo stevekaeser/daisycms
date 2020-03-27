@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="toc">Obsah</message>
+  <message key="figure.default">Obrázek</message>
+  <message key="figure.screenshot">Snímek obrazovky</message>
+  <message key="table.default">Tabulka</message>
+  <message key="list-of-figures.default">Obrázky</message>
+  <message key="list-of-figures.screenshot">Snímky obrazovky</message>
+  <message key="list-of-tables.default">Tabulky</message>
+  <message key="link.page">strana</message>
+
+  <!-- For cross references -->
+  <message key="crossrefname.img.default">Obrázek</message>
+  <message key="crossrefname.img.screenshot">Snímek obrazovky</message>
+  <message key="crossrefname.table.default">Tabulka</message>
+  <message key="crossrefname.h1">Kapitola</message>
+  <message key="crossrefname.h2">Sekce</message>
+  <message key="crossrefname.h3">Sekce</message>
+  <message key="crossrefname.h4">Sekce</message>
+  <message key="crossrefname.h5">Sekce</message>
+  <message key="crossrefname.h6">Sekce</message>
+  <message key="crossrefname.h7">Sekce</message>
+  <message key="crossrefname.h8">Sekce</message>
+  <message key="crossrefname.h9">Sekce</message>
+  <message key="crossref.onpage">na straně</message>
+  <!-- The 'here' text is used in HTML rendering instead of the page number or 'on page X' format -->
+  <message key="crossref.here">tady</message>
+
+  <message key="index">Index</message>
+
+  <message key="bookindex">Rejstřík</message>
+
+  <!-- 'notes' is the title of the footnotes section when they are rendered at the end of the chapter
+       instead of the bottom of the page -->
+  <message key="notes">Poznámky</message>
+</catalogue>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="changeowner.title"/></pageTitle>
+  <pageNavigation>
+    <link>
+      <title><i18n:text key="back-to-document"/></title>
+      <path>${documentPath}.html${variantQueryString}</path>
+    </link>
+  </pageNavigation>
+
+  <content>
+    <h1>
+      <i18n:translate>
+        <i18n:text key="changeowner.heading"/>
+        <i18n:param>${document.name}</i18n:param>
+        <i18n:param>${document.id}</i18n:param>
+      </i18n:translate>
+    </h1>
+
+    <p>
+      <i18n:translate>
+        <i18n:text key="changeowner.currentowner"/>
+        <i18n:param>${pageContext.repository.getUserManager().getUserDisplayName(document.owner)}</i18n:param>
+        <i18n:param>${document.owner}</i18n:param>
+      </i18n:translate>
+    </p>
+
+    <ft:form-template action="" method="POST">
+      <ft:widget-label id="newOwnerLogin"/>
+      <ft:widget id="newOwnerLogin" dojoType="daisy:UserSelector"/>
+      <input type="hidden" name="action" value="changeOwner"/>
+      <br/>
+      <br/>
+      <input type="submit" value="changeowner.change-owner" i18n:attr="value"/>
+    </ft:form-template>
+
+  </content>
+
+</page>

@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="fulltext.title"/></pageTitle>
+
+  <content>
+    <h1><i18n:text key="fulltext.title"/></h1>
+
+    <ft:form-template action="${submitPath}" method="GET" id="searchForm">
+      <ft:widget id="offset" fi:style="display:none"/>
+      <fi:group>
+        <fi:styling layout="daisy-columns"/>
+        <fi:items>
+          <jx:if test="${searchConf.documentNameShow}">
+            <fi:custom-entry>
+              <fi:label-entry><i18n:text key="fulltext.documentName"/></fi:label-entry>
+              <fi:widget-entry>
+                <ft:widget id="documentName"/>
+                <jx:if test="${documentNameAutoWildcards == false}">
+                  <fi:standalone-help><i18n:text key="docbrowser.doc-name-like-info"/></fi:standalone-help>
+                </jx:if>
+              </fi:widget-entry>
+            </fi:custom-entry>
+          </jx:if>
+          <jx:if test="${searchConf.fullTextShow}">
+            <ft:widget id="query">
+              <fi:styling size="50"/>
+            </ft:widget>
+            <ft:widget id="queryType">
+              <fi:styling list-type="radio" list-orientation="horizontal" disable-required-mark="true"/>
+            </ft:widget>
+            <fi:widget-entry>
+              <ft:widget id="searchName"/><label for="searchName:input"><ft:widget-label id="searchName"/></label>
+              <ft:widget id="searchContent"/><label for="searchContent:input"><ft:widget-label id="searchContent"/></label>
+              <ft:widget id="searchFields"/><label for="searchFields:input"><ft:widget-label id="searchFields"/></label>
+            </fi:widget-entry>
+          </jx:if>
+          <jx:if test="${searchConf.collectionsShow}">
+            <ft:widget id="collection">
+              <fi:styling list-type="double-listbox-popup" popup="true"/>
+            </ft:widget>
+          </jx:if>
+          <jx:if test="${searchConf.documentTypesShow}">
+            <ft:widget id="documentType">
+              <fi:styling list-type="double-listbox-popup" popup="false"/>
+            </ft:widget>
+            <jx:if test="${searchConf.documentTypesExcludeShow}">
+              <ft:widget id="excludeDocumentType">
+                <fi:styling list-type="double-listbox-popup" popup="false"/>
+              </ft:widget>
+            </jx:if>
+          </jx:if>
+          <jx:if test="${searchConf.partTypesShow}">
+            <ft:widget id="partType">
+              <fi:styling list-type="double-listbox-popup" popup="false"/>
+            </ft:widget>
+          </jx:if>
+          <fi:widget-entry>
+            <i18n:text key="branch"/>&#160;<ft:widget id="branchId" fi:disable-required-mark="true"/>
+              &#160;
+            <i18n:text key="language"/>&#160;<ft:widget id="languageId" fi:disable-required-mark="true"/>
+          </fi:widget-entry>
+          <fi:widget-entry class="dsyfrm-primaryaction">
+            <ft:widget id="send">
+              <fi:styling onclick="document.getElementById('offset:input').value=1" class="dsyfrm-primaryaction"/>
+            </ft:widget>
+          </fi:widget-entry>
+        </fi:items>
+      </fi:group>
+    </ft:form-template>
+
+    <jx:if test="${pageXml != null}">
+      <br/>
+      <div parseWidgets="false">
+        <cinclude:include src="cocoon:/internal/searchResults/fulltext"/>
+      </div>
+    </jx:if>
+  </content>
+
+</page>

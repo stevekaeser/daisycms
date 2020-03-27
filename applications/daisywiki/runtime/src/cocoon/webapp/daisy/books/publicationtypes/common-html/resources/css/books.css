@@ -1,0 +1,212 @@
+body {
+    background-color: white;
+}
+
+div.content {
+    margin-left: 3em;
+    padding: 1em;
+    width: 50em;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+div.top {
+    border-bottom: 1px solid gray;
+}
+
+div.toparea {
+    margin-left: 3em;
+    padding: 1em;
+    border-left: 1px solid gray;
+    width: 50em;
+    border-right: 1px solid gray;
+}
+
+div.bottom {
+    border-top: 1px solid gray;
+}
+
+div.bottomarea {
+    margin-left: 3em;
+    padding: 1em;
+    border-left: 1px solid gray;
+    width: 50em;
+    border-right: 1px solid gray;
+}
+
+div.chunkNavigation {
+    font-size: 80%;
+}
+
+div.toc ul {
+    list-style-type: none;
+}
+
+table.chunkNavigation tbody tr td {
+    vertical-align: top;
+}
+
+.imageCaption {
+    text-align: center;
+}
+
+img {
+  border: 0px; /* otherwise img's inside a's have those fat blue boxes around them */
+}
+
+table.footnotes {
+    margin-top: 1em;
+    padding-top: 0.5em;
+    margin-bottom: 1em;
+    border-top: 1px solid gray;
+}
+
+table.footnotes tbody tr td {
+    vertical-align: top;
+    padding-bottom: .3em;
+}
+
+p.note {
+  border: 1px solid gray;
+  margin: 10px 10px 10px 10px;
+  padding: 2px 2px 2px 40px;
+  background-image: url("../images/note.png");
+  background-position: 10px 2px;
+  background-repeat: no-repeat;
+  min-height: 24px;
+}
+
+p.warn {
+  border: 1px solid gray;
+  margin: 10px 10px 10px 10px;
+  padding: 2px 2px 2px 40px;
+  background-image: url("../images/important.png");
+  background-position: 10px 2px;
+  background-repeat: no-repeat;
+  min-height: 24px;
+}
+
+p.fixme {
+  border: 1px solid gray;
+  margin: 10px 10px 10px 10px;
+  padding: 2px 2px 2px 40px;
+  background-image: url("../images/fixme.png");
+  background-position: 10px 2px;
+  background-repeat: no-repeat;
+  min-height: 24px;
+}
+
+span.daisy-unresolved-variable {
+  background-color: red;
+  color: white;
+}
+
+/* Normal tables that are part of the document content. */
+table.content {
+  border-spacing: 0pt;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+table.content tbody tr td {
+  border: 1px solid gray;
+  padding: 2px 4px 2px 4px;
+}
+table.content tbody tr th {
+  border: 1px solid gray;
+  background-color: lightgray;
+  padding: 2px 4px 2px 4px;
+}
+
+/* Special 'borderless' tables part of document content. */
+table.borderless {
+  border-spacing: 0pt;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+table.borderless tbody tr td {
+  padding: 2px 4px 2px 4px;
+}
+table.borderless tbody tr th {
+  background-color: lightgray;
+  padding: 2px 4px 2px 4px;
+}
+
+
+/*
+    * The following rules are taken from Mozilla's quirck mode stylesheet.
+    * See http://lxr.mozilla.org/seamonkey/source/layout/html/document/src/quirk.css
+    * They avoid the top and bottom margin of elements in table cells.
+    */
+td > form:-moz-first-node, th > form:-moz-first-node,
+td > p:-moz-first-node, th > p:-moz-first-node,
+td > dl:-moz-first-node, th > dl:-moz-first-node,
+td > multicol:-moz-first-node, th > multicol:-moz-first-node,
+td > blockquote:-moz-first-node, th > blockquote:-moz-first-node,
+td > h1:-moz-first-node, th > h1:-moz-first-node,
+td > h2:-moz-first-node, th > h2:-moz-first-node,
+td > h3:-moz-first-node, th > h3:-moz-first-node,
+td > h4:-moz-first-node, th > h4:-moz-first-node,
+td > h5:-moz-first-node, th > h5:-moz-first-node,
+td > h6:-moz-first-node, th > h6:-moz-first-node,
+td > listing:-moz-first-node, th > listing:-moz-first-node,
+td > plaintext:-moz-first-node, th > plaintext:-moz-first-node,
+td > xmp:-moz-first-node, th > xmp:-moz-first-node,
+td > pre:-moz-first-node, th > pre:-moz-first-node,
+td > ul:-moz-first-node, th > ul:-moz-first-node,
+td > menu:-moz-first-node, th > menu:-moz-first-node,
+td > dir:-moz-first-node, th > dir:-moz-first-node,
+td > ol:-moz-first-node, th > ol:-moz-first-node {
+   margin-top: 0;
+}
+
+td > p:-moz-last-node, th > p:-moz-last-node {
+   margin-bottom: 0;
+}
+
+td > form:empty:-moz-first-node, th > form:empty:-moz-first-node,
+td > p:empty:-moz-first-node, th > p:empty:-moz-first-node,
+td > dl:empty:-moz-first-node, th > dl:empty:-moz-first-node,
+td > multicol:empty:-moz-first-node, th > multicol:empty:-moz-first-node,
+td > blockquote:empty:-moz-first-node, th > blockquote:empty:-moz-first-node,
+td > h1:empty:-moz-first-node, th > h1:empty:-moz-first-node,
+td > h2:empty:-moz-first-node, th > h2:empty:-moz-first-node,
+td > h3:empty:-moz-first-node, th > h3:empty:-moz-first-node,
+td > h4:empty:-moz-first-node, th > h4:empty:-moz-first-node,
+td > h5:empty:-moz-first-node, th > h5:empty:-moz-first-node,
+td > h6:empty:-moz-first-node, th > h6:empty:-moz-first-node,
+th > listing:empty:-moz-first-node,
+th > plaintext:empty:-moz-first-node,
+td > xmp:empty:-moz-first-node, th > xmp:empty:-moz-first-node,
+td > pre:empty:-moz-first-node, th > pre:empty:-moz-first-node,
+td > ul:empty:-moz-first-node, th > ul:empty:-moz-first-node,
+td > menu:empty:-moz-first-node, th > menu:empty:-moz-first-node,
+td > dir:empty:-moz-first-node, th > dir:empty:-moz-first-node,
+td > ol:empty:-moz-first-node, th > ol:empty:-moz-first-node {
+   margin-bottom: 0;
+}
+
+td > form:empty:-moz-last-node, th > form:empty:-moz-last-node,
+td > p:empty:-moz-last-node, th > p:empty:-moz-last-node,
+td > dl:empty:-moz-last-node, th > dl:empty:-moz-last-node,
+td > multicol:empty:-moz-last-node, th > multicol:empty:-moz-last-node,
+td > blockquote:empty:-moz-last-node, th > blockquote:empty:-moz-last-node,
+td > h1:empty:-moz-last-node, th > h1:empty:-moz-last-node,
+td > h2:empty:-moz-last-node, th > h2:empty:-moz-last-node,
+td > h3:empty:-moz-last-node, th > h3:empty:-moz-last-node,
+td > h4:empty:-moz-last-node, th > h4:empty:-moz-last-node,
+td > h5:empty:-moz-last-node, th > h5:empty:-moz-last-node,
+td > h6:empty:-moz-last-node, th > h6:empty:-moz-last-node,
+td > listing:empty:-moz-last-node, th > listing:empty:-moz-last-node,
+td > plaintext:empty:-moz-last-node, th > plaintext:empty:-moz-last-node,
+td > xmp:empty:-moz-last-node, th > xmp:empty:-moz-last-node,
+td > pre:empty:-moz-last-node, th > pre:empty:-moz-last-node,
+td > ul:empty:-moz-last-node, th > ul:empty:-moz-last-node,
+td > menu:empty:-moz-last-node, th > menu:empty:-moz-last-node,
+td > dir:empty:-moz-last-node, th > dir:empty:-moz-last-node,
+td > ol:empty:-moz-last-node, th > ol:empty:-moz-last-node {
+  margin-top: 0;
+}

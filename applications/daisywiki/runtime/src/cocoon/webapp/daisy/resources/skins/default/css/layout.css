@@ -1,0 +1,119 @@
+@import url("layout-common.css");
+
+body {
+  margin: 0;
+}
+
+form {
+  /* IE6 adds an annoying extra space around forms, this is to unset that. */
+  margin: 0px;
+  padding: 0px;
+}
+
+#header{
+  margin-left: 1em;
+  margin-bottom: 0;
+  padding-right: 1em;
+  top: 0px;  
+  height: 100px;
+  background: url(../images/bg.png) top right no-repeat ;
+}
+
+.logo {
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left;
+}
+
+a.daisyVersion {
+  color: black; text-decoration: none;
+}
+
+#siteNavigation, #search{
+  padding-top:  10px;
+  text-align: right;
+}
+
+#search{
+  margin-top: 2em;
+}
+
+#generalNavigation{
+  position: relative;
+  z-index: 3;
+  height: 30px;
+  width: 93%;
+}
+
+#generalNavigation span{
+  visibility: hidden;
+}
+
+#pointInTimeIndicator{
+  cursor: pointer;
+}
+
+/* Inset 3D Raised */
+.raised {background: transparent; width:100%; margin:0 auto;}
+
+.raised .top, .raised .bottom {display:block; background:transparent; font-size:1px;}
+.raised .b1, .raised .b2, .raised .b3, .raised .b4, .raised .b1b, .raised .b2b, .raised .b3b, .raised .b4b {display:block; overflow:hidden;}
+.raised .b1, .raised .b2, .raised .b3, .raised .b1b, .raised .b2b, .raised .b3b {height:1px;}
+.raised .b2 {background:#efc; border-left:1px solid #efc; border-right:1px solid #cfa;}
+.raised .b3 {background:#efc; border-left:1px solid #efc; border-right:1px solid #cf8;}
+.raised .b4 {background:#efc; border-left:1px solid #efc; border-right:1px solid #af2;}
+.raised .b4b {background:#efc; border-left:1px solid #cfa; border-right:1px solid #af0;}
+.raised .b3b {background:#efc; border-left:1px solid #cf8; border-right:1px solid #af0;}
+.raised .b2b {background:#efc; border-left:1px solid #af2; border-right:1px solid #af0;}
+
+
+.raised .b1 {margin:0 5px; background:#ffe;}
+.raised .b2, .raised .b2b {margin:0 3px; border-width:0 2px;}
+.raised .b3, .raised .b3b {margin:0 2px;}
+.raised .b4, .raised .b4b {height:2px; margin:0 1px;}
+.raised .b1b {margin:0 5px; background:#af0;}
+.raised .boxcontent {display:block;  background:#efc; border-left:1px solid #ffe; border-right:1px solid #af0;}
+
+#documentNavigation{
+  margin-left: .2em;    
+  position:absolute;
+  top: 100px;
+  margin-top: 5em;
+  width: 15em;
+}
+
+#pageNavigation{
+  margin-top: 2em;
+}
+
+div.section {
+  margin-bottom: 2em;
+  background-color: white;
+}
+
+#content {
+  padding: 0 .5em;
+  margin-left: 16em;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  height: 200px;
+  /* fix for IE min-height */
+  height: auto !important;
+  min-height: 200px;
+  border-left: 1px solid #efc;
+}
+
+/* Styling used when there's no navigation tree and we want to have some more room instead */
+#content.content-wide {
+    margin-left: 1em;
+    border-left: none;
+}
+
+.container {  
+  color: black;
+  margin: 0px auto;
+  width: 990px;
+  
+}
+

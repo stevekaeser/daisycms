@@ -1,0 +1,129 @@
+.searchlist {
+    width: 100%;
+}
+
+.searchlist li {
+    clear:both;
+}
+
+.facetbrowser-facet {
+    float:left;
+    margin-right: 1.5em;
+}
+img {
+    border:0 none;
+}
+
+table.default tr{
+    margin-left:10px;
+}
+table.default td.first{
+    padding-left:14px;    
+    padding-right:12px;
+}
+table.default td.selected{
+    background: url(../images/doc_selected.png) no-repeat 1px center;
+}
+table.default tr.selected{
+    background-color: lightgrey;    
+    background: url(../images/doc_selected.png) no-repeat 1px center;    
+}
+
+fieldset.filterset{
+    padding: 8px 10px 8px 10px;
+    margin: 10px 4px 10px 4px;
+}
+
+fieldset.filterset legend img{
+    vertical-align: middle;
+    cursor: pointer;    
+}
+
+/* docbrowser container 
+---------------------------------------------------------- */
+div#docbrowser{
+    display: table;
+}
+
+
+/* Search title 
+---------------------------------------------------------- */
+h2#searchTitle img{
+    padding: 0 0 0 5px;
+    cursor: pointer;
+}
+
+
+/* Pager 
+---------------------------------------------------------- */
+img.pager , span.pager{
+    padding: 3px 5px 3px 5px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+img.pager.disabled{
+	cursor: default;
+}
+div.pager {
+    align: right;
+}
+
+/* Result container
+---------------------------------------------------------- */
+
+table.result tr th {
+    cursor: pointer;
+}
+
+.browserDialog table.result tr {
+    cursor: pointer;
+}
+
+
+/* Faceted filters
+---------------------------------------------------------- */
+
+.filter {
+    float: left;
+    margin: 0 0 6px;
+    display: inline;
+}
+
+.filter tr th {
+    text-align: center;
+    padding: 0px 5px 3px 0px;
+    height: 16px;
+    line-height: 16px;
+}
+
+.filter tr th span {
+    float: left;
+    
+}
+
+.filter tr th a {
+    color:#838790;
+}
+
+.filter tr td a,
+.filter tr td a:hover {
+    padding: 0;
+    text-decoration: none;
+    background: none;
+}
+
+.filter tr td, .filter tr th {
+    padding: 0 0 0 6px;
+    height: 16px;
+    line-height: 16px;
+    border: none;
+}
+
+.filter tr.disabled td a {
+    font-weight: bold;
+    color: #6a162e;
+}
+
+.daisy-documentbrowser .result td {
+  padding: 0;
+}

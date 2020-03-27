@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="namespaces">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="daisy:namespace"/>
+      </xs:sequence>
+      <xs:attribute name="repositoryNamespace" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="namespace">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:long" use="required"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="fingerprint" type="xs:string" use="required"/>
+      <xs:attribute name="registeredBy" type="xs:long" use="required"/>
+      <xs:attribute name="registeredOn" type="xs:dateTime" use="required"/>
+      <xs:attribute name="isManaged" type="xs:boolean" use="required"/>
+      <xs:attribute name="documentCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="namespaceRegistered">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="registeredNamespace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:namespace"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="namespaceUnregistered">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="unregisteredNamespace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:namespace"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="unregistrarId" type="xs:long"/>
+      <xs:attribute name="unregisterTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="namespaceManage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="manageNamespace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:namespace"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="managerId" type="xs:long"/>      
+      <xs:attribute name="manageTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="namespaceUnmanage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="unmanageNamespace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:namespace"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="unmanagerId" type="xs:long"/>      
+      <xs:attribute name="unmanageTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

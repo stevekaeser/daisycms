@@ -1,0 +1,7 @@
+<html>
+<body>
+
+<p><img src="daisy:123"/></p>
+
+</body>
+</html>

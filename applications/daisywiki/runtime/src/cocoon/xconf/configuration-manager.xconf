@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.outerj.daisy.frontend.components.config.ConfigurationManager']">
+
+  <component
+      class="org.outerj.daisy.frontend.components.config.impl.ConfigurationManagerImpl"
+      role="org.outerj.daisy.frontend.components.config.ConfigurationManager"
+      logger="daisy" >
+  </component>
+
+</xconf>

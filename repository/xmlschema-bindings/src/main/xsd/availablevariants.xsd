@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="availableVariants">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="daisy:availableVariant"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="availableVariant">
+    <xs:complexType>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="branchName" type="xs:string" use="optional"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+      <xs:attribute name="languageName" type="xs:string" use="optional"/>
+      <xs:attribute name="retired" type="xs:boolean"/>
+      <xs:attribute name="liveVersionId" type="xs:long"/>
+      <xs:attribute name="lastVersionId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

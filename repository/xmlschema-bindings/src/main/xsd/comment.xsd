@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element id="comment" name="comment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="1" minOccurs="1" name="content" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="documentId" type="xs:string" use="required"/>
+      <xs:attribute name="branchId" type="xs:long" use="required"/>
+      <xs:attribute name="languageId" type="xs:long" use="required"/>
+      <xs:attribute name="createdBy" type="xs:long" use="optional"/>
+      <xs:attribute name="createdOn" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="visibility" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="public"/>
+            <xs:enumeration value="editors"/>
+            <xs:enumeration value="private"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="comments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:comment"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="commentCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newComment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:comment"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="commentDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedComment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:comment"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

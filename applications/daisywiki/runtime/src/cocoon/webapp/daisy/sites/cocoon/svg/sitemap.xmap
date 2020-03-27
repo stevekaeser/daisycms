@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:serializers default="html">
+      <map:serializer name="svg2png"
+                      src="org.outerj.daisy.frontend.components.batik.SVGSerializer"
+                      mime-type="image/png"
+                      logger="sitemap.serializer.svg2png">
+        <parameter name="execute_onload" type="boolean" value="true"/>
+        <parameter name="constrain_script_origin" type="boolean" value="false"/>
+        <parameter name="background_color" type="color" value="#ffffff"/>
+      </map:serializer>
+    </map:serializers>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources>
+  </map:resources>
+
+  <map:pipelines>
+
+    <map:pipeline type="caching">
+      <map:parameter name="outputBufferSize" value="8192"/>
+
+      <!-- Convert an SVG to PNG (e.g. for inclusion in PDFs) -->
+      <map:match pattern="svg-to-png">
+        <map:generate src="daisy:{request-param:documentId}@{request-param:branch}:{request-param:language}:{request-param:version}!{request-param:part}"/>
+        <map:serialize type="svg2png"/>
+      </map:match>
+
+    </map:pipeline>
+
+  </map:pipelines>
+
+</map:sitemap>

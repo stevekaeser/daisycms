@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#doctaskrunner" xmlns:daisy="http://outerx.org/daisy/1.0#doctaskrunner" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="taskDescription">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="specification">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="action">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="parameters" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="type" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="stopOnFirstError" type="xs:boolean"/>
+            <xs:attribute name="description" type="xs:string"/>
+            <xs:attribute name="maxTryCount" type="xs:int"/>
+            <xs:attribute name="retryInterval" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="documentSelection">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element name="query" type="xs:string"/>
+              <xs:element name="enumeration">
+                <xs:complexType>
+                  <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="docvariant">
+                      <xs:complexType>
+                        <xs:attribute name="documentId" type="xs:string"/>
+                        <xs:attribute name="branchId" type="xs:long"/>
+                        <xs:attribute name="languageId" type="xs:long"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

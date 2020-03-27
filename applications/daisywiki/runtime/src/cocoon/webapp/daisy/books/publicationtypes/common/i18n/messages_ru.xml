@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="toc">Содержание</message>
+  <message key="figure.default">Изображение</message>
+  <message key="figure.screenshot">Фото экрана</message>
+  <message key="table.default">Таблица</message>
+  <message key="list-of-figures.default">Изображения</message>
+  <message key="list-of-figures.screenshot">Список фото экрана</message>
+  <message key="list-of-tables.default">Список таблиц</message>
+  <message key="link.page">Страница</message>
+
+  <!-- For cross references -->
+  <message key="crossrefname.img.default">Изображение</message>
+  <message key="crossrefname.img.screenshot">Фото экрана</message>
+  <message key="crossrefname.table.default">Таблица</message>
+  <message key="crossrefname.h1">Глава</message>
+  <message key="crossrefname.h2">Отрезок</message>
+  <message key="crossrefname.h3">Подотрезок</message>
+  <message key="crossrefname.h4">Подотрезок</message>
+  <message key="crossrefname.h5">Подотрезок</message>
+  <message key="crossrefname.h6">Подотрезок</message>
+  <message key="crossrefname.h7">Подотрезок</message>
+  <message key="crossrefname.h8">Подотрезок</message>
+  <message key="crossrefname.h9">Подотрезок</message>
+  <message key="crossref.onpage">на страницe</message>
+  <!-- The 'here' text is used in HTML rendering instead of the page number or 'on page X' format -->
+  <message key="crossref.here">Здесь</message>
+
+  <message key="index">Индекс</message>
+
+  <message key="bookindex">Содержание основных пунктов книги</message>
+
+  <!-- 'notes' is the title of the footnotes section when they are rendered at the end of the chapter
+       instead of the bottom of the page -->
+  <message key="notes">Нотицы</message>
+</catalogue>

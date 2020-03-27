@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<importOptions>
+  <validateOnSave>true</validateOnSave>
+  <documentTypeChecksEnabled>true</documentTypeChecksEnabled>
+  <createDocuments>true</createDocuments>
+  <createVariants>true</createVariants>
+  <updateDocuments>true</updateDocuments>
+  <maxSizeForDataCompare>-1</maxSizeForDataCompare>
+  <storeOwner>false</storeOwner>
+  <failOnNonExistingOwner>true</failOnNonExistingOwner>
+  <createMissingCollections>true</createMissingCollections>
+  <failOnPermissionDenied>false</failOnPermissionDenied>
+  <failOnLockedDocument>false</failOnLockedDocument>
+  <failOnError>false</failOnError>
+  <fullStackTracesOfFailures>false</fullStackTracesOfFailures>
+  <enableDetailOutput>false</enableDetailOutput>
+  <checkVersion>true</checkVersion>
+  <schemaCreateOnly>false</schemaCreateOnly>
+  <schemaClearLocalizedData>false</schemaClearLocalizedData>
+  <saveAsDraft>false</saveAsDraft>
+  <importVersionState>true</importVersionState>
+  <unretire>true</unretire>
+  <excludeFilesPattern>^(\..*)|(CVS)$</excludeFilesPattern>
+  <changeComment>Updated by import</changeComment>
+  <changeType>major</changeType>
+  <storeReferenceLanguage>true</storeReferenceLanguage>
+
+  <!--+
+      | A document customizer allows to manipulate the content of a document before import.
+      +-->
+  <documentCustomizer factoryClass="org.outerj.daisy.tools.importexport.import_.config.BasicCustomizerFactory">
+
+    <!--+
+        | To have parts and fields ignored, add them to both doNotAdd and doNotRemove
+        +-->
+
+    <!--+
+        | doNotAdd: do not add these parts and fields from the import to the target document
+        +-->
+    <doNotAdd>
+      <!--+
+          | Use:
+          |   <part documentType='...' type='...'/>
+          |  or
+          |   <field documentType='...' type='...'/>
+          | If documentType is not specified, it applies to all document types.
+          +-->
+      <part documentType="Image" type="ImagePreview"/>
+      <part documentType="Image" type="ImageThumbnail"/>
+      <field documentType="Image" type="ImageWith"/>
+      <field documentType="Image" type="ImageHeight"/>
+    </doNotAdd>
+
+    <!--+
+        | doNotRemove: do not remove these parts and fields from the target document if they are not in the import
+        +-->
+    <doNotRemove>
+      <part documentType="Image" type="ImagePreview"/>
+      <part documentType="Image" type="ImageThumbnail"/>
+      <field documentType="Image" type="ImageHeight"/>
+      <field documentType="Image" type="ImageWidth"/>
+    </doNotRemove>
+
+    <removeFromCollections>
+      <!-- List one ore more <collection name='...'> elements,
+           or add an attribute all="true" on this element. -->
+    </removeFromCollections>
+
+    <addToCollections>
+      <!-- List one ore more <collection name='...'> elements -->
+    </addToCollections>
+
+    <storeLinks>true</storeLinks>
+    <storeCustomFields>true</storeCustomFields>
+  </documentCustomizer>
+
+  <!--+
+      | A schema customizer allows to manipulate the schema before import.
+      +-->
+  <schemaCustomizer factoryClass="org.outerj.daisy.tools.importexport.config.BasicSchemaCustomizerFactory">
+    <!--+
+        | Use these elements to exclude part, field and document types from the export schema:
+        |  <dropPartType name='...'/>
+        |  <dropFieldType name='...'/>
+        |  <dropDocumentType name='...'/>
+        +-->
+  </schemaCustomizer>
+</importOptions>
+

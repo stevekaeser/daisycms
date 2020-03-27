@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<table class="docedit-links"
+       xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+       xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+       xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+       xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  <ft:repeater-widget id="links">
+    <tr class="titlerow">
+      <td><ft:widget-label id="title"/></td>
+      <td>
+        <ft:widget id="title">
+          <fi:styling size="60"/>
+        </ft:widget>
+      </td>
+      <td rowspan="2">
+        <ft:widget id="delete">
+          <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/delete.gif" title="editdoc.links.delete" i18n:attr="title"/>
+        </ft:widget>
+        <ft:widget id="moveUp">
+          <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/up.gif" title="editdoc.links.move-up" i18n:attr="title"/>
+        </ft:widget>
+        <ft:widget id="moveDown">
+          <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/down.gif" title="editdoc.links.move-down" i18n:attr="title"/>
+        </ft:widget>
+        <input type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/lookupdoc.gif" title="editdoc.links.lookupdocument" i18n:attr="title"
+          onclick="lookupDocumentLink(document.getElementById('${widget.requestParameterName}.target:input'), document.getElementById('${widget.requestParameterName}.title:input')); return false;"/>
+        <input type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/openlink.gif" title="editdoc.links.openlink" i18n:attr="title"
+          onclick="openLink(document.getElementById('${widget.requestParameterName}.target:input').value); return false;"/>
+      </td>
+    </tr>
+    <tr class="targetrow">
+      <td><ft:widget-label id="target"/></td>
+      <td>
+        <ft:widget id="target">
+          <fi:styling size="60"/>
+        </ft:widget>
+      </td>
+    </tr>
+  </ft:repeater-widget>
+  <tr>
+    <td colspan="3" align="right">
+      <ft:widget id="addLink"/>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  
+  <script type="text/javascript">
+    function subjectChange(name, newSubjectType) {
+      var newLinkLabel = "";
+      if (newSubjectType != 'org.outerj.daisy.books.store.BookAclSubjectType.EVERYONE') {
+        newLinkLabel = "(<i18n:text key='bookacl.select'/>)";
+      }
+      document.getElementById(name + ".subjectValueLink").innerHTML = newLinkLabel;
+      document.getElementById(name + ".subjectValueLabel").value = newLinkLabel;
+      document.getElementById(name + ".subjectValue").value = "-1";
+    }
+
+    function selectSubject(subjectId) {
+      var subjectType = document.getElementById(subjectId + ".subjectType:input").value;
+      if (subjectType == 'org.outerj.daisy.books.store.BookAclSubjectType.ROLE') {
+        var popup = window.open("${pageContext.mountPoint}/selectRole", "selectrole", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+        popup.onRoleSelected = function(id, name) {
+          document.getElementById(subjectId + ".subjectValueLink").innerHTML = name;
+          document.getElementById(subjectId + ".subjectValueLabel").value = name;
+          document.getElementById(subjectId + ".subjectValue").value = id;
+        }
+      } else {
+        var popup = window.open("${pageContext.mountPoint}/selectUser", "selectuser", "toolbar=no,menubar=no,personalbar=no,width=400,height=400,left=20,top=40,scrollbars=yes,resizable=yes");
+        popup.onUserSelected = function(id, name) {
+          document.getElementById(subjectId + ".subjectValueLink").innerHTML = name;
+          document.getElementById(subjectId + ".subjectValueLabel").value = name;
+          document.getElementById(subjectId + ".subjectValue").value = id;
+        }
+      }
+    }
+  </script>
+  
+  <ft:widget id="messages"/>
+
+  <table class="default">
+    <tr>
+      <th colspan="2">
+        <i18n:text key="bookacl.subject"/>
+      </th>
+      <th colspan="2"><i18n:text key="bookacl.permissions"/></th>
+      <th rowspan="2"><i18n:text key="bookacl.actions"/></th>
+    </tr>
+    <tr>
+      <th><i18n:text key="bookacl.subject-type"/></th>
+      <th><i18n:text key="bookacl.subject-value"/></th>
+      <th><i18n:text key="bookacl.perm-read"/></th>
+      <th><i18n:text key="bookacl.perm-manage"/></th>
+    </tr>
+    <jx:if test="${widget.getChild('entries').getSize() == 0}">
+      <tr>
+        <td colspan="5"><i18n:text key="bookacl.no-entries"/></td>
+      </tr>
+    </jx:if>
+    <ft:repeater-widget id="entries">
+      <tr>
+        <td>
+          <ft:widget id="subjectType">
+            <fi:styling onchange="subjectChange('${widget.parent.fullName}', document.getElementById('${widget.fullName}:input').value)"></fi:styling>
+          </ft:widget>
+        </td>
+        <td>
+          <a href="#" onclick="selectSubject('${widget.fullName}'); return false;" id="${widget.fullName}.subjectValueLink">${widget.getChild('subjectValueLabel').getValue()}</a>
+          <ft:validation-error id="subjectValue"/>
+          <ft:widget id="subjectValueLabel">
+            <fi:styling type="hidden"/>
+          </ft:widget>
+          <ft:widget id="subjectValue">
+            <fi:styling type="hidden"/>
+          </ft:widget>
+        </td>
+        <td><ft:widget id="readPerm"/></td>
+        <td><ft:widget id="managePerm"/></td>
+        <td>
+          <ft:widget id="delete">
+            <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="delete" i18n:attr="title"/>
+          </ft:widget>
+          <ft:widget id="moveUp">
+            <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/up.gif" title="move-up" i18n:attr="title"/>
+          </ft:widget>
+          <ft:widget id="moveDown">
+            <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/down.gif" title="move-down" i18n:attr="title"/>
+          </ft:widget>
+          <ft:widget id="addAfter">
+            <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/new.gif" title="add" i18n:attr="title"/>
+          </ft:widget>
+        </td>
+      </tr>
+    </ft:repeater-widget>
+    <tr>
+      <td colspan="5" align="right">
+        <ft:widget id="appendEntry"/>
+      </td>
+    </tr>
+  </table>
+
+</div>

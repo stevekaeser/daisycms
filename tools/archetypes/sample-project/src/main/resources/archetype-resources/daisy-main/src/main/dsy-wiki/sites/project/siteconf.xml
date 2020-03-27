@@ -1,0 +1,17 @@
+<siteconf xmlns="http://outerx.org/daisy/1.0#siteconf">
+  <title>${rootArtifactId} project site</title>
+  <description>The "${rootArtifactId}" site</description>
+  <skin>myskin</skin>
+  <navigationDocId>2-${project-namespace}</navigationDocId>
+  <homepageDocId>1-${project-namespace}</homepageDocId>
+  <collectionId>1</collectionId>
+  <contextualizedTree>false</contextualizedTree>
+  <branch>main</branch>
+  <language>default</language>
+  <defaultDocumentType>SimpleDocument</defaultDocumentType>
+  <newVersionStateDefault>publish</newVersionStateDefault>
+  <publisherRequestSet>sample2</publisherRequestSet>
+  <locking>
+    <automatic lockType='pessimistic' defaultTime='15' autoExtend='true'/>
+  </locking>
+</siteconf>

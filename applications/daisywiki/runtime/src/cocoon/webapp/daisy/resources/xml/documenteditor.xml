@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:d="http://outerx.org/daisy/1.0"
+      xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:set var="aclPerm" value="${Packages.org.outerj.daisy.repository.acl.AclPermission}"/>
+  <jx:set var="aclDetailPerm" value="${Packages.org.outerj.daisy.repository.acl.AclDetailPermission}"/>
+
+  ${pageContext}
+  
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  <pageTitle><i18n:text key="editdoc.title"/></pageTitle>
+  
+  <jx:set var="validationIconPath" value="${pageContext.mountPoint + '/resources/cocoon/forms/js/templates/images/validation-message.gif'}"/>
+  
+  <content>
+    
+    <script type="text/javascript">
+        <![CDATA[
+        dojo.require("daisy.dialog");
+      
+        function getMountPoint() {
+          return "${pageContext.mountPoint}";
+        }
+
+        function getSiteName() {
+          return "${pageContext.siteConf.name}";
+        }
+
+        function getBranchId() {
+          return "${document.getBranchId()}";
+        }
+
+        function getLanguageId() {
+          return "${document.getLanguageId()}";
+        }
+
+        function getDocumentTypeId() {
+          return "${document.getDocumentTypeId()}";
+        }
+        
+        function getDocumentTypeName() {
+          return "${documentEditorContext.documentType.name}";    
+        }
+        
+        function getDocumentId() {
+          return "${document.getId()}";
+        }
+
+        function showDocIdInput (evt) {
+          var inputs = dojo.byId("documentIdSelect");  
+          
+          dojo.dom.removeNode(inputs);
+          dojo.html.addClass(inputs, "docid-popup");
+          dojo.html.show(inputs);
+          
+          var popup = dojo.widget.createWidget("PopupContainer", {toggle: "plain", toggleDuration: 150});
+          popup.domNode.appendChild(inputs);
+          
+          popup.open(evt.target, null, "BL");
+          dojo.byId("requestedDocumentIdPop").focus();
+        };
+        
+        dojo.addOnLoad(function () {
+          var link = dojo.byId("docIdLink");
+          if (link == null) 
+            return;
+          var docSeq = dojo.byId("requestedDocumentIdPop");
+          var docNs = dojo.byId("namespacePop");
+          
+          var updateLink = function () {
+            dojo.dom.removeChildren(link);
+            dojo.dom.textContent(link, docSeq.value + "-" + docNs.value);
+            dojo.byId("requestedDocumentId").value = docSeq.value;
+            dojo.byId("namespace").value = docNs.value;
+          };
+          
+          dojo.event.connect(link, "onclick", showDocIdInput);
+          dojo.event.connect(docSeq, "onchange", updateLink);
+          dojo.event.connect(docNs, "onchange", updateLink);
+          
+        });
+        
+        dojo.addOnLoad(function () {
+            // calls all registered editorHeightListeners functions 
+            var triggerListeners = function (evt) {
+              if  (!window.editorHeightListeners)
+                return;
+              var height = getEditorHeight();
+              for (var i = 0; i < window.editorHeightListeners.length; i++) {
+                window.editorHeightListeners[i](height);
+              }
+            }
+
+            // automatically resize editors 
+            dojo.event.connect(window, "onresize", triggerListeners);
+
+            // and trigger this automatically onLoad
+            triggerListeners();
+        });
+        ]]>
+    </script>
+    
+    <ft:form-template id="editdoc" name="editdoc" action="" method="POST" enctype="multipart/form-data">
+    
+      <div class="container">
+        <div id="editor-header">
+          <table class="dsy-layouttable">
+            <tbody>
+              <tr>
+                <td>
+                  <i18n:text key="editdoc.title"/>:
+                  <input name="name" id="name" size="40" value="${documentEditorForm.documentName}" onkeypress="return daisyIgnoreEnter(event);">
+                    <jx:if test="${not documentEditorForm.aclInfo.getAccessDetails(aclPerm.WRITE).isGranted(aclDetailPerm.DOCUMENT_NAME)}">
+                      <jx:attribute name="disabled" value="disabled"/>
+                    </jx:if>
+                  </input>
+                  <input id="requestedDocumentId" name="requestedDocumentId" type="hidden"  value="${documentEditorForm.requestedDocumentSequence}"/>
+                  <input id="namespace" name="namespace" type="hidden" value="${documentEditorForm.requestedNamespace}"/>
+                  <jx:if test="${!documentEditorForm.documentNameValid()}">
+                    <fi:validation-error>${documentEditorForm.documentNameValidationError}</fi:validation-error>
+                  </jx:if>
+                  <fi:standalone-help><i18n:text key="editdoc.document-name-help"/></fi:standalone-help>
+                  <!-- administrators get to set the document id on new documents -->
+                  <jx:if test="${empty(documentEditorForm.documentId) &amp;&amp; java.util.Arrays.binarySearch(activeRoles, 'Administrator') >= 0}">
+                    
+                  </jx:if>
+                </td>
+                <td style="text-align: right;">                  
+                  <span class="info">                    
+                    <jx:if test="${empty(documentEditorForm.documentId)}">
+                      <jx:choose>
+                        <jx:when test="${empty(documentEditorForm.documentId) &amp;&amp; java.util.Arrays.binarySearch(activeRoles, 'Administrator') >= 0}">
+                          <a href="javascript:void(0)" id="docIdLink"><jx:choose>
+                              <jx:when test="${documentEditorForm.requestedDocumentSequence} &amp;&amp; ${documentEditorForm.requestedNamespace}">${documentEditorForm.requestedDocumentSequence}-${documentEditorForm.requestedNamespace}</jx:when>
+                              <jx:otherwise><i18n:text key="editdoc.new"/></jx:otherwise>
+                          </jx:choose></a>
+                          <jx:if test="${!documentEditorForm.documentIdValid()}">
+                            <fi:validation-error>${documentEditorForm.documentIdValidationError}</fi:validation-error>
+                          </jx:if>
+                          <div style="display: none" id="documentIdSelect">
+                            <i18n:text key="doceditor.docid.sequence"/>                            
+                            <input name="requestedDocumentIdPop" id="requestedDocumentIdPop" size="6" value="${documentEditorForm.requestedDocumentSequence}"/>                                
+                            <i18n:text key="doceditor.docid.namespace"/>                              
+                            <select name="namespacePop" id="namespacePop">
+                              <option value="">---</option>
+                              <jx:forEach var="ns" items="${unmanagedNamespaces}">
+                                <jx:choose>
+                                  <jx:when test="${documentEditorForm.requestedNamespace == ns}">
+                                    <option selected="true">${ns}</option>
+                                  </jx:when>
+                                  <jx:otherwise>
+                                    <option>${ns}</option>
+                                  </jx:otherwise>
+                                </jx:choose>
+                              </jx:forEach>
+                            </select>                                                     
+                          </div>
+                        </jx:when>
+                        <jx:otherwise><i18n:text key="editdoc.new"/></jx:otherwise>
+                      </jx:choose>                      
+                    </jx:if>${documentEditorForm.documentId}@${documentEditorForm.documentBranch}:${documentEditorForm.documentLanguage}<br/>
+                    <i18n:text key="editdoc.document-type"/>: ${documentEditorForm.documentType.getLabel(locale)}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section" style="clear:left;">
+          <table class="dsy-layouttable" cellspacing="0" cellpadding="0" style="margin-top: 0.3em">
+            <tbody>
+              <tr>
+                <td style="padding-top:0.3em; vertical-align: bottom">
+                  <!--
+                     | The tabs for switching between the editors
+                     -->
+                  <ul class="doceditor-tabs">
+                    <jx:forEach var="tabName" items="${tabSequence}">
+                      <jx:choose>
+                          <jx:when test="${tabName.equals('parts')}">
+                            <jx:if test="${documentEditorForm.hasPartForms()}">
+                              <jx:choose>
+                                <jx:when test="${activeFormName.startsWith('part-')}">
+                                  <li class="here">
+                                    <i18n:text key="doceditor.parts"/>
+                                    <jx:if test="${!documentEditorForm.arePartFormsValid()}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if>
+                                  </li>
+                                </jx:when>
+                                <jx:otherwise>
+                                  <li><a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('${documentEditorForm.getPartFormInfos().get(0).formName}');"><i18n:text key="doceditor.parts"/></a> <jx:if test="${!documentEditorForm.arePartFormsValid()}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                                </jx:otherwise>
+                              </jx:choose>
+                            </jx:if>
+                          </jx:when>
+                          <jx:when test="${tabName.equals('fields')}">
+                            <jx:if test="${documentEditorForm.hasFieldsForm()}">
+                              <jx:choose>
+                                <jx:when test="${activeFormName == 'fields'}">
+                                  <li class="here"><i18n:text key="editdoc.fields"/> <jx:if test="${!documentEditorForm.isValid('fields')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                                </jx:when>
+                                <jx:otherwise>
+                                  <li>
+                                    <a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('fields');"><i18n:text key="editdoc.fields"/></a>
+                                    <jx:if test="${!documentEditorForm.isValid('fields')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if>
+                                  </li>
+                                </jx:otherwise>
+                              </jx:choose>
+                            </jx:if>
+                          </jx:when>
+                          <jx:when test="${tabName.equals('links')}">
+                            <jx:choose>
+                              <jx:when test="${activeFormName == 'links'}">
+                                <li class="here"><i18n:text key="editdoc.links"/> <jx:if test="${!documentEditorForm.isValid('links')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                              </jx:when>
+                              <jx:otherwise>
+                                <li>
+                                  <a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('links');"><i18n:text key="editdoc.links"/></a>
+                                  <jx:if test="${!documentEditorForm.isValid('links')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if>
+                                </li>
+                              </jx:otherwise>
+                            </jx:choose>
+                          </jx:when>
+                          <jx:when test="${tabName.equals('misc')}">
+                            <jx:choose>
+                              <jx:when test="${activeFormName == 'misc'}">
+                                <li class="here"><i18n:text key="doceditor.misc"/> <jx:if test="${!documentEditorForm.isValid('misc')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                              </jx:when>
+                              <jx:otherwise>
+                                <li>
+                                  <a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('misc');"><i18n:text key="doceditor.misc"/></a>
+                                  <jx:if test="${!documentEditorForm.isValid('misc')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if>
+                                </li>
+                              </jx:otherwise>
+                            </jx:choose>
+                          </jx:when>
+                      </jx:choose>
+                    </jx:forEach>
+                    
+                    <jx:if test="${documentEditorForm.hasAdditionalPartsOrFieldsForm()}">
+                      <jx:choose>
+                        <jx:when test="${activeFormName == 'additionalPartsOrFields'}">
+                          <li class="here"><i18n:text key="doceditor.additional-parts-and-fields"/> <jx:if test="${!documentEditorForm.isValid('additionalPartsAndFields')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                        </jx:when>
+                        <jx:otherwise>
+                          <li><a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('additionalPartsAndFields');"><i18n:text key="doceditor.additional-parts-and-fields"/></a> <jx:if test="${!documentEditorForm.isValid('additionalPartsAndFields')}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if></li>
+                        </jx:otherwise>
+                      </jx:choose>
+                    </jx:if>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <div class="editor-outerframe">
+            <input type="hidden" name="activeForm" id="activeForm" value="${activeFormName}"/>
+            <jx:choose>
+              <jx:when test="${activeFormName.startsWith('part-')}">
+                <!--
+                   | The tabs for switching between the parts.
+                   -->
+                <ul class="doceditor-parts">
+                  <jx:forEach var="partFormInfo" items="${documentEditorForm.getPartFormInfos()}">
+                    <jx:choose>
+                      <jx:when test="${partFormInfo.formName == activeFormName}">
+                        <li class="here">
+                          ${partFormInfo.label}
+                          <jx:if test="${partFormInfo.isRequired()}">
+                            <span class="forms-field-required"> * </span>
+                          </jx:if>
+                        </li>
+                      </jx:when>
+                      <jx:otherwise>
+                        <li>
+                          <a href="#" onmouseover="window.status=''; return true;" onclick="return switchTab('${partFormInfo.formName}');">${partFormInfo.label}</a>
+                          <jx:if test="${partFormInfo.isRequired()}">
+                            <span class="forms-field-required"> * </span>
+                          </jx:if>
+                          <jx:if test="${!documentEditorForm.isValid(partFormInfo.formName)}">&#160;<img src="${validationIconPath}"/>&#160;</jx:if>
+                        </li>
+                      </jx:otherwise>
+                    </jx:choose>
+                  </jx:forEach>
+                </ul>
+                <div class="doceditor-parteditor">
+                  <div style="font-size: x-small">${documentEditorForm.currentPartFormInfo.partDescription}</div>
+                  <jx:choose>
+	                  <jx:when test="${documentEditorForm.activeFormName.startsWith('part-')}">
+	                      <ft:group id="part_${documentEditorForm.currentPartFormInfo.partTypeUse.partType.id}">
+                              <jx:import uri="${activeFormTemplate}"/>
+                          </ft:group>
+	                  </jx:when>
+                  </jx:choose>
+                </div>
+              </jx:when>
+              <jx:otherwise>
+                <jx:import uri="${activeFormTemplate}"/>
+              </jx:otherwise>
+            </jx:choose>
+          </div>
+    
+          <!-- Note: this function is not pushed onto the forms_onsubmitHandlers of CForms
+               because those don't allow to cancel the submit. In fact, I've now learned that
+               I can put additional functions in form/@onsubmit, but that doesn't help
+               because then there's HTML area which will at last one replace it. HTMLArea
+               cleanly executes the other onsubmit functions after doing its own work,
+               but doesn't check the return status. Need to fix this later. -->
+          <script type="text/javascript">
+            function preSubmitChecks() {
+              <jx:if test="${document.isNew()}">
+                  var ns = $.trim($("#namespacePop").val());
+                  var requestedId = $.trim($("#requestedDocumentIdPop").val());
+
+                  if (requestedId != '') {
+                    var idPattern = /[1-9][0-9]*/;
+                    if (!idPattern.test(requestedId)) {
+                      alert("<i18n:text key="editdoc.requestedId.invalid"/>");
+                      showDocIdInput({target:dojo.byId("docIdLink")});
+                      return false;                      
+                    }
+                  }
+                  
+                  if (ns != '' &amp;&amp; requestedId == '') {
+                    alert("<i18n:text key="editdoc.requestedId.missing"/>");
+                    showDocIdInput({target:dojo.byId("docIdLink")});
+                    return false;                      
+                  }
+                  if (ns == '' &amp;&amp; requestedId != '') {
+                    alert("<i18n:text key="editdoc.requestedNamespace.missing"/>");
+                    showDocIdInput({target:dojo.byId("docIdLink")});
+                    return false;                      
+                  }
+                  
+                  if (document.forms["editdoc"].name.value == "<i18n:text key="editdoc.new-document-name"/>") {
+                      return confirm("<i18n:text key="editdoc.name-warning"/>");
+                  }
+              </jx:if>
+              return true;
+            }
+          </script>
+    
+          <!-- The dummy action widget is required to be on each document editor form. -->
+          <div style="display: none">
+            <ft:widget id="dummy"/>
+          </div>
+          
+          <div class="saveOptions" style="clear: both;">
+          
+            <div style="float: left;">
+              <input type="checkbox" name="publishImmediately" id="publishImmediately">
+                <jx:if test="${documentEditorForm.publishImmediately}">
+                  <jx:attribute name="checked" value="checked"/>
+                </jx:if>
+                <jx:if test="${not documentEditorForm.aclInfo.isAllowed(aclPerm.PUBLISH)}">
+                  <jx:attribute name="disabled" value="disabled"/>
+                </jx:if>
+              </input>
+              <label for="publishImmediately"><i18n:text key="editdoc.publish-changes-immediately"/></label>
+      
+              <jx:choose>
+                <jx:when test="${documentEditorForm.majorChange}">
+                  <input type="checkbox" name="majorChange" id="majorChange" checked="checked">
+                    <jx:if test="${not documentEditorForm.aclInfo.getAccessDetails(aclPerm.WRITE).isGranted(aclDetailPerm.CHANGE_TYPE)}">
+                      <jx:attribute name="disabled" value="disabled"/>
+                    </jx:if>
+                  </input>
+                </jx:when>
+                <jx:otherwise>
+                  <input type="checkbox" name="majorChange" id="majorChange">
+                    <jx:if test="${not documentEditorForm.aclInfo.getAccessDetails(aclPerm.WRITE).isGranted(aclDetailPerm.CHANGE_TYPE)}">
+                      <jx:attribute name="disabled" value="disabled"/>
+                    </jx:if>
+                  </input>
+                </jx:otherwise>
+              </jx:choose>
+              <label for="majorChange"><i18n:text key="editdoc.major-change"/></label>
+      
+              <span id="syncedWithContainer" style="display:none;">
+                <jx:set var="syncedWithEnabled" value="${documentEditorForm.aclInfo.getAccessDetails(aclPerm.WRITE).isGranted(aclDetailPerm.SYNCED_WITH)}"/>
+                <input type="hidden" id="syncedWithLanguageId" name="syncedWithLanguageId" value="${documentEditorForm.syncedWithLanguageId}"/>
+                <input type="hidden" id="syncedWithVersionId" name="syncedWithVersionId" value="${documentEditorForm.syncedWithVersionId}"/>
+                <i18n:text key="tm.synced-with-language"/>
+                <!-- note: no name attribute: this should not be submitted -->
+                <select id="syncedWithLanguage">
+                  <jx:if test="${not syncedWithEnabled}">
+                    <jx:attribute name="disabled" value="disabled"/>
+                  </jx:if>
+                  <jx:forEach items="${availableLanguageVariants}" var="variant">
+                    <option value="${variant.languageId}">${variant.language.name}</option>
+                  </jx:forEach>
+                </select>
+                
+                <i18n:text key="tm.synced-with-version"/>
+                <!-- note: no name attribute: this should not be submitted -->
+                <select id="syncedWithVersion">
+                  <jx:if test="${not syncedWithEnabled}">
+                    <jx:attribute name="disabled" value="disabled"/>
+                  </jx:if>
+                  <!--  filled during onLoad -->
+                </select>
+                <input type="image" name="lookupsyncedwith" title="tm.select-with-preview" i18n:attr="title"
+                       onclick="showPreviewSyncedWithDialog(); return false;"
+                       src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/browse-link.gif">
+                  <jx:if test="${not syncedWithEnabled}">
+                    <jx:attribute name="disabled" value="disabled"/>
+                  </jx:if>
+                </input>
+              </span>
+            </div>
+            
+            <div style="float: right; white-space: nowrap">
+              <jx:choose>
+                <jx:when test="${documentEditorForm.validateOnSave}">
+                  <input type="checkbox" name="validateOnSave" id="validateOnSave" checked="checked"/>
+                </jx:when>
+                <jx:otherwise>
+                  <input type="checkbox" name="validateOnSave" id="validateOnSave"/>
+                </jx:otherwise>
+              </jx:choose>
+              <label for="validateOnSave"><i18n:text key="editdoc.validate"/></label>
+              <fi:standalone-help><i18n:text key="editdoc.validate-help"/></fi:standalone-help>
+            </div>
+          </div>
+    
+          <div class="saveOptions" style="clear:left; float:left;">
+            <div style="float:left;">
+              <label for="changeComment"><i18n:text key="editdoc.change-comment"/>: </label>
+              <input type="text" name="changeComment" id="changeComment" size="45" value="${documentEditorForm.changeComment}"
+                     onkeypress="return daisyIgnoreEnter(event);" maxlength="1023">
+                <jx:if test="${not documentEditorForm.aclInfo.getAccessDetails(aclPerm.WRITE).isGranted(aclDetailPerm.CHANGE_COMMENT)}">
+                  <jx:attribute name="disabled" value="disabled"/>
+                </jx:if>
+              </input>
+            </div>
+          </div>
+    
+          <div style="clear:right; float: right;">
+            <a class="button" href="#" onclick="if (confirm(i18n('editdoc.confirm-cancel'))) { window.needsConfirmForLeaving = false; document.forms['cancelEditing'].submit(); } return false;"><i18n:text key="editdoc.cancel"/></a>
+            <input id="mysubmit" type="submit" onclick="if (preSubmitChecks()) { window.needsConfirmForLeaving = false; return true; } else return false;" value="Save" style="display: none"/>
+            <a class="button default" href="#" onclick="document.getElementById('mysubmit').click(); return false;"><i18n:text key="editdoc.save"/></a>
+          </div>
+    
+          <script type="text/javascript">
+            window.needsConfirmForLeaving = true;
+            var unsetConfirmLeaving = new Object();
+            unsetConfirmLeaving.forms_onsubmit = function() { window.needsConfirmForLeaving = false; return true; };
+            cocoon.forms.addOnSubmitHandler(document.forms.editdoc, unsetConfirmLeaving);
+      
+            window.onbeforeunload = function() {
+              if (window.needsConfirmForLeaving)
+                return "<i18n:text key="doceditor.confirm-leave-editor"/> " + document.forms["editdoc"].name.value;
+                
+              // reset needsConfirmForLeaving
+              window.needsConfirmForLeaving = true;
+            }
+      
+            function switchTab(tabName) {
+              document.getElementById("activeForm").value = tabName;
+              cocoon.forms.submitForm(document.forms.editdoc.dummy);
+              return false;
+            }
+      
+            dojo.require("dojo.io");
+            dojo.require("dojo.dom");
+      
+            function heartbeat() {
+              dojo.io.bind({
+                url: "heartbeat",
+                preventCache: true,
+                load: function(type, data, evt) {
+                  var error = dojo.dom.firstElement(data.documentElement, "error");
+                  if (error != null) {
+                     alert(dojo.dom.textContent(error));
+                  }
+                  // reschedule
+                  scheduleHeartbeat();
+                },
+                error: function(type, data, evt) {
+                  alert("Error calling heartbeat (to keep your editing session and document lock alive): " + data.message);
+                  // reschedule
+                  scheduleHeartbeat();
+                },
+                mimetype: "text/xml"
+              });
+            }
+      
+            function scheduleHeartbeat() {
+              window.setTimeout(heartbeat, ${heartbeatInterval});
+            }
+            
+            var tmEditorHelper;
+            
+            function createTMEditorHelper() {
+              var availableLanguageVariants = [
+                <jx:forEach var="variant" items="${availableLanguageVariants}" varStatus="status">
+                  <jx:if test="${!status.first}">,</jx:if> { 
+                    languageId: ${variant.languageId},
+                    languageName: "${variant.language.name}",
+                    lastVersionId: ${variant.lastVersionId},
+                    liveVersionId: ${variant.liveVersionId}
+                  }
+                </jx:forEach>
+              ];
+              
+              tmEditorHelper = new daisy.tm.EditorHelper(
+                ${documentEditorForm.documentLanguageId},
+                <jx:choose>
+                  <jx:when test="${documentEditorForm.miscForm.getChild('referenceLanguageId').value == null}">
+                    -1,
+                  </jx:when>
+                  <jx:otherwise>
+                    ${documentEditorForm.miscForm.getChild("referenceLanguageId").value},
+                  </jx:otherwise>,
+                </jx:choose>
+                availableLanguageVariants,
+                true
+              );
+            }
+            
+            function showPreviewSyncedWithDialog() {
+              var languageInput = dojo.byId('syncedWithLanguageId');
+              var versionInput = dojo.byId('syncedWithVersionId');
+              
+              var swLanguageId = dojo.byId('syncedWithLanguageId').value;
+              var swVersionId = dojo.byId('syncedWithVersionId').value;
+              
+              daisy.dialog.popupDialog(daisy.mountPoint + "/" + daisy.site.name + "/editing/previewSyncedWith?documentId=${documentEditorForm.documentId}&amp;branch=${documentEditorForm.documentBranchId}&amp;language=${documentEditorForm.documentLanguageId}"
+                                       + "&amp;referenceLanguage=" + tmEditorHelper.getReferenceLanguageId() + "&amp;syncedWithLanguage=" + swLanguageId + "&amp;syncedWithVersionId=" + swVersionId, 
+                function(params) {
+                  tmEditorHelper.setSyncedWithSelection(params.syncedWithLanguageId, params.syncedWithVersionId);
+                },
+                {}
+              );
+              
+            }
+            
+            dojo.addOnLoad(scheduleHeartbeat);
+            dojo.addOnLoad(createTMEditorHelper);
+      
+          </script>
+        </div>
+      </div>
+    
+    </ft:form-template>
+
+    <form action="" method="POST" name="cancelEditing">
+      <input type="hidden" name="cancelEditing" value="true"/>
+    </form>
+    
+  </content>
+</page>

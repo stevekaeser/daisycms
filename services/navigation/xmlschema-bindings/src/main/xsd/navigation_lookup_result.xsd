@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#navigationspec" xmlns:nav="http://outerx.org/daisy/1.0#navigationspec" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="navigationLookupResult">
+    <xs:complexType>
+      <xs:attribute name="notFound" type="xs:boolean" use="optional"/>
+      <xs:attribute name="redirect" type="xs:boolean" use="optional"/>
+      <!--If documentId is present, then branchId and languageId should be too.-->
+      <xs:attribute name="documentId" type="xs:string" use="optional"/>
+      <xs:attribute name="branchId" type="xs:long" use="optional"/>
+      <xs:attribute name="languageId" type="xs:long" use="optional"/>
+      <xs:attribute name="path" type="xs:string" use="optional"/>
+      <xs:attribute name="lookupAlternativeName" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="timedpublish.label">Publicación según itinerario</message>
+  <message key="timedpublish.description">Un flujo de trabajo para poner una versión de documento de forma automatica en determinada fecha y hora en estado activo (live).</message>
+
+  <message key="startTimedPublishTask.label">Inicio de la Publicación según itinerario</message>
+  <message key="startTimedPublishTask.description">La versión especificada del document version será publicada en el horario especificado.</message>
+  <message key="transition.start-timer">Iniciar temporizador</message>
+
+  <message key="variable.daisy_document.description">El documento a poner en estado activo (live). Se recomienda incluir una versión, de lo contrario se pondrá activa (live) la última versión del documento.</message>
+
+  <message key="variable.publishTime.label">Fecha y Hora de la publicación</message>
+  <message key="variable.publishTime.description">Fecha y hora en la que se pondra la versión en estado activo. Naturalmente debe ser una horario en el futuro.</message>
+</catalogue>

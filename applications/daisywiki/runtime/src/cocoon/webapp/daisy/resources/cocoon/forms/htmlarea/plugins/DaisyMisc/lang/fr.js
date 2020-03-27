@@ -1,0 +1,107 @@
+/*
+ * Copyright 2004 Outerthought bvba and Schaubroeck nv
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+DaisyMisc.I18N = {
+  /* daisy-misc.js */
+  "hint.default-alignment": "Alignement par défaut",
+  "hint.align-left": "Aligner à gauche",
+  "hint.align-center": "Aligner au centre",
+  "hint.align-right": "Aligner à droite",
+  "hint.default-vertical-alignment": "Alignement vertical par défaut",
+  "hint.align-top": "Aligner sur le haut",
+  "hint.align-middle": "Aligner au milieu",
+  "hint.align-bottom": "Aligner sur le bas",
+  "hint.switch-normal-header-cell": "Basculer entre cellule normale et cellule d'en-tête",
+  "hint.insert-table": "Insérer table",
+  "hint.delete-table": "Supprimer table",
+  "hint.edit-table-class": "Editer classe de table",
+  "hint.remove-formatting": "Supprimer mise en forme",
+  "hint.tt": "Télétype",
+  "hint.table-settings": "Propriétés de la table",
+  "hint.insert-div": "Insérer un élément DIV",
+  "hint.delete-div": "Supprimer l'élément DIV",
+  "hint.div-settings": "Propriétés de l'élément DIV",
+  "hint.goto": "Aller à",
+  "hint.cleanup": "Nettoyer le code HTML",
+  "hint.switch-to-source": "Basculer vers l'éditeur de code source HTML",
+  "hint.quote": "Retrait de citation",
+  "hint.unquote": "Supprimer retrait de citation",
+  "hint.variables": "Insérer/supprimer une variable",
+  "hint.ol-settings": "Propriétés de la liste à numéros",
+  "js.no-td-th-found": "Pas trouvé d'élément <td> ou <th>.",
+  "js.remove-table-confirm": "La suppression d'une table ne peut pas être annulée. Continuer?",
+  "js.cursor-not-inside-table": "Le curseur n'est pas positionné à l'intérieur d'une table.",
+  "js.remove-div-confirm": "La suppression d'un div ne peut pas être annulée. Continuer?",
+  "js.cursor.not-inside-div": "Le curseur n'est pas positionné à l'intérieur d'un div",
+  "js.teletype-impossible": "La sélection courante ne peut pas être placée dans la mise en forme 'télétype'.",
+  "js.nothing-to-go-to": "Il n'y a aucun emplacement où aller (tel que des titres ou des éléments avec un ID).",
+
+  /* insert_table.html*/
+  "inserttable.must-enter-number-rows": "Vous devez entrer un nombre de lignes",
+  "inserttable.must-enter-number-columns": "Vous devez entrer un nombre de colonnes",
+  "inserttable.title": "Insérer une table",
+  "inserttable.rows": "Lignes:",
+  "inserttable.cols": "Colonnes:",
+  "inserttable.first-row-are-titles": "La première ligne contient des titres",
+  "inserttable.first-column-are-titles": "La première colonne contient des titres",
+  "inserttable.cancel": "Annuler",
+
+  /* goto.html */
+  "goto.title": "Aller à",
+  "goto.element": "Aller à l'élément avec cet ID",
+  "goto.goto": "Aller à",
+  "goto.header": "Aller vers ce titre",
+  "goto.close": "Fermer",
+
+  /* table_settings.html */
+  "tablesettings.invalid-column-width": "La valeur saisie n'est pas une largeur de colonne valide",
+  "tablesettings.invalid-table-width": "La valeur saisie n'est pas une largeur de table valide",
+  "tablesettings.invalid-size-value": "La valeur saisie n'est pas une taille valide.",
+  "tablesettings.title": "Propriétés de table",
+  "tablesettings.print-sizes": "Taille à l'impression",
+  "tablesettings.table-width": "Largeur de la table",
+  "tablesettings.use-default-column-widths": "Utiliser largeurs de colonne par défaut",
+  "tablesettings.column": "Colonne",
+  "tablesettings.screen-sizes": "Taille à l'écran",
+  "tablesettings.table-caption": "Légende de la table",
+  "tablesettings.table-type": "Type de la table",
+  "tablesettings.ok": "OK",
+  "tablesettings.cancel": "Annuler",
+  "tablesettings.alignment-title": "Alignement de la table",
+  "tablesettings.alignment": "Alignement: ",
+  "tablesettings.align-default": "Par défaut",
+  "tablesettings.align-left": "à gauche",
+  "tablesettings.align-center": "au centre",
+  "tablesettings.align-right": "à droite",
+  "tablesettings.classes": "Classe(s):",
+  "tablesettings.misc": "Divers",
+
+  /* div_settings.html */
+  "divsettings.title": "Propriétés du div",
+  "divsettings.ok": "OK",
+  "divsettings.cancel": "Annuler",
+  "divsettings.class": "Classe",
+  "divsettings.misc": "Divers",
+
+  "variables.title": "Variables",
+  "variables.not-in-variable": "Le curseur n'est pas positionné à l'intérieur d'une variable.",
+  "variables.cannot-nest-variable": "Les variables ne peuvent pas être imbriquées.",
+  "variables.no-variables": "Aucune variable disponible.",
+  "variables.remove": "Enlever la variable",
+
+  "olsettings.title": "Premier numéro de la liste",
+  "olsettings.no-ol-found": "Le curseur n'est pas positionné à l'intérieur d'une liste à numéros."
+
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="timedpublish.label">Публикации, запускаемые в определённый момент времени</message>
+  <message key="timedpublish.description">Процесс, при котором в конкретный момент времени определённый документ автоматически переходит от чернового (сохранённого) варианта к доступному виду.</message>
+
+  <message key="startTimedPublishTask.label">Старт Публикаций, запускаемых в определённый момент времени</message>
+  <message key="startTimedPublishTask.description">Выбранному документу в конктретное момент времени будет придан статус "доступного".</message>
+  <message key="transition.start-timer">Счётчик пуска</message>
+
+  <message key="variable.daisy_document.description">Документ, который должен стать доступным. Рекомендовано, принять ввод версии. Почти ни один ввод версии предполагает, что последняя предыдущая версия документа автоматически станет доступной.</message>
+
+  <message key="variable.publishTime.label">Дата и время общего доступа</message>
+  <message key="variable.publishTime.description">Дата и время, когда документ становится доступным. Конечноже речь идёт о дате в будущем времени.</message>
+</catalogue>

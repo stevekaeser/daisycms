@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project default="jar:jar" xmlns:maven="jelly:maven" xmlns:j="jelly:core" xmlns:util="jelly:util" xmlns:define="jelly:define" xmlns:package="package">
+
+  <goal name="build-debian-dist">
+        <package:checkProperty property="dist.debian.maintainer" var="maintainer"/>
+        <package:checkProperty property="dist.debian.depends" var="depends"/>
+
+        <package:checkPathFile filename="fakeroot"/>
+        <package:checkPathFile filename="dpkg"/>
+        <package:checkPathFile filename="gzip"/>
+
+        <j:set var="debian.package.dir" value="${maven.build.dir}/debian"/>
+        <j:set var="debian.resource.dir" value="${basedir}/resources"/>
+        <j:set var="snapshot" value=""/>
+        <j:set var="packageName" value="daisy"/>
+        <property name="core.distro.dir" value="${basedir}/../core"/>
+        <property name="core.distro.build.dir" value="${basedir}/../core/target"/>
+        <property name="dependent_apps_dir" value="${core.distro.dir}/dependent-apps"/>
+
+        <delete dir="${debian.package.dir}"/>
+        <mkdir dir="${debian.package.dir}/DEBIAN"/>
+
+        <!--
+          | Debian Control Files
+        -->
+
+        <j:useBean var="controlFile" class="org.apache.maven.deb.ControlFile"/>
+
+    <j:set var="dummy">${controlFile.setProject(pom)}</j:set>
+    <j:set var="dummy">${controlFile.setPackageName(packageName)}</j:set>
+        <j:set var="dummy">${controlFile.setVersion(version)}</j:set>
+        <j:set var="dummy">${controlFile.setMaintainer(maintainer)}</j:set>
+        <j:set var="dummy">${controlFile.setSnapshot(snapshot)}</j:set>
+        <j:set var="dummy">${controlFile.setDepends(depends)}</j:set>
+
+        <j:set var="dummy">${controlFile.build()}</j:set>
+
+        <j:file
+            name="${debian.package.dir}/DEBIAN/control"
+            trim="true"
+            omitXmlDeclaration="true"
+            escapeText="false"
+            outputMode="xml">${controlFile.contents}
+        </j:file>
+
+        <copy todir="${debian.package.dir}/DEBIAN">
+          <fileset dir="${debian.resource.dir}">
+            <include name="conffiles"/>
+            <include name="postinst"/>
+            <include name="postrm"/>
+            <include name="preinst"/>
+            <include name="prerm"/>
+          </fileset>
+        </copy>
+
+      <chmod perm="755">
+        <fileset dir="${debian.package.dir}/DEBIAN">
+            <include name="postinst"/>
+            <include name="postrm"/>
+            <include name="preinst"/>
+            <include name="prerm"/>
+          </fileset>
+      </chmod>
+      <chmod perm="644">
+        <fileset dir="${debian.package.dir}/DEBIAN">
+            <include name="control"/>
+            <include name="conffiles"/>
+          </fileset>
+        </chmod>
+
+    <!--
+          | Daisy home dir
+        -->
+        <mkdir dir="${debian.package.dir}/usr/lib/daisy/"/>
+        <copy todir="${debian.package.dir}/usr/lib/daisy/">
+          <fileset dir="${core.distro.build.dir}/daisy/">
+            <include name="daisywiki/**/*"/>
+            <include name="lib/**/*"/>
+            <include name="misc/**/*"/>
+            <include name="repository-server/**/*"/>
+	    <include name="wrapper/**/*"/>
+            <exclude name="**/*.bat"/>
+          </fileset>
+        </copy>
+
+        <copy todir="${debian.package.dir}/usr/lib/daisy">
+          <fileset dir="${debian.resource.dir}">
+            <include name="daisy-repository-init.properties"/>
+            <include name="daisy-wiki-init.properties"/>
+          </fileset>
+        </copy>
+
+        <chmod perm="a+x">
+          <fileset dir="${debian.package.dir}/usr/lib/daisy">
+            <include name="**/*.sh"/>
+            <include name="**/bin/*"/>
+          </fileset>
+        </chmod>
+
+        <!--
+          | Bin
+        -->
+        <mkdir dir="${debian.package.dir}/usr/bin"/>
+        <copy todir="${debian.package.dir}/usr/bin/">
+          <fileset dir="${core.distro.build.dir}/daisy/install">
+            <include name="daisy-wiki-add-site"/>
+            <include name="daisy-service-install"/>
+            <include name="daisy-repository-init"/>
+            <include name="daisy-wikidata-init"/>
+          </fileset>
+          <fileset dir="${basedir}/../../applications/jsclient/target">
+            <include name="daisy-js"/>
+          </fileset>
+          <fileset dir="${basedir}/../../applications/backuptool/target">
+            <include name="daisy-backup-tool"/>
+          </fileset>
+          <fileset dir="${basedir}/../../applications/blobstoreconvertor/target">
+            <include name="daisy-blobstore-convertor"/>
+          </fileset>
+        </copy>
+        <chmod perm="a+x">
+          <fileset dir="${debian.package.dir}/usr/bin">
+            <include name="daisy-js"/>
+            <include name="daisy-wiki-add-site"/>
+	    <include name="daisy-service-install"/>
+            <include name="daisy-repository-init"/>
+            <include name="daisy-wikidata-init"/>
+            <include name="daisy-backup-tool"/>
+            <include name="daisy-blobstore-convertor"/>
+            <include name="daisy-docid-convertor"/>
+          </fileset>
+        </chmod>
+
+    <!--
+          | Daisy docs
+        -->
+    <mkdir dir="${debian.package.dir}/usr/share/doc/daisy"/>
+    <copy todir="${debian.package.dir}/usr/share/doc/daisy">
+          <fileset dir="${core.distro.build.dir}/daisy/apidocs/">
+            <include name="**/*"/>
+          </fileset>
+          <fileset dir="${debian.resource.dir}/">
+            <include name="copyright"/>
+          </fileset>
+        </copy>
+
+         <!-- We need to use the commandline gzip which allows us to specify the compression rate -->
+         <copy todir="${debian.package.dir}/usr/share/doc/daisy/">
+          <fileset dir="${debian.resource.dir}">
+            <include name="changelog*"/>
+          </fileset>
+         </copy>
+    <exec executable="gzip" dir="${debian.package.dir}/usr/share/doc/daisy/">
+           <arg line="--best changelog"/>
+         </exec>
+         <exec executable="gzip" dir="${debian.package.dir}/usr/share/doc/daisy/">
+           <arg line="--best changelog.Debian"/>
+         </exec>
+
+        <!--
+          | Man pages
+        -->
+    <mkdir dir="${debian.package.dir}/usr/share/man/man1"/>
+    <copy todir="${debian.package.dir}/usr/share/man/man1">
+          <fileset dir="${debian.resource.dir}">
+            <include name="daisy-wiki-add-site.1"/>
+            <include name="daisy-js.1"/>
+          </fileset>
+        </copy>
+        <exec executable="gzip" dir="${debian.package.dir}/usr/share/man/man1">
+          <arg line="--best daisy-wiki-add-site.1"/>
+        </exec>
+        <exec executable="gzip" dir="${debian.package.dir}/usr/share/man/man1">
+          <arg line="--best daisy-js.1"/>
+        </exec>
+
+        <!--
+          | Misc
+        -->
+        <copy todir="${debian.package.dir}/usr/lib/daisy/misc">
+          <fileset dir="${debian.resource.dir}">
+            <include name="cocoon.xconf-update.xpath"/>
+            <include name="myconfig.xml-update.xpath"/>
+            <include name="wiki_backup_settings.xml" />
+          </fileset>
+        </copy>
+
+      <!--
+        | Roll the package
+      -->
+        <exec executable="fakeroot" dir="target">
+          <arg line="dpkg -b debian ${controlFile.debFileName}"/>
+      </exec>
+
+  </goal>
+</project>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<xweb xpath="/web-app"
+      insert-before="mime-mapping"
+        unless="/web-app/session-config">
+
+  <session-config>
+    <session-timeout>120</session-timeout>
+  </session-config>
+</xweb>

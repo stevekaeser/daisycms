@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Obecná úloha</message>
+  <message key="generictask.description">Workflow pro libovolný druh úlohy, který není pokryt jinými workflow</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Dokument</message>
+  <message key="variable.document.description">Pokud je tato úloha svázána s dokumentem, můžete to uvést tady.</message>
+  <message key="variable.details.label">Podrobný popis</message>
+  <message key="variable.details.description">Tady vysvětlete, co by mělo být uděláno.</message>
+  <message key="variable.workerComment.label">Poznámky pracovníka</message>
+  <message key="variable.workerComment.description">Poznámky osoby, která vykonává úlohu.</message>
+  <message key="variable.feedbackComment.label">Odezva</message>
+  <message key="variable.needsConfirmation.label">Potřebuje potvrzení</message>
+  <message key="variable.needsConfirmation.description">Povolte, pokud chcete být informováni (skrze vaši schránku úloh), když bude úloha dokončena.</message>
+  <message key="variable.worker.label">Pracovník přidělen k úloze</message>
+  <message key="variable.reviewSubmitComment.label">Posoudit poznámku</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Začít obecnou úlohu</message>
+  <message key="startTask.description">Prosím, uveďte požadované informace pro obecnou úlohu.</message>
+  <message key="performTask.label">Obecná úloha</message>
+  <message key="performTask.description">Byl(a) jste požádán(a) o provedení níže uvedených úloh.</message>
+  <message key="feedbackTask.label">Odezva na obecnou úlohu</message>
+  <message key="feedbackTask.description">Na úlohy, které jste vytvořil(a), je následující odezva.</message>
+  <message key="finishedTask.label">Obecná úloha dokončena</message>
+  <message key="finishedTask.description">Toto je oznámení o tom, že úloha, kterou jste vytvořil(a) byla ukončena.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Postoupit úlohu</message>
+  <message key="transition.failure">Poskytněte odezvu zadavateli úlohy</message>
+  <message key="transition.success">Ukončit úlohu</message>
+  <message key="transition.performAgain">Znovu postoupit úlohu</message>
+  <message key="transition.end">Ukončit úlohu</message>
+</catalogue>

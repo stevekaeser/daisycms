@@ -1,0 +1,59 @@
+.LinkEditorLabelInactive {
+    color: gray;
+}
+
+.LinkEditorPopup {
+    background-color: #ebebeb;
+    border: 1px solid gray;
+    padding: .5em;
+}
+
+.LinkEditorPopupActions {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin: .5em 0px .5em 0px;
+    padding: .5em 0px .5em 0px;
+}
+
+.LinkEditorActionLink {
+    color: blue;
+}
+
+.LinkEditorDocumentInfo {
+    width: 18em;
+    max-height: 5em;
+    overflow: auto;
+}
+
+.LinkEditorVersionsPopup {
+    background-color: #ebebeb;
+    border: 1px solid gray;
+    padding: .5em;
+    width: 18em;
+    min-height: 3em;
+}
+
+.LinkEditorVersionsList {
+    height: 10em;
+    overflow: auto;
+}
+
+.LinkEditorVersionsPopupActions {
+    border-bottom: 1px solid gray;
+    margin: 0px 0px .5em 0px;
+    padding: 0px 0px .5em 0px;
+}
+
+.LinkEditorFragmentIdPopup {
+    background-color: #ebebeb;
+    border: 1px solid gray;
+    padding: .5em;
+    min-height: 3em;
+}
+
+.LinkEditorFragmentIdList {
+    height: 10em;
+    width: 18em;
+    overflow: auto;
+}
+

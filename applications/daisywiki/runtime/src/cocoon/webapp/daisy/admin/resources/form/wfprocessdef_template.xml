@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle>Upload a process definition</pageTitle>
+
+  <content>
+    <h1>Upload a process definition</h1>
+
+    <p>If you upload a process definition with the same name as an existing one,
+    this will create a new version of the existing one.</p>
+
+    <p>See the <a href="http://www.daisycms.org/">Daisy documentation</a> for more information
+      about the form and format of process definitions (which are essentially
+      <a href="http://jbpm.org">jBPM</a> process definitions).</p>
+
+    <p>The process definition should either be an XML file (mime type text/xml),
+    or a process zip archive (mime type application/zip).</p>
+
+    <ft:form-template name="processDefinition" action="${continuation.id}" method="POST" enctype="multipart/form-data">
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="processDefinition">
+          </ft:widget>
+          <ft:widget id="processType"/>
+        </fi:items>
+      </fi:group>
+
+      <input type="submit" value="Save"/>
+      <input type="submit" value="Cancel" onclick="window.location='../../wfProcessDefinition'; return false;"/>
+    </ft:form-template>
+
+  </content>
+</page>

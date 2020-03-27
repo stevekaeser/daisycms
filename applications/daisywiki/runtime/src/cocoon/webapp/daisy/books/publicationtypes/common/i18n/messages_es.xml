@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="toc">Tabla de Contenido</message>
+  <message key="figure.default">Figura</message>
+  <message key="figure.screenshot">Captura de pantalla</message>
+  <message key="table.default">Tabla</message>
+  <message key="list-of-figures.default">Figuras</message>
+  <message key="list-of-figures.screenshot">Capturas de pantalla</message>
+  <message key="list-of-tables.default">Tablas</message>
+  <message key="link.page">página</message>
+
+  <!-- For cross references -->
+  <message key="crossrefname.img.default">Figura</message>
+  <message key="crossrefname.img.screenshot">Captura de pantalla</message>
+  <message key="crossrefname.table.default">Tabla</message>
+  <message key="crossrefname.h1">Capítulo</message>
+  <message key="crossrefname.h2">Sección</message>
+  <message key="crossrefname.h3">Sección</message>
+  <message key="crossrefname.h4">Sección</message>
+  <message key="crossrefname.h5">Sección</message>
+  <message key="crossrefname.h6">Sección</message>
+  <message key="crossrefname.h7">Sección</message>
+  <message key="crossrefname.h8">Sección</message>
+  <message key="crossrefname.h9">Sección</message>
+  <message key="crossref.onpage">en la página</message>
+  <!-- The 'here' text is used in HTML rendering instead of the page number or 'on page X' format -->
+  <message key="crossref.here">aquí</message>
+
+  <message key="index">Índice</message>
+
+  <message key="bookindex">Índice del Libro</message>
+
+  <!-- 'notes' is the title of the footnotes section when they are rendered at the end of the chapter
+       instead of the bottom of the page -->
+  <message key="notes">Notas</message>
+</catalogue>

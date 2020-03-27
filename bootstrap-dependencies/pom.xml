@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisy-bootstrap-dependencies</artifactId>
+  <version>2.4.2</version>
+  <name>Daisy: Bootstrap dependencies</name>
+
+  <description>
+    The only goal of this module is to make sure that some dependencies are being downloaded.  See ../install/pom.xml
+  </description>
+
+  <parent>
+    <groupId>daisy</groupId>
+    <artifactId>daisy-parent</artifactId>
+    <version>2.4.2</version>
+  </parent>
+
+  <dependencies>
+    <!-- Dependencies that are needed for building daisy.  These can probably be removed when http://jira.codehaus.org/browse/MNG-1323 
+         is fixed -->
+    <dependency><groupId>logkit</groupId><artifactId>logkit</artifactId><version>1.0.1</version></dependency>
+    <dependency><groupId>commons-collections</groupId><artifactId>commons-collections</artifactId></dependency>
+    <dependency><groupId>commons-lang</groupId><artifactId>commons-lang</artifactId></dependency>
+    <dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId></dependency>
+    <dependency><groupId>torque</groupId><artifactId>torque</artifactId></dependency>
+    <dependency><groupId>torque</groupId><artifactId>torque-gen</artifactId></dependency>
+
+    <!-- runtime dependencies.  -->
+    <dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId></dependency>
+    <dependency><groupId>postgresql</groupId><artifactId>postgresql</artifactId></dependency>
+    <dependency><groupId>mx4j</groupId><artifactId>mx4j-remote</artifactId></dependency>
+    <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-core</artifactId></dependency>
+    <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-jaas</artifactId></dependency>
+    <dependency>
+      <groupId>org.apache.xbean</groupId><artifactId>xbean-spring</artifactId>
+      <exclusions>
+        <exclusion><groupId>org.springframework</groupId><artifactId>spring</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jcl</artifactId></dependency>
+    <dependency><groupId>javax.sql</groupId><artifactId>jdbc-stdext</artifactId></dependency>
+    <dependency><groupId>javax.servlet</groupId><artifactId>servlet-api</artifactId></dependency>
+    <dependency><groupId>xml-apis</groupId><artifactId>xml-apis</artifactId><version>1.3.04</version></dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

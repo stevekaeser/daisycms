@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  <jx:set var="title"><i18n:text key="createdocsel.title"/></jx:set>
+
+  ${pageContext}
+
+  <pageTitle>${title}</pageTitle>
+
+  <content>
+    <h1>${title}</h1>
+    <h3><i18n:text key="createdocsel.subtitle"/></h3>
+    <ft:form-template action="" method="POST">
+      <ft:widget id="messages"/>
+      <i18n:text key="createdocsel.info"/>
+      <br/>
+      <ft:widget id="documents">
+        <fi:styling type="textarea" rows="10" cols="80" spellcheck="false"/>
+      </ft:widget>
+
+      <br/>
+      <br/>
+      <ft:widget id="queryPanelVisible">
+        <fi:styling type="hidden"/>
+      </ft:widget>
+      <jx:set var="queryPanelVisible" value="${CocoonFormsInstance.getChild('queryPanelVisible').getValue()}"/>
+      <a href="#" onclick="toggleShowQuery(); return false;"><i18n:text key="createdocsel.add-docs-from-query"/></a>
+      <div id="queryDiv" style="#{org.outerj.daisy.frontend.util.Conditional.when($queryPanelVisible, '', 'display: none;')} padding-left: 20px">
+        <i18n:text key="createdocsel.enter-query"/>:<br/>
+        <ft:widget id="query">
+          <fi:styling type="textarea" rows="3" cols="70" spellcheck="false"/>
+        </ft:widget>
+        <br/>
+        <ft:widget id="executeQuery"/>
+      </div>
+
+      <br/>
+      <br/>
+      <input type="submit" value="cancel" i18n:attr="value" onclick="window.location='../../../doctask'; return false;"/>
+      <input type="submit" value="createdocsel.next" i18n:attr="value"/>
+    </ft:form-template>
+
+    <script type="text/javascript">
+      function toggleShowQuery() {
+        var div = document.getElementById("queryDiv");
+        div.style.display = div.style.display == '' ? 'none' : '';
+        document.getElementById("queryPanelVisible").value = (div.style.display == '');
+      }
+    </script>
+
+  </content>
+</page>

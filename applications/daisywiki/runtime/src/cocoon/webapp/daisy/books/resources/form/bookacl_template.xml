@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle>
+    <jx:choose>
+      <jx:when test="${inBookPublishWizard}">
+        <i18n:text key="bookwizard.step3"/>
+      </jx:when>
+      <jx:otherwise>
+        <i18n:text key="bookacl.title"/>
+      </jx:otherwise>
+    </jx:choose>
+  </pageTitle>
+  <layoutHints wideLayout="true"/>
+
+  <content>
+
+    <jx:choose>
+      <jx:when test="${inBookPublishWizard}">
+        <h1><i18n:text key="bookwizard.step3"/></h1>
+        <h2><i18n:text key="bookwizard.step3.name"/></h2>
+      </jx:when>
+      <jx:otherwise>
+        <h1><i18n:text key="bookacl.title"/></h1>
+      </jx:otherwise>
+    </jx:choose>
+
+    <ft:form-template action="" method="POST">
+
+      <ft:union id="editors">
+        <ft:case id="xml">
+          <ft:group id="xml">
+            (You should not see this)
+          </ft:group>
+        </ft:case>
+        <ft:case id="gui">
+          <ft:group id="gui">
+            <jx:import uri="${cocoon.request.getAttribute('daisyContextPath')}/books/resources/form/bookacl_common_template.xml"/>
+          </ft:group>
+        </ft:case>
+      </ft:union>
+
+      <jx:choose>
+        <jx:when test="${inBookPublishWizard}">
+          <input type="submit" onclick="window.location = '${pageContext.mountPoint}/books/definitions'; return false;" value="cancel" i18n:attr="value"/>
+          <ft:widget id="goBack"/>
+          <input type="submit" value="bookwizard.start" i18n:attr="value"/>
+        </jx:when>
+        <jx:otherwise>
+          <input type="submit" value="bookacl.save" i18n:attr="value"/>
+          <input type="submit" onclick="window.location = '${pageContext.mountPoint}/books'; return false;" value="cancel" i18n:attr="value"/>
+        </jx:otherwise>
+      </jx:choose>
+    </ft:form-template>
+
+  </content>
+
+</page>

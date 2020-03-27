@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- layout.xsl -->
+  <message key="layout.user">Uživatel:</message>
+  <message key="layout.role">Role:</message>
+  <message key="layout.changelogin">Změnit přihlášení</message>
+  <message key="layout.logout">Odhlásit</message>
+  <message key="layout.user-settings">Uživatelské nastavení</message>
+  <message key="layout.change-locale">Změnit jazyk</message>
+  <message key="layout.query-search">Vyhledávání dotazem</message>
+  <message key="layout.recent-changes">Historie změn</message>
+  <message key="layout.new-document">Nový dokument</message>
+  <message key="layout.hide">Skrýt</message>
+  <message key="layout.search">Hledat</message>
+  <message key="layout.navigationdoc">Navigační dok.:</message>
+  <message key="layout.navigationdoc-view">zobrazit</message>
+  <message key="layout.navigationdoc-edit">editovat</message>
+  <message key="layout.my-comments">Moje komentáře</message>
+  <message key="layout.registration">Registrovat</message>
+  <message key="layout.administration">Administrace</message>
+  <message key="layout.doctask">Úlohy nad dokumenty</message>
+  <message key="layout.variants">Varianty</message>
+  <message key="layout.branch-language">(větev - jazyk)</message>
+  <message key="layout.add-variant">Přidat variantu ...</message>
+  <message key="layout.use-all-roles">Použít všechny role</message>
+  <message key="layout.excl-administrator">(mimo Administrator)</message>
+  <message key="layout.multiple-roles">Vícenásobné</message>
+  <message key="layout.page-actions">Akce</message>
+  <message key="layout.tools">Nástroje</message>
+  <message key="layout.books">Publikováni knih</message>
+  <message key="layout.basket">Košík dokumentů</message>
+  <message key="layout.new-workflow">Začít nové workflow</message>
+  <message key="layout.workflow-console">Konzole workflow</message>
+  <message key="layout.variables">Proměnné</message>
+  <message key="layout.translation-management">Správa překladů</message>
+  <message key="minimal-feed">Minimální kanál (obsahuje jenom názvy dokumentů)</message>
+  <message key="normal-feed">Normální kanál (obsahuje celý text dokumentů)</message>
+  <message key="editors-feed">Editorský kanál (obsahuje celý text dokumentů a rozdíly oproti předchozí verzi)</message>
+  <message key="layout.versionmode-live">ŽIVÁ VERZE</message>
+  <message key="layout.versionmode-last">POSLEDNÍ VERZE</message>
+  <message key="layout.switch-to-live-hint">Klikněte pro zobrazení živé verze </message>
+  <message key="layout.switch-to-last-hint">Klikněte pro zobrazení poslední verze</message>
+  <message key="image.show-referrers">Podívejte se, kde je tento obrázek používán</message>
+</catalogue>

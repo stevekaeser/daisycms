@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="error">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="cause" type="daisy:causeType"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="causeType">
+    <xs:sequence>
+      <xs:element name="exception">
+        <xs:complexType>
+          <xs:attribute name="type" type="xs:string"/>
+          <xs:attribute name="message" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      <!--exceptionData contains data that can be used to restore the original exception class-->
+      <xs:element maxOccurs="1" minOccurs="0" name="exceptionData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="value" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="stackTrace">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="stackTraceElement">
+              <xs:complexType>
+                <xs:attribute name="className" type="xs:string"/>
+                <xs:attribute name="fileName" type="xs:string"/>
+                <xs:attribute name="lineNumber" type="xs:int"/>
+                <xs:attribute name="methodName" type="xs:string"/>
+                <xs:attribute name="nativeMethod" type="xs:boolean"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="1" minOccurs="0" name="cause" type="daisy:causeType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

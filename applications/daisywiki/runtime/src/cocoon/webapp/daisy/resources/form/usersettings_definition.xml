@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="currentPassword">
+      <fd:label><i18n:text key="usersettings.current-password"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="newPassword">
+      <fd:label><i18n:text key="usersettings.new-password"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="newPasswordConfirm">
+      <fd:label><i18n:text key="usersettings.new-password-confirm"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:assert test="newPasswordConfirm = newPassword">
+          <fd:failmessage><i18n:text key="usersettings.passwords-must-be-equal"/></fd:failmessage>
+        </fd:assert>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="email">
+      <fd:label><i18n:text key="usersettings.email"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:email/>
+        <fd:length max="100"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="firstName">
+      <fd:label><i18n:text key="usersettings.first-name"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="lastName">
+      <fd:label><i18n:text key="usersettings.last-name"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:validation>
+        <fd:length max="50"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:booleanfield id="receiveDocumentEvents">
+      <fd:label><i18n:text key="usersettings.receive-document-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="receiveUserEvents">
+      <fd:label><i18n:text key="usersettings.receive-user-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="receiveSchemaEvents">
+      <fd:label><i18n:text key="usersettings.recieve-schema-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="receiveCollectionEvents">
+      <fd:label><i18n:text key="usersettings.receive-collection-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="receiveAclEvents">
+      <fd:label><i18n:text key="usersettings.receive-acl-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="receiveCommentEvents">
+      <fd:label><i18n:text key="usersettings.receive-comment-events"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:field id="locale" required="true">
+      <fd:label><i18n:text key="usersettings.notifications-locale"/></fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list type="flow-jxpath" list-path="locales" value-path="org.outerj.daisy.repository.LocaleHelper.getString(.)" label-path="getDisplayName(., /locale)" />
+    </fd:field>
+
+    <fd:field id="subscribedDocuments">
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:field id="subscribedCollections">
+      <fd:datatype base="string"/>
+    </fd:field>
+
+    <fd:submit id="save">
+      <fd:label><i18n:text key="usersettings.save-changes"/></fd:label>
+    </fd:submit>
+
+  </fd:widgets>
+
+</fd:form>

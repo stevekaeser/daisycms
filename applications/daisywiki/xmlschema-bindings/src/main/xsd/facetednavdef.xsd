@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#facetednavdef" xmlns:s="http://outerx.org/daisy/1.0#facetednavdef" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="options" id="options">
+    <xs:complexType>                  
+      <xs:all>                    
+        <xs:element name="limitToSiteCollection" type="xs:boolean"/>
+        <xs:element name="limitToSiteVariant" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="additionalSelects">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="expression" minOccurs="1" maxOccurs="unbounded">
+                 <xs:complexType mixed="true">
+                   <xs:attribute name="sortingExpression" type="xs:string" use="optional"/>
+                 </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="defaultConditions" type="xs:string"/>
+        <xs:element minOccurs="0" name="defaultOrder" type="xs:string"/>        
+      </xs:all>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>       
+  <xs:element name="facetedNavigationDefinition">
+    <xs:complexType>     
+      <xs:sequence>        
+        <xs:element name="stylesheet" minOccurs="0" maxOccurs="1">
+          <xs:complexType>            
+            <xs:attribute name="src" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:choice>                
+          <xs:element name="optionsList">          
+            <xs:complexType>            
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="s:options"/>
+              </xs:sequence>
+              <xs:attribute name="defaultOptions" type="xs:string"/>         
+            </xs:complexType>
+          </xs:element>  
+          <xs:element ref="s:options"/>   
+        </xs:choice>
+        <xs:element name="facets">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="facet">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="properties" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="name" type="xs:string" use="required"/>
+                              <xs:attribute name="value" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="expression" type="xs:string"/>
+                  <xs:attribute name="type" type="xs:string"/>
+                  <xs:attribute name="sortingExpression" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>      
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="timedpublish.label">Zeitgesteuerte Publikation</message>
+  <message key="timedpublish.description">Ein Arbeitsablauf, um zu einem gegebenen Zeitpunkt bei einem bestimmten Dokument automatisch von der Entwurfsansicht in die Live-Ansicht zu wechseln.</message>
+
+  <message key="startTimedPublishTask.label">Start der zeitgesteuerten Publikation</message>
+  <message key="startTimedPublishTask.description">Das ausgewählte Dokument wird zum angegebenen Zeitpunkt auf den Status "publiziert" gesetzt.</message>
+  <message key="transition.start-timer">Starttimer</message>
+
+  <message key="variable.daisy_document.description">Das Dokument das live geschaltet werde soll. Es wird empfohlen, die Angabe der Version mit vorzunehmen. Falls keine Versionsangabe erfolgt, wird automatisch die letzte vorliegende Version des Dokuments live gestellt.</message>
+
+  <message key="variable.publishTime.label">Datum und Uhrzeit der Veröffentlichung</message>
+  <message key="variable.publishTime.description">Datum und Uhrzeit zu dem das Dokument live geschaltet werden soll. Natürlich muss es sich hierbei um ein in der Zukunft liegendes Datum handeln.</message>
+</catalogue>

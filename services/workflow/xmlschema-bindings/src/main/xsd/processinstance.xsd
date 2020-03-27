@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="processdefinition.xsd"/>
+  <xs:element name="variable">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="wf:variableValuesType">
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="scope" type="wf:scopeType" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="variableValuesType">
+    <xs:choice>
+      <xs:element name="string" type="xs:string"/>
+      <xs:element name="date" type="xs:date"/>
+      <xs:element name="dateTime" type="xs:dateTime"/>
+      <xs:element name="long" type="xs:long"/>
+      <xs:element name="daisyLink">
+        <xs:complexType>
+          <xs:attribute name="documentId" type="xs:string" use="required"/>
+          <xs:attribute name="branchId" type="xs:long"/>
+          <xs:attribute name="languageId" type="xs:long"/>
+          <xs:attribute name="version" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="actor">
+        <!--For non-pools, the id attribute should be used, for pools the id attribute can be used if there is only one entry,
+and otherwise nested id elements can be used (the id attribute will take preference over any nested elements).-->
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="xs:long"/>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:long" use="optional"/>
+          <xs:attribute name="pool" type="xs:boolean" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="user" type="xs:long"/>
+      <xs:element name="boolean" type="xs:boolean"/>
+      <xs:element name="id" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="variables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:variable"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="executionPath">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="children">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:executionPath"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="wf:nodeDefinition"/>
+      </xs:all>
+      <xs:attribute name="path" type="xs:string"/>
+      <xs:attribute name="start" type="xs:dateTime"/>
+      <xs:attribute name="end" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="task">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="wf:variables"/>
+        <xs:element ref="wf:taskDefinition"/>
+      </xs:all>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="created" type="xs:dateTime"/>
+      <xs:attribute name="end" type="xs:dateTime"/>
+      <xs:attribute name="dueDate" type="xs:dateTime"/>
+      <xs:attribute name="priority" type="wf:priorityType"/>
+      <xs:attribute name="actorId" type="xs:long"/>
+      <xs:attribute name="hasPools" type="xs:boolean"/>
+      <xs:attribute name="hasSwimlane" type="xs:boolean"/>
+      <xs:attribute name="processId" type="xs:string"/>
+      <xs:attribute name="executionPath" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tasks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:task"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="priorityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="highest"/>
+      <xs:enumeration value="high"/>
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="low"/>
+      <xs:enumeration value="lowest"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="process">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="wf:tasks"/>
+        <xs:element ref="wf:executionPath"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="start" type="xs:dateTime"/>
+      <xs:attribute name="end" type="xs:dateTime"/>
+      <xs:attribute name="suspended" type="xs:boolean"/>
+      <xs:attribute name="definitionId" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="processes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:process"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

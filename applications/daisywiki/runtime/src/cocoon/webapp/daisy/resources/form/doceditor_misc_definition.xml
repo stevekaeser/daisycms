@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:booleanfield id="private">
+      <fd:label><i18n:text key="editdoc.private"/></fd:label>
+      <fd:help><i18n:text key="editdoc.private-help"/></fd:help>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="retired">
+      <fd:label><i18n:text key="editdoc.retired"/></fd:label>
+    </fd:booleanfield>
+
+    <fd:repeater id="customFields">
+      <fd:widgets>
+        <fd:field id="name" required="true">
+          <fd:label><i18n:text key="editdoc.customfields.name"/></fd:label>
+          <fd:datatype base="string"/>
+          <fd:validation>
+            <fd:length max="255"/>
+          </fd:validation>
+        </fd:field>
+        <fd:field id="value" required="true">
+          <fd:label><i18n:text key="editdoc.customfields.value"/></fd:label>
+          <fd:datatype base="string"/>
+          <fd:validation>
+            <fd:length max="255"/>
+          </fd:validation>
+        </fd:field>
+        <fd:row-action id="delete" command="delete">
+          <fd:label><i18n:text key="editdoc.customfields.delete"/></fd:label>
+        </fd:row-action>
+      </fd:widgets>
+    </fd:repeater>
+
+    <fd:field id="referenceLanguageId">
+      <fd:datatype base="long"/>
+      <fd:label><i18n:text key="editdoc.reference-language"/></fd:label>
+    </fd:field>
+
+    <fd:action id="addCustomField">
+      <fd:label><i18n:text key="editdoc.add-custom-field"/></fd:label>
+    </fd:action>
+
+    <fd:multivaluefield id="collections">
+      <fd:datatype base="long"/>
+      <fd:selection-list type="flow-jxpath" list-path="collectionsArray" value-path="id" label-path="name" />
+    </fd:multivaluefield>
+
+    <!--
+    | Dummy action used to cause a server roundtrip without ending the use case or validation.
+    | This is required by the document editor.
+    -->
+    <fd:action id="dummy">
+      <fd:label>dummy action</fd:label>
+    </fd:action>
+  </fd:widgets>
+
+</fd:form>

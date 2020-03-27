@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+  <packaging>jar</packaging>
+
+  <parent>
+    <groupId>${groupId}</groupId>
+    <artifactId>${rootArtifactId}</artifactId>
+    <version>${version}</version>
+  </parent>
+
+  <name>Main Daisy module</name>
+
+  <properties>
+    <rootdir>${project.basedir}/..</rootdir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>daisy</groupId>
+        <artifactId>daisy-maven-plugin</artifactId>
+        <configuration>
+          <!-- Used by import[-acl],export[-acl] and pack goals -->
+          <exportFileDestination>src/main/dsy-exp/project-export.zip</exportFileDestination>
+          <exportSetFile>src/main/dsy-exp/project-expset.xml</exportSetFile>
+          <importFileSource>src/main/dsy-exp/project-export.zip</importFileSource>
+          <importOptionsFile>src/main/dsy-exp/project-impopt.xml</importOptionsFile>
+          <aclFile>src/main/dsy-exp/acl.xml</aclFile>
+          <wfPoolFile>src/main/dsy-exp/wf-pools.xml</wfPoolFile>
+          <wikiSourceDir>src/main/dsy-wiki</wikiSourceDir>
+          <repoSourceDir>src/main/dsy-data</repoSourceDir>
+
+          <!-- Used by install-plugin and install-wiki-ext -->
+          <overwriteIfNewer>true</overwriteIfNewer>
+
+          <!-- Use this to define repodata and wikidata resources (in addition to ${repoResource} and ${wikiResource} -->
+          <repoResources> 
+            <repoResource>${rootdir}/daisy-workflow/src/main/dsy-data</repoResource>
+          </repoResources> 
+          <wikiResources> 
+            <wikiResource>${rootdir}/daisy-workflow/src/main/dsy-wiki</wikiResource>
+          </wikiResources>
+          <!-- TODO: allow specifying resources via dependencies (wikidata & repodata classifier!) -->
+ 
+          <!-- xpatch -->
+          <!-- (default) <patchDir>src/main/xpatch</patchDir> -->
+          <patches>
+            <patch>
+              <target>${daisy.wiki}/daisy.xconf</target>
+              <!--  <patchFile>src/main/xpatch/daisy.xconf.xpatch</patchFile> -->
+              <!--  note: when patchFile is omitted, the default is to use a file named ${targetFile.name}.xpatch in the patchDir -->
+            </patch>
+          </patches>
+
+          <!-- install-plugin -->
+          <loadBefore>
+            <includeGroupIds>${groupId}</includeGroupIds>
+            <includeArtifactIds>${rootArtifactId}-daisy-extensions-before</includeArtifactIds>
+          </loadBefore>
+          <loadAfter>
+          <!-- (example)
+            <includeGroupIds>${groupId}</includeGroupIds>
+            <includeArtifactIds>${rootArtifactId}-daisy-extensions-after</includeArtifactIds>
+          -->
+          </loadAfter>
+
+          <!-- install-wiki-ext -->
+          <wikiExtensions>
+            <includeGroupIds>${groupId}</includeGroupIds>
+            <includeArtifactIds>${rootArtifactId}-daisywiki-extensions</includeArtifactIds>
+          </wikiExtensions>
+          <!-- Here you can limit which dependencies of the wiki extensions are copied to the WEB-INF/lib dir of the wiki (default all are copied)
+            (example)
+          <wikiTransitiveDeps>
+            <includeGroupIds>org.springframework,org.hibernate,jaxen<includeGroupIds>
+          </wikiTransitiveDeps>
+          -->
+          
+          <!-- ideally this would be dependencies, but when there are multiple workflows, that's just not practical -->
+          <workflow>
+            <includeGroupIds>${groupId}</includeGroupIds>
+            <includeArtifactIds>${rootArtifactId}-daisy-workflow</includeArtifactIds>
+            <includeTypes>zip</includeTypes>
+          </workflow>
+          <processDefinitionNames>
+            <processDefinitionNames>myproject-sample-wf</processDefinitionNames>
+          </processDefinitionNames>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>full</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>daisy</groupId>
+            <artifactId>daisy-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>initialise</id>
+                <goals>
+                  <goal>init-repo</goal>
+                  <!--
+                  <goal>create-users</goal>
+                  <goal>create-variants</goal>
+                  -->
+                  <goal>init-wiki</goal>
+                  <goal>xpatch</goal>
+                  <goal>install-plugin</goal>
+                  <goal>install-wiki-ext</goal>
+                  <goal>wf-upload</goal>
+                  <!--
+                  <goal>import-acl</goal>
+                  -->
+                  <goal>restart</goal>
+                </goals>
+                <phase>install</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+  <dependencies>
+    <dependency><groupId>${groupId}</groupId><artifactId>${rootArtifactId}-daisy-extensions-before</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>${groupId}</groupId><artifactId>${rootArtifactId}-daisy-workflow</artifactId><version>${project.version}</version><classifier>sample-workflow</classifier><type>zip</type><scope>runtime</scope></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.1</version><scope>test</scope></dependency>
+  </dependencies>
+</project>

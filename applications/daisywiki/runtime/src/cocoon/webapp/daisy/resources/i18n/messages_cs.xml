@@ -1,0 +1,1129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="org.outerj.daisy.repository.LockType.WARN">Varovat</message>
+  <message key="org.outerj.daisy.repository.LockType.PESSIMISTIC">Pesimistický</message>
+
+  <!-- shared -->
+  <message key="back-to-document">Zpět k dokumentu</message>
+  <message key="hide-navigation">Skrýt navigaci</message>
+  <message key="warning-upper">VAROVÁNÍ</message>
+  <message key="mv-available">Dostupné</message>
+  <message key="mv-selected">Vybrané</message>
+  <message key="ok">Ok</message>
+  <message key="cancel">Zrušit</message>
+  <message key="draft">koncept</message>
+  <message key="publish">zveřejněná</message>
+  <message key="major">větší</message>
+  <message key="minor">menší</message>
+  <message key="createvariant-versionnumber-error">Neplatný vstup: zadejte 'last' (poslední), 'live' (živá) nebo číslo verze.</message>
+  <message key="branch">Větev</message>
+  <message key="language">Jazyk</message>
+  <message key="reference-language">Referenční jazyk</message>
+  <message key="branch_lc">větev</message>
+  <message key="language_lc">jazyk</message>
+  <message key="variant">Varianta</message>
+  <message key="version_lc">verze</message>
+  <message key="version">Verze</message>
+  <message key="collection">Kolekce</message>
+  <message key="help">Nápověda</message>
+  <message key="select-any">--- Libovolný ---</message>
+  <message key="please-wait-uploading">Prosím čekejte, nahrávání souboru...</message>
+  <message key="delete">Smazat</message>
+  <message key="add">Přidat</message>
+  <message key="add-new">Přidat nový</message>
+  <message key="move-up">Nahoru</message>
+  <message key="move-down">Dolů</message>
+  <message key="name">Název</message>
+  <message key="value">Hodnota</message>
+  <message key="live">Živá</message>
+  <message key="last">Poslední</message>
+  <!-- For search navigation -->
+  <message key="prev">Předchozí</message>
+  <message key="next">Další</message>
+  <message key="collections">Kolekce</message>
+
+  <!-- login.xsl -->
+  <message key="login.title">Přihlášení</message>
+  <message key="login.user-label">Uživatel:</message>
+  <message key="login.password-label">Heslo:</message>
+  <message key="login.login-button">Přihlásit</message>
+  <message key="login.switchrole">Změnit roli:</message>
+  <message key="login.switchrole-button">Změnit roli</message>
+  <message key="login.forgot-password">Zapomněli jste heslo?</message>
+  <message key="login.use-all-roles">Použít všechny role</message>
+  <message key="login.excl-administrator">(mimo Administrator)</message>
+
+  <!-- deletedocument.xsl -->
+  <message key="deletedocument.title">Smazání {0} (ID: {1})</message>
+  <message key="deletedocument.headtitle">Smazat dokument</message>
+  <message key="deletedocument.choose-action">Vyberte jednu z následujících akcí:</message>
+  <message key="deletedocument.document-variant-retired">Tato varianta dokumentu je v archivu.</message>
+  <message key="deletedocument.retire-document-variant">Archivovat tuto variantu dokumentu.</message>
+  <message key="deletedocument.retire-document-variant-info">Varianta dokumentu je virtuálně smazaná, ale pořád může být obnovena.</message>
+  <message key="deletedocument.delete-variant-permanently">Trvale smazat tuto variantu dokumentu.</message>
+  <message key="deletedocument.delete-variant-permanently-info">Varianta dokumentu bude trvale odstraněna, tato operace nemůže být navrácena.</message>
+  <message key="deletedocument.delete-permanently">Trvale smazat tento dokument.</message>
+  <message key="deletedocument.delete-permanently-info">Tento dokument (včetně všech jeho variant) bude trvale odstraněn, tato operace nemůže být navrácena.</message>
+  <message key="deletedocument.retire-note">Poznámka: archivní status dokumentu může být také změněn (zapnut nebo vypnut) při editování dokumentu.</message>
+  <message key="deletedocument.links-title">Dokumenty odkazující na tento dokument</message>
+  <message key="deletedocument.links-info">Následující dokumenty odkazují na tuto variantu dokumentu (buď jejich poslední nebo živá verze):</message>
+  <message key="deletedocument.links-consider-updating">Prosím, zvažte aktualizaci těchto dokumentů.</message>
+
+  <!-- diff.xsl -->
+  <message key="diff.title">Zpráva o změnách</message>
+  <message key="diff.reverse-diff-warning">VAROVÁNÍ: provádíte obrácené porovnání!</message>
+  <message key="diff.general">Obecné</message>
+  <message key="diff.version">Verze</message>
+  <message key="diff.document-name">Název dokumentu</message>
+  <message key="diff.not-changed">(nezměněn)</message>
+  <message key="diff.creation-time">Čas vytvoření</message>
+  <message key="diff.created-by">Vytvořen kým</message>
+  <message key="diff.state">Stav</message>
+  <message key="diff.part-changes">Změny v částech</message>
+  <message key="diff.no-changes-detected">Žádné změny nebyly zjištěny.</message>
+  <message key="diff.part-has-changed">Část "{0}" byla změněna.</message>
+  <message key="diff.mime-type">Mime-type</message>
+  <message key="diff.filename">Název souboru</message>
+  <message key="diff.size">Velikost (bytes)</message>
+  <message key="diff.content-diff">Změny obsahu</message>
+  <message key="diff.part-removed">Část "{0}" byla odstraněna.</message>
+  <message key="diff.part-added">Část "{0}" byla přidána.</message>
+  <message key="diff.part-unchanged">Část "{0}" zůstala nezměněna.</message>
+  <message key="diff.part-mightbe-changed">Část "{0}" přesahuje velikostní limit k nalezení změn.</message>
+  <message key="diff.field-changes">Změny v polích</message>
+  <message key="diff.deleted-field">(pole smazáno)</message>
+  <message key="diff.new-field">(nové pole)</message>
+  <message key="diff.link-changes">Změny v odkazech</message>
+  <message key="diff.removed-links">Odstraněné odkazy</message>
+  <message key="diff.added-links">Přidané odkazy</message>
+  
+  <message key="diff.compare-settings">Nastavení porovnání</message>
+  <message key="diff.changes-from">Změny z:</message>
+  <message key="diff.changes-to">na:</message>
+  <message key="diff.txt-compare">Porovnání textové</message>
+  <message key="diff.html-compare">Porovnání HTML</message>
+  <message key="diff.text-xml-compare">Porovnání HTML/XML značek</message>
+  <message key="diff.compare-versions">Porovnat verze {0} a {1}</message>
+  <message key="diff.type">Typ:</message>
+  <message key="diff.click-on-changed">Pro detailní popis klikněte na změněné části.</message>
+  <message key="diff.use-arrows">K procházení modifikací použijte levou nebo pravou šipku.</message>
+  <message key="diff.go-to-first">Jít na první změnu.</message>
+  <message key="diff.go-to-last">Jít na poslední změnu.</message>
+  <message key="diff.first">první</message>
+  <message key="diff.last">poslední</message>
+  <message key="diff.compare">Porovnat</message>
+  <message key="diff.version">Verze</message>
+  <message key="diff.by">kdo</message>
+  <message key="diff.on">kdy</message>
+  <message key="diff.name">Název:</message>
+  <message key="diff.variant">Varianta:</message>
+  <message key="diff.state">Stav:</message>
+
+  <!-- documentlayout.xsl / documentlayout-xslfo.xsl -->
+  <message key="doclayout.edit">Editovat</message>
+  <message key="doclayout.delete">Smazat</message>
+  <message key="doclayout.duplicate">Duplikovat</message>
+  <message key="doclayout.docinfo">Informace o dokumentu</message>
+  <message key="doclayout.unsubscribe">Neodebírat změny</message>
+  <message key="doclayout.subscribe">Odebírat změny</message>
+  <message key="doclayout.change-owner">Změnit vlastníka</message>
+  <message key="doclayout.changes">Změny</message>
+  <message key="doclayout.versions">Verze</message>
+  <message key="doclayout.referrers">Odkazující dokumenty</message>
+  <message key="doclayout.pdf">PDF</message>
+  <message key="doclayout.add-to-basket">Přidat do košíku</message>
+  <message key="doclayout.related-workflows">Související workflow</message>
+  <message key="doclayout.in-preparation">V přípravě</message>
+  <message key="doclayout.retired">Archivované</message>
+  <message key="doclayout.in-preparation-info">Tento dokument ještě nebyl zveřejněn.</message>
+  <message key="doclayout.retired-info">Tento dokument byl archivován.</message>
+<!--
+  <message key="doclayout.not-last-version-warning">prohlížíte živou verzi dokumentu, která v současné době není {0}.</message>
+  <message key="doclayout.last-version">verze poslední</message>
+  <message key="doclayout.not-live-version-warning">neprohlížíte {0}, ale {1}.</message>
+  <message key="doclayout.live-version">verze živá</message>
+  <message key="doclayout.at-the-last-version">na poslední verzi</message>
+  <message key="doclayout.at-a-more-recent-version">na novější verzi</message>
+  <message key="doclayout.at-an-older-version">na starší verzi</message>
+-->
+  <message key="doclayout.make-version-live">Změnit na živou.</message>
+  <message key="doclayout-xslfo.id">ID</message>
+  <message key="doclayout-xslfo.version">Verze</message>
+  <message key="doclayout-xslfo.date">Datum</message>
+  <message key="comments.title">Komentáře</message>
+  <message key="comments.no-comments">Neexistují žádné komentáře.</message>
+  <message key="comments.add-comment">Přidat komentář</message>
+  <message key="comments.log-in-to-add-comments">Prosím, přihlaste se, abyste mohli přidávat komentáře.</message>
+  <message key="comments.visible-to">Komentář viditelný pro:</message>
+  <message key="comments.visibility-everyone">všechny</message>
+  <message key="comments.visibility-editors">jenom editoři</message>
+  <message key="comments.visibility-private">jenom já</message>
+  <message key="comments.add">Přidat komentář</message>
+  <message key="comments.created-by">Vytvořen kým</message>
+  <message key="comments.created-on">kdy</message>
+  <message key="comments.private-comment">PRIVÁTNÍ KOMENTÁŘ</message>
+  <message key="comments.editors-comment">EDITORSKÝ KOMENTÁŘ</message>
+  <message key="comments.delete">Smazat</message>
+  <message key="comments.show">Komentáře</message>
+  <message key="comments.hide">Skrýt</message>
+
+  <!-- docinfo.xsl -->
+  <message key="docinfo.pageTitle">Informace o dokumentu</message>
+  <message key="docinfo.title">Informace o dokumentu</message>
+  <message key="docinfo.name">Název</message>
+  <message key="docinfo.id">ID</message>
+  <message key="docinfo.id-based-link">Odkaz typu ID</message>
+  <message key="docinfo.navigation-based-link">Odkaz typu navigace</message>
+  <message key="docinfo.doctype">Typ dokumentu</message>
+  <message key="docinfo.owner">Vlastník</message>
+  <message key="docinfo.created">Vytvořen kdy</message>
+  <message key="docinfo.last-modified">Naposled změněn</message>
+  <message key="docinfo.versioninfo.title">Informace o verzi</message>
+  <message key="docinfo.version">Zobrazená verze</message>
+  <message key="docinfo.version-of">z</message>
+  <message key="docinfo.version-state">Stav</message>
+  <message key="docinfo.version-synced-with">Synchronizována s</message>
+  <message key="docinfo.version-abbrev">v.</message>
+  <message key="docinfo.version-change-type">Typ změny</message>
+  <message key="docinfo.version-change-comment">Změnit komentář</message>
+  <message key="docinfo.version-created">Vytvořena kdy</message>
+  <message key="docinfo.version-last-modified">Naposled změněna</message>
+  <message key="docinfo.by">kým</message>
+  
+  <message key="docinfo.close">Zavřít</message>
+
+  <!-- error.xsl -->
+  <message key="error.title">Chyba</message>
+  <message key="error.login-info">V současné době jste přihlášeni jako uživatel <em>{0}</em> s rolí/rolemi <em>{1}</em>.</message>
+  <message key="error.change-login">Změnit přihlášení...</message>
+  <message key="error.show-details">Zobrazit detaily</message>
+  <message key="error.hide-details">Skrýt detaily</message>
+
+  <!-- fulltext_searchresult.xsl -->
+  <message key="fulltextresult.no-docs-found">Nenalezeny žádné dokumenty.</message>
+  <message key="fulltextresult.infoline">Zveřejněn: {0}, ID dokumentu: {1}</message>
+  <message key="fulltextresult.results">Výsledky {0} z {1}</message>
+  <message key="fulltextresult.resultspage">Stránka výsledků:</message>
+
+  <!-- indexpage.xsl -->
+  <message key="index.available-sites">Dostupné stránky:</message>
+  <message key="index.no-sites-available">Žádné stránky pro vás nejsou dostupné.</message>
+
+  <!-- referrers.xsl -->
+  <message key="referrers.referrers-for">Odkazy pro</message>
+  <message key="referrers.title">Odkazující dokumenty</message>
+  <message key="referrers.infoline">Zobrazit dokumenty, kde {0} nebo {1} verze odkazují na tento dokument.</message>
+  <message key="referrers.live">živá</message>
+  <message key="referrers.last">poslední</message>
+  <message key="referrers.no-referring-docs">Neexistují žádné odkazující dokumenty.</message>
+  <message key="referrers.show-button">Zobrazit</message>
+
+  <!-- searchresult.xsl -->
+  <message key="searchresult.title">Výsledky vyhledávání</message>
+  <message key="searchresult.actions">Akce</message>
+  <message key="searchresult.action-show">zobrazit</message>
+  <message key="searchresult.action-edit">editovat</message>
+  <message key="searchresult.nothing-found">Dotaz nenašel žádné výsledky.</message>
+  <message key="searchresult.add-to-basket">Přidat výsledky vyhledávání do košíku dokumentů</message>
+
+  <!-- select_doctype.xsl -->
+  <message key="doctype.title">Výběr typu dokumentu</message>
+  <message key="doctype.select">Vyberte typ dokumentu pro nový dokument:</message>
+  <message key="doctype.non-available">(žádné vám nejsou dostupné)</message>
+  <message key="doctype.create-on-branch">Vytvořit dokument z větvě</message>
+  <message key="doctype.create-in-language">v jazyku</message>
+  <message key="doctype.default-doctype">Výchozí typ dokumentu pro tyto stránky</message>
+  <message key="doctype.other-doctype">Další typy dokumentů</message>
+
+  <!-- select_locale.xsl -->
+  <message key="locale.title">Výběr jazyka</message>
+  <message key="locale.select">Vyberte vaše jazykové nastavení:</message>
+
+  <!-- select_role.xsl -->
+  <message key="selectrole.title">Výběr role</message>
+  <message key="selectrole.id">ID</message>
+  <message key="selectrole.name">Název</message>
+  <message key="selectrole.description">Popis</message>
+
+  <!-- select_user.xsl -->
+  <message key="selectuser.title">Výběr uživatele</message>
+  <message key="selectuser.id">ID</message>
+  <message key="selectuser.login">Uživatelské jméno</message>
+  <message key="selectuser.name">Jméno</message>
+
+  <!-- version_overview.xsl -->
+  <message key="versions.for">Verze pro</message>
+  <message key="versions.overview">Přehled verzí</message>
+  <message key="versions.nr">Č</message>
+  <message key="versions.time">Čas</message>
+  <message key="versions.creator">Autor</message>
+  <message key="versions.state">Stav</message>
+  <message key="versions.synced-with">Synchronizována s</message>
+  <message key="versions.synced-with-none">Žádný</message>
+  <message key="versions.version-abbreviated">v.</message>
+  <message key="versions.change-type">Změna</message>
+  <message key="versions.change-comment">Komentář</message>
+  <message key="versions.diff">Porovnat</message>
+  <message key="versions.diff-to-previous">s předchozí</message>
+  <message key="versions.diff-to-last">s poslední</message>
+  <message key="versions.diff-to-next">s následující</message>
+  <message key="versions.compare-selected">Porovnat vybrané verze</message>
+  <message key="versions.live">ŽIVÁ</message>
+  <message key="versions.created-from">Tato varianta byla vytvořena z</message>
+  <message key="versions.actions">Akce</message>
+  <message key="versions.edit">Editovat</message>
+  <message key="versions.edit.version">Editovat vlastnosti verze</message>
+  <message key="versions.revert">Vrátit sem</message>
+  <message key="versions.revert-info">Budete přesměrování do editoru dokumentů, abyste mohli provést změny než potvrdíte reverzi.</message>
+  <message key="versions.confirm-change-to-publish">Změnit stav této verze na 'zveřejněna'?</message>
+  <message key="versions.confirm-change-to-draft">Změnit stav této verze na 'koncept'?</message>
+  <message key="versions.editor.save">Uložit</message>
+  <message key="versions.editor.cancel">Zrušit</message>
+  
+  <!-- upload_*.xml, upload_finish.xml -->
+  <message key="upload.name">Název:</message>
+  <message key="upload.file">Soubor:</message>
+  <message key="upload.title">Nahrání souboru</message>
+  <message key="upload.collections">Kolekce</message>
+  <message key="upload.upload">Nahrát</message>
+  <message key="upload.completing">Dokončování nahrávání</message>
+
+  <!-- changeowner_*.xml -->
+  <message key="changeowner.newowner">Nový vlastník:</message>
+  <message key="changeowner.title">Změna vlastníka dokumentu</message>
+  <message key="changeowner.heading">Změnit vlastníka {0} (ID: {1})</message>
+  <message key="changeowner.currentowner">Současný vlastník je: {0} (ID: {1}).</message>
+  <message key="changeowner.change-owner">Změnit vlastníka</message>
+
+  <!-- fulltextsearch_*.xml -->
+  <message key="fulltext.query">Fulltextový dotaz</message>
+  <message key="fulltext.help">
+      Zapnout nebo vypnout použití <a href="http://lucene.apache.org/java/2_2_0/queryparsersyntax.html">syntaxe Lucene</a>.
+      <br/><strong>Rychlá nápověda::</strong><br/>
+      Wildcards: ? a * (ne na začátku slova)<br/>
+      Neurčité vyhledávání: přidejte <span style='font-family: "Andale Mono" monospace;'>~</span> (vlnku) na konec slova.<br/>
+      Booleanovské operátory: AND, OR, NOT (velkými písmeny).<br/>
+      +/- (plus/minus) před slovem jej vyžaduje/zakazuje.<br/>
+      Spojování do skupin pomocí ( ) je podoporováno.
+  </message>
+  <message key="fulltext.search-in">Hledat v</message>
+  <message key="fulltext.query-type">Typ dotazu</message>
+  <message key="fulltext.literal-string">Doslovný řetězec</message>
+  <message key="fulltext.lucene-query">Dotaz Lucene</message>
+  <message key="fulltext.current-site-collection">Kolekce nynějších stránek</message>
+  <message key="fulltext.all-documents">Všechny dokumenty</message>
+  <message key="fulltext.name">název</message>
+  <message key="fulltext.content">obsah</message>
+  <message key="fulltext.fields">pole</message>
+  <message key="fulltext.title">Fulltextové vyhledávání</message>
+  <message key="fulltext.search">Hledat</message>
+
+  <!-- querysearch_*.xml -->
+  <message key="querysearch.query">Dotaz:</message>
+  <message key="querysearch.search">Vyhledávání</message>
+  <message key="querysearch.info">Hledat pomocí dotazovacího jazyka Daisy.</message>
+  <message key="querysearch.execute-query">Provést dotaz</message>
+  <message key="querysearch.samples">Příklady dotazů</message>
+  <message key="querysearch.samples.alldocs">Všechny dokumenty</message>
+  <message key="querysearch.samples.alldocs-bullets">Všechny dokumenty formátované jako výčty s odrážkami (body)</message>
+  <message key="querysearch.samples.lockeddocs">Všechny uzamčené dokumenty</message>
+  <message key="querysearch.samples.images">Všechny dokumenty obsahující část s obrázkem</message>
+  <message key="querysearch.samples.retireddocs">Všechny archivované dokumenty</message>
+  <message key="querysearch.samples.attachments">Všechny přílohy</message>
+  <message key="querysearch.samples.navigationtrees">Všechny navigační stromy</message>
+  <message key="querysearch.samples.unpublisheddocs">Dokumenty, kterých poslední verze ještě nebyla zveřejněna</message>
+  <message key="querysearch.samples.largestdocs">Deset největších dokumentů</message>
+
+  <!-- recentchanges_*.xml -->
+  <message key="recentchanges.changes-during">Změny provedené během</message>
+  <message key="recentchanges.last-24-hours">Posledních 24 hodin</message>
+  <message key="recentchanges.last-week">Posledního týdne</message>
+  <message key="recentchanges.last-month">Posledního měsíce</message>
+  <message key="recentchanges.maximim-results">Maximální počet výsledků</message>
+  <message key="recentchanges.search-in">Hledat v</message>
+  <message key="recentchanges.current-site-collection">Kolekce nynějších stránek</message>
+  <message key="recentchanges.all-documents">Všechny dokumenty</message>
+  <message key="recentchanges.title">Historie změn</message>
+  <message key="recentchanges.search">Hledat</message>
+
+  <!-- usersettings_*.xml -->
+  <message key="usersettings.current-password">Současné heslo:</message>
+  <message key="usersettings.new-password">Nové heslo:</message>
+  <message key="usersettings.new-password-confirm">Nové heslo:</message>
+  <message key="usersettings.passwords-must-be-equal">Uvedená dvě hesla nejsou totožná.</message>
+  <message key="usersettings.email">Email:</message>
+  <message key="usersettings.first-name">Jméno:</message>
+  <message key="usersettings.last-name">Příjmení:</message>
+  <message key="usersettings.receive-document-events">Dostávat oznámení emailem o změnách týkajících se dokumentů.</message>
+  <message key="usersettings.receive-user-events">Dostávat oznámení emailem o změnách týkajících se uživatelů (jenom když jste v roli Administrator).</message>
+  <message key="usersettings.recieve-schema-events">Dostávat oznámení emailem o změnách týkajících se struktury dokumentů (schema).</message>
+  <message key="usersettings.receive-collection-events">Dostávat oznámení emailem o změnách týkajících se kolekcí.</message>
+  <message key="usersettings.receive-acl-events">Dostávat oznámení emailem o změnách týkajících se přístupových práv (ACL).</message>
+  <message key="usersettings.receive-comment-events">Dostávat oznámení emailem, když budou přidány nebo odebrány komentáře.</message>
+  <message key="usersettings.notifications-locale">Nastavení jazyka &amp; země pro oznámení:</message>
+  <message key="usersettings.title">Uživatelská nastavení</message>
+  <message key="usersettings.change-password">Změnit heslo (volitelně)</message>
+  <message key="usersettings.user-data">Údaje uživatele</message>
+  <message key="usersettings.email-notifications">Oznámení emailem</message>
+  <message key="usersettings.document-notification-options">Volby oznámení o dokumentech</message>
+  <message key="usersettings.notification-documents">Dostávat oznámení o následujících dokumentech:</message>
+  <message key="usersettings.notification-documents-info">
+    Přidejte položky ve formátu "id dokumentu,větev,jazyk" po jedné na řádek. Použijte * [hvězdička] jako značku pro výběr souborů pro kteroukoliv komponentu.<br/>
+    Příklady:<br/>
+    <ul>
+      <li><b>15,main,en</b><br/>dostávat oznámení o dokumentu <em>15</em> z větvě <em>main</em> a jazyka  <em>cs</em> (čeština)</li>
+      <li><b>15,*,*</b><br/>dostávat oznámení o dokumentu <em>15</em>, z kterékoliv větve a jazyka</li>
+      <li><b>*,*,en</b><br/>dostávat oznámení o všech dokumentech jazyka <em>en</em> (angličtina)</li>
+      <li><b>*,*,*</b><br/>dostávat oznámení o všech dokumentech, ve všech větvích a všech jazycích (pokud přidáte tento řádek, nemusíte přidávat žádný další)</li>
+    </ul>
+ </message>
+  <message key="usersettings.notification-collections">Dostávat oznámení o dokumentech, které jsou na následujících stránkách:</message>
+  <message key="usersettings.notification-collections-info">
+    Přidejte položky ve formátu "kolekce,větev,jazyk", jednu na řádek. Použijte * [hvězdička] jako značku pro výběr větve a jazyka.<br/>
+    Například:<br/>
+    <b>testy,*,cs</b><br/>
+    dostávat oznámení o všech dokumentech patřících do kolekce <em>testy</em> v jazyku <em>cs</em> (čeština)<br/>
+  </message>
+  <message key="usersettings.save-changes">Uložit změny</message>
+
+  <!-- documentbrowser(_docs).xml -->
+  <message key="docbrowser.invalid-link">Prosím, zadejte platný odkaz.</message>
+  <message key="docbrowser.title">Vložení odkazu</message>
+  <message key="docbrowser.doc-name-like">Jako název dokumentu</message>
+  <message key="docbrowser.doc-name-like-info">(ponechte prázdné k obdržení všech dokumentů, použijte % [procento] jako značku pro výběr)</message>
+  <message key="docbrowser.containing-text">Obsahující text</message>
+  <message key="docbrowser.containing-text-optional">(volitelně)</message>
+  <message key="docbrowser.search-in">Hledat v</message>
+  <message key="docbrowser.current-site-collection">Kolekce nynějších stránek</message>
+  <message key="docbrowser.all-documents">Všechny dokumenty</message>
+  <message key="docbrowser.exclude-doctypes">Vypnout</message>
+  <message key="docbrowser.doctype-image">obrázky</message>
+  <message key="docbrowser.doctype-attachment">přílohy</message>
+  <message key="docbrowser.search">Hledat</message>
+  <message key="docbrowser.documents">Dokumenty</message>
+  <message key="docbrowser.preview">Náhled</message>
+  <message key="docbrowser.insert-link">Vložit&#160;odkaz</message>
+  <message key="docbrowser.nothing-found">(nic nenalezeno)</message>
+
+  <!-- heartbeat.xml -->
+  <message key="heartbeat.could-not-extend-lock">Varování: váš zámek nemohl být prodloužen, následující uživatel má teď dokument uzamčený pro sebe:</message>
+
+  <!-- imagebrower(_*).xml -->
+  <message key="imagebrowser.title">Vložení obrázku</message>
+  <message key="imagebrowser.images-in-collection">Obrázky ve vybrané kolekci:</message>
+  <message key="imagebrowser.image-preview">Náhled obrázku:</message>
+  <message key="imagebrowser.link">Vložit odkaz na obrázek</message>
+  <message key="imagebrowser.insert-image">Vložit obrázek</message>
+  <message key="imagebrowser.no-collections">(žádné kolekce)</message>
+  <message key="imagebrowser.no-images">(žádné obrázky)</message>
+
+  <!-- locked.xml -->
+  <message key="locked.title">Dokument uzamčen</message>
+  <message key="locked.info-warn">Také uživatel "{0}" edituje tento dokument.</message>
+  <message key="locked.ignore-and-edit">Ignorovat = přesto začít s editací (bez zámku)</message>
+  <message key="locked.info-pessimistic">Uživatel "{0}" má dokument uzamčený pro sebe, takže právě teď ho nemůžete editovat.</message>
+
+  <!-- parteditor_daisyhtml_template.xml -->
+  <message key="htmleditor.switch-to-html">Přepnout do zobrazení HTML</message>
+  <message key="htmleditor.cleanup-html">Pročistit HTML</message>
+  
+  <!-- parteditor_noedit_template.xml -->
+  <message key="noedit.noneditable"><p>Tato část není editovatelná</p></message>
+
+  <!-- documenteditor.xml -->
+  <message key="editdoc.title">Editace dokumentu</message>
+  <message key="editdoc.new">nový</message>
+  <message key="editdoc.document-type">Typ dokumentu</message>
+  <message key="editdoc.document-name">Název/titul dokumentu:</message>
+  <message key="editdoc.document-name-help">Název (titul) dokumentu, nemusí být jedinečný.</message>
+  <message key="editdoc.new-document-name">Nový dokument</message>
+  <message key="editdoc.name-warning">Ponechali jste název dokumentu 'Nový dokument', přesto uložit?</message>
+  <message key="editdoc.publish-changes-immediately">Zveřejnit okamžitě.</message>
+  <message key="editdoc.validate">Validovat vzhledem k typu dokumentu.</message>
+  <message key="editdoc.validate-help">Zpravidla by mělo být zapnuto.<br/><br/>
+            Vypnutí validace může být někdy užitečné když:
+            <ul>
+              <li>chcete archivovat dokument a nechcete se zaobírat aktualizací obsahu dokumentu,
+	      tak aby splňoval případné změny kritérií pro daný typ dokumentu;</li>
+              <li>typ dokumentu se změnil během editace dokumentu a tak je nemožné uložit dokument správně
+	      (protože editor dokumentů odpovídá typu dokumentu na začátku editace);</li>
+              <li>víte o přítomných chybách, ale práci chcete dokončit později.</li>
+            </ul>
+  </message>
+  <message key="editdoc.reference-variant">Toto je referenční varianta</message>
+  <message key="editdoc.major-change">Větší změna.</message>
+  <message key="editdoc.change-comment">Změnit komentář</message>
+  <message key="editdoc.save">Uložit</message>
+  <message key="editdoc.cancel">Zrušit editaci (uvolní zámek)</message>
+  <message key="editdoc.change-editor-height">Změnit výšku editoru...</message>
+  <!-- These are the labels of the tabs in the document editor -->
+  <message key="doceditor.parts">Části</message>
+  <message key="editdoc.fields">Pole</message>
+  <message key="editdoc.links">Odkazy</message>
+  <message key="doceditor.misc">Různé</message>
+  <message key="doceditor.additional-parts-and-fields">Další Části &amp; Pole</message>
+  <message key="doceditor.confirm-leave-editor">Daisy editor stále otevřený s tímto dokumentem:</message>
+
+  <!-- doceditor_additionalPartsAndField_*.xml -->
+  <message key="editdoc.extra-parts">Níže jsou vypsané části, které existují, ale už nejsou povoleny v tomto typu dokumentů.</message>
+  <message key="editdoc.extra-fields">Níže jsou vypsané pole, které existují, ale už nejsou povoleny v tomto typu dokumentů.</message>
+  <message key="editdoc.extra-parts.id">ID typu části</message>
+  <message key="editdoc.extra-parts.label">Označení části</message>
+  <message key="editdoc.extra-parts.size">Velikost (bytes)</message>
+  <message key="editdoc.extra-parts.mime-type">mime-type</message>
+  <message key="editdoc.extra-parts.delete">Smazat</message>
+  <message key="editdoc.extra-fields.id">ID typu pole</message>
+  <message key="editdoc.extra-fields.label">Označení pole</message>
+  <message key="editdoc.extra-fields.value">Hodnota</message>
+  <message key="editdoc.extra-fields.delete">Smazat</message>
+  <message key="doceditor.extra-fields.error">Buď toto pole musí být odstraněno, nebo musí být vypnuta validace vzhledem k typu dokumentu.</message>
+  <message key="doceditor.extra-parts.error">Buď tato část musí být odstraněna, nebo musí být vypnuta validace vzhledem k typu dokumentu.</message>
+  <message key="editdoc.link-no-valid-docid">Neplatné ID dokumentu: {0}</message>
+  <message key="editdoc.link-no-valid-namespace">Neplatný jmenný prostor: {0}</message>
+  <message key="editdoc.link-no-valid-branch">Neplatná větev uvedena v odkazu: {0}</message>
+  <message key="editdoc.link-no-valid-language">Neplatný jazyk uveden v odkazu: {0}</message>
+  <message key="editdoc.link-not-valid">Neplatný odkaz: {0}</message>
+
+  <!-- doceditor_misc_*.xml -->
+  <message key="editdoc.custom-fields">Uživatelská pole</message>
+  <message key="editdoc.collections">Kolekce</message>
+  <message key="editdoc.options">Volby</message>
+  <message key="editdoc.global-document-options-title">Globální volby dokumentu</message>
+  <message key="editdoc.global-document-options-help">Tyto volby jsou sdíleny všemi variantami dokumentu.</message>
+  <message key="editdoc.private">Privátní</message>
+  <message key="editdoc.private-help">Označení dokumentu jako privátní ho zpřístupňuje pouze vlastníkovi,
+            bez ohledu na přístupová práva.<br/><br/>Mějte na paměti, že administrátoři
+            můžou číst dokument vždy, i když bude privátní.</message>
+  <message key="editdoc.retired">Archivován</message>
+  <message key="editdoc.customfields.name">Název</message>
+  <message key="editdoc.customfields.value">Hodnota</message>
+  <message key="editdoc.customfields.delete">Smazat</message>
+  <message key="editdoc.add-custom-field">Přidat uživatelské pole</message>
+  <message key="editdoc.translation-management">Správa překladů</message>
+  <message key="editdoc.reference-language">referenční jazyk</message>
+  <message key="editdoc.reference-language-none">(žádný)</message>
+  <message key="editdoc.actions">Akce</message>
+
+  <!-- doceditor_links_*.xml -->
+  <message key="editdoc.links.title">Název</message>
+  <message key="editdoc.links.target">Cíl</message>
+  <message key="editdoc.links.delete">Smazat</message>
+  <message key="editdoc.links.move-up">Nahoru</message>
+  <message key="editdoc.links.lookupdocument">Vyhledat dokument...</message>
+  <message key="editdoc.links.openlink">Otevřít odkaz (v novém okně)</message>
+  <message key="editdoc.links.move-down">Dolů</message>
+  <message key="editdoc.add-link">Přidat odkaz</message>
+
+  <!-- parteditor_upload_*.xml -->
+  <message key="editdoc.filename">Název souboru</message>
+  <message key="editdoc.mime-type">Mime-type</message>
+  <message key="editdoc.upload-data">Nahrát data</message>
+
+  <!-- fieldtype_to_widgettemplate.xsl -->
+  <message key="editdoc.clear-field-value">Vynulovat hodnotu pole</message>
+  <message key="editdoc.select-from-list">Vybrat hodnotu ze seznamu...</message>
+
+  <!-- DocumentEditorApple.java -->
+  <message key="editdoc.part-required">Tato část je vyžadována.</message>
+  <message key="editdoc.field-required">Toto pole je vyžadováno.</message>
+
+  <!-- DocumentApple.java -->
+  <message key="subscription-added">Přihlášení k odběru proběhlo: budete dostávat oznámení emailem, pokud se tento dokument změní.</message>
+  <message key="subscription-missing-email"><br/><strong>Varování:</strong> neuvedli jste vaši emailovou adresu v uživatelském nastavení.</message>
+  <message key="subscription-deleted">Přihlášení k odběru bylo zrušeno.</message>
+  <message key="document-in-basket">Dokument byl přidán do košíku dokumentů.</message>
+
+  <!-- document-to-html.xsl, document-to-xslfo.xsl -->
+  <message key="document.links-title">Odkazy</message>
+  <message key="document.fields-title">Pole</message>
+  <message key="document.fields.name">Název</message>
+  <message key="document.fields.value">Hodnota</message>
+  <message key="document.part.title">Část</message>
+  <message key="document.part.size">velikost</message>
+  <message key="document.warning">VAROVÁNÍ</message>
+  <message key="document.note">POZNÁMKA</message>
+  <message key="document.fixme">OPRAVIT</message>
+  <message key="document.error">CHYBA</message>
+  <message key="document.unprocessed-include-directive">NEVYKONANÁ DIREKTIVA INCLUDE</message>
+  <message key="document.info-link">info</message> <!-- this is the (info) link after links pointing directly to a part --> 
+  <message key="document.click-to-enlarge">Kliknout pro zvětšení</message> <!-- text put below previews of large images -->
+  <message key="document.edit-included-doc">editovat</message> <!-- edit link shown for included docs -->
+
+  <!-- mycomments.xsl -->
+  <message key="mycomments.title">Moje komentáře</message>
+  <message key="mycomments.intro">Tato stránka uvádí všechny vaše privátní komentáře.</message>
+  <message key="mycomments.createdon">Vytvořen kdy</message>
+  <message key="mycomments.document">Pro dokument</message>
+  <message key="mycomments.delete">Smazat</message>
+
+  <!-- userregistration_*.xml -->
+  <message key="userregistration.title">Nová registrace uživatele</message>
+  <message key="userregistration.email">Váš email:</message>
+  <message key="userregistration.login">Požadované uživatelské jméno:</message>
+  <message key="userregistration.first-name">Vaše jméno:</message>
+  <message key="userregistration.last-name">Vaše příjmení:</message>
+  <message key="userregistration.password">Heslo:</message>
+  <message key="userregistration.password-confirm">Opakovat heslo:</message>
+  <message key="userregistration.passwords-must-be-equal">Dvě hesla nejsou totožná.</message>
+  <message key="userregistration.register">Registrovat</message>
+
+  <!-- registrationsuccess.xml -->
+  <message key="registrationsuccess.title">Úspěšná registrace</message>
+  <message key="registrationsuccess.text">Registrace dokončena. Než začnete používat vaše nové uživatelské jméno, musíte potvrdit registrace kliknutím na odkaz, který vám bude zaslán na vaši emailovou adresu:</message>
+  <message key="registrationsuccess.continue">Pokračovat</message>
+
+  <!-- registrationconfirmed.xml -->
+  <message key="registrationconfirmed.title">Registrace potvrzena</message>
+  <message key="registrationconfirmed.text">Váš uživatelský účet byl aktivován.</message>
+
+  <!-- passwordreminder_*.xml -->
+  <message key="passwordreminder.title">Připomenutí hesla</message>
+  <message key="passwordreminder.intro">Pokud níže zadáte vaše uživatelské jméno, bude vám zaslána zpráva, která vám umožní nastavit heslo znovu.</message>
+  <message key="passwordreminder.login">Uživatelské jméno</message>
+  <message key="passwordreminder.mail">Vyžádat zprávu</message>
+  <message key="passwordreminder.forgot-login">Zapomněli jste heslo?</message>
+
+  <!-- pwdremindersuccess.xml -->
+  <message key="pwdremindersuccess.title">Odeslání odkazu</message>
+  <message key="pwdremindersuccess.text">Na vaši emailovou adresu byla odeslána zpráva s odkazem k opětovnému nastavení vašeho hesla.</message>
+
+  <!-- newpassword.xml -->
+  <message key="newpassword.title">Nové heslo</message>
+  <message key="newpassword.text">Vaše nové heslo je</message>  
+
+  <!-- loginreminder_*.xml -->
+  <message key="loginreminder.email">Email</message>
+  <message key="loginreminder.title">Připomenutí uživatelského jména</message>
+  <message key="loginreminder.intro">Pokud níže zadáte vaši emailovou adresu, bude vám zaslána zpráva se všemi vašimi uživatelskými jmény.</message>
+  <message key="loginreminder.mail">Vyžádat email</message>
+
+  <!-- loginremindersuccess.xml -->
+  <message key="loginremindersuccess.title">Uživatelská jména zaslána</message>
+  <message key="loginremindersuccess.text">Vaše uživatelská jména byla odeslána na vaši emailovou adresu.</message>
+
+  <!-- altvariants.xsl -->
+  <message key="altvariants.title">Varianta nenalezena</message>
+  <message key="altvariants.intro">Požadovaný dokument není dostupný v současné nebo požadované variantě. Prosím, zadejte jinou variantu:</message>
+
+  <!-- doctask_taskspec_*.xml -->
+  <message key="createtaskspec.description">Popis</message>
+  <message key="createtaskspec.type-of-task">Typ úlohy</message>
+  <message key="createtaskspec.actiontype.create-variant">Vytvořit variantu</message>
+  <message key="createtaskspec.actiontype.delete-variant">Smazat variantu</message>
+  <message key="createtaskspec.actiontype.add-to-collection">Přidat do kolekce</message>
+  <message key="createtaskspec.actiontype.remove-from-collection">Odstranit z kolekce</message>
+  <message key="createtaskspec.simpleaction.create-variant.branch">Nová větev</message>
+  <message key="createtaskspec.simpleaction.create-variant.language">Nový jazyk</message>
+  <message key="createtaskspec.simpleaction.create-variant.start-version">Založit verzi</message>
+  <message key="createtaskspec.simpleaction.collection">Kolekce</message>
+  <message key="createtaskspec.simpleaction.add">Přidat</message>
+  <message key="createtaskspec.simpleaction.validate-on-save">Validovat při uložení</message>
+  <message key="createtaskspec.title">Vytvoření úlohy, krok 2: Specifikace úlohy</message>
+  <message key="createtaskspec.subtitle">Specifikujte úlohu, která proběhne nad všemi vybranými dokumenty</message>
+  <message key="createtaskspec.info">Tato úloha umožňuje spustit Javascript nad každým vybraným dokumentem.</message>
+  <message key="createtaskspec.simpleaction.delete">Smazat</message>
+  <message key="createtaskspec.simpleaction.move-up">Nahoru</message>
+  <message key="createtaskspec.simpleaction.move-down">Dolů</message>
+  <message key="createtaskspec.simpleaction.no-params">(žádné parametry nejsou potřebné)</message>
+  <message key="createtaskspec.stop-on-first-error">Zastavit při první chybě</message>
+  <message key="createtaskspec.tasktype-javascript">Javascript</message>
+  <message key="createtaskspec.tasktype-simple">Jednoduché akce</message>
+  <message key="createtaskspec.simpleaction.need-at-least-one">Musí být přidána nejméně jedna jednoduchá akce.</message>
+  <message key="createtaskspec.start">Spustit</message>
+  <message key="createtaskspec.back">&lt; Zpět</message>
+
+  <!-- documenttask_list.xsl -->
+  <message key="doctasklist.title">Úlohy nad dokumenty</message>
+  <message key="doctasklist.info">Úlohy nad dokumenty jsou úlohy (procesy), které probíhají nad souborem dokumentů a jsou vykonávány na pozadí.</message>
+  <message key="doctasklist.create-doctask">Vytvořit novou úlohu nad dokumenty</message>
+  <message key="doctasklist.confirm-delete">Určitě chcete smazat úlohu s ID $id ?</message>
+  <message key="doctasklist.confirm-interrupt">Určitě chcete přerušit úlohu s ID $id ?</message>
+  <message key="doctasklist.id">ID</message>
+  <message key="doctasklist.owner">Vlastník</message>
+  <message key="doctasklist.state">Stav</message>
+  <message key="doctasklist.progress">Průběh</message>
+  <message key="doctasklist.started-at">Spuštěna</message>
+  <message key="doctasklist.finished-at">Ukončena</message>
+  <message key="doctasklist.description">Popis</message>
+  <message key="doctasklist.script">Skript</message>
+  <message key="doctasklist.details">(Chyba) detaily</message>
+  <message key="doctasklist.actions">Akce</message>
+  <message key="doctasklist.no-tasks">(Žádné úlohy)</message>
+  <message key="doctasklist.show">Zobrazit</message>
+  <message key="doctasklist.delete">Smazat</message>
+  <message key="doctasklist.interrupt">Přerušit</message>
+  <message key="doctasklist.show-details">Detaily</message>
+
+  <!-- shared between task pages -->
+  <message key="taskstate.initialising">Inicializace</message>
+  <message key="taskstate.running">Bežící</message>
+  <message key="taskstate.finished">Dokončena</message>
+  <message key="taskstate.finished_with_errors">Dokončena s chybami</message>
+  <message key="taskstate.interrupted_by_error">Přerušena s chybami</message>
+  <message key="taskstate.interrupted_by_user">Přerušena uživatelem</message>
+  <message key="taskstate.interrupted_by_shutdown">Přerušena odstavením serveru</message>
+
+  <!-- documenttaskdetails.xsl -->
+  <message key="doctaskdetails.title">Detaily úloh nad dokumenty</message>
+  <message key="doctaskdetails.to-task-overview">Na přehled úloh</message>
+  <message key="doctaskdetails.taskid">ID úlohy</message>
+  <message key="doctaskdetails.taskdescription">Popis</message>
+  <message key="doctaskdetails.state">Stav</message>
+  <message key="doctaskdetails.doc-id">ID dokumentu</message>
+  <message key="doctaskdetails.execution-state">Stav procesu</message>
+  <message key="doctaskdetails.details">(Chyba) detaily</message>
+  <message key="documentexecutionstate.waiting">Čekající</message>
+  <message key="documentexecutionstate.done">Hotovo</message>
+  <message key="documentexecutionstate.error">Chyba</message>
+  <message key="doctaskdetails.show">Zobrazit</message>
+
+  <!-- KeySetParser.java -->
+  <message key="keylist.entry-invalid">Položka na řádek {0} není ve správném formátu.</message>
+  <message key="keylist.branch-does-not-exist">Větev uvedena na řádek {0} neexistuje.</message>
+  <message key="keylist.branch-retrieval-error">Problém s přístupem k větvi uvedené na řádku {0}: {1}</message>
+  <message key="keylist.lang-does-not-exist">Jazyk uveden na řádku {0} neexistuje.</message>
+  <message key="keylist.lang-retrieval-error">Problém s přístupem k jazyku uvedeném na řádku {0}: {1}</message>
+  <message key="keylist.need-at-least-one-entry">Nejméně jeden dokument musí být uveden.</message>
+  <message key="keylist.invalid-docid">Neplatné ID dokumentu na řádku {0}.</message>
+  <message key="keylist.collection-does-not-exist">Kolekce uvedena na řádku {0} neexistuje.</message>
+  <message key="keylist.collection-retrieval-error">Problém s přístupem ke kolekci uvedené na řádku {0}: {1}</message>
+
+  <!-- doctask_docselection_*.xml -->
+  <message key="createdocsel.execute-query">Provést dotaz a přidat výsledky</message>
+  <message key="createdocsel.title">Vytvoření úlohy, krok 1: Výběr dokumentů</message>
+  <message key="createdocsel.subtitle">Vyberte dokumenty nad kterými by se měla provést úloha</message>
+  <message key="createdocsel.info">Zadejte dokumenty, jeden na řádek. Každý řádek musí odpovídat následujícímu formátu:
+      <i>id dokumentu, větev, jazyk</i>. Uvedení větve a jazyka je volitelné,
+      pokud bebodu neuvedny, bude použitá větev <i>main</i> a výchozí jazyk. Větev a jazyk mohou být uvedeny jejich ID nebo jménem.
+      Komentáře mohou být přidány na konec řádku nebo samostatný řádek a musí začínat symbolem # [mřížka].</message>
+  <message key="createdocsel.add-docs-from-query">Přidat dokumenty vybrané dotazem</message>
+  <message key="createdocsel.enter-query">Zadejte dotaz (select name where ...)</message>
+  <message key="createdocsel.no-query-entered">Nebyl zadán žádný dotaz.</message>
+  <message key="createdocsel.error-performing-query">Chyba při zpracování dotazu.</message>
+  <message key="createdocsel.query-executed">Dotaz vykonán, přidáno výsledků: {0}.</message>
+  <message key="createdocsel.query-no-result">Dotaz nevrátil žádné výsledky.</message>
+  <message key="createdocsel.next">Další ></message>
+
+  <!-- taskcreatedpage.xml -->
+  <message key="taskcreated.title">Úloha vytvořena</message>
+  <message key="taskcreated.info">Úloha vytvořena, ID = {0}.</message>
+  <message key="taskcreated.show-execution-details">Zobrazit detaily zpracování této úlohy</message>
+  <message key="taskcreated.go-to-task-overview">Jít na přehled všech úloh</message>
+  <message key="taskcreated.create-another-task">Vytvořit novou úlohu</message>
+
+  <!-- createdocvariant_*.xml -->
+  <message key="createdocvariant.title">Vytvoření varianty dokumentu</message>
+  <message key="createdocvariant.start-from">Začít z</message>
+  <message key="createdocvariant.new">Nová</message>
+  <message key="createdocvariant.variant-already-exists">Tato varianta již existuje!</message>
+  <message key="createdocvariant.start-from-current">Začít novou variantu z nynější varianty:</message>
+  <message key="createdocvariant.version-info">(zadejte <i>last</i> (poslední), <i>live</i> (živá) nebo číslo verze)</message>
+  <message key="createdocvariant.start-from-current-info">
+    Tato volba je doporučena k vytvoření nové větve. Když ji použijete uchová se
+    větev a jazyk jako počáteční bod pro vytvoření této varianty
+    a první verze bude inicializována s obsahem vybrané verze.
+    <!-- check again! Recommended to use this option when creating a new branch. When using this option
+    the start branch and language will be remembered as start point for this variant, and the
+    first version will be initialized with the content of the selected version. -->
+  </message>
+  <message key="createdocvariant.embedded-images">Vytvořit varianty vložených obrázků</message>
+  <message key="createdocvariant.embedded-images-info">
+    Dokument obsahuje reference na následující obrázky, pro které může být nová varianta vytvořena také.
+    Jestli obrázek v nové variantě již existuje, bude vynechán.
+  </message>
+  <message key="createdocvariant.new-branch">Nová větev</message>
+  <message key="createdocvariant.new-language">Nový jazyk</message>
+  <message key="createdocvariant.startversion-failmessage">Neplatný vstup: zadejte 'last' (poslední), 'live' (živá) nebo číslo verze.</message>
+  <message key="createdocvariant.goto-editor">Po vytvoření varianty dokumentu přejít rovnou do editoru.</message>
+  <message key="createdocvariant.image-id">ID</message>
+  <message key="createdocvariant.image-name">Název</message>
+  <message key="createdocvariant.image-create-variant">Vytvořit variantu</message>
+
+  <!-- placeholder_*.xml -->
+  <message key="placeholder.name">Název dokumentu</message>
+  <message key="placeholder.documentType">Typ dokumentu</message>
+  <message key="placeholder.collections">Kolekce</message>
+  <message key="placeholder.title">Odkaz na nový dokument</message>
+  <message key="placeholder.create">Vytvořit</message>
+  <message key="placeholder.completing">Dokončování, prosím čekejte...</message>
+
+  <!-- book messages shared by multiple files -->
+  <message key="book.edit-mode">Editovací mód</message>
+  <message key="book.edit-mode-xml">XML</message>
+  <message key="book.edit-mode-graphical">Grafický</message>
+  <message key="bookwizard.back">&lt; Zpět</message>
+  <message key="bookwizard.continue">Pokračovat ></message>
+  <message key="bookwizard.step1">Publikování knihy, krok 1</message>
+  <message key="bookwizard.step1.name">Obecné parametry</message>
+  <message key="bookwizard.step2">Publikování knihy, krok 2</message>
+  <message key="bookwizard.step2.name">Vyberte typy knižních publikací</message>
+  <message key="bookwizard.step3">Publikování knihy, krok 3</message>
+  <message key="bookwizard.step3.name">Přístupová práva</message>
+  <message key="bookwizard.start">Spustit publikaci knihy</message>
+  <message key="book.books">Knihy</message>
+  <message key="book.book-definitions">Definice knih</message>
+
+  <!-- bookacl_*.xml -->
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.EVERYONE">každý</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.USER">uživatel</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.ROLE">role</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.GRANT">povolit</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.DENY">zakázat</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.NOTHING">nic</message>
+  <message key="bookacl.subject">Subjekt</message>
+  <message key="bookacl.permissions">Oprávnění</message>
+  <message key="bookacl.actions">Akce</message>
+  <message key="bookacl.subject-type">Typ</message>
+  <message key="bookacl.subject-value">Hodnota</message>
+  <message key="bookacl.perm-read">Číst</message>
+  <message key="bookacl.perm-manage">Spravovat</message>
+  <message key="bookacl.no-entries">(žádné položky)</message>
+  <message key="bookacl.add-entry">Přidat položku</message>
+  <message key="bookacl.append-entry">Doplnit položku</message>
+  <message key="bookacl.value-required">Musíte vybrat hodnotu.</message>
+  <message key="bookacl.error-cannot-exclude-yourself">Uvedená přístupová práva (ACL) vám berou oprávnění 'spravovat', což není povoleno.</message>
+  <message key="bookacl.title">Editace přístupových práv (ACL) knihy</message>
+  <message key="bookacl.save">Uložit</message>
+  <message key="bookacl.select">vybrat...</message>
+
+  <!-- bookinstanceparams_*.xml -->
+  <message key="bookip.id">ID</message>
+  <message key="bookip.book-instance-name">Název instance knihy</message>
+  <message key="bookip.book-instance-label">Označení instance knihy</message>
+  <message key="bookip.content-branch">Větev obsahu</message>
+  <message key="bookip.content-language">Jazyk obsahu</message>
+  <message key="bookip.content-version">Verze obsahu</message>
+  <message key="bookip.locale">Jazykové prostředí</message>
+  <message key="bookip.book-definition">Definice knihy</message>
+  <message key="bookip.book-instance">Instance knihy</message>
+  <message key="pubtypes.no-properties-yet">(zatím žádné vlastnosti)</message>
+  <message key="pubtypes.default-properties">Výchozí vlastnosti</message>
+  <message key="pubtypes.add-pubtype">Přidat typ publikace</message>
+  <message key="bookip.duplicate-instance-name">Instance knihy s tímto názvem již existuje.</message>
+  <message key="bookip.book-instance-name-help">Jsou povolena jenom malá písmena a-z, číslice, mezery,
+  a znaky - _ : a čárka.</message>
+
+  <!-- selectpublicationtypes_*.xml -->
+  <message key="pubtypes.need-at-least-one">Musí být přidána nejméně jedna publikace.</message>
+  <message key="pubtypes.duplicate-output-name">Existuje jiná publikace se stejným jménem.</message>
+  <message key="pubtypes.output-name">Název výstupu</message>
+  <message key="pubtypes.output-label">Označení výstupu</message>
+  <message key="pubtypes.add-property">Přidat vlastnost</message>
+  <message key="pubtypes.publication-properties">Vlastnosti publikace</message>
+
+  <!-- bookpublished.xml -->
+  <message key="bookpublished.started">Publikování knihy spuštěno</message>
+  <message key="bookpublished.info">Kniha je právě publikována. Status, aktualizovaný každých 5 sekund, je zobrazen níže.</message>
+
+  <!-- edit_bookinstance.xml -->
+  <message key="ebi.title">Editace instance knihy</message>
+  <message key="ebi.enter-new-label">Zadejte nové označení:</message>
+  <message key="ebi.enter-new-name">Zadejte nový název:</message>
+  <message key="ebi.general">Obecné</message>
+  <message key="ebi.publications">Publikace</message>
+  <message key="ebi.change">změnit</message>
+  <message key="ebi.label">Označení</message>
+  <message key="ebi.back-to-published-books">Zpět k publikovaným knihám</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="publishtaskstate.finished">Dokončeno</message>
+  <message key="publishtaskstate.view-publication-log">Zobrazit záznam publikování</message>
+  <message key="publishtaskstate.view-link-error-log">Zobrazit záznam chyb v odkazech</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="bookstate.starting">Spouštění</message>
+  <message key="bookstate.initializing">Inicializace</message>
+  <message key="bookstate.retrieving-data">Získávání dat o knize</message>
+  <message key="bookstate.publishing">Publikování "{2}"</message>
+  <message key="bookstate.finished">Dokončeno</message>
+
+  <!-- parteditor_bookmeta_*.xml -->
+  <message key="bookmeta.no-fields-yet">Zatím neexistují žádná pole metadat.</message>
+
+  <!-- publishtasks.xsl -->
+  <message key="publishtasks.title">Probíhající úlohy publikování knih</message>
+  <message key="publishtasks.book-instance">Instance knihy</message>
+  <message key="publishtasks.started-by-user">Spuštěno uživatelem</message>
+  <message key="publishtasks.started-on">Spuštěno kdy</message>
+  <message key="publishtasks.state">Stav</message>
+  <message key="publishtasks.hidden">záměrně nezobrazeno</message>
+  <message key="publishtasks.no-tasks-running">Neprobíhají žádné úlohy.</message>
+
+  <!-- bookmanagement.xsl -->
+  <message key="bookmgmt.title">Definice knih</message>
+  <message key="bookmgmt.published-books">Publikované knihy</message>
+  <message key="bookmgmt.publish">Publikovat</message>
+  <message key="bookmgmt.no-bookdefs">Nejsou dostupné žádné definice knih. K vytvoření definice je potřebné vytvořit dokument typu "Definice knihy".</message>
+
+  <!-- bookinstancemanagement.xsl -->
+  <message key="bookinstancemgmt.title">Knihy</message>
+  <message key="bookinstancemgmt.no-books">Nejsou dostupné žádné knihy.</message>
+  <message key="bookinstacemgmt.publish-a-book">Publikovat knihu</message>
+  <message key="bookinstancemgmt.view-running-tasks">Zobrazit probíhající úlohy publikování knih</message>
+  <message key="bookinstancemgmt.edit-acl">editovat přístupová práva (ACL)</message>
+  <message key="bookinstancemgmt.delete">smazat</message>
+  <message key="bookinstancemgmt.change-names">změnit názvy</message>
+  <message key="bookinstancemgmt.link-log">záznam odkazů</message>
+  <message key="bookinstancemgmt.publication-log">záznam publikace</message>
+  <message key="bookinstancemgmt.confirm-delete">Určitě chcete smazat instanci knihy "{0}"? Gone is gone!</message>
+
+  <!-- documentbasket.xsl -->
+  <message key="docbasket.title">Košík dokumentů</message>
+  <message key="docbasket.empty">Váš košík dokumentů je prázdný.</message>
+  <message key="docbasket.content-title">Obsah vašeho košíku</message>
+  <message key="docbasket.contains-one">Váš košík obsahuje <b>jeden</b> dokument.</message>
+  <message key="docbasket.contains-documents">Počet dokumentů ve vašem košíku je: <b>{0}</b></message>
+  <message key="docbasket.refresh">Obnovit</message>
+  <message key="docbasket.doc-name">Název dokumentu</message>
+  <message key="docbasket.op-select-all">Vybrat vše</message>
+  <message key="docbasket.op-unselect-all">Zrušit výběr</message>
+  <message key="docbasket.op-remove-selected">Odstranit vybrané položky</message>
+  <message key="docbasket.rop-remove-all">Odstranit všechny</message>
+  <message key="docbasket.actions-title">Akce košíku dokumentů</message>
+  <message key="docbasket.action-aggr-html">Získat dokumenty shromážděné ve formátu HTML</message>
+  <message key="docbasket.action-aggr-html-plain">Získat dokumenty shromážděné ve formátu HTML, bez navigace</message>
+  <message key="docbasket.action-aggr-pdf">Získat dokumenty shromážděné ve formátu PDF</message>
+  <message key="docbasket.action-start-doctask">Spustit úlohu nad těmito dokumenty</message>
+  <message key="docbasket.adding-title">Přidávání dokumentů do košíku</message>
+  <message key="docbasket.adding-manual">Při prohlížení dokumentu použijte 'Akce', 'Přidat do košíku'</message>
+  <message key="docbasket.adding-with-query">Přidat dokumenty použitím dotazu</message>
+  <message key="docbasket.adding-from-nav">Vybrat dokumenty z navigačního stromu</message>
+
+  <!-- docbasket_aggr_html.xsl -->
+  <message key="docbasket.aggr-title">Shromážděný obsah z košíku dokumentů</message>
+
+  <!-- docbasket_select_from_nav.xsl -->
+  <message key="docbaset-nav.title">Košík dokumentů: přidání dokumentů z navigace</message>
+  <message key="docbasket-nav.return-to-docbasket">Zpět do košíku dokumentů</message>
+  <message key="docbasket-nav.add-selected-docs">Přidat vybrané dokumenty</message>
+
+  <!-- includepreviews.xsl -->
+  <message key="includepreview.error">Vyskytla se chyba při získávání náhledu vloženého obsahu.</message>
+
+  <!-- daisy-forms-styling.xsl -->
+  <message key="formstyling.load-options">Zobrazit volby...</message>
+
+  <!-- documentinfo.xsl / DocumentInfoApple -->
+  <message key="documentinfo.result.document-not-found">Dokument nenalezen</message>
+  <message key="documentinfo.result.document-variant-not-found">Varianta dokumentu nenalezena</message>
+  <message key="documentinfo.result.access-denied">Přístup odepřen</message>
+  <message key="documentinfo.result.version-not-found">Verze nenalezena</message>
+  <message key="documentinfo.result.branch-not-found">Větev nenalezena</message>
+  <message key="documentinfo.result.language-not-found">Jazyk nenalezen</message>
+  <message key="documentinfo.result.error">Neočekávaná chyba</message>
+
+  <!-- Workflow general -->
+  <message key="wf.actor-user">Uživatel</message>
+  <message key="wf.actor-pools">Pools</message>
+  <message key="wf.actor">Aktér</message>
+  <message key="wf.login">Uživatelské jméno</message>
+  <message key="wf.section.my-tasks">Moje úlohy</message>
+  <message key="wf.section.search-tasks">Hledat úlohy</message>
+  <message key="wf.section.search-processes">Hledat procesy</message>
+  <message key="wf.section.search-timers">Hledat časovače</message>
+  <message key="wf.console">Konzole workflow</message>
+  <message key="wf.site-home">Domů</message>
+  <message key="wf.priority-highest">Nejvyšší</message>
+  <message key="wf.priority-high">Vysoká</message>
+  <message key="wf.priority-normal">Normální</message>
+  <message key="wf.priority-low">Nízká</message>
+  <message key="wf.priority-lowest">Nejnižší</message>
+
+  <!-- wf_assign_*.xml -->
+  <message key="wfassign.scope-task">Jenom tato úloha</message>
+  <message key="wfassign.scope-swimlane">Všechny budoucí úlohy přidělené ke stejné procesní roli</message>
+  <message key="wfassign.assign">Přidělit úlohu</message>
+  <message key="wfassign.cancel">Zrušit</message>
+  <message key="wfassign.title">Přidělení úlohy workflow</message>
+  <message key="wfassign.scope">Rozsah</message>
+
+  <!-- wfprocesssearch_*.xml -->
+  <message key="wfsearch.process-search-title">Vyhledávání procesů workflow</message>
+  <message key="wfsearch.task-search-title">Vyhledávání úloh workflow</message>
+  <message key="wfsearch.timer-search-title">Vyhledávání časovačů</message>
+
+  <message key="wfsearch.process-state">Stav procesu</message>
+  <message key="wfsearch.process-state-open">Otevřený</message>
+  <message key="wfsearch.process-state-finished">Dokončený</message>
+  <message key="wfsearch.process-state-any">Oboje</message> <!-- jk -->
+  <message key="wfsearch.description-like">Podle popisu</message>
+  <message key="wfsearch.description-like-help">Použít % [procento] jako značku pro výběr (wildcard).</message>
+  <message key="wfsearch.process-owner">Vlastník</message>
+  <message key="wfsearch.process-definition">Definice procesu</message>
+  <message key="wfsearch.related-to-doc">Související dokument</message>
+  <message key="wfsearch.search">Hledat</message>
+  <message key="wfsearch.task-state">Stav úlohy</message>
+  <message key="wfsearch.task-state-open">Otevřená</message>
+  <message key="wfsearch.task-state-closed">Uzavřená</message>
+  <message key="wfsearch.task-state-any">Oboje</message> <!-- jk -->
+  <message key="wfsearch.task-assigned-to">Přidělena komu</message>
+  <message key="wfsearch.task-assigned-to-me">Mně</message>
+  <message key="wfsearch.task-assigned-to-anyone">Komukoliv</message>
+  <message key="wfsearch.task-assigned-to-noone">Nikomu</message>
+  <message key="wfsearch.priority-at-least">Priorita nejméně</message>
+  <message key="wfsearch.process-definition">Definice procesu</message>
+  <message key="wfsearch.process-owner">Vlastník</message>
+  <message key="wfsearch.suspended">Odročen</message>
+  <message key="wfsearch.suspended-yes">Ano</message>
+  <message key="wfsearch.suspended-no">Ne</message>
+  <message key="wfsearch.suspended-either">Oboje</message>
+  <message key="wfsearch.timer-failed">Selhal</message>
+  <message key="wfsearch.timer-failed-yes">Ano</message>
+  <message key="wfsearch.timer-failed-no">Ne</message>
+  <message key="wfsearch.timer-failed-either">Oboje</message>
+  <message key="wfsearch.no-processes-found">Nebyly nalezeny žádné procesy workflow, odpovídající uvedeným kriteriím.</message>
+  <message key="wfsearch.no-tasks-found">Nebyly nalezeny žádné úlohy, odpovídající uvedeným kriteriím.</message>
+  <message key="wfsearch.no-timers-found">Nebyly nalezeny žádné časovače, odpovídající uvedeným kriteriím.</message>
+  <message key="wfsearch.alt-title.description">Popis</message>
+  <message key="wfsearch.alt-title.owner">Vlastník</message>
+  <message key="wfsearch.alt-title.suspension">Odročení</message>
+  <message key="wfsearch.action.resume">Obnovení</message>
+  <message key="wfsearch.action.suspend">Odročit</message>
+  <message key="wfsearch.action.view">Zobrazit</message>
+  <message key="wfsearch.action.delete">Smazat</message>
+  <message key="wfsearch.action-confirm.suspend">Odročit proces "{0}"?</message>
+  <message key="wfsearch.action-confirm.resume">Obnovit proces "{0}"?</message>
+  <message key="wfsearch.action-confirm.delete">Určitě chcete smazat proces "{0}"?</message>
+  <message key="wfsearch.action.open">otevřít</message>
+  <message key="wfsearch.action.pool">pool</message>
+  <message key="wfsearch.action-confirm.assign-to-pool">Přidělit úlohu zpět do poolu?</message>
+  <message key="wfsearch.action.assign-to-me">přidělit mně</message>
+  <message key="wfsearch.action.assign">přidělit</message>
+  <message key="wfsearch.nav.first">První</message>
+  <message key="wfsearch.nav.prev">Předchozí</message>
+  <message key="wfsearch.nav.next">Další</message>
+  <message key="wfsearch.nav.last">Poslední</message>
+  <message key="wfsearch.return-to-tasks">Zpět k úkolům</message>
+  <message key="wfsearch.return-to-process-search">Zpět k vyhledávání procesů</message>
+  <message key="wfsearch.return-to-task-search">Zpět k vyhledávání úloh</message>
+  <message key="wfsearch.return-to-timer-search">Zpět k vyhledávání časovačů</message>
+  <message key="wfsearch.timers-info">
+    <p>Tento seznam zobrazuje jenom naplánované a neúspěšné časovače. Úspešně dokončené časovače jsou po vykonání smazány.</p>
+    <p>K zastavení činnosti časovače můžete odročit proces, ke kterému patří. Můžete tak učinit na stránce s detaily procesu,
+    dostupnou kliknutím na ID precesu.</p>
+  </message>
+
+  <!-- wf_process_delete_success.xml -->
+  <message key="wfdelscs.title">Smazání procesu </message>
+  <message key="wfdelscs.info">Proces byl úspěšně smazán.</message>
+
+  <!-- wf_process_resume_success.xml -->
+  <message key="wfresumescs.title">Obnovení procesu</message>
+  <message key="wfresumescs.info">Proces byl úspěšně obnoven.</message>
+
+  <!-- wf_process_started.xml -->
+  <message key="wfpstarted.title">Spuštění procesu</message>
+  <message key="wfpstarted.info">Proces byl úspěšně spuštěn.</message>
+  <message key="wfpstarted.process-id">ID procesu</message>
+
+  <!-- wf_process_suspended_success.xml -->
+  <message key="wfpsusp.title">Odročení procesu</message>
+  <message key="wfpsusp.info">Proces byl úspěšně odročen.</message>
+
+  <!-- wftask_to_*.xsl -->
+  <message key="wfuptsk.save">Uložit</message>
+  <message key="wfuptsk.cancel">Zrušit</message>
+  <message key="wfuptsk.start-title">Začít workflow</message>
+  <message key="wfuptsk.perform-title">Provést úlohy workflow</message>
+  <message key="wfuptsk.actions-label.continue">Pokračovat v práci na této úloze později</message>
+  <message key="wfuptsk.actions-label.startprocess">Spustit proces</message>
+  <message key="wfuptsk.actions-label.transition">Ukončit tuto úlohu na základě následujícího přechodu (transition)</message>
+  <message key="wfuptsk.due-date">Do data</message>
+  <message key="wfuptsk.priority">Priorita</message>
+
+  <!-- wf_processdef_selection.xsl -->
+  <message key="wfpsel.title">Založení nového workflow</message>
+  <message key="wfpsel.intro">Vyberte typ workflow:</message>
+  <message key="wfpsel.no-workflows-available">Nejsou dostupná žádná workflow.</message>
+
+  <!-- wf_tasks(_list).xsl -->
+  <message key="wftasks.title">Úlohy workflow</message>
+  <message key="wftasks.my-tasks">Moje úlohy</message>
+  <message key="wftasks.pooled-tasks">Úlohy v poolu</message>
+  <message key="wftasks.none-assigned-to-you">Nemáte přidělené žádné úlohy.</message>
+  <message key="wftasks.none-pooled">Nemáte přidělené žádné úlohy v poolu.</message>
+
+  <!-- wf_timer(_searchresult).xsl -->
+  <message key="wftimer.title">Časovač workflow</message>
+  <message key="wftimer.id">ID</message>
+  <message key="wftimer.due-date">Do data</message>
+  <message key="wftimer.suspended">Odročen</message>
+  <message key="wftimer.owner-process-id">ID vlastníka procesu</message>
+  <message key="wftimer.execution-path">Prováděcí vlákno (execution path), kde byl časovač vytvořen.</message>
+  <message key="wftimer.transition">Přechod po akci časovače</message>
+  <message key="wftimer.exception">Výjimka</message>
+
+  <!-- variables_index.xsl -->
+  <message key="varsindex.title">Proměnné</message>
+  <message key="varsindex.vardocsintro">Na těchto stránkách jsou používány následující definice proměnných dokumentů:</message>
+  <message key="varsindex.novarsdefined">Na těchto stránkách není v současnosti nakonfigurováno žádné nahrazování proměnných.
+          To musí být provedeno administrátorem. Pokud jste administrátorem, podívejte se do <a href="http://www.daisycms.org/">Dokumentace Daisy</a>,
+          jak nakonfigurovat používání proměnných.</message>
+  <message key="varsindex.view">zobrazit</message>
+  <message key="varsindex.edit">editovat</message>
+
+  <!-- transl_mgmt_* -->
+  <message key="tmsearch.title">Vyhledávání ve správě překladů</message>
+  <message key="tmsearch.reference-language">Referenční jazyk</message>
+  <message key="tmsearch.language">Jazyk</message>
+  <message key="tmsearch.search">Hledat</message>
+  <message key="tmsearch.live-version">Živá verze</message>
+  <message key="tmsearch.last-version">Poslední verze</message>
+  <message key="tmsearch.query">Zobrazit</message>
+  <message key="tmsearch.in-sync">Překlady, které jsou synchronizovány</message>
+  <message key="tmsearch.not-in-sync">Překlady, které nejsou synchronizovány</message>
+  <message key="tmsearch.no-major-changes">Referenční dokumenty, bez větších změn</message>
+  <message key="tmsearch.no-reference-language">Dokumenty, pro které není nastaven referenční jazyk</message>
+  <message key="tmsearch.translation-does-not-exist">Překlady, které neexistují</message>
+  <message key="tmsearch.not-synced-with-reference-language">Dokumenty synchronizované s jiným než referenčním jazykem</message>
+  <message key="tmsearch.only-translation-exists">Dokumenty, pro které existuje jenom překlad</message>
+  <message key="tmsearch.overview">Přehled</message>
+  <message key="tmsearch.required-for-current-query">Toto pole je vyžadováno pro aktuálně vybraný dotaz</message>
+  <message key="tmsearch.lang-reflang-conflict">Jazyk by měl být odlišný od referenčního jazyka.</message>
+  
+  <message key="tmsearch.result.ref-variant-missing">chybí referenční varianta.</message>
+  <message key="tmsearch.result.never-synced">nikdy nebyla synchronizována.</message>
+  <message key="tmsearch.result.not-synced-with-reflang">není synchronizována s referenčním jazykem.</message>
+  <message key="tmsearch.result.not-in-sync">není synchronizována.</message>
+
+  <message key="tm.select-with-preview">Vybrat s náhledem</message>
+  <message key="tm.select-synced-with.title">Vybrání synchronizována s</message>
+  <message key="tm.synced-with">Synchronizována s</message>
+  <message key="tm.synced-with-language">Synchronizována s</message>
+  <message key="tm.synced-with-version">verze</message>
+
+  <!-- facetedbrowser.xsl -->
+  <message key="facetedbrowser.pagetitle">Prohlížeč dle aspektů</message>
+  <message key="facetedbrowser.title">Prohlížeč dle aspektů</message>
+  <message key="facetedbrowser.docs-found">Nalezeno {0} dokument(ů).</message>
+  <message key="facetedbrowser.open-query">Otevřít tento dotaz na stránce vyhledávání databázovým dotazem</message>
+  <message key="facetedbrowser.limit-to-site-collection">Omezit na kolekci stránek ({0})</message>
+  <message key="facetedbrowser.limit-to-site-variant">Omezit na variantu stránek (větev {0}, jazyk {1})</message>
+  <message key="facetedbrowser.order-by">Seřadit dle:</message>
+  <message key="facetedbrowser.name">název</message>
+  <message key="facetedbrowser.asc">vzestupně</message>
+  <message key="facetedbrowser.desc">sestupně</message>
+  <message key="facetedbrowser.filters">Filtry:</message>
+  <message key="facetedbrowser.remove-all">Odstranit všechny</message>
+  <message key="facetedbrowser.by">kým</message>
+  <message key="facetedbrowser.more">{0} více</message>
+  <message key="facetedbrowser.previous">Předchozí</message>
+  <message key="facetedbrowser.of">z</message>  
+  <message key="facetedbrowser.next">Další</message>
+
+</catalogue>

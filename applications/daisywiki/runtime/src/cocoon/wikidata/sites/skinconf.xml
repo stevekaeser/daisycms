@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<skinconf
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <logo>resources/skins/default/images/daisy.png</logo>
+  <daisy-home-link>Daisy Home</daisy-home-link>
+  <site-home-link>Site Home</site-home-link>
+
+  <!-- this controls various aspects of the versionmode picker
+     timePrecision (boolean) allow choosing versionmode with time precision?
+     hideFromGuest (boolean) show the versionmode picker to guests?
+     hideLastFromGuest (boolean) when showing the versionmode picker to guests, should they be allowed to select 'last'?
+  -->    
+  <!-- 
+  <versionmode 
+     timePrecision="false"
+     hideFromGuest="true"
+     hideLastFromGuest="true"/>
+  -->
+  
+  <!-- As the RSS feeds are extensions, and not built-in Daisy
+       functionality, the URLs to them can be adjusted,
+       removed or added here. -->
+  <rss-feeds>
+    <rss-feed>
+      <path>ext/rss/minimal-rss.xml</path>
+      <label><i18n:text catalogue="skin" key="minimal-feed"/></label>
+      <type>application/rss+xml</type>
+    </rss-feed>
+    <rss-feed>
+      <path>ext/rss/normal-rss.xml</path>
+      <label><i18n:text catalogue="skin" key="normal-feed"/></label>
+      <type>application/rss+xml</type>
+    </rss-feed>
+    <rss-feed>
+      <path>ext/rss/editors-rss.xml</path>
+      <label><i18n:text catalogue="skin" key="editors-feed"/></label>
+      <type>application/rss+xml</type>
+    </rss-feed>
+  </rss-feeds>
+
+</skinconf>

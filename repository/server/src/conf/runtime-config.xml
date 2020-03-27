@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><!--
+   This is the Daisy runtime configuration to launch the repository server.
+--><runtime>
+
+  <containers>
+    <!--
+       The order of the containers is significant, containers should be ordered such
+       that service imports are satisfied, the Daisy runtime is not smart enough
+       to figure this out itself.
+
+       In other words: if container A imports a service provided by container B,
+       than container B should be imported after container A.
+
+       Each of the jars referenced here needs to contain a DAISY-INF directory
+       with at least one spring bean-container configuration and optionally
+       a classloader configuration. See the documentation for more information.
+    -->
+
+    <!--
+       | These are some general services, which can be used by the core repository
+       | server and extensions.
+       -->
+    <artifact id="configuration" groupId="daisy" artifactId="daisy-configuration-impl" version="2.4.2"/>
+    <artifact id="jmx" groupId="daisy" artifactId="daisy-jmx" version="2.4.2"/>
+    <artifact id="pluginregistry" groupId="daisy" artifactId="daisy-pluginregistry-impl" version="2.4.2"/>
+    <artifact id="credentialsprovider" groupId="daisy" artifactId="daisy-credentials-provider-impl" version="2.4.2"/>
+    <artifact id="driverregistrar" groupId="daisy" artifactId="daisy-driverregistrar" version="2.4.2"/>
+    <artifact id="jms" groupId="daisy" artifactId="daisy-jmsclient-impl" version="2.4.2"/>
+    <artifact id="datasource" groupId="daisy" artifactId="daisy-datasource" version="2.4.2"/>
+    <artifact id="linkextractors" groupId="daisy" artifactId="daisy-linkextractors-impl" version="2.4.2"/>
+    <artifact id="textextraction" groupId="daisy" artifactId="daisy-textextraction-impl" version="2.4.2"/>
+
+    <!--
+       | Plugins to be loaded before the repository server starts.
+       -->
+    <artifact id="ntlm" groupId="daisy" artifactId="daisy-auth-ntlm" version="2.4.2"/>
+    <artifact id="ldap" groupId="daisy" artifactId="daisy-auth-ldap" version="2.4.2"/>
+    <artifact id="spnego" groupId="daisy" artifactId="daisy-auth-spnego" version="2.4.2"/>
+    <artifact id="trusted" groupId="daisy" artifactId="daisy-auth-trusted" version="2.4.2"/>
+    <artifact id="imagehook" groupId="daisy" artifactId="daisy-image-presavehook" version="2.4.2"/>
+
+    <!--
+        | Auto-add plugins from repository data directory that
+        | should be loaded before the repository is started.
+        -->
+    <directory id="datadir" path="${daisy.datadir}${file.separator}plugins${file.separator}load-before-repository"/>
+
+    <!--
+       | This is the core repository server.
+       -->
+    <artifact id="repository" groupId="daisy" artifactId="daisy-repository-server-impl" version="2.4.2"/>
+
+    <!--
+       | All sorts of extensions.
+       -->
+    <artifact id="emailer" groupId="daisy" artifactId="daisy-emailer-server-impl" version="2.4.2"/>
+    <artifact id="revision" groupId="daisy" artifactId="daisy-repository-revision-server-impl" version="2.4.2"/>
+    <artifact id="navigation" groupId="daisy" artifactId="daisy-navigation-server-impl" version="2.4.2"/>
+    <artifact id="publisher" groupId="daisy" artifactId="daisy-publisher-server-impl" version="2.4.2"/>
+    <artifact id="emailnotifier" groupId="daisy" artifactId="daisy-emailnotifier-server-impl" version="2.4.2"/>
+    <artifact id="doctasks" groupId="daisy" artifactId="daisy-doctaskrunner-server-impl" version="2.4.2"/>
+    <artifact id="workflow" groupId="daisy" artifactId="daisy-workflow-server-impl" version="2.4.2"/>
+    <artifact id="usermaintainer" groupId="daisy" artifactId="daisy-user-maintainer" version="2.4.2"/>
+    <artifact id="replication" groupId="daisy" artifactId="daisy-replication-server-impl" version="2.4.2"/>
+
+    <!--
+        | Auto-add plugins from repository data directory that
+        | should be loaded once repository is available.
+        -->
+    <directory id="datadir" path="${daisy.datadir}${file.separator}plugins${file.separator}load-after-repository"/>
+  </containers>
+
+</runtime>

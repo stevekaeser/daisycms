@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="facetedQueryRequest">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="query" type="xs:string"/>
+        <xs:element name="facetConfs">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="facetConf">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="properties" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="name" type="xs:string" use="required"/>
+                              <xs:attribute name="value" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="isFacet" type="xs:boolean"/>
+                  <xs:attribute name="maxValues" type="xs:int"/>
+                  <xs:attribute name="sortOnValue" type="xs:boolean"/>
+                  <xs:attribute name="sortAscending" type="xs:boolean"/>
+                  <xs:attribute name="type" type="xs:string"/>                                  
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="queryOptions">
+          <xs:complexType>
+            <xs:sequence>              
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="queryOption">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string"/>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>            
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="locale" type="xs:string"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

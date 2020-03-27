@@ -1,0 +1,9 @@
+<html>
+<body>
+
+<p>
+<strong>x</strong><img src="x.gif"/><strong>x</strong><img src="x.gif"/><strong>x</strong><img src="x.gif"/><strong>x</strong><img src="x.gif"/><strong>x</strong><img src="x.gif"/>
+</p>
+
+</body>
+</html>

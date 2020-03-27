@@ -1,0 +1,232 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  ${pageContext}
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/daisy_edit.js"></script>
+  </extraHeadContent>
+
+  <pageTitle><i18n:text key="imagebrowser.title"/></pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      dojo.require("daisy.dialog");
+
+      window.daisyContextBranch = "${branch}";
+      window.daisyContextLanguage = "${language}";
+
+      // Make sure progress indicator image gets loaded
+      var progressIndicatorImage = new Image();
+      progressIndicatorImage.src = daisy.mountPoint + "/resources/skins/" + daisy.skin + "/images/progress_indicator_flat.gif";
+
+      function Init() {
+          daisy.dialog.init();
+
+          var daisyLinkWidget = dojo.widget.byId("daisyLink");
+          daisyLinkWidget.setCustomContext(window.daisyContextBranch, window.daisyContextLanguage);
+
+          daisy.dialog.sizeAndPosition({"minWidth": 750});
+          reloadImages();
+      }
+
+      dojo.addOnLoad(Init);
+
+      /**
+       * Called from the document list.
+       */
+      function setLink(documentId, branch, language, versionMode) {
+          // Set the value of the link widget
+          var link = "daisy:" + documentId;
+          if (branch != window.daisyContextBranch || language != window.daisyContextLanguage) {
+              link += "@";
+              if (branch != window.daisyContextBranch)
+                  link += branch;
+              if (language != window.daisyContextLanguage)
+                  link += ":" + language;
+          }
+          dojo.widget.byId("daisyLink").setValue(link);
+
+
+          // Show the image preview
+          var imageURL = daisy.mountPoint + "/" + daisy.site.name + "/" + documentId + "/version/" + versionMode + "/part/ImageData/data?branch=" + branch + "&amp;language=" + language;
+
+          window.daisyImagePreview.location.replace(imageURL);
+          var documentURL = daisy.mountPoint + "/" + daisy.site.name + "/" + documentId + "/version/" + versionMode + "?layoutType=plain&amp;branch=" + branch + "&amp;language=" + language;
+      }
+
+      function showProgress(frame) {
+        var doc = frame.contentWindow.document;
+        doc.body.style.margin = "0px";
+        doc.body.style.padding = "0px";
+        doc.body.innerHTML = "&lt;p style='padding-left: 1em; margin-top: 1em;'>&lt;img src='" + progressIndicatorImage.src + "' alt='...'/>&lt;/p>";
+      }
+
+      function insertImage() {
+        var linkWidget = dojo.widget.byId("daisyLink");
+        var link = linkWidget.getValue();
+        var parsedLink = daisy.util.parseDaisyLink(link);
+
+        if (parsedLink == null) {
+          alert("<i18n:text key="docbrowser.invalid-link"/>");
+          return;
+        }
+
+        var params = new Object();
+        params.url = link;
+        params.docId = parsedLink.documentId;
+        params.branch = parsedLink.branch;
+        params.language = parsedLink.language;
+        params.version = parsedLink.version;
+        daisy.dialog.close(params);
+      }
+
+      function reloadImages() {
+        var collectionId = getSelectedCollectionOption().value;
+        var branchId = getSelectedBranchOption().value;
+        var languageId = getSelectedLanguageOption().value;
+        var versionMode = getSelectedVersionOption().value;
+
+        var imagesURL = daisy.mountPoint + "/" + daisy.site.name + "/editing/imageBrowser/imagesByCollection/" + collectionId + "?branch=" + branchId + "&amp;language=" + languageId + "&amp;versionMode=" + versionMode;
+
+        showProgress(dojo.byId("daisyImages"));
+        window.daisyImages.location.replace(imagesURL);
+        window.daisyImagePreview.location.replace("about:blank");
+      }
+
+      function getSelectedCollectionOption() {
+        var collectionIdSelect = document.getElementById("collectionId");
+        return collectionIdSelect.options[collectionIdSelect.selectedIndex];
+      }
+
+      function getSelectedBranchOption() {
+        var branchIdSelect = document.getElementById("branchId");
+        return branchIdSelect.options[branchIdSelect.selectedIndex];
+      }
+
+      function getSelectedLanguageOption() {
+        var languageIdSelect = document.getElementById("languageId");
+        return languageIdSelect.options[languageIdSelect.selectedIndex];
+      }
+
+      function getSelectedVersionOption() {
+        var versionSelect = document.getElementById("versionMode");
+        return versionSelect.options[versionSelect.selectedIndex];
+      }
+    </script>
+
+    <div class="dsydlg-title"><i18n:text key="imagebrowser.title"/></div>
+
+    <table>
+      <tr>
+        <td style="white-space: nowrap">
+          <i18n:text key="collection"/>:
+          <select name="collectionId" id="collectionId" onchange="reloadImages();">
+            <jx:forEach var="collection" items="${collections}">
+                <jx:choose>
+                  <jx:when test="${collection.id == collectionId}">
+                    <option value="${collection.id}" selected="selected">${collection.name}</option>
+                  </jx:when>
+                  <jx:otherwise>
+                    <option value="${collection.id}">${collection.name}</option>
+                  </jx:otherwise>
+                </jx:choose>
+            </jx:forEach>
+            <option value="all"><i18n:text key="select-any"/></option>
+          </select>
+        </td>
+        <td style="white-space: nowrap">
+          <i18n:text key="branch"/>:
+          <select name="branchId" id="branchId" onchange="reloadImages();">
+            <jx:forEach var="branch" items="${branches}">
+                <jx:choose>
+                  <jx:when test="${branch.id == branchId}">
+                    <option value="${branch.id}" selected="selected">${branch.name}</option>
+                  </jx:when>
+                  <jx:otherwise>
+                    <option value="${branch.id}">${branch.name}</option>
+                  </jx:otherwise>
+                </jx:choose>
+            </jx:forEach>
+          </select>
+
+          <i18n:text key="language"/>:
+          <select name="languageId" id="languageId" onchange="reloadImages();">
+            <jx:forEach var="language" items="${languages}">
+                <jx:choose>
+                  <jx:when test="${language.id == languageId}">
+                    <option value="${language.id}" selected="selected">${language.name}</option>
+                  </jx:when>
+                  <jx:otherwise>
+                    <option value="${language.id}">${language.name}</option>
+                  </jx:otherwise>
+                </jx:choose>
+            </jx:forEach>
+          </select>
+
+          <i18n:text key="version"/>:
+          <select name="versionMode" id="versionMode" onchange="reloadImages();">
+            <option value="live"><jx:if test="${versionMode == 'live'}"><jx:attribute name="selected" value="selected"/></jx:if><i18n:text key="live"/></option>
+            <option value="last"><jx:if test="${versionMode == 'last'}"><jx:attribute name="selected" value="selected"/></jx:if><i18n:text key="last"/></option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align: right">
+    </div>
+
+    <table width="100%">
+      <col width="35%"/>
+      <col width="65%"/>
+      <tr>
+        <td>
+          <i18n:text key="imagebrowser.images-in-collection"/>
+        </td>
+        <td>
+          <i18n:text key="imagebrowser.image-preview"/>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <iframe name="daisyImages" id="daisyImages" frameborder="0" style="border : 1px solid gray; background-color: white;" height="300" width="100%" src=""></iframe>
+        </td>
+        <td valign="top">
+          <iframe name="daisyImagePreview" id="daisyImagePreview" frameborder="0" style="border : 1px solid gray; background-color: white;" height="300" width="100%" src=""></iframe>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <table class="dsyfrm-table">
+      <tbody>
+        <tr>
+          <td class="dsyfrm-labelcell dsy-nowrap"><b><i18n:text key="imagebrowser.link"/></b></td>
+          <td class="dsyfrm-widgetcell"><input id="daisyLink" name="daisyLink" dojoType="daisy:LinkEditor" contextMode="custom" enableBrowseDocuments="false" openInNewWindows="true"/></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="dsydlg-buttons">
+      <button type="button" name="insertImage" onclick="insertImage()" class="dsyfrm-primaryaction"><i18n:text key="imagebrowser.insert-image"/></button>
+      &#160;
+      <button type="button" onclick="daisy.dialog.close(null); return false;"><i18n:text key="cancel"/></button>
+    </div>
+  </content>
+
+</page>

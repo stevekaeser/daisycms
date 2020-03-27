@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<catalogue>
+    <message key="timedpublish.label">Getimede publicatie</message>
+    <message key="timedpublish.description">Een workflow voor het automatisch 'live' zetten van een document versie op vastgestelde datum en tijd.</message>
+
+    <message key="startTimedPublishTask.label">Start getimede publicatie</message>
+    <message key="startTimedPublishTask.description">De aangegeven document versie zal op de status 'publiceer' worden gezet op het opgegeven tijdstip.</message>
+    <message key="transition.start-timer">Start timer</message>
+
+    <message key="variable.daisy_document.description">het document dat 'live' gezet moet worden. Het wordt aangeraden om een versie aan te geven; als deze niet wordt aangegeven zal de laatste versie van het document 'live' worden gezet.</message>
+
+    <message key="variable.publishTime.label">Publicatie datum &amp; tijd</message>
+    <message key="variable.publishTime.description">Datum en tijd waarop de versie 'live' gezet wordt. Dit dient uiteraard een tijd te zijn, die in de toekomst ligt.</message>
+</catalogue>

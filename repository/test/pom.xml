@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>daisy</groupId>
+  <artifactId>daisy-repository-test</artifactId>
+  <version>2.4.2</version>
+  <name>Daisy: Repository: Automated Tests</name>
+  <parent>
+    <groupId>daisy</groupId>
+    <artifactId>daisy-repository-parent</artifactId>
+    <version>2.4.2</version>
+  </parent>
+  <properties>
+    <!-- See DSY-266 for why we need to add -Duser.language etc. -->
+    <jvm.debugopt/>
+    <maven.surefire.debug>${jvm.debugopt} -XX:MaxPermSize=512m -Xmx512m -Duser.language=en -Duser.country=US -Duser.variant=</maven.surefire.debug>
+  </properties>
+
+  <dependencies>
+    <dependency><groupId>commons-collections</groupId><artifactId>commons-collections</artifactId></dependency>
+    <dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-bootstrap-dependencies</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-spi</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-doctaskrunner-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailnotifier-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-emailnotifier-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-htmlcleaner</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-impexp</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-install</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-jmsclient-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-launcher</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-linkextractors-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-linkextractors-impl</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-navigation-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-navigation-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-pluginregistry-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-publisher-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-publisher-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-repository-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-repository-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-util</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-workflow-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>daisy</groupId><artifactId>daisy-workflow-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>org.apache.geronimo.specs</groupId><artifactId>geronimo-jms_1.1_spec</artifactId></dependency>
+    <dependency><groupId>jaxen</groupId><artifactId>jaxen</artifactId></dependency>
+    <dependency><groupId>joda-time</groupId><artifactId>joda-time</artifactId><scope>compile</scope></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><scope>compile</scope></dependency>
+    <dependency><groupId>nekohtml</groupId><artifactId>nekodtd</artifactId></dependency>
+    <dependency><groupId>nekohtml</groupId><artifactId>nekohtml</artifactId></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId></dependency>
+    <dependency><groupId>saxpath</groupId><artifactId>saxpath</artifactId></dependency>
+    <dependency><groupId>stax</groupId><artifactId>stax-api</artifactId></dependency>
+    <dependency><groupId>xerces</groupId><artifactId>xercesImpl</artifactId></dependency>
+    <dependency><groupId>xmlbeans</groupId><artifactId>xbean</artifactId></dependency>
+    <dependency><groupId>xmlbeans</groupId><artifactId>xmlpublic</artifactId></dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>-Duser.language=en -Duser.country=US -Duser.variant=</argLine>
+          <excludes>
+            <exclude>**/Abstract*.java</exclude>
+          </excludes>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>debug</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <jvm.debugopt>-Xnoagent -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y</jvm.debugopt>
+      </properties>
+    </profile>
+    <profile> <!-- (This profile requires additional setup) -->
+      <id>profiling</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <jvm.debugopt>-agentlib:yjpagent</jvm.debugopt>
+      </properties>
+    </profile>
+  </profiles>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

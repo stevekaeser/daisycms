@@ -1,0 +1,426 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  ${pageContext}
+
+  <extraHeadContent>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/daisy-plugins-common.js"></script>
+
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/jquery/jquery.partialreset.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/jquery/uritemplate.js"></script>
+    <script type="text/javascript" src="${pageContext.mountPoint}/resources/js/jquery/jquery.docbrowser.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/css/docbrowser.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/css/extras.css"/>
+  </extraHeadContent>
+
+  <pageTitle><i18n:text key="docbrowser.title"/></pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      dojo.require("daisy.dialog");
+      dojo.require("daisy.util");
+
+      window.daisyContextBranch = "${branchId}";
+      window.daisyContextLanguage = "${languageId}";
+
+      /**
+       * function needs to be present for faceted browsing aspect
+       */
+      function showMoreValues(facetIndex) {
+          $("#docbrowser").daisyDocumentBrowser("showMoreFacetValues", facetIndex);
+      }
+       
+      var availableBranches = {
+         <jx:forEach items="${branches}" var="branch" varStatus="branchStatus">"${branch.name}": ${branch.id}<jx:if test="${!branchStatus.last}">,</jx:if>
+         </jx:forEach>};
+      var availableLanguages = {
+         <jx:forEach items="${languages}" var="language" varStatus="languageStatus">"${language.name}": ${language.id}<jx:if test="${!languageStatus.last}">,</jx:if>
+         </jx:forEach>};
+
+      $(function Init() {
+          daisy.dialog.init();
+
+          dojo.event.connect(dojo.byId("insertLink"), "onclick", function() { $("#docbrowser").daisyDocumentBrowser("insertLink"); });
+
+          var multiSelect = window.dialogArguments?(window.dialogArguments.multiSelect||false):false;
+          
+          var baseConditions = new Array();
+          <![CDATA[
+          if(window.dialogArguments && window.dialogArguments.whereclause){
+            baseConditions.push(window.dialogArguments.whereclause);
+          }
+          ]]>
+          <jx:if test="${config.baseCondition != null and config.baseCondition != ''} ">
+            baseConditions.push("(${config.baseCondition})");
+          </jx:if>
+
+          var columns=new Array();
+          var columnLabels=new Array();
+          var sortingValues=new Array();
+          <jx:forEach var="column" items="${config.columns}">
+              columns.push("${column.name}");
+              columnLabels.push("${column.label}");
+              sortingValues.push("${column.sortingValue}");
+          </jx:forEach>
+          if(columns.length==0) {
+              columns = [ "id", "name" ];
+              columnLabels = undefined;
+              sortingValues = [ "id", "name" ];
+          }
+          
+          daisy.dialog.sizeAndPosition({"minWidth": 750, "minHeight": 630});
+
+          $("#docbrowser").daisyDocumentBrowser({
+            columns: columns,
+            columnLabels: columnLabels,
+            sortingValues: sortingValues,
+            previewUrl: "${daisy.mountPoint}/${daisy.site.name}/${doc_id}/version/${versionMode}?layoutType=plain&amp;branch=${doc.branch}&amp;language=${doc.language}",
+            chunkLength: ${config.chunkSize},
+            faceted: "${config.facetedConf}",
+            multiSelect: multiSelect,
+            initialSelection: window.dialogArguments.initialSelection,
+            config: "${configParam}",
+            baseConditions: baseConditions,
+            initialSortColumn: "name",
+            loadImmediately: ${config.loadImmediately},
+            startMode: "${config.startMode}"
+          });
+
+          $("#searchButton").click(function() {
+            $("#docbrowser").daisyDocumentBrowser("update", 1);
+          });          
+
+          $("#preview-toggle").click(function() {
+            $("#docbrowser").daisyDocumentBrowser("toggleMode");
+          }); 
+
+      });
+
+    </script>
+
+    <div class="dsydlg-title"><i18n:text key="docbrowser.title"/></div>
+
+    <form style="display:inline;" target="documents" method="GET" action="${mountPoint}/${siteConf.getName()}/editing/documentBrowser/documents">
+    <fieldset class="filterset">
+    <legend><b><i18n:text key="docbrowser.filters"/></b></legend>
+
+      <jx:macro name="searchHeaderClass">
+          <jx:parameter name="condition"/>
+          <jx:choose>
+            <jx:when test="${condition}">
+              <jx:attribute name="class" value="searchheader expanded"/>
+            </jx:when>
+            <jx:otherwise>
+              <jx:attribute name="class" value="searchheader collapsed"/>
+            </jx:otherwise>
+          </jx:choose>
+      </jx:macro>
+      <div id="searchaspects">
+          <ul class="searchlist">
+            <jx:if test="${config.showPredefined}">
+                <li>
+                  <a href="#predefined">
+                    <searchHeaderClass condition="${config.expandPredefined}"/>
+                    <span><i18n:text key="docbrowser.predefined"/></span>
+                  </a>
+                 
+                  <div class="searchbody">
+                    <select multiple="true" id="predefined" name="predefined">
+                      <jx:forEach var="query" items="${config.whereClauses}">
+                        <option value="${query.value}">${query.name} <b>(${query.description})</b></option>
+                      </jx:forEach>
+                    </select>
+                  </div>                  
+                </li>
+            </jx:if>
+            <jx:if test="${config.showFullText}">
+                <li>
+                  <a href="#fulltext">
+                    <searchHeaderClass condition="${config.expandFullText}"/>
+                    <span><i18n:text key="docbrowser.content"/></span>
+                  </a>
+                  
+                  <div id="fulltext" class="searchbody">
+                    <table class="dsyfrm-table" >
+                      <tbody>
+                       <tr>
+                         <td class="dsyfrm-labelcell dsy-nowrap"><i18n:text key="docbrowser.doc-name-like"/>:</td>
+                         <td class="dsyfrm-widgetcell dsy-nowrap"><input type="text" name="name" id="name" width="80"/> <i18n:text key="docbrowser.doc-name-like-info"/></td>
+                       </tr>
+                       <tr>
+                         <td class="dsyfrm-labelcell"><i18n:text key="docbrowser.containing-text"/>:</td>
+                         <td class="dsyfrm-widgetcell dsy-nowrap"><input type="text" name="fulltextQuery" id="fulltextQuery" width="80"/> <i18n:text key="docbrowser.containing-text-optional"/></td>
+                       </tr>
+                       <tr>
+                         <jx:if test="${!(config.fullTextNameShow or config.fullTextContentShow or config.fullTextFieldsShow)}">
+                           <jx:attribute name="style">display:none</jx:attribute>
+                         </jx:if>
+                         
+                         <td class="dsyfrm-labelcell"></td>
+                         <td class="dsyfrm-widgetcell dsy-nowrap">
+                           <span><jx:if test="${!config.fullTextNameShow}">
+                             <jx:attribute name="style">display:none</jx:attribute>
+                             </jx:if>
+                             <input type="checkbox" name="searchName" id="searchName"><jx:if test="${config.fullTextNameReadonly}">
+                               <jx:attribute name="disabled">true</jx:attribute>
+                             </jx:if><jx:if test="${config.fullTextName}">
+                               <jx:attribute name="checked">true</jx:attribute>
+                             </jx:if></input>
+                             <!-- if a checkbox is disabled it's status (checked/unchecked) is not sent in a form submit, but we will only be reading the status in javascript, not submitting -->
+                             <label for="searchName"><i18n:text key="fulltext.name"/></label>
+                           </span>
+
+
+                           <span><jx:if test="${!config.fullTextContentShow}">
+                             <jx:attribute name="style">display:none</jx:attribute>
+                             </jx:if>
+                             <input type="checkbox" name="searchContent" id="searchContent"><jx:if test="${config.fullTextContentReadonly}">
+                               <jx:attribute name="disabled">true</jx:attribute>
+                             </jx:if><jx:if test="${config.fullTextContent}">
+                               <jx:attribute name="checked">true</jx:attribute>
+                             </jx:if></input>
+                             <label for="searchContent"><i18n:text key="fulltext.content"/></label>
+                           </span>
+
+
+                           <span><jx:if test="${!config.fullTextFieldsShow}">
+                             <jx:attribute name="style">display:none</jx:attribute>
+                             </jx:if>
+                             <input type="checkbox" name="searchFields" id="searchFields"><jx:if test="${config.fullTextFieldsReadonly}">
+                               <jx:attribute name="disabled">true</jx:attribute>
+                             </jx:if><jx:if test="${config.fullTextFields}">
+                               <jx:attribute name="checked">true</jx:attribute>
+                             </jx:if></input>
+                             <label for="searchFields"><i18n:text key="fulltext.fields"/></label>
+                           </span>
+                         </td>
+                       </tr>
+                     </tbody>
+                    </table>
+                  </div>
+                </li>
+                <script>
+                  $(function() {
+                    var on_enter = function(ev) {
+                      if (ev.which==13) {
+                        $("#docbrowser").daisyDocumentBrowser("update", 1);
+                      }
+                    };
+                    $("#name").keypress(on_enter);
+                    $("#fulltextQuery").keypress(on_enter);
+                  });
+                </script>
+            </jx:if>
+            <jx:if test="${config.showFaceted}">
+                <li>
+                  <a href="#faceted">
+                    <searchHeaderClass condition="${config.expandFaceted}"/>
+                    <span><i18n:text key="docbrowser.faceted"/></span>
+                  </a>
+               
+                  <div id="faceted" class="searchbody">
+                  </div>                  
+                </li>
+            </jx:if>
+              <jx:if test="${config.metaConfig.limitToSiteLanguage and !(config.showMeta and config.metaConfig.showLanguage)}">
+                <input type="hidden" id="languageId" value="${siteConf.languageId}"/>
+              </jx:if>
+              <jx:if test="${config.metaConfig.limitToSiteBranch and !(config.showMeta and config.metaConfig.showBranch)}">
+                <input type="hidden" id="branchId" value="${siteConf.branchId}"/>
+              </jx:if>
+              <jx:if test="${config.showMeta}">
+                  <li>
+                    <a href="#daisy-meta">
+                    <searchHeaderClass condition="${config.expandMeta}"/>
+                        <span><i18n:text key="docbrowser.metadata"/></span>
+                    </a>
+                  <div id="daisy-meta" class="searchbody">
+                    <table>
+                      <tbody>
+                      <jx:if test="${config.metaConfig.showLimitToSite}">
+                       <tr>
+                         <td class="dsyfrm-labelcell"><i18n:text key="docbrowser.search-in"/>:</td>
+                         <td class="dsyfrm-widgetcell dsy-nowrap" colspan="6">
+                           <input type="radio" name="collections" id="currentCollection" value="current" checked="true"/><label for="currentCollection"><i18n:text key="docbrowser.current-site-collection"/></label>
+                           <input type="radio" name="collections" id="allCollections" value="all"/><label for="allCollections"><i18n:text key="docbrowser.all-documents"/></label>
+                         </td>
+                       </tr>
+                       </jx:if>
+                       <jx:if test="${config.metaConfig.showExclude}">
+                       <tr>
+                         <td class="dsyfrm-labelcell"><i18n:text key="docbrowser.exclude-doctypes"/>:</td>
+                         <td class="dsyfrm-widgetcell dsy-nowrap"  colspan="6">
+                           <input type="checkbox" name="attachmentDocType" id="attachmentDocType" checked="true"/><label for="attachmentDocType"><i18n:text key="docbrowser.doctype-attachment"/></label>
+                           <input type="checkbox" name="imageDocType" id="imageDocType" checked="true"/><label for="imageDocType"><i18n:text key="docbrowser.doctype-image"/></label>
+                         </td>
+                       </tr>
+                       </jx:if>
+                       <tr>
+                        <jx:if test="${config.metaConfig.showBranch}">
+                          <td class="dsyfrm-labelcell">
+                             <i18n:text key="branch"/>:
+                          </td>
+                         <td>
+                           <select name="branchId" id="branchId">
+                             <jx:if test="${config.metaConfig.limitToSiteBranch}">
+                               <jx:attribute name="disabled">true</jx:attribute>
+                             </jx:if>
+                             <option value="-1"><i18n:text key="select-any"/></option>
+                             <jx:forEach var="branch" items="${branches}">
+                                 <jx:choose>
+                                   <jx:when test="${branch.id == branchId}">
+                                     <option value="${branch.id}" selected="selected">${branch.name}</option>
+                                   </jx:when>
+                                   <jx:otherwise>
+                                     <option value="${branch.id}">${branch.name}</option>
+                                   </jx:otherwise>
+                                 </jx:choose>
+                             </jx:forEach>
+                           </select>
+                         </td>
+                        </jx:if>
+                        <jx:if test="${config.metaConfig.showLanguage}">
+                          <td class="dsyfrm-labelcell">
+                           <i18n:text key="language"/>:
+                          </td>
+                          <td>
+                           <select name="languageId" id="languageId">
+                             <jx:if test="${config.metaConfig.limitToSiteLanguage}">
+                               <jx:attribute name="disabled">true</jx:attribute>
+                             </jx:if>
+                             <option value="-1"><i18n:text key="select-any"/></option>
+                             <jx:forEach var="language" items="${languages}">
+                                 <jx:choose>
+                                   <jx:when test="${language.id == languageId}">
+                                     <option value="${language.id}" selected="selected">${language.name}</option>
+                                   </jx:when>
+                                   <jx:otherwise>
+                                     <option value="${language.id}">${language.name}</option>
+                                   </jx:otherwise>
+                                 </jx:choose>
+                             </jx:forEach>
+                           </select>
+                          </td>
+                        </jx:if>
+                        <jx:if test="${config.metaConfig.showVersion}">
+                        <td class="dsyfrm-labelcell">
+                           <i18n:text key="version"/>:
+                        </td>
+                        <td>
+                           <input type="hidden" id="versionMode" name="versionMode" value="${versionMode}"/>
+                           <div id="docBrowserVersionMode">...</div>
+                           <script>
+                             $(function() {
+                               $("#docBrowserVersionMode").versionmode({
+                                value: 'last',
+                                inline: true,
+                                select: function() {
+                                  //
+                                },
+                                valueInput: "#versionMode" // storing our value in an input helps remembering the selected value on a manual page refresh
+                               });
+                             });
+                           </script>
+                         </td>
+                         </jx:if>
+                        </tr>
+                     </tbody>
+                    </table>
+                  </div>
+
+                </li>
+            </jx:if>
+            <li>
+                <input id="searchButton" type="button" class="dsyfrm-primaryaction" value="docbrowser.search" i18n:attr="value"/>
+            </li>
+          </ul>
+          
+          
+        </div>
+        <script>
+          $(function() {
+            $("a.searchheader.collapsed").next().hide();
+            
+            $(".searchheader").click(function() {
+                $(this).toggleClass("expanded");
+                $(this).toggleClass("collapsed");
+                
+                $(this).next().toggle();
+                return false;
+            });      
+          
+          });
+        
+        
+          $(function() {
+            $("#reset-daisy-meta").click(function(e) {
+              $("#daisy-meta *").partialReset();
+              e.stopPropagation();
+              e.preventDefault();
+            });
+            $("#reset-fulltext").click(function(e) {
+              $("#fulltext *").partialReset();
+              e.stopPropagation();
+              e.preventDefault();
+            });
+            $("#reset-predefined").click(function(e) {
+              $("#predefined *").partialReset();
+              e.stopPropagation();
+              e.preventDefault();
+            });
+          });
+        </script>
+     </fieldset>
+    </form>
+    
+    <fieldset class="filterset">
+        <legend>
+          <b><i18n:text key="serp.search.results.title"/></b>
+          <img id="preview-toggle"  style="vertical-align:center;" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/preview.png" alt="toggle mode" title="docbrowser.toggle-preview" i18n:attr="title"/>
+        </legend>
+        <div id="docbrowser" class="browserDialog">
+        </div>
+    </fieldset>
+
+    <div class="dsydlg-buttons">
+      <button type="button" id="insertLink" class="dsyfrm-primaryaction"><i18n:text key="docbrowser.insert-link"/></button>
+      &#160;
+      <button type="button" onclick="daisy.dialog.close(null); return false;"><i18n:text key="cancel"/></button>
+    </div>
+
+    <table class="dsyfrm-table">
+      <tbody>
+        <tr>
+          <td class="dsy-nowrap" style="vertical-align: top"><b><i18n:text key="docbrowser.current-selection"/>:</b></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="dsy-nowrap" style="vertical-align: top"><a id="dsyClearSelection" href="javascript:void(0)" style="display:none" onclick="$('#docbrowser').daisyDocumentBrowser('clearSelection');">(<i18n:text key="docbrowser.clear-selection"/>)</a></td>
+          <td class="dsyfrm-widgetcell" style="vertical-align: top">
+            <!-- The min-height is to foresee enough space for the LinkEditor widget to run over to two lines
+                 (for longer document names) -->
+            <div id="documentSelection" style="min-height: 3em;">
+              <input id="daisyLink" name="daisyLink"  dojoType="daisy:LinkEditor" enableFragmentId="${enableFragmentId}" contextMode="custom" enableBrowseDocuments="false" openInNewWindows="true"/>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </content>
+</page>

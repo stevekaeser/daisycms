@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<!-- Note: this only applies when using Jetty with the parameter "-Dorg.mortbay.util.URI.charset=UTF-8"
+     (as is default when using Daisy) -->
+<xweb xpath="/web-app/servlet/init-param[param-name='container-encoding']/param-value"
+        remove="/web-app/servlet/init-param[param-name='container-encoding']/param-value/text()"
+>UTF-8</xweb>

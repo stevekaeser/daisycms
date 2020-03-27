@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- DOCTYPE database SYSTEM "database.dtd" -->
+<database>
+  <table name="branches">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="description" type="VARCHAR" size="255"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index>
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="branch_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="languages">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="description" type="VARCHAR" size="255"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index>
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="language_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="documents">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="id_search" type="VARCHAR" size="50" required="true"/>
+    <column name="created" type="DATE" required="true"/>
+    <column name="owner" type="BIGINT" required="true"/>
+    <column name="private" type="BOOLEANCHAR" required="true"/>
+    <column name="reference_lang_id" type="BIGINT" required="false"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <index>
+      <index-column name="id_search"/>
+    </index>
+    <index>
+      <index-column name="owner"/>
+    </index>
+    <index>
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="users">
+      <reference local="owner" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="daisy_namespaces">
+      <reference local="ns_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="languages">
+      <reference local="reference_lang_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="document_variants">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="link_search" type="VARCHAR" size="100" required="true"/>
+    <column name="variant_search" type="VARCHAR" size="100" required="true"/>
+    <column name="doctype_id" type="BIGINT" required="true"/>
+    <column name="retired" type="BOOLEANCHAR" required="true"/>
+    <column name="lastversion_id" type="BIGINT" required="true"/>
+    <column name="liveversion_id" type="BIGINT" required="false"/>
+    <column name="last_major_change_version_id" type="BIGINT" required="false"/>
+    <column name="live_major_change_version_id" type="BIGINT" required="false"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <column name="created_from_branch_id" type="BIGINT" required="false"/>
+    <column name="created_from_lang_id" type="BIGINT" required="false"/>
+    <column name="created_from_version_id" type="BIGINT" required="false"/>
+    <index>
+      <index-column name="doctype_id"/>
+    </index>
+    <index>
+      <index-column name="last_modifier"/>
+    </index>
+    <index>
+      <index-column name="branch_id"/>
+    </index>
+    <index>
+      <index-column name="lang_id"/>
+    </index>
+    <index>
+      <index-column name="link_search"/>
+    </index>
+    <index name="variant_search">
+      <index-column name="variant_search"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="document_types">
+      <reference local="doctype_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="branches">
+      <reference local="branch_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="languages">
+      <reference local="lang_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="document_sequence">
+    <column name="maxid" type="BIGINT"/>
+    <column name="ns_id" type="BIGINT"/>
+    <unique>
+      <unique-column name="ns_id"/>
+    </unique>
+    <foreign-key foreignTable="daisy_namespaces">
+      <reference local="ns_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="document_versions">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="1023" required="true"/>
+    <column name="created_on" type="DATE" required="true"/>
+    <column name="created_by" type="BIGINT" required="true"/>
+    <column name="state" type="CHAR" size="1" required="true"/>
+    <column name="synced_with_lang_id" type="BIGINT" required="false"/>
+    <column name="synced_with_version_id" type="BIGINT" required="false"/>
+    <column name="synced_with_search" type="VARCHAR" size="100" required="false"/>
+    <column name="change_type" type="CHAR" size="1" required="true"/>
+    <column name="change_comment" type="CLOB" required="false"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="total_size_of_parts" type="BIGINT" required="true"/>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <index name="created_by">
+      <index-column name="created_by"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="users">
+      <reference local="created_by" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="live_history">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="doc_id" type="BIGINT" required="true"/>
+    <column name="ns_id" type="BIGINT" required="true"/>
+    <column name="branch_id" type="BIGINT" required="true"/>
+    <column name="lang_id" type="BIGINT" required="true"/>
+    <column name="version_id" type="BIGINT" required="true"/>
+    <column name="begin_date" type="DATE" required="true"/>
+    <column name="end_date" type="DATE" required="false"/>
+    <column name="created_on" type="DATE" required="true"/>
+    <column name="created_by" type="BIGINT" required="true"/>
+    <index name="created_by">
+      <index-column name="created_by"/>
+    </index>
+    <index>
+      <index-column name="doc_id"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="created_by" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="live_history_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="repository_revisions">
+    <column name="ns_id" type="BIGINT" required="true"/>
+    <column name="doc_id" type="BIGINT" required="true"/>
+    <column name="revision_date" type="DATE" required="false"/>
+  </table>
+  <table name="parts">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="version_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="parttype_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="blob_id" type="VARCHAR" size="255" required="true"/>
+    <column name="mimetype" type="VARCHAR" size="255" required="true"/>
+    <column name="filename" type="VARCHAR" size="255" required="false"/>
+    <column name="blob_size" type="BIGINT" required="true"/>
+    <column name="changed_in_version" type="BIGINT" required="true"/>
+    <index>
+      <index-column name="parttype_id"/>
+    </index>
+    <index>
+      <index-column name="blob_id"/>
+    </index>
+    <foreign-key foreignTable="part_types">
+      <reference local="parttype_id" foreign="part_id"/>
+    </foreign-key>
+  </table>
+  <table name="thefields">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="version_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="fieldtype_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="value_seq" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="hier_seq" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="value_count" type="BIGINT" required="true"/>
+    <column name="hier_count" type="BIGINT" required="true"/>
+    <column name="stringvalue" type="VARCHAR" size="255"/>
+    <column name="datevalue" type="DATE"/>
+    <column name="datetimevalue" type="DATE"/>
+    <column name="integervalue" type="BIGINT"/>
+    <column name="floatvalue" type="DOUBLE"/>
+    <column name="decimalvalue" type="DECIMAL" size="10, 5"/>
+    <column name="booleanvalue" type="BOOLEANCHAR"/>
+    <column name="link_docid" type="BIGINT"/>
+    <column name="link_nsid" type="BIGINT"/>
+    <column name="link_searchdocid" type="VARCHAR" size="50"/>
+    <column name="link_branchid" type="BIGINT"/>
+    <column name="link_searchbranchid" type="BIGINT"/>
+    <column name="link_langid" type="BIGINT"/>
+    <column name="link_searchlangid" type="BIGINT"/>
+    <column name="link_search" type="VARCHAR" size="100"/>
+    <index>
+      <index-column name="stringvalue"/>
+    </index>
+    <index>
+      <index-column name="datevalue"/>
+    </index>
+    <index>
+      <index-column name="datetimevalue"/>
+    </index>
+    <index>
+      <index-column name="integervalue"/>
+    </index>
+    <index>
+      <index-column name="floatvalue"/>
+    </index>
+    <index>
+      <index-column name="decimalvalue"/>
+    </index>
+    <index>
+      <index-column name="booleanvalue"/>
+    </index>
+    <index>
+      <index-column name="link_searchdocid"/>
+    </index>
+    <index>
+      <index-column name="link_searchbranchid"/>
+    </index>
+    <index>
+      <index-column name="link_searchlangid"/>
+    </index>
+    <index>
+      <index-column name="link_search"/>
+    </index>
+    <index>
+      <index-column name="fieldtype_id"/>
+    </index>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="daisy_namespaces">
+      <reference local="link_nsid" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="links">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="version_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="title" type="CLOB" required="true"/>
+    <column name="target" type="CLOB" required="true"/>
+  </table>
+  <table name="summaries">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="version_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="summary" type="CLOB" required="true"/>
+  </table>
+  <table name="comment_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="comments">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="doc_id" type="BIGINT" required="true"/>
+    <column name="ns_id" type="BIGINT" required="true"/>
+    <column name="branch_id" type="BIGINT" required="true"/>
+    <column name="lang_id" type="BIGINT" required="true"/>
+    <column name="created_by" type="BIGINT" required="true"/>
+    <column name="created_on" type="DATE" required="true"/>
+    <column name="visibility" type="CHAR" size="1" required="true"/>
+    <column name="comment_text" type="CLOB" required="true"/>
+    <index>
+      <index-column name="doc_id"/>
+    </index>
+    <index>
+      <index-column name="created_by"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="created_by" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="customfields">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="255" required="true" primaryKey="true"/>
+    <column name="value" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="locks">
+    <column name="doc_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="user_id" type="BIGINT" required="true"/>
+    <column name="locktype" type="CHAR" size="1" required="true"/>
+    <column name="time_acquired" type="DATE" required="true"/>
+    <column name="duration" type="BIGINT" required="true"/>
+    <column name="time_expires" type="DATE"/>
+    <index>
+      <index-column name="user_id"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="user_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="extracted_links">
+    <column name="source_doc_id" type="BIGINT" required="true"/>
+    <column name="source_ns_id" type="BIGINT" required="true"/>
+    <column name="source_branch_id" type="BIGINT" required="true"/>
+    <column name="source_lang_id" type="BIGINT" required="true"/>
+    <column name="source_version_id" type="BIGINT" required="true"/>
+    <column name="source_parttype_id" type="BIGINT" required="true"/>
+    <column name="target_doc_id" type="BIGINT" required="true"/>
+    <column name="target_ns_id" type="BIGINT" required="true"/>
+    <column name="target_branch_id" type="BIGINT" required="true"/>
+    <column name="target_lang_id" type="BIGINT" required="true"/>
+    <column name="target_version_id" type="BIGINT" required="true"/>
+    <column name="linktype" type="CHAR" size="1" required="true"/>
+    <index>
+      <index-column name="source_doc_id"/>
+      <index-column name="source_ns_id"/>
+    </index>
+    <index>
+      <index-column name="target_doc_id"/>
+      <index-column name="target_ns_id"/>
+    </index>
+    <!-- Note: only need FK on target_ns_id, source_ns_id always corresponds
+         to some record in the documents table which has a FK -->
+    <foreign-key foreignTable="daisy_namespaces">
+      <reference local="target_ns_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="events">
+    <column name="seqnr" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="message_type" type="VARCHAR" required="true" size="50"/>
+    <column name="message" type="CLOB" required="true"/>
+  </table>
+  <table name="event_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="parttype_sequence ">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="part_types">
+    <column name="part_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="label_id" type="BIGINT" required="true"/>
+    <column name="description_id" type="BIGINT" required="true"/>
+    <column name="mimetype" type="VARCHAR" size="100" required="true"/>
+    <column name="daisy_html" type="BOOLEANCHAR" required="false"/>
+    <column name="linkextractor" type="VARCHAR" size="50" required="false"/>
+    <column name="deprecated" type="BOOLEANCHAR" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="localizedstring_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="localized_strings">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="locale" type="VARCHAR" size="20" required="true" primaryKey="true"/>
+    <column name="value" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="fieldtype_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="field_types">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="label_id" type="BIGINT" required="true"/>
+    <column name="description_id" type="BIGINT" required="true"/>
+    <column name="size" type="INTEGER" required="true"/>
+    <column name="valuetype" type="SMALLINT" required="true"/>
+    <column name="deprecated" type="BOOLEANCHAR" required="true"/>
+    <column name="acl_allowed" type="BOOLEANCHAR" required="true"/>
+    <column name="multivalue" type="BOOLEANCHAR" required="true"/>
+    <column name="hierarchical" type="BOOLEANCHAR" required="true"/>
+    <column name="selectionlist_type" type="CHAR" size="1" required="true"/>
+    <column name="selectlist_free_entry" type="BOOLEANCHAR" required="true"/>
+    <column name="selectlist_load_async" type="BOOLEANCHAR" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="selectionlist_data">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="sequencenr" type="SMALLINT" required="true"/>
+    <column name="depth" type="SMALLINT" required="true"/>
+    <column name="stringvalue" type="VARCHAR" size="255"/>
+    <column name="datevalue" type="DATE"/>
+    <column name="datetimevalue" type="DATE"/>
+    <column name="integervalue" type="BIGINT"/>
+    <column name="floatvalue" type="DOUBLE"/>
+    <column name="decimalvalue" type="DECIMAL" size="10, 5"/>
+    <column name="booleanvalue" type="BOOLEANCHAR"/>
+    <column name="link_docid" type="BIGINT"/>
+    <column name="link_nsid" type="BIGINT"/>
+    <column name="link_branchid" type="BIGINT"/>
+    <column name="link_langid" type="BIGINT"/>
+    <column name="label_id" type="BIGINT" required="true"/>
+    <index name="fieldtype_id">
+      <index-column name="fieldtype_id"/>
+    </index>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="daisy_namespaces">
+      <reference local="link_nsid" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="linkquerysellist">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="whereclause" type="CLOB" required="true"/>
+    <column name="filtervariants" type="BOOLEANCHAR" required="true"/>
+    <unique>
+      <unique-column name="fieldtype_id"/>
+    </unique>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="querysellist">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="query" type="CLOB" required="true"/>
+    <column name="filtervariants" type="BOOLEANCHAR" required="true"/>
+    <column name="sort_order" type="VARCHAR" size="1" required="true"/>
+    <unique>
+      <unique-column name="fieldtype_id"/>
+    </unique>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="parentlinkedsellist">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="whereclause" type="CLOB" required="true"/>
+    <column name="filtervariants" type="BOOLEANCHAR" required="true"/>
+    <column name="linkfield" type="VARCHAR" size="50" required="true"/>
+    <unique>
+      <unique-column name="fieldtype_id"/>
+    </unique>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="hierquerysellist">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="whereclause" type="CLOB" required="true"/>
+    <column name="filtervariants" type="BOOLEANCHAR" required="true"/>
+    <unique>
+      <unique-column name="fieldtype_id"/>
+    </unique>
+    <foreign-key foreignTable="field_types">
+      <reference local="fieldtype_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="hierquerysellist_fields">
+    <column name="fieldtype_id" type="BIGINT" required="true"/>
+    <column name="sequencenr" type="SMALLINT" required="true"/>
+    <column name="fieldname" type="VARCHAR" size="50" required="true"/>
+    <unique>
+      <unique-column name="fieldtype_id"/>
+      <unique-column name="sequencenr"/>
+    </unique>
+    <foreign-key foreignTable="hierquerysellist">
+      <reference local="fieldtype_id" foreign="fieldtype_id"/>
+    </foreign-key>
+  </table>
+  <table name="documenttype_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="document_types">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="label_id" type="BIGINT" required="true"/>
+    <column name="description_id" type="BIGINT" required="true"/>
+    <column name="deprecated" type="BOOLEANCHAR" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="doctypes_fieldtypes">
+    <column name="doctype_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="field_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="required" type="BOOLEANCHAR" required="true"/>
+    <column name="editable" type="BOOLEANCHAR" required="true"/>
+    <column name="sequencenr" type="INTEGER" required="true"/>
+    <index>
+      <index-column name="field_id"/>
+    </index>
+    <foreign-key foreignTable="field_types">
+      <reference local="field_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="doctype_contentmodel">
+    <column name="doctype_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="part_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="required" type="BOOLEANCHAR" required="true"/>
+    <column name="editable" type="BOOLEANCHAR" required="true"/>
+    <column name="sequencenr" type="INTEGER" required="true"/>
+    <index>
+      <index-column name="part_id"/>
+    </index>
+    <foreign-key foreignTable="part_types">
+      <reference local="part_id" foreign="part_id"/>
+    </foreign-key>
+  </table>
+  <table name="collections">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique>
+      <unique-column name="name"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="collection_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="document_collections">
+    <column name="document_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="ns_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="collection_id" type="BIGINT" required="true" primaryKey="true"/>
+    <index name="collection_id">
+      <index-column name="collection_id"/>
+    </index>
+    <foreign-key foreignTable="collections">
+      <reference local="collection_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="acls">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="255" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="acl_objects">
+    <column name="acl_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="objectspec" type="CLOB" required="true"/>
+  </table>
+  <table name="acl_entries">
+    <column name="acl_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="acl_object_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="subject_user_id" type="BIGINT"/>
+    <column name="subject_role_id" type="BIGINT"/>
+    <column name="subject_type" type="CHAR" size="1" required="true"/>
+    <column name="perm_read" type="CHAR" size="1" required="true"/>
+    <column name="perm_write" type="CHAR" size="1" required="true"/>
+    <column name="perm_publish" type="CHAR" size="1" required="true"/>
+    <column name="perm_delete" type="CHAR" size="1" required="true"/>
+    <column name="read_detail" type="BOOLEANCHAR" required="true"/>
+    <column name="write_detail" type="BOOLEANCHAR" required="true"/>
+    <column name="publish_detail" type="BOOLEANCHAR" required="true"/>
+    <index>
+      <index-column name="subject_user_id"/>
+    </index>
+    <index>
+      <index-column name="subject_role_id"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="subject_user_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="roles">
+      <reference local="subject_role_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="acl_accessdetail">
+    <column name="acl_id" type="BIGINT" required="true"/>
+    <column name="acl_object_id" type="BIGINT" required="true"/>
+    <column name="acl_entry_id" type="BIGINT" required="true"/>
+    <column name="acl_permission" type="CHAR" size="1" required="true"/>
+    <column name="ad_type" type="VARCHAR" size="20" required="true"/>
+    <column name="ad_data" type="VARCHAR" size="255"/>
+    <index>
+      <index-column name="acl_id"/>
+      <index-column name="acl_object_id"/>
+      <index-column name="acl_entry_id"/>
+    </index>
+  </table>
+  <table name="users">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="login" type="VARCHAR" size="50" required="true"/>
+    <column name="password" type="VARCHAR" size="50" required="false"/>
+    <column name="default_role" type="BIGINT" required="true"/>
+    <column name="first_name" type="VARCHAR" size="50"/>
+    <column name="last_name" type="VARCHAR" size="50"/>
+    <column name="email" type="VARCHAR" size="100"/>
+    <column name="updateable_by_user" type="BOOLEANCHAR" required="true"/>
+    <column name="confirmed" type="BOOLEANCHAR" required="true"/>
+    <column name="confirmkey" type="VARCHAR" size="50" required="false"/>
+    <column name="auth_scheme" type="VARCHAR" size="50" required="true"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique name="login">
+      <unique-column name="login"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="user_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="roles">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="description" type="VARCHAR" size="100"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique name="name">
+      <unique-column name="name"/>
+    </unique>
+    <index name="last_modifier">
+      <index-column name="last_modifier"/>
+    </index>
+    <!-- The following FK will be created after the system data is inserted. -->
+    <!-- foreign-key foreignTable="users">
+      <reference local="last_modifier" foreign="id"/>
+    </foreign-key -->
+  </table>
+  <table name="role_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="user_roles">
+    <column name="user_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="role_id" type="BIGINT" required="true" primaryKey="true"/>
+    <index name="role_id">
+      <index-column name="role_id"/>
+    </index>
+    <foreign-key foreignTable="users">
+      <reference local="user_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="roles">
+      <reference local="role_id" foreign="id"/>
+    </foreign-key>
+  </table>
+
+  <table name="daisy_system">
+    <column name="propname" type="VARCHAR" size="100" required="true" primaryKey="true"/>
+    <column name="propvalue" type="VARCHAR" size="255" required="true"/>
+  </table>
+
+  <table name="daisy_namespaces">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name_" type="VARCHAR" size="200" required="true"/>
+    <column name="fingerprint" type="VARCHAR" size="255" required="true"/>
+    <column name="registered_by" type="BIGINT" required="true"/>
+    <column name="registered_on" type="DATE" required="true"/>
+    <unique name="name_">
+      <unique-column name="name_"/>
+    </unique>
+    <unique name="fingerprint">
+      <unique-column name="fingerprint"/>
+    </unique>
+    <foreign-key foreignTable="users">
+      <reference local="registered_by" foreign="id"/>
+    </foreign-key>
+  </table>
+
+  <table name="namespace_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+
+  <!--
+#
+# What follows below are
+# TABLES NEEDED BY OPTIONAL SERVICES
+#
+# None of these tables should directly reference any of the standard tables;
+# it should be possible to create the tables of these optional services in
+# separate databases.
+#
+# In the future, the creation of these tables will/might be splitted of
+# as part of the installation of the service they belong to.
+
+#
+# tables needed by the email notification service
+#
+-->
+  <table name="emailntfy_subscriptions">
+    <column name="user_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="document_events" type="BOOLEANCHAR" required="true"/>
+    <column name="schema_events" type="BOOLEANCHAR" required="true"/>
+    <column name="user_events" type="BOOLEANCHAR" required="true"/>
+    <column name="collection_events" type="BOOLEANCHAR" required="true"/>
+    <column name="acl_events" type="BOOLEANCHAR" required="true"/>
+    <column name="comment_events" type="BOOLEANCHAR" required="true"/>
+    <column name="locale" type="VARCHAR" size="20"/>
+  </table>
+  <table name="document_subscriptions">
+    <column name="user_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="doc_id" type="VARCHAR" size="255" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <index>
+      <index-column name="doc_id"/>
+    </index>
+    <foreign-key foreignTable="emailntfy_subscriptions">
+      <reference local="user_id" foreign="user_id"/>
+    </foreign-key>
+  </table>
+  <table name="collection_subscriptions">
+    <column name="user_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="collection_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <index>
+      <index-column name="collection_id"/>
+    </index>
+    <foreign-key foreignTable="emailntfy_subscriptions">
+      <reference local="user_id" foreign="user_id"/>
+    </foreign-key>
+  </table>
+  <table name="email_queue" idMethod="native">
+    <column name="from_address" type="VARCHAR" size="255"/>
+    <column name="to_address" type="VARCHAR" size="255" required="true"/>
+    <column name="subject" type="VARCHAR" size="255" required="true"/>
+    <column name="message" type="CLOB" required="true"/>
+    <column name="retry_count" type="SMALLINT" required="true"/>
+    <column name="last_try_time" type="DATE"/>
+    <column name="created" type="DATE" required="true"/>
+    <column name="id" type="BIGINT" autoIncrement="true" primaryKey="true" required="true"/>
+    <column name="error" type="VARCHAR" size="255" required="false"/>
+  </table>
+
+  <!--
+     | Tables needed by the "doctaskrunner" service.
+     -->
+  <table name="task_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="document_tasks">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="owner" type="BIGINT" required="true"/>
+    <column name="state" type="VARCHAR" size="1" required="true"/>    
+    <column name="started_at" type="DATE" required="true"/>    
+    <column name="try_count" type="SMALLINT" required="true" default="0"/>
+    <column name="max_tries" type="SMALLINT" required="true"/>
+    <column name="retry_interval" type="BIGINT" required="false"/>
+    <column name="description" type="CLOB" required="true"/>
+    <column name="action_type" type="VARCHAR" size="100" required="true"/>    
+    <column name="action_parameters" type="CLOB" required="true"/>    
+    <column name="details" type="CLOB" required="false"/>
+    <column name="finished_at" type="DATE" required="false"/>
+    <column name="progress" type="VARCHAR" size="255" required="true"/>
+    <index>
+      <index-column name="started_at"/>
+    </index>
+    <index>
+      <index-column name="owner"/>
+    </index>
+    <index>
+      <index-column name="state"/>
+    </index>
+  </table>
+  <table name="task_doc_details">
+    <column name="task_id" type="BIGINT" required="true" primaryKey="true"/>
+    <!-- We store the document ID here simply as a string. An extension
+         component is a user of the repository as any other user so
+         should treat the document ID as one atomic thing, and not
+         use the internal namespace ID. A foreign key or
+         a join with daisy_namespaces is not possible anyway, since it
+         should not be assumed that the tables of the document task
+         manager are stored in the same DB as the repository. -->
+    <column name="doc_id" type="VARCHAR" size="255" required="true" primaryKey="true"/>
+    <column name="branch_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="lang_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="seqnr" type="BIGINT" required="true"/>
+    <column name="state" type="VARCHAR" size="1" required="true"/>
+    <column name="try_count" type="SMALLINT" required="true" default="0"/>
+    <column name="details" type="CLOB" required="false"/>
+    <foreign-key foreignTable="document_tasks">
+      <reference local="task_id" foreign="id"/>
+    </foreign-key>
+  </table>
+
+  <!--
+     | Tables needed by the replication service
+     -->
+  <table name="replication">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="document_id" type="VARCHAR" size="100" required="true"/>
+    <column name="branch_id" type="BIGINT" required="true"/>
+    <column name="lang_id" type="BIGINT" required="true"/>
+    <column name="target" type="VARCHAR" size="255" required="true"/>
+    <column name="state" type="CHAR" size="1" required="true"/>
+  </table>
+  <table name="replication_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+
+  <!--
+     | Tables needed by the workflow service.
+     | (in addition to the JBPM-created/managed tables)
+     -->
+  <table name="wfpool_sequence">
+    <column name="maxid" type="BIGINT"/>
+  </table>
+  <table name="wf_pools">
+    <column name="id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="name_" type="VARCHAR" size="100" required="true"/>
+    <column name="description" type="VARCHAR" size="255" required="false"/>
+    <column name="last_modified" type="DATE" required="true"/>
+    <column name="last_modifier" type="BIGINT" required="true"/>
+    <column name="updatecount" type="BIGINT" required="true"/>
+    <unique name="name_pool">
+      <unique-column name="name_"/>
+    </unique>
+  </table>
+  <table name="wf_pool_members">
+    <column name="pool_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="user_id" type="BIGINT" required="true" primaryKey="true"/>
+    <column name="added" type="DATE" required="true"/>
+    <column name="adder" type="BIGINT" required="true"/>
+    <index>
+      <index-column name="user_id"/>
+    </index>
+    <foreign-key foreignTable="wf_pools">
+      <reference local="pool_id" foreign="id"/>
+    </foreign-key>
+  </table>
+</database>

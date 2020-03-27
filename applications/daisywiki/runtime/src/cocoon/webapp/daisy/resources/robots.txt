@@ -1,0 +1,8 @@
+#
+# robots.txt
+#
+# Do not modify this file here, since it will be lost when upgrading.
+# Instead, create a robots.txt file at
+# <WIKIDATA_DIR>/resources/robots.txt
+#
+ 

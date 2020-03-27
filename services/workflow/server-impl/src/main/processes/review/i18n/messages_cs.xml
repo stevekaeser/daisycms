@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="review.label">Revize</message>
+  <message key="review.description">Workflow pro revizi dokumentu</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Dokument k revizi</message>
+  <message key="variable.reviewSubmitComment.label">Poznámka k požadavku na revizi</message>
+  <message key="variable.reviewSubmitComment.description">Poznámka pro revidujícího</message>
+  <message key="variable.reviewer.label">Revidující</message>
+  <message key="variable.fixComment.label">Opravit poznámku</message>
+  <message key="variable.fixComment.description">Poznámka tvůrce workflow, po aktualizaci dokumentu, založené na poznámkách revidující(ho).</message>
+  <message key="variable.reviewComment.label">Poznámka k revizi</message>
+  <message key="variable.reviewComment.description">Poznámka od revidující(ho)</message>
+
+  <!-- Tasks -->
+  <message key="startReviewTask.label">Začít revizi</message>
+  <message key="startReviewTask.description">Prosím, uveďte parametry potřebné k revizi dokumentu.</message>
+  <message key="reviewTask.label">Revize</message>
+  <message key="reviewTask.description">Byl(a) jste požádán(a) o revizi dokumentu.</message>
+  <message key="requestChangesTask.label">Požadavek na změnu revize</message>
+  <message key="requestChangesTask.description">Byl(a) jste požádán(a) o úpravu dokumentu a opětovné postoupení k revizi.</message>
+  <message key="rejectedTask.label">Revize zamítnuta</message>
+  <message key="rejectedTask.description">Toto je oznámení o tom, že dokument, který jste odevzdal k revizi byl zamítnut.</message>
+
+  <!-- Transitions -->
+  <message key="transition.request-review">Vyžádat revizi</message>
+  <message key="transition.publish">Publikovat dokument</message>
+  <message key="transition.endReview">Ukončit revizi</message>
+  <message key="transition.request-changes">Požádat o změny</message>
+  <message key="transition.reject">Zamítnout</message>
+  <message key="transition.request-new-review">Požádat o novou revizi</message>
+  <message key="transition.give-up">Vzdát to</message>
+  <message key="transition.confirm">Potvrdit</message>
+</catalogue>

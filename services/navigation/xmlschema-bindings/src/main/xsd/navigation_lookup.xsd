@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#navigationspec" xmlns:nav="http://outerx.org/daisy/1.0#navigationspec" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="navigationLookup">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="1">
+        <xs:element name="lookupAlternative">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="collectionId" type="xs:long"/>
+            <xs:attribute name="navDocId" type="xs:string"/>
+            <xs:attribute name="navBranchId" type="xs:long"/>
+            <xs:attribute name="navLangId" type="xs:long"/>
+            <xs:attribute name="navVersionMode" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="navigationPath" type="xs:string" use="required"/>
+      <xs:attribute name="requestedBranchId" type="xs:long" use="optional"/>
+      <xs:attribute name="requestedLanguageId" type="xs:long" use="optional"/>
+      <xs:attribute name="allowOld" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

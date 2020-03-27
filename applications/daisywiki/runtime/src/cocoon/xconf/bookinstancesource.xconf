@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon/source-factories" unless="component-instance[@name='bookstore']">
+
+    <!-- bookstore pseudo protocol -->
+    <component-instance
+         name="bookstore"
+         class="org.outerj.daisy.books.store.source.BookStoreSourceFactory">
+    </component-instance>
+
+</xconf>

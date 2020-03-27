@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="tmsearch.title"/></pageTitle>
+  <layoutHints wideLayout="true"/>
+
+  <content>
+    <script type="text/javascript">
+      function show_hide_searchfields(query) {
+        var refLang = dojo.byId('referenceLanguageContainer');
+        if (query == "no-reference-language" || query == "no-major-changes") {
+          refLang.style.visibility = 'hidden';
+        } else {
+          refLang.style.visibility = 'visible';
+        }
+        
+        var lang = dojo.byId('language');
+        if (query == "overview") {
+          lang.style.visibility = 'hidden';
+        } else {
+          lang.style.visibility = 'visible';
+        }
+
+        var lang = dojo.byId('collectionContainer');
+        if (query == "overview") {
+          lang.style.visibility = 'hidden';
+        } else {
+          lang.style.visibility = 'visible';
+        }
+      }
+      
+      daisyPushOnLoad(function() {
+        var query = dojo.byId('query:input');
+        show_hide_searchfields(query.options[query.selectedIndex].value);
+      });
+    </script>
+    <h1><i18n:text key="tmsearch.title"/></h1>
+
+    <ft:form-template name="tmSearch" method="GET">
+      <fi:group>
+        <fi:styling layout="daisy-columns"/>
+        <fi:items>
+
+          <fi:custom-entry entryId="referenceLanguageContainer">
+            <fi:label-entry><i18n:text key="tmsearch.reference-language"/></fi:label-entry>
+            <fi:widget-entry>
+              <ft:widget id="referenceLanguage" fi:disable-required-mark="true"/>
+              &#160;
+              <ft:widget id="referenceLanguageVersion" fi:disable-required-mark="true"/>
+            </fi:widget-entry>
+          </fi:custom-entry>
+
+          <fi:custom-entry entryId="languageContainer">
+            <fi:label-entry><i18n:text key="tmsearch.language"/></fi:label-entry>
+            <fi:widget-entry>
+              <ft:widget id="language" fi:disable-required-mark="true"/>
+              &#160;
+              <ft:widget id="languageVersion" fi:disable-required-mark="true"/>
+            </fi:widget-entry>
+          </fi:custom-entry>
+
+          <ft:widget id="branch" fi:disable-required-mark="true"/>
+
+          <fi:custom-entry entryId="collectionContainer">
+            <fi:label-entry><i18n:text key="collection"/></fi:label-entry>
+            <fi:widget-entry>
+              <ft:widget id="collection" fi:disable-required-mark="true"/>
+            </fi:widget-entry>
+          </fi:custom-entry>
+
+          <ft:widget id="query" fi:disable-required-mark="true">
+            <fi:styling onchange="show_hide_searchfields(this.options[this.selectedIndex].value);"/> 
+          </ft:widget>
+
+          <fi:widget-entry class="dsyfrm-primaryaction">
+            <ft:widget id="send" fi:class="dsyfrm-primaryaction"/>
+          </fi:widget-entry>
+        </fi:items>
+      </fi:group>
+    </ft:form-template>
+
+    <jx:if test="${pageXml != null}">
+      <br/>
+      <div parseWidgets="false">
+        <jx:choose>
+          <jx:when test="${CocoonFormsInstance.getChild('query').getValue() == 'overview'}">
+            <cinclude:include src="cocoon:/internal/translmgmt/searchresult_overview"/>
+          </jx:when>
+          <jx:otherwise>
+            <cinclude:include src="cocoon:/internal/translmgmt/searchresult"/>
+          </jx:otherwise>
+        </jx:choose>
+      </div>
+    </jx:if>
+
+  </content>
+
+</page>

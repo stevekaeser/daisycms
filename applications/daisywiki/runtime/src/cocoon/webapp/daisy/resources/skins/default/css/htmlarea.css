@@ -1,0 +1,37 @@
+/*
+ * CSS file used to format the htmlarea
+ */
+@import url("docstyle.css");
+
+body {
+  margin: 1em;
+}
+
+table {
+  border-spacing: 0pt;
+  border-collapse: collapse;
+  font-size: small;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+table tbody tr td {
+  border: 1px solid gray;
+  padding: 2px 4px 2px 4px;
+}
+table tbody tr th {
+  border: 1px solid gray;
+  background-color: lightgrey;
+  padding: 2px 4px 2px 4px;
+}
+
+div.daisy-include-preview {
+  white-space: normal;
+  font-family: helvetica, sans-serif;
+  word-wrap: break-word; /* IE */
+  border-top: 1px solid gray;
+  padding-top: 13px;
+  margin-top: 3px;
+  background-image: url("../images/preview_caption.gif");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+}

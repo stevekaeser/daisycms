@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources>
+  </map:resources>
+
+  <map:flow language="javascript">
+    <map:script src="flow.js"/>
+  </map:flow>
+
+  <map:pipelines>
+
+   <map:pipeline internal-only="true" type="noncaching">
+   </map:pipeline>
+
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+
+     <map:match pattern="forms/guestbook">
+       <map:call function="guestbook"/>
+     </map:match>
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#publisher" xmlns:publisher="http://outerx.org/daisy/1.0#publisher" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="publisherRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="publisher:publisherRequestsContainer">
+          <xs:attribute name="locale" type="xs:string" use="optional"/>
+          <xs:attribute name="exceptions" use="optional">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="throw"/>
+                <xs:enumeration value="inline"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="styleHint" type="xs:string" use="optional"/>
+          <xs:attribute name="versionMode" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="document">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:choice>
+          <xs:group ref="publisher:publisherElements"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="optional"/>
+      <xs:attribute name="branch" type="xs:string" use="optional"/>
+      <xs:attribute name="language" type="xs:string" use="optional"/>
+      <xs:attribute name="version" type="xs:string" use="optional"/>
+      <xs:attribute name="field" type="xs:string" use="optional"/>
+      <xs:attribute default="all" name="hierarchyElement" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="(-?[0-9]{1,14})|(all)"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aclInfo">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="documentType">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="subscriptionInfo">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="comments">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="availableVariants">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="preparedDocuments">
+    <xs:complexType>
+      <xs:all>
+        <!--The context element is not used anymore, but left here optionally so that existing publisher requests don't break.-->
+        <xs:element minOccurs="0" name="context">
+          <xs:complexType>
+            <xs:attribute name="branch" type="xs:string" use="required"/>
+            <xs:attribute name="language" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="navigationDocument" type="publisher:variantKeyType"/>
+      </xs:all>
+      <xs:attribute name="applyDocumentTypeStyling" type="xs:boolean" use="optional"/>
+      <xs:attribute name="displayContext" type="xs:string" use="optional"/>
+      <xs:attribute name="publisherRequestSet" type="xs:string" use="optional"/>
+      <xs:attribute name="doDiff" type="xs:boolean" use="optional"/>
+      <xs:attribute name="diffList" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="shallowAnnotatedVersion">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="annotatedDocument">
+    <xs:complexType>
+      <xs:attribute name="inlineParts" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="annotatedVersionList">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="ids">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="diff">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="otherDocument">
+          <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="branch" type="xs:string" use="optional"/>
+            <xs:attribute name="language" type="xs:string" use="optional"/>
+            <xs:attribute name="version" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="contentDiffType" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="if">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="publisher:publisherRequestsContainer">
+          <xs:attribute name="test" type="xs:string" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="choose">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="1" name="when">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="publisher:publisherRequestsContainer">
+                <xs:attribute name="test" type="xs:string" use="required"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="otherwise" type="publisher:publisherRequestsContainer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="navigationTree">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="navigationDocument" type="publisher:variantKeyType"/>
+        <xs:element minOccurs="0" name="activeDocument" type="publisher:variantKeyType"/>
+        <xs:element minOccurs="0" name="activePath" type="xs:string"/>
+        <xs:element name="contextualized" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="depth" type="xs:int"/>
+        <xs:element minOccurs="0" name="versionMode" type="xs:string"/>
+        <xs:element minOccurs="0" name="addChildCounts" type="xs:string"/>
+        <xs:element maxOccurs="1" minOccurs="0" ref="publisher:document"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="myComments">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="performQuery">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="query" type="xs:string"/>
+        <xs:element minOccurs="0" name="extraConditions" type="xs:string"/>
+        <xs:element maxOccurs="1" minOccurs="0" ref="publisher:document"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="forEach">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="query" type="xs:string"/>
+          <xs:element name="expression">
+            <xs:complexType>
+              <xs:simpleContent>
+                <xs:extension base="xs:string">
+                  <xs:attribute name="precompile" type="xs:boolean" use="optional"/>
+                  <xs:attribute default="all" name="hierarchyElement" use="optional">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:pattern value="(-?[0-9]{1,14})|(all)"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:simpleContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+        <xs:element ref="publisher:document"/>
+      </xs:sequence>
+      <xs:attribute name="useLastVersion" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="resolveDocumentIds">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="document">
+          <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="branch" type="xs:string"/>
+            <xs:attribute name="language" type="xs:string"/>
+            <xs:attribute name="version" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="branch" type="xs:string"/>
+      <xs:attribute name="language" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="prepareDocument">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="linkAnnotation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="element">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="customAnnotation">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="expression" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:QName" use="required"/>
+                  <xs:attribute name="attribute" type="xs:QName" use="required"/>
+                  <xs:attribute name="navigationPath" type="xs:boolean"/>
+                  <xs:attribute name="imageAnnotations" type="xs:boolean"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="inlineParts" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="selectionList">
+    <xs:complexType>
+      <xs:attribute name="fieldType" type="xs:string" use="required"/>
+      <xs:attribute name="branch" type="xs:string" use="optional"/>
+      <xs:attribute name="language" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="variantKeyType">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="branch" type="xs:string" use="required"/>
+    <xs:attribute name="language" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="publisherRequestsContainer">
+    <xs:sequence>
+      <xs:element maxOccurs="1" minOccurs="0" name="variablesConfig" type="publisher:variablesConfigType"/>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:group ref="publisher:publisherElements"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="publisherElements">
+    <xs:choice>
+      <xs:element ref="publisher:document"/>
+      <xs:element ref="publisher:navigationTree"/>
+      <xs:element ref="publisher:myComments"/>
+      <xs:element ref="publisher:performQuery"/>
+      <xs:element ref="publisher:forEach"/>
+      <xs:element ref="publisher:group"/>
+      <xs:element ref="publisher:resolveDocumentIds"/>
+      <xs:element ref="publisher:aclInfo"/>
+      <xs:element ref="publisher:documentType"/>
+      <xs:element ref="publisher:subscriptionInfo"/>
+      <xs:element ref="publisher:comments"/>
+      <xs:element ref="publisher:availableVariants"/>
+      <xs:element ref="publisher:preparedDocuments"/>
+      <xs:element ref="publisher:prepareDocument"/>
+      <xs:element ref="publisher:shallowAnnotatedVersion"/>
+      <xs:element ref="publisher:annotatedDocument"/>
+      <xs:element ref="publisher:annotatedVersionList"/>
+      <xs:element ref="publisher:diff"/>
+      <xs:element ref="publisher:if"/>
+      <xs:element ref="publisher:choose"/>
+      <xs:element ref="publisher:selectionList"/>
+      <xs:element ref="publisher:ids"/>
+      <xs:element ref="publisher:performFacetedQuery"/>
+      <xs:element ref="publisher:performWorkflowQuery"/>
+      <xs:element ref="publisher:resolveVariables"/>
+      <xs:element ref="publisher:variablesList"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="group">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="publisher:publisherRequestsContainer">
+          <xs:attribute name="id" type="xs:string" use="required"/>
+          <xs:attribute name="catchErrors" type="xs:boolean" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="variablesConfigType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="variableSources">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="variableDocument" type="publisher:variantKeyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="variablesInAttributes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="element">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="attributes" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="allAttributes" type="xs:boolean" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="performFacetedQuery">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="options">
+          <xs:complexType>
+            <xs:all>
+              <xs:element maxOccurs="1" minOccurs="0" name="defaultConditions" type="xs:string"/>
+              <xs:element maxOccurs="1" minOccurs="0" name="defaultSortOrder" type="xs:string"/>
+              <xs:element maxOccurs="1" minOccurs="0" name="additionalSelects">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="expression" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="0" name="queryOptions">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="queryOption">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="value" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="facets">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="1" name="facet">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element maxOccurs="1" minOccurs="0" name="properties">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" minOccurs="1" name="property">
+                            <xs:complexType>
+                              <xs:attribute name="name" type="xs:string" use="required"/>
+                              <xs:attribute name="value" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                  <xs:attribute name="expression" type="xs:string" use="required"/>
+                  <xs:attribute name="maxValues" type="xs:int"/>
+                  <xs:attribute name="sortOnValue" type="xs:boolean"/>
+                  <xs:attribute name="sortAscending" type="xs:boolean"/>
+                  <xs:attribute name="type" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="performWorkflowQuery">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="query">
+          <xs:complexType>
+            <xs:all>
+              <xs:element minOccurs="0" name="selectClause">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="select">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="type" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="conditions">
+                <xs:complexType>
+                  <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xs:choice>
+                      <xs:element name="propertyCondition" type="publisher:wfCondition"/>
+                      <xs:element name="taskVariableCondition" type="publisher:wfCondition"/>
+                      <xs:element name="processVariableCondition" type="publisher:wfCondition"/>
+                      <xs:element name="specialCondition">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="publisher:wfVariableValuesType"/>
+                          </xs:sequence>
+                          <xs:attribute name="name" type="xs:string" use="required"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:sequence>
+                  <xs:attribute name="meetAllCriteria" type="xs:boolean"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="orderByClause">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="orderBy">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="type" type="xs:string"/>
+                        <xs:attribute name="sortOrder" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>        
+      </xs:all>
+      <xs:attribute name="type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="process"/>
+            <xs:enumeration value="task"/>
+            <xs:enumeration value="timer"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="wfCondition">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="publisher:wfVariableValuesType"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="operator" type="xs:string" use="required"/>
+    <xs:attribute name="valueType" type="xs:string" use="required"/>
+    <xs:attribute name="multiValue" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="wfVariableValuesType">
+    <xs:choice>
+      <xs:element name="string" type="xs:string"/>
+      <xs:element name="date" type="xs:date"/>
+      <xs:element name="dateTime" type="xs:dateTime"/>
+      <xs:element name="long" type="xs:long"/>
+      <xs:element name="daisyLink">
+        <xs:complexType>
+          <xs:attribute name="documentId" type="xs:string" use="required"/>
+          <xs:attribute name="branch" type="xs:string"/>
+          <xs:attribute name="language" type="xs:string"/>
+          <xs:attribute name="version" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="actor">
+        <!--For non-pools, the id attribute should be used, for pools the id attribute can be used if there is only one entry,
+and otherwise nested id elements can be used (the id attribute will take preference over any nested elements).-->
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="xs:long"/>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:long" use="optional"/>
+          <xs:attribute name="pool" type="xs:boolean" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="user" type="xs:long"/>
+      <xs:element name="boolean" type="xs:boolean"/>
+      <xs:element name="id" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="resolveVariables">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="text" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variablesList">
+    <xs:complexType/>
+  </xs:element>
+</xs:schema>

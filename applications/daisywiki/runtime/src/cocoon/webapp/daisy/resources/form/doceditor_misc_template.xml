@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+     xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+     xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+     xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <table class="dsy-layouttable">
+    <tbody>
+      <tr>
+        <td width="50%">
+          <h2><i18n:text key="editdoc.collections"/></h2>
+          <ft:widget id="collections">
+            <fi:styling list-type="double-listbox">
+              <fi:available-label><i18n:text key="mv-available"/></fi:available-label>
+              <fi:selected-label><i18n:text key="mv-selected"/></fi:selected-label>
+            </fi:styling>
+          </ft:widget>
+        </td>
+        <td>
+          <h2><i18n:text key="editdoc.options"/></h2>
+          <ft:widget-label id="retired"/> <ft:widget id="retired"/><br/>
+  
+          <h2><i18n:text key="editdoc.global-document-options-title"/><fi:standalone-help><i18n:text key="editdoc.global-document-options-help"/></fi:standalone-help></h2>
+          <ft:widget-label id="private"/> <ft:widget id="private"/><br/>
+      
+          <i18n:text key="editdoc.reference-language"/>: <ft:widget id="referenceLanguageId"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <h2><i18n:text key="editdoc.custom-fields"/></h2>
+          <jx:choose>
+            <jx:when test='${CocoonFormsInstance.getChild("customFields").getSize() &lt; 1}'>
+              <ft:widget id="addCustomField"/>
+            </jx:when>
+            <jx:otherwise>
+              <table class="plainTable">
+                <tr>
+                  <th><ft:repeater-widget-label id="customFields" widget-id="name"/></th>
+                  <th><ft:repeater-widget-label id="customFields" widget-id="value"/></th>
+                  <th><i18n:text key="editdoc.actions"/></th>
+                </tr>
+                <ft:repeater-widget id="customFields">
+                  <tr>
+                    <td><ft:widget id="name"/></td>
+                    <td><ft:widget id="value"/></td>
+                    <td>
+                      <ft:widget id="delete">
+                        <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.siteConf.skin}/images/delete.gif" title="editdoc.customfields.delete" i18n:attr="title"/>
+                      </ft:widget>
+                    </td>
+                  </tr>
+                </ft:repeater-widget>
+                <tr>
+                  <td colspan="3" align="right">
+                    <ft:widget id="addCustomField"/>
+                  </td>
+                </tr>
+              </table>
+            </jx:otherwise>
+          </jx:choose>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>

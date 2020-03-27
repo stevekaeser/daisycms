@@ -1,0 +1,60 @@
+#!/bin/bash
+
+export DAISY_HOME=/usr/lib/daisy
+export DAISY_DATA=`cat $DAISY_HOME/daisy-repository-init.properties | grep dataDirLocation= | sed 's/dataDirLocation=//'`
+export JMS_DB=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^jmsDbUrl=" | sed 's/.*\///' | sed 's/\?.*//'`
+export DAISY_DB=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^dbUrl=" | sed 's/.*\///' | sed 's/\?.*//'`
+export DAISY_DB_USER=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^dbUser=" | sed 's/dbUser=//'`
+export JMS_DB_USER=`cat $DAISY_HOME/daisy-repository-init.properties | grep -e "^jmsDbUser=" | sed 's/jmsDbUser=//'`
+
+. /usr/lib/java-wrappers/java-wrappers.sh
+find_java_runtime
+export JAVA_HOME
+
+create_backups () {
+  BACKUP_DIR=/tmp/daisy-backup
+  if [ ! -d ${BACKUP_DIR} ]; then
+    mkdir ${BACKUP_DIR}
+  fi
+
+  # Do backup
+  daisy-backup-tool -b -d $DAISY_DATA -l $BACKUP_DIR -a $DAISY_HOME/misc/wiki_backup_settings.xml
+}
+
+store_resources () {
+  echo "daisydata=$DAISY_DATA" > /tmp/daisyresources.txt
+  echo "daisydb=$DAISY_DB" >> /tmp/daisyresources.txt
+  echo "jmsdb=$JMS_DB" >> /tmp/daisyresources.txt
+  echo "daisydb_user=$DAISY_DB_USER" >> /tmp/daisyresources.txt
+  echo "jmsdb_user=$JMS_DB_USER" >> /tmp/daisyresources.txt
+}
+
+stop_services () {
+  /etc/init.d/daisy-wiki stop
+  /etc/init.d/daisy-repository-server stop
+}
+
+case "$1" in 
+  upgrade)
+    create_backups
+    stop_services
+    store_resources
+  ;;
+  
+  remove)
+    stop_services
+    store_resources
+  ;;
+  
+  failed-upgrade | deconfigure )
+    store_resources
+  ;;
+  
+  *)
+    echo "I don't know how to $1"
+    exit1
+  ;;
+esac
+
+
+

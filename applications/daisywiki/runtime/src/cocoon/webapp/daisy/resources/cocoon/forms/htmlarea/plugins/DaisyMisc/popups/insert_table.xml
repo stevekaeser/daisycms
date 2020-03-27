@@ -1,0 +1,113 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Originally based on code from HTMLArea. -->
+<page>
+  ${pageContext}
+
+  <pageTitle>inserttable.title</pageTitle>
+  <layoutHints needsDojo="true"/>
+
+  <content>
+    <script type="text/javascript">
+      <![CDATA[
+        dojo.require("daisy.dialog");
+
+        DaisyMisc = window.opener.DaisyMisc;
+        i18n = DaisyMisc.I18N;
+
+        function Init() {
+          daisy.dialog.translate(i18n);
+          daisy.dialog.init();
+
+          document.getElementById("f_rows").focus();
+
+          daisy.dialog.sizeAndPosition();
+        }
+
+        dojo.addOnLoad(Init);
+
+        function onOK() {
+          if (!checkCount("f_rows", "inserttable.must-enter-number-rows"))
+            return;
+          if (!checkCount("f_cols", "inserttable.must-enter-number-columns"))
+            return;
+
+          var fields = ["f_rows", "f_cols", "firstRowHeadings", "firstColHeadings"];
+          var param = new Object();
+          for (var i in fields) {
+            var id = fields[i];
+            var el = document.getElementById(id);
+            if (el.type == "checkbox")
+                param[id] = el.checked;
+            else
+                param[id] = el.value;
+          }
+          daisy.dialog.close(param);
+          return false;
+        };
+
+        function checkCount(id, errorMsg) {
+            var countValue = document.getElementById(id).value;
+            if (countValue == null || !/^[0-9]+$/.test(countValue) || parseInt(countValue) < 1) {
+                alert(i18n[errorMsg]);
+                return false;
+            }
+            return true;
+        }
+
+        function onCancel() {
+          daisy.dialog.close(null);
+          return false;
+        };
+      ]]>
+    </script>
+
+    <div class="dsydlg-title">inserttable.title</div>
+
+    <form action="" method="get">
+    <table class="dsyfrm-table">
+      <tbody>
+        <tr>
+          <td class="dsyfrm-labelcell dsy-nowrap">inserttable.rows</td>
+          <td class="dsyfrm-widgetcell dsy-nowrap"><input type="text" name="rows" id="f_rows" size="5" value="4" dojoType="IntegerSpinner"/></td>
+        </tr>
+        <tr>
+          <td class="dsyfrm-labelcell dsy-nowrap">inserttable.cols</td>
+          <td class="dsyfrm-widgetcell dsy-nowrap"><input type="text" name="cols" id="f_cols" size="5" value="4" dojoType="IntegerSpinner"/></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="dsyfrm-widgetcell dsy-nowrap">
+            <input type="checkbox" name="firstRowHeadings" id="firstRowHeadings" value="true"/><label for="firstRowHeadings"><span>inserttable.first-row-are-titles</span></label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="dsyfrm-widgetcell dsy-nowrap">
+            <input type="checkbox" name="firstColHeadings" id="firstColHeadings" value="true"/><label for="firstColHeadings"><span>inserttable.first-column-are-titles</span></label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="dsydlg-buttons">
+      <button type="button" onclick="return onOK()" class="dsyfrm-primaryaction">OK</button>
+      &#160;
+      <button type="button" onclick="return onCancel()">inserttable.cancel</button>
+    </div>
+
+    </form>
+  </content>
+</page>

@@ -1,0 +1,358 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+
+  <fd:widgets>
+
+    <fd:repeater id="objects">
+      <fd:widgets>
+        <fd:field id="expr" required="true">
+          <fd:datatype base="string"/>
+        </fd:field>
+
+        <fd:repeater id="entries">
+          <fd:widgets>
+            <fd:field id="subjectType" required="true">
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclSubjectType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+              <fd:selection-list type="enum" nullable="false" class="org.outerj.daisy.repository.acl.AclSubjectType"/>
+            </fd:field>
+
+            <fd:field id="subjectValueLabel">
+              <fd:datatype base="string"/>
+            </fd:field>
+
+            <fd:field id="subjectValue">
+              <fd:datatype base="long"/>
+              <fd:validation>
+                <fd:javascript>
+                  <![CDATA[
+                  var success = true;
+                  var subjectType = widget.getParent().getChild('subjectType').getValue().toString();
+                  if (widget.getValue() == -1 && subjectType != 'everyone' && subjectType != 'owner') {
+                    widget.setValidationError(new Packages.org.apache.cocoon.forms.validation.ValidationError("You have to select a value.", false));
+                    success = false;
+                  }
+                  return success;
+                  ]]>
+                </fd:javascript>
+              </fd:validation>
+            </fd:field>
+
+            <fd:field id="readPerm" required="true">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+            <!-- 'rad' prefix = Read Access Detail -->
+
+            <fd:field id="radNonLive">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radLiveHistory">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radAllFields">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radFields">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="radAllParts">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radParts">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="radFullText">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radFTFragments">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="radSummary">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+            <fd:field id="writePerm" required="true">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+            <!-- 'wad' prefix = Write Access Detail -->
+
+            <fd:field id="wadDocumentName">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadLinks">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadCustomFields">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadCollections">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadDocumentType">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadRetired">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadPrivate">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadReferenceLanguage">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadAllFields">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadFields">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="wadAllParts">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadParts">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="wadChangeComment">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadChangeType">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadSyncedWith">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="wadVersionMeta">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+            <fd:field id="publishPerm" required="true">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="padLiveHistory">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.GRANT</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+
+            <fd:field id="deletePerm" required="true">
+              <fd:initial-value>org.outerj.daisy.repository.acl.AclActionType.DO_NOTHING</fd:initial-value>
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.acl.AclActionType</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+            </fd:field>
+
+            <fd:row-action id="delete" command="delete">
+              <fd:label>Delete</fd:label>
+            </fd:row-action>
+
+            <fd:row-action id="moveUp" command="move-up">
+              <fd:label>Move Up</fd:label>
+            </fd:row-action>
+
+            <fd:row-action id="moveDown" command="move-down">
+              <fd:label>Move Down</fd:label>
+            </fd:row-action>
+
+            <fd:action id="addAfter">
+              <fd:label>Add Entry</fd:label>
+              <fd:on-action>
+                <javascript>
+                  var row = Packages.org.apache.cocoon.forms.formmodel.Repeater.getParentRow(event.getSource());
+                  var repeater = row.getParent();
+                  var newRow = repeater.addRow(repeater.indexOf(row) + 1);
+                  newRow.getChild('subjectValue').setValue(new java.lang.Long(-1));
+                  newRow.getChild('subjectType').setValue(Packages.org.outerj.daisy.repository.acl.AclSubjectType.EVERYONE);
+                </javascript>
+              </fd:on-action>
+            </fd:action>
+          </fd:widgets>
+        </fd:repeater>
+
+        <fd:row-action id="delete" command="delete">
+          <fd:label>Delete</fd:label>
+        </fd:row-action>
+
+        <fd:row-action id="moveUp" command="move-up">
+          <fd:label>Move Up</fd:label>
+        </fd:row-action>
+
+        <fd:row-action id="moveDown" command="move-down">
+          <fd:label>Move Down</fd:label>
+        </fd:row-action>
+
+        <fd:row-action id="addAfter" command="add-after">
+          <fd:label>Add Object</fd:label>
+        </fd:row-action>
+
+        <fd:action id="appendEntry">
+          <fd:label>Append Entry</fd:label>
+          <fd:on-action>
+            <javascript>
+              var row = event.getSource().getParent().getChild("entries").addRow();
+              row.getChild('subjectValue').setValue(new java.lang.Long(-1));
+              row.getChild('subjectType').setValue(Packages.org.outerj.daisy.repository.acl.AclSubjectType.EVERYONE);
+            </javascript>
+          </fd:on-action>
+        </fd:action>
+
+      </fd:widgets>
+    </fd:repeater>
+
+    <fd:action id="appendObject">
+      <fd:label>Append Object</fd:label>
+      <fd:on-action>
+        <javascript>
+          event.getSource().getParent().getChild("objects").addRow();
+        </javascript>
+      </fd:on-action>
+    </fd:action>
+
+  </fd:widgets>
+
+</fd:form>

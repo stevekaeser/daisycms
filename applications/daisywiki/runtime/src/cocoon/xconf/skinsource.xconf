@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon/source-factories" unless="component-instance[@name='daisyskin']">
+
+    <!-- daisyskin pseudo protocol -->
+    <component-instance
+         name="daisyskin"
+         class="org.outerj.daisy.frontend.components.skinsource.SkinSourceFactory">
+    </component-instance>
+
+</xconf>

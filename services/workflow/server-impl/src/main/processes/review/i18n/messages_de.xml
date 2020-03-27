@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="review.label">Überarbeitung</message>
+  <message key="review.description">Arbeitsablauf um ein Dokument durchzusehen</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Dokument zur Durchsicht</message>
+  <message key="variable.reviewSubmitComment.label">Kommentar zur Beantragung der Durchsicht</message>
+  <message key="variable.reviewSubmitComment.description">Kommentar für den Rezensenten</message>
+  <message key="variable.reviewer.label">Rezensent</message>
+  <message key="variable.fixComment.label">Kommentar zur Lösung</message>
+  <message key="variable.fixComment.description">Kommentar vom Ersteller des Arbeitsablaufs nach Verbesserung des Dokuments gemäß den Kommentaren des Rezensenten.</message>
+  <message key="variable.reviewComment.label">Kommentar zur Durchsicht</message>
+  <message key="variable.reviewComment.description">Vom Rezensenten angegebener Kommentar</message>
+
+  <!-- Tasks -->
+  <message key="startReviewTask.label">Erstmalige Durchsicht</message>
+  <message key="startReviewTask.description">Bitte geben Sie die zur Durchsicht des Dokuments benötigten Parameter an.</message>
+  <message key="reviewTask.label">Durchsicht</message>
+  <message key="reviewTask.description">Sie werden gebeten, ein Dokument durchzusehen.</message>
+  <message key="requestChangesTask.label">Antrag auf Änderung der Durchsicht</message>
+  <message key="requestChangesTask.description">Sie werden gebeten, das Dokument anzupassen und erneut zur Durchsicht einzureichen.</message>
+  <message key="rejectedTask.label">Durchsicht zurückgewiesen</message>
+  <message key="rejectedTask.description">Hiermit werden Sie darüber informiert, dass das Dokument, dessen Begutachtung Sie beantragt hatten, zurückgewiesen wurde.</message>
+
+  <!-- Transitions -->
+  <message key="transition.request-review">Durchsicht beantragen</message>
+  <message key="transition.publish">Dokument publizieren</message>
+  <message key="transition.endReview">Durchsicht beenden</message>
+  <message key="transition.request-changes">Änderungen anfordern</message>
+  <message key="transition.reject">Zurückweisen</message>
+  <message key="transition.request-new-review">Neue Durchsicht beantragen</message>
+  <message key="transition.give-up">Aufgeben</message>
+  <message key="transition.confirm">Bestätigen</message>
+</catalogue>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <message key="timedpublish.label">Timed publication</message>
+  <message key="timedpublish.description">A workflow for automatically putting a document version live at a certain date and time.</message>
+
+  <message key="startTimedPublishTask.label">Start timed publish</message>
+  <message key="startTimedPublishTask.description">The specified document version will be put to state publish at the specified time.</message>
+  <message key="transition.start-timer">Start timer</message>
+
+  <message key="variable.daisy_document.description">The document to be put live. It is recommended to include a version, if not specified the last version of the document will be put live.</message>
+
+  <message key="variable.publishTime.label">Publish date &amp; time</message>
+  <message key="variable.publishTime.description">Date and time at which to put the version live. This should of course be a time in the future.</message>
+</catalogue>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="userInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="availableRoleIds">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="roleId" type="xs:long"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="activeRoleIds">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="1" name="roleId" type="xs:long"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="userId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

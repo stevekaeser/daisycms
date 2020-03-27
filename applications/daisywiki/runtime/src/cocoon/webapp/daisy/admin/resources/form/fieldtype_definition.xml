@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="name" required="true">
+      <fd:label>Name:</fd:label>
+      <fd:datatype base="string">
+      </fd:datatype>
+      <fd:validation>
+        <fd:length min="1" max="50"/>
+        <fd:regexp pattern="[a-zA-Z][a-zA-Z\-_0-9]*"/>
+      </fd:validation>
+    </fd:field>
+
+    <fd:field id="valuetype">
+      <fd:label>Value type:</fd:label>
+      <!-- Note: not using enum datatype here because this widget is used as a case
+           for a union -->
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="string"><i18n:text key="org.outerj.daisy.repository.ValueType.STRING"/></fd:item>
+        <fd:item value="date"><i18n:text key="org.outerj.daisy.repository.ValueType.DATE"/></fd:item>
+        <fd:item value="datetime"><i18n:text key="org.outerj.daisy.repository.ValueType.DATETIME"/></fd:item>
+        <fd:item value="long"><i18n:text key="org.outerj.daisy.repository.ValueType.LONG"/></fd:item>
+        <fd:item value="double"><i18n:text key="org.outerj.daisy.repository.ValueType.DOUBLE"/></fd:item>
+        <fd:item value="decimal"><i18n:text key="org.outerj.daisy.repository.ValueType.DECIMAL"/></fd:item>
+        <fd:item value="boolean"><i18n:text key="org.outerj.daisy.repository.ValueType.BOOLEAN"/></fd:item>
+        <fd:item value="link"><i18n:text key="org.outerj.daisy.repository.ValueType.LINK"/></fd:item>
+      </fd:selection-list>
+    </fd:field>
+
+    <fd:booleanfield id="multivalue">
+      <fd:label>Multivalue</fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="hierarchical">
+      <fd:label>Hierarchical</fd:label>
+    </fd:booleanfield>
+
+    <fd:field id="size" required="true">
+      <fd:label>Size hint:</fd:label>
+      <fd:help>A hint for the size of the edit box for this field on the document editing screen. This value is <em>not</em> used to validate the maximum length of the input. Leave 0 for default size.</fd:help>
+      <fd:datatype base="integer">
+        <fd:validation>
+          <fd:range min="0"/>
+        </fd:validation>
+      </fd:datatype>
+    </fd:field>
+
+    <fd:booleanfield id="deprecated">
+      <fd:label>Deprecated</fd:label>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="aclAllowed">
+      <fd:label>ACL allowed</fd:label>
+    </fd:booleanfield>
+    
+    <fd:repeater id="displaydata">
+      <fd:widgets>
+        <fd:output id="locale">
+          <fd:datatype base="string"/>
+        </fd:output>
+        <fd:field id="label">
+          <fd:datatype base="string"/>
+        </fd:field>
+        <fd:field id="description">
+          <fd:datatype base="string"/>
+        </fd:field>
+      </fd:widgets>
+    </fd:repeater>
+
+    <fd:booleanfield id="allowFreeEntry">
+      <fd:datatype base="boolean"/>
+      <fd:label>In addition to selecting a value from the list, allow entering other values.</fd:label>
+      <fd:help>Note that even when this option is not selected, it is not checked (validated)
+        whether the field value(s) belong to the set of values defined by the selection list.</fd:help>
+    </fd:booleanfield>
+
+    <fd:booleanfield id="loadSelectionListAsync">
+      <fd:datatype base="boolean"/>
+      <fd:label>Load selection list data asynchronously.</fd:label>
+      <fd:help>Use this option for (somewhat slower) query-based selection lists or large static selection lists.</fd:help>
+    </fd:booleanfield>
+
+    <fd:field id="selectionlist_type">
+      <fd:datatype base="string"/>
+      <fd:initial-value>none</fd:initial-value>
+      <fd:selection-list>
+        <fd:item value="none"><fd:label>No selection list</fd:label></fd:item>
+        <fd:item value="static"><fd:label>Static selection list (manual enumeration)</fd:label></fd:item>
+        <fd:item value="query"><fd:label>Query-based selection list</fd:label></fd:item>
+        <fd:item value="linkquery"><fd:label>Query-based selection list for link-type fields</fd:label></fd:item>
+        <fd:item value="hierarchicalquery"><fd:label>Query, children-linked hierarchical selection list</fd:label></fd:item>
+        <fd:item value="parentlinked"><fd:label>Query, parent-linked hierarchical selection list</fd:label></fd:item>
+      </fd:selection-list>
+    </fd:field>
+
+    <fd:union id="selectionlist" case="selectionlist_type">
+      <fd:widgets>
+        <fd:group id="none">
+          <!-- Nothing needed here -->
+        </fd:group>
+        <fd:group id="static">
+          <fd:widgets>
+            <fd:field id="staticSelectionList" required="true">
+              <fd:datatype base="string">
+                <fd:convertor type="xmlbeans" class="org.outerx.daisy.x10.StaticSelectionListDocument"/>
+              </fd:datatype>
+            </fd:field>
+            <fd:field id="treemode">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:action id="validateEditors">
+              <fd:on-action>
+                <fd:javascript>
+                  event.getSourceWidget().lookupWidget("../staticSelectionList").validate();
+                </fd:javascript>
+              </fd:on-action>
+            </fd:action>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="linkquery">
+          <fd:widgets>
+            <fd:field id="whereClause" required="true">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:booleanfield id="filterVariants">
+              <fd:label>Filter variants (branch and language) automatically.</fd:label>
+            </fd:booleanfield>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="hierarchicalquery">
+          <fd:widgets>
+            <fd:field id="whereClause" required="true">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:multivaluefield id="linkfields">
+              <fd:datatype base="string"/>
+            </fd:multivaluefield>
+            <fd:booleanfield id="filterVariants">
+              <fd:label>Filter variants (branch and language) automatically.</fd:label>
+            </fd:booleanfield>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="query">
+          <fd:widgets>
+            <fd:field id="query" required="true">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="sortOrder" required="true">
+              <fd:datatype base="enum">
+                <fd:convertor type="enum">
+                  <fd:enum>org.outerj.daisy.repository.query.SortOrder</fd:enum>
+                </fd:convertor>
+              </fd:datatype>
+              <fd:selection-list type="enum" nullable="false" class="org.outerj.daisy.repository.query.SortOrder"/>
+            </fd:field>
+            <fd:booleanfield id="filterVariants">
+              <fd:label>Filter variants (branch and language) automatically.</fd:label>
+            </fd:booleanfield>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="parentlinked">
+          <fd:widgets>
+            <fd:field id="whereClause" required="true">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:field id="linkfield">
+              <fd:datatype base="string"/>
+            </fd:field>
+            <fd:booleanfield id="filterVariants">
+              <fd:label>Filter variants (branch and language) automatically.</fd:label>
+            </fd:booleanfield>
+          </fd:widgets>
+        </fd:group>
+      </fd:widgets>
+    </fd:union>
+  </fd:widgets>
+
+</fd:form>

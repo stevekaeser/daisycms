@@ -1,0 +1,93 @@
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page
+  xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="upload.title"/></pageTitle>
+
+  <content>
+    <script type="text/javascript">
+      dojo.require("daisy.dialog");
+
+      function Init() {
+        daisy.dialog.init();
+        daisy.dialog.sizeAndPosition();
+      }
+
+      dojo.addOnLoad(Init);
+
+      function upload() {
+        var uploadNotification = document.getElementById("upload-notification");
+        uploadNotification.style.display = "block";
+        var uploadForm = document.getElementById("uploadform");
+        uploadForm.style.display = "none";
+        cocoon.forms.submitForm(document.getElementById("file:input"));
+      }
+    </script>
+
+    <div class="dsydlg-title"><i18n:text key="upload.title"/></div>
+
+    <div id="upload-notification" style="display: none; background-color: red; color: white; font-weight: bold;"><i18n:text key="please-wait-uploading"/></div>
+
+    <ft:form-template id="uploadform" action="${submitPath}" method="POST" enctype="multipart/form-data">
+      <fi:group>
+        <fi:styling layout="daisy-columns" nowrap="true"/>
+        <fi:items>
+          <ft:widget id="file">
+            <fi:styling onchange="upload()"/>
+          </ft:widget>
+          <ft:widget id="name">
+            <fi:styling size="45"/>
+          </ft:widget>
+          <ft:widget id="mimetype">
+            <fi:styling size="45"/>
+          </ft:widget>
+          <ft:widget id="filename">
+            <fi:styling size="45"/>
+          </ft:widget>
+          <ft:widget id="collections">
+            <fi:styling list-type="double-listbox">
+              <fi:available-label><i18n:text key="mv-available"/></fi:available-label>
+              <fi:selected-label><i18n:text key="mv-selected"/></fi:selected-label>
+            </fi:styling>
+          </ft:widget>
+          <fi:custom-entry>
+            <fi:label-entry><i18n:text key="variant"/></fi:label-entry>
+            <fi:widget-entry>
+              <i18n:text key="branch"/> <ft:widget id="branchId" fi:disable-required-mark="true"/>
+              <i18n:text key="language"/> <ft:widget id="languageId" fi:disable-required-mark="true"/>
+            </fi:widget-entry>
+          </fi:custom-entry>
+        </fi:items>
+      </fi:group>
+
+      <div class="dsydlg-buttons">
+        <input type="submit" value="upload.upload" i18n:attr="value" class="dsyfrm-primaryaction"/>
+        &#160;
+        <button type="button" onclick="daisy.dialog.close(null); return false;"><i18n:text key="cancel"/></button>
+      </div>
+    </ft:form-template>
+
+  </content>
+
+</page>

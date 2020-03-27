@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<workflowMeta xmlns="http://outerx.org/daisy/1.0#workflowmeta">
+  <resourceBundles>
+    <resourceBundle>messages</resourceBundle>
+  </resourceBundles>
+
+  <label i18n="true">review.label</label>
+  <description i18n="true">review.description</description>
+
+  <!-- Resuable variable definitions -->
+  <variables>
+    <variable name="document" type="daisy-link" scope="global" required="true">
+      <label i18n="true">variable.document.label</label>
+    </variable>
+    <variable name="reviewSubmitComment" type="string" scope="global">
+      <label i18n="true">variable.reviewSubmitComment.label</label>
+      <description i18n="true">variable.reviewSubmitComment.description</description>
+    </variable>
+    <variable name="fixComment" type="string" scope="global"/>
+    <variable name="reviewComment" type="string" scope="global"/>
+    <variable name="reviewer" type="actor" scope="global" required="true">
+      <label i18n="true">variable.reviewer.label</label>
+    </variable>
+  </variables>
+
+  <nodes>
+    <node path="startReview">
+      <transition name="review">
+        <label i18n="true">transition.request-review</label>
+      </transition>
+    </node>
+
+    <node path="review">
+      <transition name="approve">
+        <label i18n="true">transition.approve</label>
+      </transition>
+      <transition name="requestChanges">
+        <label i18n="true">transition.request-changes</label>
+      </transition>
+      <transition name="reject">
+        <label i18n="true">transition.reject</label>
+      </transition>
+    </node>
+
+    <node path="requestChanges">
+      <transition name="newReview">
+        <label i18n="true">transition.request-new-review</label>
+      </transition>
+      <transition name="giveUp">
+        <label i18n="true">transition.give-up</label>
+      </transition>
+    </node>
+
+    <node path="rejected">
+      <transition name="confirm">
+        <label i18n="true">transition.confirm</label>
+      </transition>
+    </node>
+  </nodes>
+
+  <tasks>
+    <task name="startReviewTask">
+      <label i18n="true">startReviewTask.label</label>
+      <description i18n="true">startReviewTask.description</description>
+      <variables>
+        <variable base="document"/>
+        <variable base="reviewSubmitComment"/>
+        <variable base="reviewer" required="true"/>
+      </variables>
+    </task>
+
+    <task name="reviewTask">
+      <label i18n="true">reviewTask.label</label>
+      <description i18n="true">reviewTask.description</description>
+      <variables>
+        <variable base="document" readOnly="true"/>
+        <variable base="reviewSubmitComment" readOnly="true"/>
+        <variable base="fixComment" readOnly="true"/>
+        <variable base="reviewComment"/>
+      </variables>
+    </task>
+
+    <task name="requestChangesTask">
+      <label i18n="true">requestChangesTask.label</label>
+      <description i18n="true">requestChangesTask.description</description>
+      <variables>
+        <variable base="document"/>
+        <variable base="reviewComment" readOnly="true"/>
+        <variable base="fixComment"/>
+      </variables>
+    </task>
+
+    <task name="rejectedTask">
+      <label i18n="true">rejectedTask.label</label>
+      <variables>
+        <variable base="reviewComment" readOnly="true"/>
+      </variables>
+    </task>
+  </tasks>
+</workflowMeta>

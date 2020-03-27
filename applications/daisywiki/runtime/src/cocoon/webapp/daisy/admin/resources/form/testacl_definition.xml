@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+
+  <fd:widgets>
+    <fd:field id="userId" required="true">
+      <fd:label>User ID:</fd:label>
+      <fd:datatype base="long"/>
+    </fd:field>
+
+    <fd:field id="roleId" required="true">
+      <fd:label>Role ID:</fd:label>
+      <fd:datatype base="long"/>
+    </fd:field>
+
+    <fd:field id="testOn">
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="existing"><fd:label>Existing document</fd:label></fd:item>
+        <fd:item value="conceptual"><fd:label>Conceptual document</fd:label></fd:item>
+      </fd:selection-list>
+      <fd:initial-value>existing</fd:initial-value>
+    </fd:field>
+
+    <fd:union id="document" case="testOn">
+      <fd:widgets>
+
+        <fd:group id="existing">
+          <fd:widgets>
+            <fd:field id="documentId" required="true">
+              <fd:label>Document ID:</fd:label>
+              <fd:datatype base="string"/>
+            </fd:field>
+
+            <fd:field id="branchId" required="true">
+              <fd:label>Branch (name or ID):</fd:label>
+              <fd:selection-list type="flow-jxpath" list-path="branchesArray" value-path="id" label-path="name" />
+              <fd:datatype base="long"/>
+              <fd:initial-value>1</fd:initial-value>
+            </fd:field>
+
+            <fd:field id="languageId" required="true">
+              <fd:label>Language (name or ID):</fd:label>
+              <fd:selection-list type="flow-jxpath" list-path="languagesArray" value-path="id" label-path="name" />
+              <fd:datatype base="long"/>
+              <fd:initial-value>1</fd:initial-value>
+            </fd:field>
+          </fd:widgets>
+        </fd:group>
+
+        <fd:group id="conceptual">
+          <fd:widgets>
+            <fd:field id="documentType" required="true">
+              <fd:label>Document type:</fd:label>
+              <fd:selection-list type="flow-jxpath" list-path="documentTypesArray" value-path="id" label-path="name" />
+              <fd:datatype base="long"/>
+            </fd:field>
+
+            <fd:field id="branchId" required="true">
+              <fd:label>Branch (name or ID):</fd:label>
+              <fd:selection-list type="flow-jxpath" list-path="branchesArray" value-path="id" label-path="name" />
+              <fd:datatype base="long"/>
+              <fd:initial-value>1</fd:initial-value>
+            </fd:field>
+
+            <fd:field id="languageId" required="true">
+              <fd:label>Language (name or ID):</fd:label>
+              <fd:selection-list type="flow-jxpath" list-path="languagesArray" value-path="id" label-path="name" />
+              <fd:datatype base="long"/>
+              <fd:initial-value>1</fd:initial-value>
+            </fd:field>            
+          </fd:widgets>
+        </fd:group>
+      </fd:widgets>
+    </fd:union>
+
+
+  </fd:widgets>
+
+</fd:form>

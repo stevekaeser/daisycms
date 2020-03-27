@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="processinstance.xsd"/>
+  <xs:element name="query">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="selectClause">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="select">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string"/>
+                  <xs:attribute name="type" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="conditions">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:choice>
+                <xs:element name="propertyCondition" type="wf:condition"/>
+                <xs:element name="taskVariableCondition" type="wf:condition"/>
+                <xs:element name="processVariableCondition" type="wf:condition"/>
+                <xs:element name="specialCondition">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="wf:variableValuesType"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="meetAllCriteria" type="xs:boolean"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="orderByClause">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="orderBy">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string"/>
+                  <xs:attribute name="type" type="xs:string"/>
+                  <xs:attribute name="sortOrder" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="chunkOffset" type="xs:int"/>
+      <xs:attribute name="chunkLength" type="xs:int"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="condition">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="wf:variableValuesType"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="operator" type="xs:string" use="required"/>
+    <xs:attribute name="valueType" type="xs:string" use="required"/>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans              xmlns = "http://www.springframework.org/schema/beans"
+                xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:daisy = "http://outerx.org/daisy/1.0#runtime-springext"
+               xmlns:conf = "http://outerx.org/daisy/1.0#config-springext"
+            xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+                             http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                             http://outerx.org/daisy/1.0#runtime-springext
+                             http://daisycms.org/schemas/daisyruntime-springext.xsd
+                             http://outerx.org/daisy/1.0#config-springext
+                             http://daisycms.org/schemas/config-springext.xsd">
+
+  <context:annotation-config/>
+
+  <daisy:import-service id="configurationManager" service="org.outerj.daisy.configuration.ConfigurationManager"/>
+  <daisy:import-service id="mbeanServer" service="javax.management.MBeanServer"/>
+  <daisy:import-service id="datasource" service="javax.sql.DataSource"/>
+  <daisy:import-service id="jmsClient" service="org.outerj.daisy.jms.JmsClient"/>
+  <daisy:import-service id="linkExtractorManager" service="org.outerj.daisy.linkextraction.LinkExtractorManager"/>
+  <daisy:import-service id="textExtractorManager" service="org.outerj.daisy.textextraction.TextExtractorManager"/>
+  <daisy:import-service id="pluginRegistry" service="org.outerj.daisy.plugin.PluginRegistry"/>
+  <daisy:import-service id="credentialsProvider" service="org.outerj.daisy.credentialsprovider.CredentialsProvider"/>
+
+  <daisy:export-service ref="repositoryManager" service="org.outerj.daisy.repository.RepositoryManager"/>
+
+
+  <bean id="systeminfo" class="org.outerj.daisy.repository.serverimpl.SystemInfoImpl">
+    <constructor-arg ref="repositoryManager"/>
+    <constructor-arg ref="mbeanServer"/>
+  </bean>
+
+  <bean id="blobstore" class="org.outerj.daisy.blobstore.impl.FSBlobStore">
+    <constructor-arg>
+      <conf:configuration group="repository" name="fsblobstore" source="configurationManager"/>
+    </constructor-arg>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="queryFactory" class="org.outerj.daisy.query.QueryFactoryImpl"/>
+
+  <bean id="documentcache" class="org.outerj.daisy.cache.impl.DocumentCacheImpl">
+    <constructor-arg>
+      <conf:configuration group="repository" name="documentcache" source="configurationManager">
+        <conf:default xmlns="">
+          <!-- The document cache caches documents and their available variants, the below configuration
+               defines the maximum sizes of these caches. -->
+          <documentCacheMaxSize>10000</documentCacheMaxSize>
+          <availableVariantsCacheMaxSize>10000</availableVariantsCacheMaxSize>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="mbeanServer"/>
+  </bean>
+
+  <bean id="summarizer" class="org.outerj.daisy.summary.DocumentSummarizerImpl"/>
+
+  <bean id="fullTextIndex" class="org.outerj.daisy.ftindex.FullTextIndexImpl">
+    <constructor-arg>
+      <conf:configuration group="repository" name="fulltextindex" source="configurationManager"/>
+    </constructor-arg>
+    <constructor-arg ref="mbeanServer"/>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="fullTextIndexUpdater" class="org.outerj.daisy.ftindex.FullTextIndexUpdater" depends-on="daisy-native-authentication">
+    <constructor-arg>
+      <conf:configuration group="repository" name="fulltextindex-updater" source="configurationManager">
+        <conf:default xmlns="">
+          <jmsTopic>daisy</jmsTopic>
+          <jmsSubscriptionName>fullTextIndexer</jmsSubscriptionName>
+          <jmsQueue>fullTextIndexerJobs</jmsQueue>
+
+          <!-- If the logExtractedText tag is enabled, all text extracted from documents to be indexed
+               will be logged to that file (in UTF-8 encoding). This feature is for debugging purposes. -->
+          <!-- logExtractedText file="/tmp/textextraction.log"/ -->
+
+          <!-- Text extraction won't happen on parts whose data size exceeds the below value (in bytes) -->
+          <dataMaxSize>20000000</dataMaxSize>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="repositoryManager"/>
+    <constructor-arg ref="fullTextIndex"/>
+    <constructor-arg ref="textExtractorManager"/>
+    <constructor-arg ref="jmsClient"/>
+    <constructor-arg ref="mbeanServer"/>
+    <constructor-arg ref="credentialsProvider"/>
+  </bean>
+
+  <bean id="backupLocker" class="org.outerj.daisy.backuplock.impl.BackupLockerImpl">
+    <constructor-arg ref="jmsClient"/>
+    <constructor-arg ref="mbeanServer"/>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="authenticator" class="org.outerj.daisy.authentication.impl.UserAuthenticatorImpl">
+    <constructor-arg>
+      <conf:configuration group="repository" name="user-authenticator" source="configurationManager">
+        <conf:default xmlns=""></conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="mbeanServer"/>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean name="daisy-native-authentication" class="org.outerj.daisy.authentication.impl.DaisyAuthenticationFactory">
+    <constructor-arg>
+      <conf:configuration group="repository" name="native-auth" source="configurationManager">
+        <conf:default xmlns="">
+          <cache enabled="true" maxCacheDuration="1800000" maxCacheSize="3000"/>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="datasource"/>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean id="repositoryManager" class="org.outerj.daisy.repository.serverimpl.LocalRepositoryManager">
+    <constructor-arg>
+      <conf:configuration group="repository" name="repository" source="configurationManager">
+        <conf:default xmlns="">
+          <!-- How often should expired locks be checked for cleanup (in milliseconds) ? default = 5 minutes -->
+          <expiredLockJanitorInterval>60000</expiredLockJanitorInterval>
+          <liveVersionJanitorInterval>300000</liveVersionJanitorInterval>
+          <!-- Default repository namespace
+          <namespace>something</namespace>
+          -->          
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="datasource"/>
+    <constructor-arg ref="blobstore"/>
+    <constructor-arg ref="documentcache"/>
+    <constructor-arg ref="authenticator"/>
+    <constructor-arg ref="queryFactory"/>
+    <constructor-arg ref="fullTextIndex"/>
+    <constructor-arg ref="summarizer"/>
+    <constructor-arg ref="linkExtractorManager"/>
+    <constructor-arg ref="pluginRegistry"/>
+    <constructor-arg ref="mbeanServer"/>
+  </bean>
+
+  <bean id="httpConnector" class="org.outerj.daisy.httpconnector.HttpConnector">
+    <constructor-arg>
+      <conf:configuration group="repository" name="httpconnector" source="configurationManager">
+        <conf:default xmlns="">
+          <port>9263</port>
+          <!-- The upload configuration parameters concern the uploading of part data into the repository -->
+          <upload>
+            <!-- threshold beyond which files are directly written to disk (in bytes) -->
+            <threshold>50000</threshold>
+            <!-- Maximum upload size (in bytes), -1 for no maximum -->
+            <maxsize>400000000</maxsize>
+            <!-- Location for temporary upload files, default java.io.tmpdir -->
+            <!-- tempdir></tempdir -->
+          </upload>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="repositoryManager"/>
+    <constructor-arg ref="pluginRegistry"/>
+  </bean>
+
+  <bean name="eventdispatcher" class="org.outerj.daisy.event.EventDispatcherImpl">
+    <constructor-arg>
+      <conf:configuration group="repository" name="eventdispatcher" source="configurationManager">
+        <conf:default xmlns="">
+          <jmsTopic>daisy</jmsTopic>
+        </conf:default>
+      </conf:configuration>
+    </constructor-arg>
+    <constructor-arg ref="datasource"/>
+    <constructor-arg ref="jmsClient"/>
+  </bean>
+</beans>

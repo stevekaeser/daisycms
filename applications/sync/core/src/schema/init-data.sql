@@ -1,0 +1,1 @@
+insert into sync_system values ('lockstate', '0');

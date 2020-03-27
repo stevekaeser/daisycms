@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<cocoon>
+
+  <!-- First create the JmsClient. Other components may depend on it -->
+  <component
+    class="org.outerj.daisy.jms.impl.JmsClientImpl"
+    role="org.outerj.daisy.jms.JmsClient"
+    logger="daisy.jmsclient">
+    <jmsConnection>
+      <clientId>daisy-wiki</clientId>
+      <!-- note: to disable authentication, remove the credentials element -->
+      <credentials username="admin" password="jmsadmin"/>
+      <initialContext>
+        <property name="java.naming.provider.url" value="tcp://localhost:61616"/>
+        <property name="java.naming.factory.initial" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory"/>
+        <property name="topic.daisy" value="daisy"/>
+      </initialContext>
+      <!-- JNDI names for the jms connection factory -->
+      <connectionFactoryName>ConnectionFactory</connectionFactoryName>
+    </jmsConnection>
+  </component>
+  
+  <component
+      class="org.outerj.daisy.repository.clientimpl.RemoteRepositoryManager"
+      role="daisy-repository-manager"
+      logger="daisy.repositorymanager" >
+    <repository-server-base-url>http://localhost:9263</repository-server-base-url>
+    <jmsTopic>daisy</jmsTopic>
+    <!-- Lets RemoteRepositoryManager fail in absense of JMS client -->
+    <requireJms>true</requireJms>
+    <maxHttpConnections>60</maxHttpConnections>
+    <!-- A User used to fill caches. -->
+    <cacheUser login="guest" password="guest"/>
+    <extensions>
+      <extension name="EmailSubscriptionManager" class="org.outerj.daisy.emailnotifier.clientimpl.RemoteEmailSubscriptionManagerProvider"/>
+      <extension name="Emailer" class="org.outerj.daisy.emailer.clientimpl.RemoteEmailerProvider"/>
+      <extension name="NavigationManager" class="org.outerj.daisy.navigation.clientimpl.RemoteNavigationManagerProvider"/>
+      <extension name="DocumentTaskManager" class="org.outerj.daisy.doctaskrunner.clientimpl.RemoteDocumentTaskManagerProvider"/>
+      <extension name="Publisher" class="org.outerj.daisy.publisher.clientimpl.RemotePublisherProvider"/>
+      <extension name="WorkflowManager" class="org.outerj.daisy.workflow.clientimpl.RemoteWorkflowManagerProvider"/>
+    </extensions>
+  </component>
+  
+  <component
+      class="org.outerj.daisy.frontend.components.userregistrar.UserRegistrarImpl"
+      role="org.outerj.daisy.frontend.components.userregistrar.UserRegistrar"
+      logger="daisy.userregistrar" >
+
+    <!-- The user that will create users, update their password, etc. This user must
+         have the Administrator role. -->
+    <registrarUser login="registrar" password="defaultpwd"/>
+
+    <!-- The names of the roles to which the user should be assigned -->
+    <roles>
+      <role>guest</role>
+    </roles>
+
+    <!-- The default role for the user, should be one of those mentioned in the roles list.
+         Comment out this element for no default role (will then default to use all roles together). -->
+    <defaultRole>guest</defaultRole>
+
+    <!-- The address of the server and the path where daisy is mounted, to be
+         used in the emails send for registration.
+         By default this is determined automatically, but sometimes it might
+         be useful to override this, for example when using a proxy.
+         The path should not end on a slash. -->
+    <!-- daisyHomePath>http://myhost:myport/daisy</daisyHomePath -->
+
+    <!-- A list of users for who requesting a new password is disallowed. The users
+         are specified by their login. -->
+    <excludeUsers>
+      <!-- login>alibaba</login -->
+    </excludeUsers>
+  </component>
+  
+  <component
+    class="org.outerj.daisy.frontend.GuestRepositoryProviderImpl"
+    role="org.outerj.daisy.frontend.GuestRepositoryProvider"
+    logger="daisy">
+    <guestUser login="guest" password="guest"/>
+  </component>
+  
+  <!-- This section enables SSO authentiation (needs additional configuration, see
+       online documentation
+  <component
+    class="org.outerj.daisy.frontend.sso.NegotiateClientAuthenticator"
+    role="org.outerj.daisy.frontend.sso.ClientAuthenticator"
+    logger="daisy">
+  </component>
+  <component
+    class="org.outerj.daisy.frontend.sso.NopIdentityMapper"
+    role="org.outerj.daisy.frontend.sso.IdentityMapper"
+    logger="daisy">
+  </component>
+  <component
+    class="org.outerj.daisy.frontend.sso.TrustedApplicationRepositoryAuthenticator"
+    role="org.outerj.daisy.frontend.sso.RepositoryAuthenticator"
+    logger="daisy">
+    <key>your.shared.key.here</key>
+  </component>
+  -->
+
+</cocoon>

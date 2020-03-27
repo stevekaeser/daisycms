@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  ${pageContext}
+
+  <pageTitle><i18n:text key="createdocvariant.title"/></pageTitle>
+  <pageNavigation>
+    <link>
+      <title><i18n:text key="back-to-document"/></title>
+      <path>${documentPath}.html${variantQueryString}</path>
+    </link>
+  </pageNavigation>
+
+  <content>
+    <h1>
+      <i18n:text key="createdocvariant.title"/>
+    </h1>
+
+    <ft:form-template action="" method="POST" id="newVariant" name="newVariant">
+      <table class="plainTable">
+        <tr>
+          <td style="width: 10em"></td><td style="width: 10em"><b><i18n:text key="createdocvariant.start-from"/></b></td><td style="width: 14em"><b><i18n:text key="createdocvariant.new"/></b></td>
+        </tr>
+        <tr>
+          <td><i18n:text key="branch"/></td>
+          <td>${startBranchName}</td>
+          <td>
+            <ft:widget id="newBranchId">
+              <fi:styling onchange="checkVariantExists();" style="width: 13em"/>
+            </ft:widget>
+          </td>
+        </tr>
+        <tr>
+          <td><i18n:text key="language"/></td>
+          <td>${startLanguageName}</td>
+          <td>
+            <ft:widget id="newLanguageId" onchange="checkVariantExists();">
+              <fi:styling onchange="checkVariantExists();" style="width: 13em"/>
+            </ft:widget>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <div style="visibility: hidden" id="variantExistsWarning">
+              <span style="color: red; font-weight: bold"><i18n:text key="createdocvariant.variant-already-exists"/></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <br/>
+      <ft:widget id="copyContent"><fi:styling onclick="copyContentChanged();"/></ft:widget>
+      <label for="copyContent:input"><i18n:text key="createdocvariant.start-from-current"/></label>
+      <ft:widget id="startVersion"><fi:styling size="4"/></ft:widget> <i18n:text key="createdocvariant.version-info"/>
+      <div style="padding: 0.5em 3em; font-size: x-small">
+        <i18n:text key="createdocvariant.start-from-current-info"/>
+      </div>
+      <div style="padding-left: 2em" id="goToEditorDiv">
+        <ft:widget id="goToEditor"/><label for="goToEditor:input"><ft:widget-label id="goToEditor"/></label>
+      </div>
+      <br/>
+      <jx:if test="${CocoonFormsInstance.getChild('resources').getSize() > 0}">
+        <h2><i18n:text key="createdocvariant.embedded-images"/></h2>
+        <i18n:text key="createdocvariant.embedded-images-info"/>        
+        <table class="default">
+          <tr>
+            <th><ft:repeater-widget-label id="resources" widget-id="id"/></th>
+            <th><ft:repeater-widget-label id="resources" widget-id="name"/></th>
+            <th><ft:repeater-widget-label id="resources" widget-id="createvariant"/></th>
+          </tr>
+          <ft:repeater-widget id="resources">
+            <tr>
+              <td><ft:widget id="id"/></td>
+              <td>
+                <a href="#" onmouseover="status=''; return true;" onclick="showImageInPopup('${widget.getChild('id').getValue()}'); return false;">
+                  <ft:widget id="name"/>
+                </a>
+              </td>
+              <td><ft:widget id="createvariant"/></td>
+            </tr>
+          </ft:repeater-widget>
+        </table>
+      </jx:if>
+      <br/>
+      <input type="submit" value="Create" i18n:attr="value" id="createButton"/>
+    </ft:form-template>
+
+    <script type="text/javascript">
+      var availableVariants = [
+        <jx:forEach var="variant" items="${availableVariants}" varStatus="loopinfo">
+          [${variant.getBranchId()}, ${variant.getLanguageId()}]<jx:if test="${not loopinfo.last}">,</jx:if>
+        </jx:forEach>
+      ];
+
+      function checkVariantExists() {
+        var form = document.forms.newVariant;
+        var newBranchIdSelect = form["newBranchId:input"];
+        var newBranchId = newBranchIdSelect.options[newBranchIdSelect.selectedIndex].value;
+        var newLanguageIdSelect = form["newLanguageId:input"];
+        var newLanguageId = newLanguageIdSelect.options[newLanguageIdSelect.selectedIndex].value;
+
+        var variantExists = false;
+        for (var i = 0; i &lt; availableVariants.length; i++) {
+          if (availableVariants[i][0] == newBranchId &amp;&amp; availableVariants[i][1] == newLanguageId) {
+            variantExists = true;
+            break;
+          }
+        }
+
+        document.getElementById("variantExistsWarning").style.visibility = variantExists ? "visible" : "hidden";
+        document.getElementById("createButton").disabled = variantExists;
+      }
+
+      function copyContentChanged() {
+        var form = document.forms.newVariant;
+        document.getElementById("goToEditorDiv").style.visibility = form.copyContent.checked ? "visible" : "hidden";
+      }
+
+      function showImageInPopup(imageId) {
+        window.open("${pageContext.mountPoint}/${pageContext.siteConf.name}/" + imageId + "/version/last/part/ImageData/data",
+          "", "toolbar=no,menubar=no,personalbar=no,width=500,height=500,left=20,top=40" +
+                ",scrollbars=yes,resizable=yes");
+      }
+
+      checkVariantExists();
+      copyContentChanged();
+    </script>
+  </content>
+
+</page>

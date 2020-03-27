@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!--
+ Russian language file.
+ Contributed by: Alexander Serbul (droopy @ nm.ru)
+ Updated by Andreas Deininger. Credits go to Elena Kandert and Jimsher Koshadze for providing the translation messages
+-->
+<catalogue>
+  <!-- layout.xsl -->
+  <message key="layout.user">Пользователь:</message>
+  <message key="layout.role">Роль:</message>
+  <message key="layout.changelogin">Изменить регистрацию</message>
+  <message key="layout.logout">Отменить регистрацию (logout)</message>
+  <message key="layout.user-settings">Установки пользователя</message>
+  <message key="layout.change-locale">Изменить язык</message>
+  <message key="layout.query-search">Расширенный поиск</message>
+  <message key="layout.recent-changes">Последние изменения</message>
+  <message key="layout.new-document">Новый документ</message>
+  <message key="layout.hide">Спрятать</message>
+  <message key="layout.search">Поиск</message>
+  <message key="layout.goto-navigation">Перейти к навигационному документу</message>
+  <message key="layout.my-comments">Мои комментарии</message>
+  <message key="layout.registration">Регистрация</message>
+  <message key="layout.administration">Администрация</message>
+  <message key="layout.doctask">Функции документа</message>
+  <message key="layout.variants">Варианты</message>
+  <message key="layout.branch-language">(Ветвь - язык)</message>
+  <message key="layout.add-variant">Добавить вариант ...</message>
+  <message key="layout.use-all-roles">Использовать все роли</message>
+  <message key="layout.excl-administrator">(кроме администратора)</message>
+  <message key="layout.multiple-roles">Многие роли</message>
+  <message key="layout.page-actions">Страницы действий</message>
+  <message key="layout.tools">Инструменты</message>
+  <message key="layout.books">Публикация книг</message>
+  <message key="layout.basket">корзина документов</message>
+
+  <message key="layout.new-workflow">Начать выполнение нового задания</message>
+  <message key="layout.workflow-console">Панель управления выполнения задания</message>
+
+  <message key="minimal-feed">минималный RSS-Feed (содержет имен документов)</message>
+  <message key="normal-feed">нормалный RSS-Feed (содержет вес содержаные документов)</message>
+  <message key="editors-feed">подробный RSS-Feed (содержет вес содержаные документов и Различия с предыдущей версией)</message>
+  <message key="layout.versionmode-live">LIVE</message>
+  <message key="layout.versionmode-last">Пред-представление</message>
+  <message key="layout.switch-to-live-hint">нажмите здес штоб перейти на Live-Представление</message>
+  <message key="layout.switch-to-last-hint">нажмите здес штоб перейти на Пред-представление</message>
+
+</catalogue>

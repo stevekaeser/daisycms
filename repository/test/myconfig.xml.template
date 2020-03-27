@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+   | This file specifies component configurations (possibly overriding defaults).
+   -->
+<targets>
+  <target path="/daisy/repository/repository-manager">
+    <configuration>
+      <namespace>@namespace@</namespace>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/credentials-provider">
+    <configuration>
+      <credentials key="internal" login="internal" password="defaultpwd"/>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/blobstore">
+    <configuration>
+      <directory>@testsupport.blobstore@</directory>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/fullTextIndex">
+    <configuration>
+      <!-- directory where index files should be stored -->
+      <indexDirectory>@testsupport.fulltextindexstore@</indexDirectory>
+      <!-- How regularly should the full text index be flushed?
+           Updates to the fulltext index only have effect after flushing. -->
+      <indexFlushInterval>5000</indexFlushInterval>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/fulltextindexupdater">
+    <configuration>
+      <jmsTopic>daisy</jmsTopic>
+      <jmsSubscriptionName>fullTextIndexer</jmsSubscriptionName>
+      <jmsQueue>fullTextIndexerJobs</jmsQueue>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/publisher/publisher">
+    <configuration>
+      <publisherRequestDirectory>/somewhere/pubreqs</publisherRequestDirectory>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/eventdispatcher">
+    <configuration>
+      <jmsTopic>daisy</jmsTopic>
+    </configuration>
+  </target>
+
+  <target path="/daisy/driverregistrar/driverregistrar">
+    <configuration>
+      <drivers>
+        <driver>
+          <classpath>@testsupport.driverClasspath@</classpath>
+          <classname>@testsupport.driver@</classname>
+        </driver>
+      </drivers>
+    </configuration>
+  </target>
+
+  <target path="/daisy/datasource/datasource">
+    <configuration>
+      <username>@testsupport.dbuser@</username>
+      <password>@testsupport.dbpwd@</password>
+      <url>@testsupport.dburl@</url>
+    </configuration>
+  </target>
+
+  <target path="/daisy/emailer/emailer">
+    <configuration>
+      <smtpHost>@testsupport.smtpHost@</smtpHost>
+      <fromAddress>@testsupport.fromAddress@</fromAddress>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/emailnotifier/emailnotifier">
+    <configuration>
+      <jmsTopic>daisy</jmsTopic>
+      <jmsSubscriptionName>emailNotifier</jmsSubscriptionName>
+    </configuration>
+  </target>
+
+  <target path="/daisy/jmsclient/jmsclient">
+    <configuration>
+      <jmsConnection>
+        <clientId>daisy-repository-test</clientId>
+        <credentials username="admin" password="jmsadmin"/>
+        <initialContext>
+          <property name="java.naming.provider.url" value="vm://DaisyJMS?brokerConfig=xbean:file:activemq-test-conf.xml"/>
+          <property name="java.naming.factory.initial" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory"/>
+          <property name="queue.fullTextIndexerJobs" value="fullTextIndexerJobs"/>
+          <property name="topic.daisy" value="daisy"/>
+        </initialContext>
+        <connectionFactoryName>ConnectionFactory</connectionFactoryName>
+      </jmsConnection>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/workflow/workflow-manager">
+    <configuration>
+      <jbpm>
+        <hibernate>
+          <properties>
+            <entry key="hibernate.dialect">@testsupport.hibernateDialect@</entry>
+            <entry key="hibernate.show_sql">@testsupport.hibernateShowSql@</entry>
+          </properties>
+        </hibernate>
+      </jbpm>
+      <workflowUser login="workflow" password="defaultpwd"/>
+    </configuration>
+  </target>
+
+</targets>

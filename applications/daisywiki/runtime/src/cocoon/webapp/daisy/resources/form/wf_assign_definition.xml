@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<fd:form xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <fd:widgets>
+    <fd:field id="actorCase" required="true">
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="user"><fd:label><i18n:text key="wf.actor-user"/></fd:label></fd:item>
+        <fd:item value="pool"><fd:label><i18n:text key="wf.actor-pools"/></fd:label></fd:item>
+      </fd:selection-list>
+      <fd:initial-value>user</fd:initial-value>
+    </fd:field>
+
+    <fd:union id="actor" case="actorCase">
+      <fd:widgets>
+        <fd:group id="user">
+          <fd:widgets>
+            <fd:field id="user" required="true">
+              <fd:datatype base="string"/>
+              <fd:validation>
+                <fd:java class="org.outerj.daisy.frontend.UserLoginValidator"/>
+              </fd:validation>
+            </fd:field>
+          </fd:widgets>
+        </fd:group>
+        <fd:group id="pool">
+          <fd:widgets>
+            <fd:multivaluefield id="pool">
+              <fd:datatype base="long"/>
+              <fd:selection-list type="flow-jxpath" list-path="pools" value-path="id" label-path="name" />
+            </fd:multivaluefield>
+          </fd:widgets>
+        </fd:group>
+      </fd:widgets>
+    </fd:union>
+
+    <fd:field id="scope" required="true">
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+        <fd:item value="task"><fd:label><i18n:text key="wfassign.scope-task"/></fd:label></fd:item>
+        <fd:item value="swimlane"><fd:label><i18n:text key="wfassign.scope-swimlane"/></fd:label></fd:item>
+      </fd:selection-list>
+    </fd:field>
+
+    <fd:submit id="assign">
+      <fd:label><i18n:text key="wfassign.assign"/></fd:label>
+    </fd:submit>
+
+    <fd:submit id="cancel" validate="false">
+      <fd:label><i18n:text key="wfassign.cancel"/></fd:label>
+    </fd:submit>
+
+  </fd:widgets>
+
+</fd:form>

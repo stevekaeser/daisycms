@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  <jx:set var="title">
+      <jx:choose>
+        <jx:when test="${fieldType}">
+          Edit Field Type
+        </jx:when>
+        <jx:otherwise>
+          Create A New Field Type
+        </jx:otherwise>
+      </jx:choose>
+  </jx:set>
+
+  ${pageContext}
+
+  <pageTitle>${title}</pageTitle>
+
+  <content>
+    <h1>${title}</h1>
+
+    <ft:form-template action="${submitPath}" method="POST">
+      <fi:group>
+        <fi:styling layout="columns"/>
+        <fi:items>
+          <ft:widget id="name"/>
+          <ft:widget id="valuetype"/>
+          <ft:widget id="multivalue"/>
+          <!-- When hierarchical property changes, do roundtrip so that static selection list editor is aware of this change -->
+          <ft:widget id="hierarchical" fi:submit-on-change="true"/>
+          <ft:widget id="size"/>
+          <ft:widget id="deprecated"/>
+          <ft:widget id="aclAllowed"/>
+        </fi:items>
+      </fi:group>
+
+      <ft:repeater id="displaydata">
+        <table class="default">
+          <tr>
+            <th></th>
+            <th>Label (optional)</th>
+            <th>Description (optional)</th>
+          </tr>
+          <ft:repeater-rows>
+            <tr>
+              <td>
+                <ft:widget id="locale"/>
+              </td>
+              <td>
+                <ft:widget id="label">
+                  <fi:styling size="35"/>
+                </ft:widget>
+              </td>
+              <td>
+                <ft:widget id="description">
+                  <fi:styling size="55"/>
+                </ft:widget>
+              </td>
+            </tr>
+          </ft:repeater-rows>
+        </table>
+      </ft:repeater>
+
+      <br/>
+
+      <h2>Selection list</h2>
+
+      <p style="margin-left: 2em;">Hint: it is possible to use hierarchical selection lists with non-hierarchical fields.
+      With hierarchical fields, the whole pad leading to the selected tree node is stored in
+      the fields, while with non-hierarchical fields only the specific selected node is stored.</p>
+      
+      <fieldset style="margin-bottom: 1em;">
+        <legend>General selection list options</legend>
+        <fi:group>
+          <fi:styling layout="columns"/>
+          <fi:items>
+            <ft:widget id="allowFreeEntry"/>
+            <ft:widget id="loadSelectionListAsync"/>
+          </fi:items>
+        </fi:group>
+      </fieldset>
+
+      <fieldset style="background-color: #F8F5F2; margin-bottom: 1em;">
+        <legend>
+          <b>Selection list type: </b><ft:widget id="selectionlist_type"/>
+        </legend>
+
+        <ft:union id="selectionlist">
+          <ft:case id="none">
+            <div>
+              No selection list.
+            </div>
+          </ft:case>
+          <ft:case id="static">
+            <ft:group id="static">
+              <div>
+                <h3>Selection list data</h3>
+                <!-- General tree editor code -->
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/lang/tree_en.js"/>
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/treemodel.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/treeview.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/toolbar.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/actions.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/util.js"></script>
+
+                <!-- Selectionlist tree specific code -->
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/lang/selectionlisttree_en.js"/>
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/selectionlisttree.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/treemodel.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/nodeeditor.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/actions.js"></script>
+                <script type="text/javascript" src="${pageContext.mountPoint}/admin/resources/selectionlist_editor/dictionary.js"></script>
+
+                <div id="${widget.getChild('staticSelectionList').fullName}:input_sourceTreeToolbar"></div>
+                <div id="${widget.getChild('staticSelectionList').fullName}:input_guiTreeToolbar"></div>
+                <div id="${widget.getChild('staticSelectionList').fullName}:input_treeViewFrameAnchor"></div>
+                <div id="${widget.getChild('staticSelectionList').fullName}:input_treeNodeEditorAnchor"></div>
+
+                <ft:widget id="staticSelectionList">
+                  <fi:styling type="textarea" style="width:100%; height: 250px;" spellcheck="false"/>
+                </ft:widget>
+                <ft:widget id="validateEditors">
+                  <fi:styling style="display:none"/>
+                </ft:widget>
+                <ft:widget id="treemode">
+                  <fi:styling type="hidden"/>
+                </ft:widget>
+
+                <script>
+                  // Functions expected by the tree editor
+
+                  function getEditorHeight() {
+                    return 400;
+                  }
+
+                  function getMountPoint() {
+                    return "${pageContext.mountPoint}";
+                  }
+
+                  function getFieldValueType() {
+                    return "${widget.getForm().getChild('valuetype').value}";
+                  }
+
+                  function getAdminLocales() {
+                      return [ <jx:forEach var="locale" items="${adminLocales}" varStatus="status"><jx:if test="${status.index > 0}">,</jx:if> "${locale}"</jx:forEach> ];
+                  }
+
+                  initSelectionListTree("${widget.getChild('staticSelectionList').fullName}:input", "${widget.fullName}.");
+                </script>
+              </div>
+            </ft:group>
+          </ft:case>
+          <ft:case id="linkquery">
+            <ft:group id="linkquery">
+              <div>
+                <jx:choose>
+                  <jx:when test="${CocoonFormsInstance.getChild('valuetype').value != 'link'}">
+                    This selection list type can only be used with link-type fields. It allows the user to select
+                    a document from one of those returned by the query.
+                  </jx:when>
+                  <jx:otherwise>
+                    Enter only the part of the query following the "where".
+                    <br/>
+                    select name where ...
+                    <br/>
+                    <ft:widget id="whereClause">
+                      <fi:styling type="textarea" cols="60" rows="5" spellcheck="false"/>
+                    </ft:widget>
+                    <br/>
+                    <ft:widget id="filterVariants"/>
+                    <label for="${widget.getChild('filterVariants').fullName}:input"><ft:widget-label id="filterVariants"/></label>
+                  </jx:otherwise>
+                </jx:choose>
+              </div>
+            </ft:group>
+          </ft:case>
+          <ft:case id="hierarchicalquery">
+            <ft:group id="hierarchicalquery">
+              <div>
+                <jx:choose>
+                  <jx:when test="${CocoonFormsInstance.getChild('valuetype').value != 'link'}">
+                    This selection list type can only be used with <b>link-type</b> fields.
+                  </jx:when>
+                  <jx:otherwise>
+                    <h3>Base query</h3>
+                    <p style="font-style: italic; font-size: small">The documents returned by this query
+                    will become the top-level of the hierarchical selection list. The hierarchy is then
+                    created by following (multivalue-)link-type fields in these documents. (see below)</p>
+                    Enter only the part of the query following the "where".
+                    <br/>
+                    select name where ...
+                    <br/>
+                    <ft:widget id="whereClause">
+                      <fi:styling type="textarea" cols="60" rows="5" spellcheck="false"/>
+                    </ft:widget>
+                    <ft:widget id="filterVariants"/>
+                    <label for="${widget.getChild('filterVariants').fullName}:input"><ft:widget-label id="filterVariants"/></label>
+                    <br/>
+                    <h3>Link fields to follow</h3>
+                    <p style="font-style: italic; font-size: small">For each document returned by the above query,
+                    the first link field specified here will create the first level of children, the second link field
+                    the second level (the second link field is followed in the documents returned by the first link field),
+                    and so on.</p>
+                    Specify link fields to follow in the documents:
+                    <table>
+                      <tr>
+                        <td valign="top">
+                          <ft:widget id="linkfields"/>
+                        </td>
+                        <td valign="top">
+                          <script>
+                            function selectLinkField() {
+                                var url = "${pageContext.mountPoint}/admin/fieldType/linkFieldSelector";
+                                var infoWindow = window.open(url, "",
+                                          "toolbar=no,menubar=no,personalbar=no,width=700,height=300,left=20,top=40" +
+                                          ",scrollbars=yes,resizable=yes");
+                                // set the callback function
+                                infoWindow.fieldSelected = function(id, name) {
+                                    var list = document.getElementById("${widget.getChild('linkfields').fullName}:input");
+                                    // unselect any currently selected options
+                                    for (var i = 0; i &lt; list.length; i++)
+                                        list.options[i].selected = false;
+                                    // add the new one
+                                    list.options[list.options.length] = new Option(name, name, false, true);
+                                }
+                            }
+                          </script>
+                          <a href="#" onmouseover="window.status=''; return true;" onclick="selectLinkField(); return false;">Lookup...</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </jx:otherwise>
+                </jx:choose>
+              </div>
+            </ft:group>
+          </ft:case>
+          <ft:case id="query">
+            <ft:group id="query">
+              <div>
+                Enter a query below.
+                <br/>
+                The query needs to select only one value. The distinct set of returned values
+                will be the values in the selection list.
+                <br/>
+                The most common case is probably to allow the user to select from already available
+                values in this or another field. For this use a query like:
+                <pre>select $SomeField where $SomeField is not null</pre>
+                <ft:widget id="query">
+                  <fi:styling type="textarea" cols="60" rows="5" spellcheck="false"/>
+                </ft:widget>
+                <br/>
+                <ft:widget id="filterVariants"/>
+                <label for="${widget.getChild('filterVariants').fullName}:input"><ft:widget-label id="filterVariants"/></label>
+                <br/>
+                Sort Order: <ft:widget id="sortOrder"/>
+              </div>
+            </ft:group>
+          </ft:case>
+          <ft:case id="parentlinked">
+            <ft:group id="parentlinked">
+              <div>
+                <jx:choose>
+                  <jx:when test="${CocoonFormsInstance.getChild('valuetype').value != 'link'}">
+                    This selection list type can only be used with <b>link-type</b> fields.
+                  </jx:when>
+                  <jx:otherwise>
+                    <h3>Base query</h3>
+                    <p>This query should retrieve all documents that need to be part of the tree.</p>
+                    Enter only the part of the query following the "where".
+                    <br/>
+                    select ... where ...
+                    <br/>
+                    <ft:widget id="whereClause">
+                      <fi:styling type="textarea" cols="60" rows="5" spellcheck="false"/>
+                    </ft:widget>
+                    <br/>
+                    <ft:widget id="filterVariants"/>
+                    <label for="${widget.getChild('filterVariants').fullName}:input"><ft:widget-label id="filterVariants"/></label>
+                    <br/>
+                    <h3>Parent Link field</h3>
+                    <ft:widget id="linkfield"/>
+                    <a href="#" onmouseover="window.status=''; return true;" onclick="selectLinkField(); return false;">Lookup...</a>
+                    <script>
+                      function selectLinkField() {
+                          var url = "${pageContext.mountPoint}/admin/fieldType/linkFieldSelector";
+                          var infoWindow = window.open(url, "",
+                                    "toolbar=no,menubar=no,personalbar=no,width=700,height=300,left=20,top=40" +
+                                    ",scrollbars=yes,resizable=yes");
+                          // set the callback function
+                          infoWindow.fieldSelected = function(id, name) {
+                              var input = document.getElementById("${widget.getChild('linkfield').fullName}:input");
+                              input.value = name;
+                          }
+                      }
+                    </script>
+                  </jx:otherwise>
+                </jx:choose>
+              </div>
+            </ft:group>
+          </ft:case>
+        </ft:union>
+
+      </fieldset>
+
+      <input type="submit" value="Save"/>
+      <input type="submit" value="Cancel" onclick="window.location='../../../fieldType'; return false;"/>
+    </ft:form-template>
+
+    <jx:if test="${fieldType != null and fieldType.getId() != -1}">
+      <hr/>
+      <i>Last updated by ${pageContext.repository.userManager.getUserDisplayName(fieldType.lastModifier)} on
+      <jx:formatDate value="${fieldType.lastModified}" dateStyle="short" timeStyle="medium" type="both" locale="${locale}"/>
+      </i>
+    </jx:if>
+  </content>
+</page>

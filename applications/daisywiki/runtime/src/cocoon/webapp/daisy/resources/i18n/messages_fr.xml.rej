@@ -1,0 +1,29 @@
+--- daisy/applications/daisywiki/runtime/src/cocoon/webapp/daisy/resources/i18n/messages_fr.xml
++++ daisy/applications/daisywiki/runtime/src/cocoon/webapp/daisy/resources/i18n/messages_fr.xml
+@@ -163,6 +165,16 @@
+   <message key="doclayout.at-a-more-recent-version">à une version plus récente</message>
+   <message key="doclayout.at-an-older-version">à une version plus ancienne</message>
+ -->
++
++  <message key="doclayout.live-but-not-last">Vous consultez la version en ligne de ce document, qui n'est cependant pas la <a href="{lastVersionUrl}">dernière version</a>.</message>
++  <message key="doclayout.pit-but-not-last">Vous consultez la version en ligne du {0} de ce document, qui n'est cependant pas la <a href="{lastVersionUrl}">dernière version</a>.</message>
++  <message key="doclayout.not-live-but-last">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne</a> de ce document, mais la dernière version.</message>
++  <message key="doclayout.not-live-but-more-recent">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne</a> de ce document, mais une version plus récente.</message>
++  <message key="doclayout.not-live-but-older">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne</a> de ce document, mais une version plus ancienne.</message>
++  <message key="doclayout.not-pit-but-last">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne du {0}</a> de ce document, mais la dernière version.</message>
++  <message key="doclayout.not-pit-but-more-recent">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne du {0}</a> de ce document, mais une version plus récente.</message>
++  <message key="doclayout.not-pit-but-older">Vous ne consultez pas la <a href="{modeVersionUrl}">version en ligne du {0}</a> de ce document, mais une version plus ancienne.</message>
++
+   <message key="doclayout.make-version-live">Mettre en ligne</message>
+   <message key="doclayout-xslfo.id">ID</message>
+   <message key="doclayout-xslfo.version">Version</message>
+@@ -468,6 +491,9 @@
+   <message key="editdoc.document-name-help">Un nom (titre) pour le document, qui ne doit pas nécessairement être unique.</message>
+   <message key="editdoc.new-document-name">Nouveau document</message>
+   <message key="editdoc.name-warning">Vous avez conservé 'Nouveau document' dans le nom du document, l'enregistrer tout de même?</message>
++  <message key="editdoc.requestedId.invalid">L'ID demandé n'est pas valide. Seuls des caractères numériques sont autorisés.</message>
++  <message key="editdoc.requestedId.missing">Vous avez communiqué un espace de nom, mais aucun identifiant (ID).</message>
++  <message key="editdoc.requestedNamespace.missing">Vous avez saisi un identifiant (ID), mais aucun espace de nom.</message>
+   <message key="editdoc.publish-changes-immediately">Publier immédiatement.</message>
+   <message key="editdoc.validate">Valider selon le type de document.</message>
+   <message key="editdoc.validate-help">Vous devriez habituellement laisser cette case cochée.<br/><br/>

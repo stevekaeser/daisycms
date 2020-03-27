@@ -1,0 +1,40 @@
+<!--
+   This is a static page providing a client side, cookie-based mechanism to enable/disable
+   dojo debugging for Daisy pages which use Dojo.
+-->
+<html>
+  <body onload="updateStatus();">
+    <script>
+      function enableDojoDebug() {
+          document.cookie = "dsy-dojo-debug=true; path=/";
+          updateStatus();
+      }
+
+      function disableDojoDebug() {
+          document.cookie = "dsy-dojo-debug=false; path=/; max-age=0";
+          updateStatus();
+      }
+
+      function updateStatus() {
+          var enabled = document.cookie.indexOf("dsy-dojo-debug=true") > -1;
+          var status = document.getElementById("dojoDebugStatus");
+          status.innerHTML = "Dojo debug is " + (enabled ? "enabled" : "disabled");
+      }
+    </script>
+
+    <p>
+        This page allows you to enable/disable dojo debugging. It works by setting a cookie,
+        whose existance is checked by other, Dojo-using pages.
+    </p>
+
+    <p id="dojoDebugStatus"></p>
+
+    <button onclick="updateStatus();">Refresh status</button>
+
+    <br/>
+    <br/>
+
+    <button onclick="enableDojoDebug();">Enable Dojo debug</button>
+    <button onclick="disableDojoDebug();">Disable Dojo debug</button>
+  </body>
+</html>

@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<!--
+   | This file specifies component configurations (possibly overriding defaults).
+   -->
+<targets>
+  <target path="/daisy/repository/repository-manager">
+    <configuration>
+      <!-- Namespace of this repository server. Should preferably be different
+           from other repository servers you control, at least to be able
+           to do export/import between them.
+           The namespace name should conform to the regexp [a-zA-Z0-9_]{1,200}
+           This is the default namespace
+           -->
+      <namespace>DSY</namespace>
+      <!-- Conditional namespaces allow documents to be placed in a certain 
+           namespace based on a Daisy query expression. If the test returns true
+           the document ill be placed in that namespace. If multiple entries 
+           return true then the first one will be chosen. If all entries return 
+           false then the default namespace is used.
+
+           <namespace test="documentType='SimpleDocument'">SD</namespace>
+      -->
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/credentials-provider">
+    <configuration>
+      <credentials key="internal" login="internal" password="defaultpwd"/>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/blobstore">
+    <configuration>
+      <directory>/somewhere/blobstore</directory>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/fullTextIndex">
+    <configuration>
+      <!-- directory where index files should be stored -->
+      <indexDirectory>/somewhere/indexstore</indexDirectory>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/httpconnector">
+    <configuration>
+      <port>9263</port>
+    </configuration>
+  </target>
+
+  <target path="/daisy/emailer/emailer">
+    <configuration>
+      <smtpHost>_lazy_admin_.com</smtpHost>
+      <!-- The smtpLocalhost element is optional, and only required if
+           InetAddress.getLocalHost().getHostName() fails to return something. -->
+      <!-- smtpLocalhost>localhost</smtpLocalhost -->
+      <!-- The smtpPort element is optional. Depending on the chosen protocol (i.e. boolean useSSL) 
+           the javax.mail libs will take the correct default when left blank. -->
+      <!-- smtpPort>25</smtpPort -->
+      <fromAddress>notconfigured@_lazy_admin_.com</fromAddress>
+      <useSSL>false</useSSL>
+      <!--
+      <authentication username="" password=""/>
+      -->
+      <startTLS>false</startTLS>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/emailnotifier/emailnotifier">
+    <configuration>
+     <!-- If you want to have URL's linking to documents in the notification mails,
+           enable the following section.
+           You can have different URL's depending on the collection the document
+           belongs to. If a document belongs to multiple collections, the first entry
+           that matches will be used. You can have an entry without collection attribute
+           also, this obviously has to be the last entry since any entries following
+           that wouldn't ever be matched.
+           The same holds for branches and language: you can add branch and language
+           attributes to use different URLs depending on the branch and language, missing
+           branch and/or language means match whatever branch/language.
+           If the URL pointed to doesn't have the branch and/or language as default,
+           don't forget to add appropriate URL parameters for those.
+      -->
+      <!--
+      <documentURLs>
+      <documentURL collection="mycollection" branch="main" language="default" url="http://myhost.com/daisy/mysite/{id}"/>
+        <documentURL collection="mycollection" url="http://myhost.com/daisy/mysite/{id}?branch={branch}&amp;language={language}"/>
+        <documentURL url="http://myhost.com/daisy/mysite/{id}"/>
+      </documentURLs>
+      -->
+      <!--
+        For events caused by the users listed below, no notification e-mails
+        will be sent out (to anyone). This is useful if you have e.g. an
+        automated process which creates or updates documents (or any sort
+        of entity: collections, users, ACL, ...) but you don't want
+        these to cause e-mail events (e.g. because it concerns a large
+        amount of uninteresting modifications.
+        You can also add and remove users at runtime via the management
+        console.
+      -->
+      <!--
+      <eventsIgnoredUsers>
+        <user>john</user>
+        <user>lisa</user>
+      </eventsIgnoredUsers>
+      -->
+      <!-- The enabled flag below allows to enable/disable the sending
+           of e-mail notifications completely. Any change events received
+           will be ignored, until this is enabled again (thus this enabled
+           flag does not suspend the sending of messages, but really
+           ignores changes done while the enabled flag is true). Can also
+           be changed at runtime via the JMX console. -->
+      <enabled>true</enabled>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/publisher/publisher">
+    <configuration>
+      <publisherRequestDirectory>/somewhere/pubreqs</publisherRequestDirectory>
+    </configuration>
+  </target>
+
+  <target path="/daisy/datasource/datasource">
+    <configuration>
+      <username>daisy</username>
+      <password>daisy</password>
+      <!-- The following is for MySQL 5.0 -->
+      <url>jdbc:mysql://localhost/daisyrepository?characterEncoding=UTF-8</url>
+      <!-- The following is for MySQL 4.1 -->
+      <!--
+      <url>jdbc:mysql://localhost/daisyrepository?useServerPrepStmts=false&amp;characterEncoding=UTF-8</url>
+      -->
+      <!--
+      <connectionProperties>
+        <property name="..." value="..."/>
+      </connectionProperties>
+      -->
+      <maxActive>20</maxActive>
+      <maxIdle>8</maxIdle>
+      <minIdle>0</minIdle>
+      <maxWait>5000</maxWait>
+    </configuration>
+  </target>
+  
+  <target path="/daisy/driverregistrar/driverregistrar">
+    <configuration>
+      <drivers>
+        <!-- classpath can contain a comma-separated list of paths to jars. -->
+        <!--
+        <driver>
+          <classpath>somepath</classpath>
+          <classname>com.mysql.jdbc.Driver</classname>
+        </driver>
+        -->
+      </drivers>
+    </configuration>
+  </target>
+
+  <target path="/daisy/jmsclient/jmsclient">
+    <configuration>
+      <jmsConnection>
+        <clientId>daisy-repository</clientId>
+        <credentials username="admin" password="jmsadmin"/>
+        <initialContext>
+          <property name="java.naming.provider.url" value="vm://DaisyJMS?brokerConfig=xbean:file:activemq-conf.xml"/>          
+          <property name="java.naming.factory.initial" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory"/>
+          <property name="queue.fullTextIndexerJobs" value="fullTextIndexerJobs"/>
+          <property name="topic.daisy" value="daisy"/>          
+        </initialContext>
+        <connectionFactoryName>ConnectionFactory</connectionFactoryName>
+      </jmsConnection>
+    </configuration>
+  </target>
+
+  <target path="/daisy/jmx/mbeanserver">
+    <configuration>
+      <!-- authenticationMethod can be one of: none/basic/digest [digest doesn't seem to work] -->
+      <httpAdaptor port="9264" host="localhost" authenticationMethod="basic" username="daisyjmx" password="daisyjmx"/>
+      <xmlHttpAdaptor port="9265" host="localhost" authenticationMethod="basic" username="daisyjmx" password="daisyjmx"/>
+    </configuration>
+  </target>
+
+  <target path="/daisy/extensions/workflow/workflow-manager">
+    <configuration>
+      <jbpm>
+        <hibernate>
+          <properties>
+            <entry key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</entry>
+          </properties>
+        </hibernate>
+      </jbpm>
+      <workflowUser login="workflow" password="defaultpwd"/>
+      <!-- Where to look for workflow mail templates -->
+      <mailTemplates>
+        <!-- built-in templates (loaded from the classpath) -->
+        <location>resource:/org/outerj/daisy/workflow/serverimpl/mailtemplates/</location>
+        <!-- custom templates in the datadir -->
+        <location>${daisy.datadir}/templates/workflow/</location>
+      </mailTemplates>
+      <taskURL>http://localhost:8888/daisy/${site}/workflow/performtask?taskId=${taskId}</taskURL>
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/authentication/authenticator">
+    <configuration>
+      <!-- Indicates which authentication scheme to use, if any, to automatically create new users. -->
+      <!-- authenticationSchemeForUserCreation>ldap1</authenticationSchemeForUserCreation -->
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/authentication/ldap">
+    <configuration>
+      <!-- You can configure one or more LDAP-based authentication schemes here -->
+      <!-- Notes:
+            - the name of a scheme should not be daisy, no two schemes can have the same name
+            - ssl is option, just remove the property tag if not needed/supported
+            - in the value of the property "java.naming.security.principal", the string
+              $daisyLogin is replaced by the login of the user.
+            - the autoCreateUser element is optional
+      -->
+      <!-- scheme name="ldap1" description="Test LDAP config">
+        <environment>
+          <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
+          <property name="java.naming.provider.url" value="ldap://strider.outerthought.net:389"/>
+          <property name="java.naming.security.authentication" value="simple"/>
+          <property name="java.naming.security.protocol" value="ssl"/>
+          <property name="java.naming.security.principal" value="cn=admin,dc=outerthought,dc=org"/>
+          <property name="java.naming.security.credentials" value="s3kret"/>
+        </environment>
+        <searchBase>dc=outerthought,dc=org</searchBase>
+        <filter>cn=$daisyLogin</filter>
+        <cache enabled="true" maxCacheSize="3000" maxCacheDuration="1800000"/>
+        <autoCreateUser>
+          <roles>
+            <role>User</role>
+          </roles>
+          <defaultRole>User</defaultRole>
+          <updateableByUser>true</updateableByUser>
+        </autoCreateUser>
+      </scheme -->
+    </configuration>
+  </target>
+
+  <target path="/daisy/repository/authentication/trusted">
+    <configuration>
+      <!--scheme name="trusted1" description="Test trusted config">
+        <keys>
+          <key>verylongstringthatnobodywillbeabletoguess</key>
+        </keys>
+        <cache enabled="true" maxCacheSize="3000" maxCacheDuration="1800000"/>
+        <autoCreateUser>
+          <roles>
+            <role>User</role>
+          </roles>
+          <defaultRole>User</defaultRole>
+          <updateableByUser>true</updateableByUser>
+        </autoCreateUser>
+      </scheme -->
+    </configuration>
+  </target>
+
+  <!-- The SPNEGO auth scheme has some problems that prevent it from
+    properly working with the Daisy Wiki.  For other applications
+    it may work sufficiently, but until we solve the problems, this auth scheme
+    is not supported -->
+  <target path="/daisy/repository/authentication/spnego">
+    <configuration>
+      <!--scheme name="spnego1" description="Test SPNEGO config">
+      </scheme-->
+    </configuration>
+  </target>
+
+
+  <target path="/daisy/repository/authentication/ntlm/ntlm">
+    <configuration>
+      <!-- You can configure one or more NTLM-based authentication schemes here -->
+      <!-- Notes:
+            - the name of a scheme should not be daisy, no two schemes can have the same name
+            - the autoCreateUser element is optional
+      -->
+      <!-- scheme name="ntlm1" description="Test NTLM config">
+        <domainControllerAddress>127.0.0.1</domainControllerAddress>
+        <domain>yum</domain>
+        <cache enabled="true" maxCacheSize="3000" maxCacheDuration="1800000"/>
+        <autoCreateUser>
+          <roles>
+            <role>User</role>
+          </roles>
+          <defaultRole>User</defaultRole>
+          <updateableByUser>true</updateableByUser>
+        </autoCreateUser>
+      </scheme -->
+    </configuration>
+  </target>
+
+  <target path="/daisy/image-presavehook/hook">
+    <configuration>
+      <!-- Maximum number of images to process concurrently, when there are more they'll have to wait in line -->
+      <maxConcurrentOperations>3</maxConcurrentOperations>
+
+      <!-- You can have multiple of these config elements, though not
+           two which work on the same document type -->
+      <config documentType="Image">
+        <!-- Allows to enable/disable the image pre-save hook simply by configuration -->
+        <enabled>true</enabled>
+        <!-- Do not process images larger then this size, in bytes -->
+        <maxImageSize>3000000</maxImageSize>
+        <!-- Name of part type containing the (source) image -->
+        <imagePartName>ImageData</imagePartName>
+        <!-- All the following settings are optional, not specifying the
+             part/field names will disable them -->
+        <widthFieldName>ImageWidth</widthFieldName>
+        <heightFieldName>ImageHeight</heightFieldName>
+        <previewPartName>ImagePreview</previewPartName>
+        <previewMaxSize>250</previewMaxSize>
+        <thumbnailPartName>ImageThumbnail</thumbnailPartName>
+        <thumbnailMaxSize>125</thumbnailMaxSize>
+        <!-- Should images be rotated automatically based on exif metadata? -->
+        <automaticRotationEnabled>true</automaticRotationEnabled>
+        <!-- Quality setting for generated jpeg's (the thumbnails and the original image in case of exif-based image rotation).
+             The value should be a float between 0 (lowest quality) and 1 (best quality). -->
+        <jpegQuality>.85</jpegQuality>
+      </config>
+
+      <!--
+           Example config (commented out) with exif extraction
+           Here without thumbnail etc. but that can be added just as above
+
+           metadata/@tag = name of metadata tag
+           metadata/@field = name of daisy field
+           metadata/@type = one of: string/long/double/datetime/description
+              (description is the nicely formatted value, for example for
+               the resolution instead of just '72', '72 dots per inch',
+               or for exposure program: '2' = 'Program normal')
+      -->
+      <!--
+      <config documentType="Foto">
+        <imagePartName>ImageData</imagePartName>
+        <metadata tag="Make" field="Make" type="string"/>
+        <metadata tag="Model" field="Model" type="string"/>
+        <metadata tag="Date/Time Original" field="DateTaken" type="datetime"/>
+      </config>
+      -->
+    </configuration>
+  </target>
+
+  <!-- Checks if authentication schemes are updatable and then updates users at regular intervals --> 
+  <target path="/daisy/repository/authentication/user-maintainer">
+     <configuration>
+        <interval>60</interval>
+     </configuration>
+  </target>
+
+<!--
+  <target path="/extra/replication">
+    <configuration>
+      <targets>
+        <target name="target1" url="http://target1:9263" username="t1user" password="t1password" roles="Administrator"/>
+        ...
+      </targets>
+      <jmsTopic>daisy</jmsTopic>
+      <jmsSubscriptionName>daisy-replication-service</jmsSubscriptionName>
+    </configuration>
+  </target>
+-->
+
+</targets>

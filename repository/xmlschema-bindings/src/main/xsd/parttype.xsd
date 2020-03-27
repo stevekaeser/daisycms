@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="i18n.xsd"/>
+  <xs:element id="partType" name="partType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="daisy:labels"/>
+        <xs:element ref="daisy:descriptions"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="mimeTypes" type="xs:string" use="required"/>
+      <xs:attribute name="daisyHtml" type="xs:boolean" use="required"/>
+      <xs:attribute name="linkExtractor" type="xs:string" use="optional"/>
+      <xs:attribute name="deprecated" type="xs:boolean" use="required"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="partTypes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:partType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="partTypeCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newPartType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:partType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="partTypeUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldPartType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:partType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newPartType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:partType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="partTypeDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedPartType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:partType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

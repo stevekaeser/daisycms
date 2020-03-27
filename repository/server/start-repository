@@ -1,0 +1,45 @@
+#! /bin/sh
+
+#
+# This is the repository server startup script to use in the development setup scenario
+#
+# Hints:
+#
+#  * a JVM debug port is available: 8001
+#
+#  * to enable logging to console, use the -l argument, for example:
+#
+#      start-repository -l info
+#      start-repository -l debug -m org.outerj.daisy
+#
+#  * since workflow is a slow component to start, you might disable it while developing:
+#
+#      start-repository --disable-containers=workflow
+#
+#  * use -h to see all repository startup options
+#
+
+# some helpful soul might create a patch so that the following can be overriden
+# by the environment:
+DAISY_REPO_DEBUG_PORT=8001
+DAISY_REPO_MAX_MEM=150M
+
+if [ -z "$DAISY_DEV_REPODATA" ] ; then
+  DAISY_DEV_REPODATA=../../../devrepodata
+fi
+
+echo
+echo Using data directory $DAISY_DEV_REPODATA
+echo
+
+DAISY_DEV_REPO_CONF=$DAISY_DEV_REPODATA/conf
+
+JVM_DEBUG_OPTIONS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=$DAISY_REPO_DEBUG_PORT"
+JVM_JMX_OPTIONS="-Dcom.sun.management.jmxremote"
+JVM_DAISY_OPTIONS="-Djava.security.auth.login.config=$DAISY_DEV_REPO_CONF/login.config -Ddaisy.configLocation=$DAISY_DEV_REPO_CONF/myconfig.xml -Ddaisy.datadir=$DAISY_DEV_REPODATA -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.variant="
+
+DAISY_JAVA_OPTIONS="-Xmx$DAISY_REPO_MAX_MEM $JVM_DEBUG_OPTIONS $JVM_JMX_OPTIONS $JVM_DAISY_OPTIONS"
+
+export DAISY_JAVA_OPTIONS
+
+sh ../runtime/target/daisy-runtime-dev $@ --config src/conf/runtime-config.xml --repository ~/.m2/repository

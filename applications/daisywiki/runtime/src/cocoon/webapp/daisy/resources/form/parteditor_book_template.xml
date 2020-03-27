@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+     xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+     xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+     xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+
+  <!-- General tree editor code -->
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/lang/tree_${htmlareaLang}.js"/>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/treemodel.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/treeview.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/toolbar.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/actions.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/tree_editor/util.js"></script>
+
+  <!-- Book tree specific code -->
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/book_editor/lang/booktree_${htmlareaLang}.js"/>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/book_editor/booktree.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/book_editor/treemodel.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/book_editor/nodeeditor.js"></script>
+  <script type="text/javascript" src="${pageContext.mountPoint}/resources/book_editor/actions.js"></script>
+
+  <div id="${widget.fullName}.book:input_sourceTreeToolbar"></div>
+  <div id="${widget.fullName}.book:input_guiTreeToolbar"></div>
+  <div id="${widget.fullName}.book:input_treeViewFrameAnchor"></div>
+  <div id="${widget.fullName}.book:input_treeNodeEditorAnchor"></div>
+
+  <ft:widget id="book">
+    <fi:styling type="textarea" style="width:100%; height: 250px;" spellcheck="false"/>
+  </ft:widget>
+  <ft:widget id="validateEditors">
+    <fi:styling style="display:none"/>
+  </ft:widget>
+  <ft:widget id="treemode">
+    <fi:styling type="hidden"/>
+  </ft:widget>
+
+  <script>
+    function getDocumentCollectionNames() {
+       return [<jx:forEach var="collection" items="${collectionsArray}" varStatus="loopInfo">"${collection.name}"<jx:if test="${!loopInfo.last}">,</jx:if></jx:forEach>];
+    }
+
+    initBookTree("${widget.fullName}", ${widget.lookupWidget('book').state == Packages.org.apache.cocoon.forms.formmodel.WidgetState.ACTIVE});
+  </script>
+
+</div>

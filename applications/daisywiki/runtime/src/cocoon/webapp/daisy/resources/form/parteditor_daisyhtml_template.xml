@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<div xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+     xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+     xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+     xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+     
+  <div id="htmlPartEditorSourceToolbar" style="display: none">
+    <button type="button" onclick="htmlPartEditorSwitchEditors(); return false;" title="htmleditor.switch-to-html" i18n:attr="title"><img src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/DaisyMisc/img/ed_html.gif"/></button>
+    <button type="button" onclick="htmlPartEditorValidateEditors(); return false;" title="htmleditor.cleanup-html" i18n:attr="title"><img src="${pageContext.mountPoint}/resources/cocoon/forms/htmlarea/plugins/DaisyMisc/img/cleanup.gif"/></button>
+  </div>
+
+  <jx:set var="editorMode" value="${widget.lookupWidget('part').getAttribute('EditorMode')}"/>
+  
+  <script type="text/javascript">
+    function htmlPartEditorValidateEditors() {
+      cocoon.forms.submitForm(document.forms.editdoc.elements['${widget.fullName}.validateEditors']);
+    }
+
+    function htmlPartEditorSwitchEditors() {
+    cocoon.forms.submitForm(document.forms.editdoc.elements['${widget.fullName}.switchEditors']);
+    }
+
+    if (HTMLArea.checkSupportedBrowser()) {
+      document.getElementById("htmlPartEditorSourceToolbar").style.display = ${editorMode == 'htmlarea'} ? "none" : "";
+    } else {
+      document.getElementById("htmlPartEditorSourceToolbar").style.display = "";
+    }
+  </script>
+
+  <ft:widget id="part">
+    <fi:styling type="daisy-htmlarea" rows="20" cols="80" style="width:100%"/>
+  </ft:widget>
+  <ft:widget id="validateEditors" fi:style="display:none"/>
+  <ft:widget id="switchEditors" fi:style="display:none"/>
+
+  <script type="text/javascript">
+    var toolbarHeight = document.getElementById("htmlPartEditorSourceToolbar").offsetHeight;
+    var textArea = document.getElementById("${widget.fullName}.part:input");
+
+    if (window.editorHeightListeners == null)
+        window.editorHeightListeners = new Array();
+        
+    window.editorHeightListeners.push(function(height) {
+       textArea.style.height = (height - toolbarHeight).toFixed(0) + "px";
+    });
+    
+    <!-- TODO: the EditorMode attribute should be stored on the fd:group  with id="part_{@id}" --> 
+    <jx:if test="${editorMode == 'htmlarea' &amp;&amp; widget.state != Packages.org.apache.cocoon.forms.formmodel.WidgetState.DISABLED}">
+      <jx:choose>
+        <jx:when test="${displayMode!='default'}">
+          initEditor("${widget.fullName}.part:input", {'toolbar':[
+            ["daisy-block-switcher",
+                 "separator", "bold", "italic", "daisy-make-tt", "strikethrough", "daisy-remove-format",
+                 "separator", "subscript", "superscript",
+                 "separator", "copy", "cut", "paste", "space", "undo", "redo",
+                 "separator", "insertunorderedlist", "insertorderedlist", "daisy-ol-settings",
+                 "separator", "daisy-align-none", "daisy-align-left", "daisy-align-center", "daisy-align-right",
+                 "separator", "daisy-quote", "daisy-unquote",
+                 "separator", "daisy-open",
+                 "separator", "daisy-edit-id", "daisy-goto",
+                 "separator", "daisy-switch-to-source", "daisy-cleanup"],
+            ["daisy-create-link", "daisy-browse-link", "daisy-link-to-new", "daisy-create-attachment", 
+                 "separator", "daisy-unlink", "daisy-insert-image", "daisy-alter-image",
+                 "separator", "daisy-insert-table", "daisy-delete-table", "daisy-table-settings",
+                 "separator", "TO-row-insert-above", "TO-row-insert-under", "TO-row-delete", "TO-row-split",
+                 "separator", "TO-col-insert-before", "TO-col-insert-after", "TO-col-delete", "TO-col-split",
+                 "separator", "TO-cell-merge", "daisy-td-th-switch",
+                 "separator", "daisy-valign-none", "daisy-valign-top", "daisy-valign-middle", "daisy-valign-bottom"],
+             ["T[Books:]", "daisy-indexentry", "daisy-footnote", "daisy-crossreference",
+                 "separator", "T[Includes:]", "daisy-insert-include", "daisy-include-settings", "daisy-browse-include", "daisy-load-include-previews", "daisy-remove-include-previews", "daisy-insert-query", "daisy-insert-query-include",
+                 "separator", "daisy-variables"] 
+          ]});
+        </jx:when>
+        <jx:otherwise>
+          initEditor("${widget.fullName}.part:input");
+        </jx:otherwise>
+      </jx:choose>
+	</jx:if>
+  </script>
+</div>

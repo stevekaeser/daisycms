@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="searchresult.xsd"/>
+  <xs:element name="facetedQueryResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="facets">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="facet">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="value">
+                      <xs:complexType>
+                        <xs:attribute name="isDiscrete" type="xs:boolean"/>
+                        <xs:attribute name="userFormat" type="xs:string"/>
+                        <xs:attribute name="queryFormat" type="xs:string"/>
+                        <xs:attribute name="count" type="xs:long"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="availableValues" type="xs:long"/>
+                  <xs:attribute name="label" type="xs:string"/>
+                  <xs:attribute name="expression" type="xs:string"/>
+                  <xs:attribute name="multiValue" type="xs:boolean"/>
+                  <xs:attribute name="hierarchical" type="xs:boolean"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="daisy:searchResult"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

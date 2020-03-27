@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#workflow" xmlns:wf="http://outerx.org/daisy/1.0#workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="processdefinition.xsd"/>
+  <xs:include schemaLocation="processinstance.xsd"/>
+  <xs:element name="taskUpdateData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="wf:variable"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="deletedVariable">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="scope" type="wf:scopeType" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="dueDate">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:dateTime">
+                <xs:attribute name="clear" type="xs:boolean" use="optional"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="priority" type="wf:priorityType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="startProcess">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="wf:taskUpdateData"/>
+      </xs:sequence>
+      <xs:attribute name="processDefinitionId" type="xs:string" use="required"/>
+      <xs:attribute name="initialTransition" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="wf:taskUpdateData"/>
+      </xs:sequence>
+      <xs:attribute name="endTask" type="xs:boolean" use="optional"/>
+      <xs:attribute name="transitionName" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

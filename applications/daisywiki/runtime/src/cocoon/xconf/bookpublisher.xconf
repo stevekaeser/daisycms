@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<xconf xpath="/cocoon"
+       unless="component[@role='org.outerj.daisy.books.publisher.BookPublisher']">
+
+  <component
+      class="org.outerj.daisy.books.publisher.impl.BookPublisherImpl"
+      role="org.outerj.daisy.books.publisher.BookPublisher"
+      logger="daisy" >
+  </component>
+
+</xconf>

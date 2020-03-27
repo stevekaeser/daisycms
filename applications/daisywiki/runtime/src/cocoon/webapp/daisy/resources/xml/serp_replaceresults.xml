@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  ${pageContext}
+  <searchtask>
+    ${searchTaskXml}
+    ${searchTaskDocDetailsXml}
+  </searchtask>
+  <replacetask>
+    ${replaceTaskXml}
+    ${searchTaskDocDetailsXml}
+  </replacetask>
+  <continuationId>${cocoon.continuation.id}</continuationId>
+  <selection>
+    <jx:attribute name="type">${selectionType}</jx:attribute>
+    <jx:choose>
+     <jx:when test="${selectionType == 'document'}">
+       <jx:attribute name="documentId">${documentId}</jx:attribute>
+       <jx:attribute name="branch">${branch}</jx:attribute>
+       <jx:attribute name="language">${language}</jx:attribute>
+     </jx:when>
+     <jx:when test="${selectionType == 'query'}">
+       <jx:attribute name="query">${query}</jx:attribute>
+     </jx:when>
+     <jx:otherwise></jx:otherwise>
+   </jx:choose>
+  </selection>
+  <formvalues>
+    <needle>${needle}</needle>
+    <replacement>${replacement}</replacement>
+    <caseHandling>${caseHandling}</caseHandling>
+    <regexp>${regexp}</regexp>
+  </formvalues>
+  <!-- 
+  <debug>
+  </debug>
+  -->
+  <searchtaskoutput>
+    <jx:forEach items="${searchTaskDocDetails}" var="details">
+      <details variantKey="${details.variantKey.documentId}@${details.variantKey.branchId}:${details.variantKey.languageId}">
+        <jx:if test="${details != null &amp;&amp; details.details != null}">
+          <jx:out xmlize="true" value="${details.details}"/>
+        </jx:if>
+      </details>
+    </jx:forEach>
+  </searchtaskoutput>
+  <replacetaskoutput>
+    <jx:forEach items="${replaceTaskDocDetails}" var="details">
+      <details variantKey="${details.variantKey.documentId}@${details.variantKey.branchId}:${details.variantKey.languageId}">
+        <jx:if test="${details != null &amp;&amp; details.details != null}">
+          ${details.details}
+        </jx:if>
+      </details>
+    </jx:forEach>
+  </replacetaskoutput>
+  <selecteddocuments>
+    <jx:forEach items="${selecteddocuments}" var="key">
+      <document key="${key.documentId}@${key.branchId}:${key.languageId}"/>
+    </jx:forEach>
+  </selecteddocuments>
+</page>

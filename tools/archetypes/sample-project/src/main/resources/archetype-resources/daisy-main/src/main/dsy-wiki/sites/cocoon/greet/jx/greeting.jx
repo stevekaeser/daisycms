@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  ${pageContext}
+  
+  <pageTitle>Greeting sample</pageTitle>
+  
+  <content>
+    <h3>${greeting}</h3>
+  </content>
+
+</page>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<catalogue>
+  <!-- General -->
+  <message key="generictask.label">Tarea genérica</message>
+  <message key="generictask.description">Un flujo de trabajo para cualquier tarea, no cubierto por otros flujos de trabajo</message>
+
+  <!-- Variables -->
+  <message key="variable.document.label">Documento</message>
+  <message key="variable.document.description">Si esta tarea está relacionada con un documento, Usted puede especificarlo aquí.</message>
+  <message key="variable.details.label">Descripción detallada</message>
+  <message key="variable.details.description">Explique aquí here lo que debia ejecutarse.</message>
+  <message key="variable.workerComment.label">Comentario del ejecutor</message>
+  <message key="variable.workerComment.description">Algunos comentarios de la persona que ejecuta la tarea.</message>
+  <message key="variable.feedbackComment.label">Retroalimentación</message>
+  <message key="variable.needsConfirmation.label">Requiere confirmación</message>
+  <message key="variable.needsConfirmation.description">Habilite este escaque si desea ser notificado (en su carpeta de entrada de tareas) cuando la tarea ha terminado.</message>
+  <message key="variable.worker.label">Ejecutante de la tarea</message>
+  <message key="variable.reviewSubmitComment.label">Comentario para la revisión</message>
+
+  <!-- Tasks -->
+  <message key="startTask.label">Comenzar la tarea genérica</message>
+  <message key="startTask.description">Por favor suministre la información requerida para la tarea genérica.</message>
+  <message key="performTask.label">Tarea genérica</message>
+  <message key="performTask.description">Se le solicita ejecutar la tarea descrita mas adelante.</message>
+  <message key="feedbackTask.label">Retroalimentación acerca de la tarea genérica</message>
+  <message key="feedbackTask.description">La siguiente retroalimentación fue suministrada acerca de la tarea que Usted creó.</message>
+  <message key="finishedTask.label">La tarea genérica terminó</message>
+  <message key="finishedTask.description">Por esta vía se le informa que la tarea creada por Usted ha terminado.</message>
+
+  <!-- Transitions -->
+  <message key="transition.start">Enviar la tarea</message>
+  <message key="transition.failure">Suministre la retroalimentación al solicitante de la tarea</message>
+  <message key="transition.success">Terminar la tarea</message>
+  <message key="transition.performAgain">Vuelva a enviar la tarea</message>
+  <message key="transition.end">Terminar la tarea</message>
+</catalogue>

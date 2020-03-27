@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="i18n.xsd"/>
+  <xs:element id="branch" name="branch">
+    <xs:complexType>
+      <xs:sequence/>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="description" type="xs:string" use="optional"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="branches">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:branch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="branchCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newBranch">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:branch"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="branchUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldBranch">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:branch"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newBranch">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:branch"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="branchDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedBranch">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:branch"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

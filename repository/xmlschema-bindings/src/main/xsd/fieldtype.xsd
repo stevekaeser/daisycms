@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="i18n.xsd"/>
+  <xs:element name="fieldType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="daisy:labels"/>
+        <xs:element ref="daisy:descriptions"/>
+        <xs:element minOccurs="0" ref="daisy:selectionList"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:long" use="optional"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="valueType" type="xs:string" use="required"/>
+      <xs:attribute name="deprecated" type="xs:boolean" use="required"/>
+      <xs:attribute name="aclAllowed" type="xs:boolean" use="required"/>
+      <xs:attribute name="multiValue" type="xs:boolean" use="required"/>
+      <xs:attribute name="hierarchical" type="xs:boolean" use="required"/>
+      <xs:attribute name="allowFreeEntry" type="xs:boolean" use="required"/>
+      <xs:attribute name="loadSelectionListAsync" type="xs:boolean" use="required"/>
+      <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="lastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+      <xs:attribute name="size" type="xs:int" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fieldTypes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:fieldType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="selectionList">
+    <xs:complexType>
+      <xs:choice maxOccurs="1" minOccurs="1">
+        <xs:element ref="daisy:staticSelectionList"/>
+        <xs:element ref="daisy:linkQuerySelectionList"/>
+        <xs:element ref="daisy:querySelectionList"/>
+        <xs:element ref="daisy:hierarchicalQuerySelectionList"/>
+        <xs:element ref="daisy:parentLinkedSelectionList"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="staticSelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:listItem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="listItem">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="daisy:fieldValuesType">
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="daisy:labels"/>
+            <!--In hierarchical selection lists, a listItem can again contain listItems-->
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:listItem"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="fieldValuesType">
+    <xs:choice maxOccurs="unbounded" minOccurs="1">
+      <xs:element name="string" type="xs:string"/>
+      <xs:element name="date" type="xs:date"/>
+      <xs:element name="dateTime" type="xs:dateTime"/>
+      <xs:element name="long" type="xs:long"/>
+      <xs:element name="double" type="xs:double"/>
+      <xs:element name="decimal" type="xs:decimal"/>
+      <xs:element name="boolean" type="xs:boolean"/>
+      <xs:element ref="daisy:link"/>
+      <xs:element name="hierarchyPath">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:restriction base="daisy:fieldValuesType">
+              <xs:choice maxOccurs="unbounded" minOccurs="1">
+                <xs:element name="string" type="xs:string"/>
+                <xs:element name="date" type="xs:date"/>
+                <xs:element name="dateTime" type="xs:dateTime"/>
+                <xs:element name="long" type="xs:long"/>
+                <xs:element name="double" type="xs:double"/>
+                <xs:element name="decimal" type="xs:decimal"/>
+                <xs:element name="boolean" type="xs:boolean"/>
+                <xs:element ref="daisy:link"/>
+              </xs:choice>
+            </xs:restriction>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="link">
+    <xs:complexType>
+      <xs:attribute name="documentId" type="xs:string" use="required"/>
+      <xs:attribute name="branchId" type="xs:long" use="optional"/>
+      <xs:attribute name="languageId" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="linkQuerySelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="whereClause" type="xs:string"/>
+        <xs:element name="filterVariants" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hierarchicalQuerySelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="whereClause" type="xs:string"/>
+        <xs:element name="filterVariants" type="xs:boolean"/>
+        <xs:element name="linkFieldNames">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="linkFieldName" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parentLinkedSelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="whereClause" type="xs:string"/>
+        <xs:element name="filterVariants" type="xs:boolean"/>
+        <xs:element name="parentLinkField" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="querySelectionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="query" type="xs:string"/>
+        <xs:element name="filterVariants" type="xs:boolean"/>
+        <xs:element name="sortOrder" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fieldTypeCreated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="newFieldType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:fieldType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fieldTypeUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldFieldType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:fieldType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newFieldType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:fieldType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fieldTypeDeleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deletedFieldType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:fieldType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="deleterId" type="xs:long"/>
+      <xs:attribute name="deletedTime" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

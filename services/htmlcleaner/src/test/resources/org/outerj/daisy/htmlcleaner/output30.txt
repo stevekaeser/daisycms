@@ -1,0 +1,7 @@
+<html>
+<body>
+<blockquote>
+<p>foobar</p>
+</blockquote>
+</body>
+</html>

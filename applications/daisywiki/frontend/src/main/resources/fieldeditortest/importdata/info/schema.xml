@@ -1,0 +1,364 @@
+<?xml version="1.0"?>
+<schema>
+  <fieldType name="basicStringField" valueType="string"/>
+  <fieldType name="smallStringField" valueType="string" size="3">
+    <description locale="" text="A field configured with size 3"/>
+  </fieldType>
+  <fieldType name="aclAllowedStringField" valueType="string" aclAllowed="true"/>
+  <fieldType name="freeMvStringField" valueType="string" multiValue="true"/>
+  <fieldType name="nonEditableStringField" valueType="string"/>
+
+  <!--
+     | Fields with selection lists.
+     -->
+  <fieldType name="listStringField" valueType="string">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="freeEntryListStringField" valueType="string" allowFreeEntry="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncListStringField" valueType="string" loadSelectionListAsync="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncFreeEntryListStringField" valueType="string" loadSelectionListAsync="true" allowFreeEntry="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+
+  <!--
+     | Multivalue fields with selection lists.
+     -->
+  <fieldType name="listMvStringField" valueType="string" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="freeEntryListMvStringField" valueType="string" allowFreeEntry="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncListMvStringField" valueType="string" loadSelectionListAsync="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncFreeEntryListMvStringField" valueType="string" loadSelectionListAsync="true" allowFreeEntry="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1"/>
+      <item value="value 2">
+        <label locale="" text="value 2 label"/>
+      </item>
+      <item value="value 3"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncFreeEntryQueryListMvStringField" valueType="string" loadSelectionListAsync="true" allowFreeEntry="true" multiValue="true">
+    <querySelectionList query="select $asyncFreeEntryQueryListMvStringField where $asyncFreeEntryQueryListMvStringField is not null"
+                    filterVariants="true"
+                    sortOrder="ascending"/>
+  </fieldType>
+
+  <!--
+     | Hierarchical fields with selection lists.
+     -->
+  <fieldType name="listHierStringField" valueType="string" hierarchical="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="freeEntryListHierStringField" valueType="string" allowFreeEntry="true" hierarchical="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncListHierStringField" valueType="string" loadSelectionListAsync="true" hierarchical="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncFreeEntryListHierStringField" valueType="string" loadSelectionListAsync="true" allowFreeEntry="true" hierarchical="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+
+  <!--
+     | Hierarchical multivalue fields with selection lists.
+     -->
+  <fieldType name="listHierMvStringField" valueType="string" hierarchical="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="freeEntryListHierMvStringField" valueType="string" allowFreeEntry="true" hierarchical="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncListHierMvStringField" valueType="string" loadSelectionListAsync="true" hierarchical="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+  <fieldType name="asyncFreeEntryListHierMvStringField" valueType="string" loadSelectionListAsync="true" allowFreeEntry="true" hierarchical="true" multiValue="true">
+    <staticSelectionList>
+      <item value="value 1">
+        <item value="value 2">
+          <label locale="" text="value 2 label"/>
+          <item value="value 3">
+            <label locale="" text="value 3 label"/>
+          </item>
+        </item>
+      </item>
+      <item value="value 4">
+        <item value="value 5"/>
+        <item value="value 6"/>
+      </item>
+      <item value="value 7"/>
+    </staticSelectionList>
+  </fieldType>
+
+  <!--
+     | Various datatypes.
+     -->
+  <fieldType name="longField" valueType="long"/>
+  <fieldType name="doubleField" valueType="double"/>
+  <fieldType name="decimalField" valueType="decimal"/>
+  <fieldType name="booleanField" valueType="boolean"/>
+  <fieldType name="linkField" valueType="link"/>
+  <fieldType name="dateField" valueType="date"/>
+  <fieldType name="datetimeField" valueType="datetime"/>
+
+  <!--
+     | Link fields.
+     -->
+  <fieldType name="listLinkField" valueType="link">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="listMvLinkField" valueType="link" multiValue="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="nonEditableListMvLinkField" valueType="link" multiValue="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="asyncListMvLinkField" valueType="link" multiValue="true" loadSelectionListAsync="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="asyncListLinkField" valueType="link" loadSelectionListAsync="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="freeEntryListMvLinkField" valueType="link" multiValue="true" allowFreeEntry="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="nonEditableFreeEntryListMvLinkField" valueType="link" multiValue="true" allowFreeEntry="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="freeEntryListLinkField" valueType="link" allowFreeEntry="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="nonEditableFreeEntryListLinkField" valueType="link" allowFreeEntry="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false"/>
+  </fieldType>
+  <fieldType name="listHierLinkField" valueType="link" hierarchical="true">
+    <hierarchicalQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false">
+      <linkFields>
+        <linkField>LinkTestAnimalColorLink</linkField>
+      </linkFields>
+    </hierarchicalQuerySelectionList>
+  </fieldType>
+  <fieldType name="asyncListHierLinkField" valueType="link" hierarchical="true" loadSelectionListAsync="true">
+    <hierarchicalQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false">
+      <linkFields>
+        <linkField>LinkTestAnimalColorLink</linkField>
+      </linkFields>
+    </hierarchicalQuerySelectionList>
+  </fieldType>
+  <fieldType name="nonEditableAsyncListHierLinkField" valueType="link" hierarchical="true" loadSelectionListAsync="true">
+    <hierarchicalQuerySelectionList whereClause="documentType='LinkTestAnimal'" filterVariants="false">
+      <linkFields>
+        <linkField>LinkTestAnimalColorLink</linkField>
+      </linkFields>
+    </hierarchicalQuerySelectionList>
+  </fieldType>
+
+  <documentType name="FieldTestDocType">
+    <fieldTypeUse fieldTypeName="basicStringField" required="true"/>
+    <fieldTypeUse fieldTypeName="smallStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="aclAllowedStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="nonEditableStringField" required="false" editable="false"/>
+
+    <fieldTypeUse fieldTypeName="listStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncFreeEntryListStringField" required="false"/>
+
+    <fieldTypeUse fieldTypeName="listMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncFreeEntryListMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncFreeEntryQueryListMvStringField" required="false"/>
+
+    <fieldTypeUse fieldTypeName="listHierStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListHierStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListHierStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncFreeEntryListHierStringField" required="false"/>
+
+    <fieldTypeUse fieldTypeName="listHierMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListHierMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListHierMvStringField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncFreeEntryListHierMvStringField" required="false"/>
+
+    <fieldTypeUse fieldTypeName="longField" required="false"/>
+    <fieldTypeUse fieldTypeName="doubleField" required="false"/>
+    <fieldTypeUse fieldTypeName="decimalField" required="false"/>
+    <fieldTypeUse fieldTypeName="booleanField" required="false"/>
+    <fieldTypeUse fieldTypeName="linkField" required="false"/>
+    <fieldTypeUse fieldTypeName="dateField" required="false"/>
+    <fieldTypeUse fieldTypeName="datetimeField" required="false"/>
+
+    <fieldTypeUse fieldTypeName="listLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="listMvLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="nonEditableListMvLinkField" required="false" editable="false"/>
+    <fieldTypeUse fieldTypeName="asyncListMvLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListMvLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="nonEditableFreeEntryListMvLinkField" required="false" editable="false"/>
+    <fieldTypeUse fieldTypeName="freeEntryListLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="nonEditableFreeEntryListLinkField" required="false" editable="false"/>
+    <fieldTypeUse fieldTypeName="listHierLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="asyncListHierLinkField" required="false"/>
+    <fieldTypeUse fieldTypeName="nonEditableAsyncListHierLinkField" required="false" editable="false"/>
+  </documentType>
+
+  <fieldType name="LinkTestAnimalColorLink" valueType="link" multiValue="true">
+    <linkQuerySelectionList whereClause="documentType='LinkTestAnimalColor'" filterVariants="false"/>
+  </fieldType>
+
+  <documentType name="LinkTestAnimal">
+    <fieldTypeUse fieldTypeName="LinkTestAnimalColorLink"/>
+  </documentType>
+
+  <documentType name="LinkTestAnimalColor">
+  </documentType>
+
+</schema>

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<jx:if test="true"
+      xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+      xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+      xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  <ft:case id="simple">
+    <ft:group id="simple">
+      <table class="plainTable" width="100%">
+        <ft:repeater-widget id="actions">
+          <tr>
+            <td valign="top" align="left">
+              <ft:widget id="delete">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/delete.gif" title="createtaskspec.simpleaction.delete" i18n:attr="title"/>
+              </ft:widget>
+              <ft:widget id="moveUp">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/up.gif" title="createtaskspec.simpleaction.move-up" i18n:attr="title"/>
+              </ft:widget>
+              <ft:widget id="moveDown">
+                <fi:styling type="image" src="${pageContext.mountPoint}/resources/skins/${pageContext.skin}/images/down.gif" title="createtaskspec.simpleaction.move-down" i18n:attr="title"/>
+              </ft:widget>
+            </td>
+            <td valign="top" align="left">
+              <ft:widget id="actiontype">
+                <fi:styling list-type="dropdown" submit-on-change="true"/>
+              </ft:widget>
+            </td>
+            <td valign="top" align="left">
+              <ft:union id="actionsUnion">
+                <ft:case id="createVariant">
+                  <ft:group id="createVariant">
+                    <fi:group>
+                      <fi:styling layout="columns"/>
+                      <fi:items>
+                        <ft:widget id="newBranchId"/>
+                        <ft:widget id="newLanguageId"/>
+                        <ft:widget id="startVersion"/>
+                      </fi:items>
+                    </fi:group>
+                  </ft:group>
+                </ft:case>
+                <ft:case id="deleteVariant">
+                  <ft:group id="deleteVariant">
+                    <i18n:text key="createtaskspec.simpleaction.no-params"/>
+                  </ft:group>
+                </ft:case>
+                <ft:case id="addToCollection">
+                  <ft:group id="addToCollection">
+                    <ft:widget-label id="collection"/>
+                    <ft:widget id="collection"/>
+                  </ft:group>
+                </ft:case>
+                <ft:case id="removeFromCollection">
+                  <ft:group id="removeFromCollection">
+                    <ft:widget-label id="collection"/>
+                    <ft:widget id="collection"/>
+                  </ft:group>
+                </ft:case>
+              </ft:union>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <hr/>
+            </td>
+          </tr>
+        </ft:repeater-widget>
+      </table>
+      <ft:widget id="addAction"/>
+      <br/><ft:widget id="validateOnSave"/><label for="taskParamsUnion.simpleactions.validateOnSave:input"><ft:widget-label id="validateOnSave"/></label>
+    </ft:group>
+  </ft:case>
+</jx:if>

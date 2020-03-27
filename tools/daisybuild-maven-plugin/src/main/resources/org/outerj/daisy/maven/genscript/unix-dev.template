@@ -1,0 +1,17 @@
+
+#
+# Configuration variables
+#
+# DAISY_CLI_CLASSPATH
+#    additional entries to be added to the classpath
+#
+# DAISY_JAVA_OPTIONS
+#    additional options to be passed to the java executable
+#
+
+        CLASSPATH="$$$CLASSPATH$$$"
+
+          export CLASSPATH
+          export DAISY_LOG_OPTS="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog -Dorg.apache.commons.logging.simplelog.defaultlog=error"
+          "$JAVA_HOME/bin/java" $DAISY_JAVA_OPTIONS $DAISY_LOG_OPTS "-Ddaisy.sourcehome=$$$SOURCEHOME$$$" $$$MAINCLASS$$$ "$@"
+      

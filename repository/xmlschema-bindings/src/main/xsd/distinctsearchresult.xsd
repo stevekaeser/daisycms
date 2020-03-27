@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="searchresult.xsd"/>
+  <xs:include schemaLocation="fieldtype.xsd"/>
+  <xs:element name="distinctSearchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="values">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="value">
+                <xs:complexType>
+                  <xs:complexContent>
+                    <xs:extension base="daisy:fieldValuesType">
+                      <xs:attribute name="label" type="xs:string"/>
+                    </xs:extension>
+                  </xs:complexContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="valueType" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!--
+ Russian language file.
+ Contributed by: Alexander Serbul (droopy @ nm.ru)
+ Updated by Andreas Deininger. Credits go to Elena Kandert and Gimmy Koshadze for providing the translation for all phrases/messages
+-->
+
+<catalogue>
+  <message key="org.outerj.daisy.repository.LockType.WARN">Предупреждающий</message>
+  <message key="org.outerj.daisy.repository.LockType.PESSIMISTIC">Пессимистичный</message>
+
+  <!-- shared -->
+  <message key="back-to-document">Вернуться к документу</message>
+  <message key="hide-navigation">Скрыть навигацию</message>
+  <message key="warning-upper">ПРЕДУПРЕЖДЕНИЕ</message>
+  <message key="mv-available">Доступный</message>
+  <message key="mv-selected">Выбранный</message>
+  <message key="cancel">Отменить</message>
+  <message key="draft">черновой</message>
+  <message key="publish">опубликованный</message>
+  <message key="createvariant-versionnumber-error">ошибка ввода: введите "last", "live" ил номер версии.</message>
+  <message key="branch">ветвь</message>
+  <message key="language">язык</message>
+  <message key="branch_lc">ветвь</message>
+  <message key="language_lc">язык</message>
+  <message key="variant">вариант</message>
+  <message key="version_lc">версия</message>
+  <message key="version">Версия</message>
+  <message key="collection">коллекция</message>
+  <message key="help">помощь</message>
+  <message key="select-any">--- все ---</message>
+  <message key="please-wait-uploading">пожалуйста ждите,файл загружается</message>
+  <message key="delete">удалить</message>
+  <message key="add">ввести</message>
+  <message key="add-new">вновь ввести</message>
+  <message key="move-up">вверх</message>
+  <message key="move-down">вниз</message>
+  <message key="name">имя</message>
+  <message key="value">величина</message>
+  <message key="live">Live</message>
+  <message key="last">пoследнй</message>
+
+  <!-- login.xsl -->
+  <message key="login.title">Регистрация</message>
+  <message key="login.user-label">Пользователь:</message>
+  <message key="login.password-label">Пароль:</message>
+  <message key="login.login-button">Регистрация</message>
+  <message key="login.switchrole">Изменить роль:</message>
+  <message key="login.switchrole-button">Изменить роль</message>
+
+  <message key="login.forgot-password">Вы забыли ваш код?</message>
+  <message key="login.use-all-roles">использовать все роли</message>
+  <message key="login.excl-administrator">(кроме администратора)</message>
+
+  <!-- deletedocument.xsl -->
+  <message key="deletedocument.title">Удаление {0} (ID: {1})</message>
+  <message key="deletedocument.headtitle">Удаление документа</message>
+  <message key="deletedocument.choose-action">Выберите одно из следующих действий:</message>
+  <message key="deletedocument.document-variant-retired">этот вариант документа  отсортирован.</message>
+  <message key="deletedocument.retire-document-variant">этот вариант документа отправить в архив.</message>
+  <message key="deletedocument.retire-document-variant-info">этот вариант документа на данный момент удалён, но его можно восстановить.</message>
+  <message key="deletedocument.delete-variant-permanently">этот вариант документа навсегда удалить.</message>
+  <message key="deletedocument.delete-variant-permanently-info">этот вариант документа  навсегда удалён, его нельзя восстновить.</message>
+  <message key="deletedocument.delete-permanently">Безвозвратно удалить этот документ.</message>
+  <message key="deletedocument.delete-permanently-info">Этот документ будет безвозвратно удален.</message>
+  <message key="deletedocument.retire-note">Обратите внимание: статус временно удаленного документа может быть изменен (установлен или сброшен) в разделе редактирования документа.</message>
+  <message key="deletedocument.links-title">Документы связанные с данным документом</message>
+  <message key="deletedocument.links-info">Следующие документы связаны с данным документом (в своих последних или в опубликованных версиях):</message>
+  <message key="deletedocument.links-consider-updating">Не забудтье обновить эти документы.</message>
+
+  <!-- diff.xsl -->
+  <message key="diff.title">Информация о различиях</message>
+  <message key="diff.reverse-diff-warning">ПРЕДУПРЕЖДЕНИЕ: операция по нахождению различий реверсивна!</message>
+  <message key="diff.general">Основные данные</message>
+  <message key="diff.version">Версия</message>
+  <message key="diff.document-name">Имя документа</message>
+  <message key="diff.not-changed">(изменений нет)</message>
+  <message key="diff.creation-time">Время создания</message>
+  <message key="diff.created-by">Создан</message>
+  <message key="diff.state">Состояние</message>
+  <message key="diff.part-changes">Изменения частей</message>
+  <message key="diff.no-changes-detected">Изменения не обнаружены</message>
+  <message key="diff.part-has-changed">Часть {0} изменилась</message>
+  <message key="diff.mime-type">Mime-тип</message>
+  
+  <message key="diff.filename">имя файла</message>
+  
+  <message key="diff.size">Размер (в байтах)</message>
+  <message key="diff.content-diff">Различия содержания</message>
+  <message key="diff.part-removed">Часть {0} была удалена</message>
+  <message key="diff.part-added">Часть {0} была добавлена</message>
+  <message key="diff.part-unchanged">Часть {0} не изменилась</message>
+  
+  <message key="diff.part-mightbe-changed">Часть {0}слишком велика, чтобы проверить на изменения</message>
+  
+  <message key="diff.field-changes">Изменения полей</message>
+  <message key="diff.deleted-field">(удаленное поле)</message>
+  <message key="diff.new-field">(новое поле)</message>
+  <message key="diff.link-changes">Изменения ссылок</message>
+  <message key="diff.removed-links">Удаленные ссылки</message>
+  <message key="diff.added-links">Добавленные ссылки</message>
+
+  <!-- documentlayout.xsl / documentlayout-xslfo.xsl -->
+  <message key="doclayout.edit">Редактировать</message>
+  <message key="doclayout.delete">Удалить</message>
+  <message key="doclayout.duplicate">создать дубликат</message>
+  <message key="doclayout.docinfo">информация к документу</message>
+  <message key="doclayout.unsubscribe">Отписаться</message>
+  <message key="doclayout.subscribe">Подписаться</message>
+  <message key="doclayout.change-owner">Изменить владельца</message>
+  <message key="doclayout.versions">Версии</message>
+  <message key="doclayout.referrers">Ссылки</message>
+  <message key="doclayout.pdf">PDF</message>
+  <message key="doclayout.add-to-basket">вставить в карзину документов</message>  <message key="doclayout.in-preparation">Подготавливается</message>
+  <message key="doclayout.retired">Временно удален</message>
+  <message key="doclayout.in-preparation-info">Этот документ еще не опубликован.</message>
+  <message key="doclayout.retired-info">Этот документ был временно удален.</message>
+<!--
+  <message key="doclayout.not-last-version-warning">Вы просматриваете опубликованную версию документа, которая в данный момент {0}.</message>
+  <message key="doclayout.last-version">последняя версия</message>
+  <message key="doclayout.not-live-version-warning">Вы просматриваете не {0}, а {1}.</message>
+  <message key="doclayout.live-version">опубликованная версия</message>
+  <message key="doclayout.at-the-last-version">последнюю версию</message>
+  <message key="doclayout.at-a-more-recent-version">более новую версию</message>
+  <message key="doclayout.at-an-older-version">более старую версию</message>
+-->
+  <message key="doclayout.make-last-version-live">эту версию опубликовать.</message>
+  <message key="doclayout-xslfo.id">ID</message>
+  <message key="doclayout-xslfo.version">версия</message>
+  <message key="doclayout-xslfo.date">дата</message>
+  <message key="comments.title">комментарии</message>
+  <message key="comments.no-comments">без комментариев.</message>
+  <message key="comments.add-comment">добавить один комментарий</message>
+  <message key="comments.log-in-to-add-comments">пожалуйста зарегистрируйтесь, чтобы добавить новый комментарий.</message>
+  <message key="comments.visible-to">комментарий видим для:</message>
+  <message key="comments.visibility-everyone">каждого</message>
+  <message key="comments.visibility-editors">только авторам составителям</message>
+  <message key="comments.visibility-private">меня</message>
+  <message key="comments.add">добавить один комментарий</message>
+  <message key="comments.created-by">Создано</message>
+  <message key="comments.created-on">(дата)</message>
+  <message key="comments.private-comment">ЛИЧНЫЙ КОММЕНТАРИЙ</message>
+  <message key="comments.editors-comment">АВTОРСКИЙ КОММЕНТАРИЙ</message>
+  <message key="comments.delete">удалить</message>
+  <message key="comments.show">комментарии</message>
+  <message key="comments.hide">спрятать</message>
+
+  <!-- docinfo.xsl -->
+  <message key="docinfo.pageTitle">информация к документу</message>
+  <message key="docinfo.title">информация к показанному документу</message>
+  <message key="docinfo.name">имя</message>
+  <message key="docinfo.id">ID</message>
+  <message key="docinfo.id-based-link">линьк базирующийся на ID</message>
+  <message key="docinfo.navigation-based-link">линьк базирующийся на навигации</message>
+  <message key="docinfo.version">показанная версия</message>
+  <message key="docinfo.version-of">от</message>
+  <message key="docinfo.version-created">показанная версия создана</message>
+  <message key="docinfo.version-state">Статус версии</message>
+  <message key="docinfo.version-state-modified">Статус версии в последний раз изменён</message>
+  <message key="docinfo.owner">Владелец документа</message>
+  <message key="docinfo.doctype">Тип Документа</message>
+  <message key="docinfo.close">закрыть</message>
+
+  <!-- error.xsl -->
+  <message key="error.title">Ошибка</message>
+  <message key="error.login-info">Вы в данный момент зарегистрированы как <em>{0}</em> в роли <em>{1}</em>.</message>
+  <message key="error.change-login">Изменить регистрацию...</message>
+  <message key="error.show-details">Показать детали</message>
+  <message key="error.hide-details">Убрать детали</message>
+
+  <!-- fulltext_searchresult.xsl -->
+  <message key="fulltextresult.no-docs-found">Документы не найдены.</message>
+  <message key="fulltextresult.infoline">Опубликован: {0}, ID документа: {1}</message>
+
+  <!-- indexpage.xsl -->
+  <message key="index.available-sites">Доступные сайты:</message>
+  <message key="index.no-sites-available">Страница не доступно.</message>
+	
+  <!-- referrers.xsl -->
+  <message key="referrers.referrers-for">Ссылки</message>
+  <message key="referrers.title">Ссылающиеся документы</message>
+  <message key="referrers.infoline">Показать документы у которых {0} или {1} версия указывает на данный документ.</message>
+  <message key="referrers.live">опубликованная</message>
+  <message key="referrers.last">последняя</message>
+  <message key="referrers.no-referring-docs">Нет ссылающихся документов.</message>
+  <message key="referrers.show-button">Показать</message>
+
+  <!-- searchresult.xsl -->
+  <message key="searchresult.title">Результаты поиска</message>
+  <message key="searchresult.actions">Действия</message>
+  <message key="searchresult.action-show">показать</message>
+  <message key="searchresult.nothing-found">Резултат поиска не наидено.</message>
+  <message key="searchresult.add-to-basket">Резултат вставит в карзину документов.</message>
+
+  <!-- select_doctype.xsl -->
+  <message key="doctype.title">Выбор типа документа</message>
+  <message key="doctype.select">Выберите тип нового документа:</message>
+  <message key="doctype.non-available">(недоступно)</message>
+  <message key="doctype.create-on-branch">создать документ в этой ветви</message>
+  <message key="doctype.create-in-language">на этом языке</message>
+  <message key="doctype.default-doctype">стандарт данного типа документа для этого сайта</message>
+  <message key="doctype.other-doctype">другие типы документа</message>
+
+  <!-- select_locale.xsl -->
+  <message key="locale.title">Выбор языка</message>
+  <message key="locale.select">Выберите язык:</message>
+
+  <!-- select_role.xsl -->
+  <message key="selectrole.title">Выбор роли</message>
+  <message key="selectrole.id">ID</message>
+  <message key="selectrole.name">Имя</message>
+  <message key="selectrole.description">Описание</message>
+
+  <!-- select_user.xsl -->
+  <message key="selectuser.title">Выбор пользователя</message>
+  <message key="selectuser.id">ID</message>
+  <message key="selectuser.login">Логин</message>
+  <message key="selectuser.name">Имя</message>
+
+  <!-- version_overview.xsl -->
+  <message key="versions.for">Версии</message>
+  <message key="versions.overview">Обзор версий</message>
+  <message key="versions.nr">Номер</message>
+  <message key="versions.time">Время</message>
+  <message key="versions.creator">Создатель</message>
+  <message key="versions.state">Состояние</message>
+  <message key="versions.diff">Различия</message>
+  <message key="versions.diff-to-previous">предыдущее</message>
+  <message key="versions.diff-to-last">последнее</message>
+  <message key="versions.live">ОПУБЛИКОВАННЫЙ</message>
+  <message key="versions.created-from">Эта версия создана</message>
+  <message key="versions.actions">Действия</message>
+  <message key="versions.revert">Возвращаться</message>
+  <message key="versions.revert-info">Сейчас будет вызван редактор документов, чтоб вы смогли изменить версию в которую вы хотите вернуться.</message>
+  <message key="versions.confirm-change-to-publish">изменить статус этой версии  на 'Публикацию'?</message>
+  <message key="versions.confirm-change-to-draft">изменить статус этой версии  на 'Рабочий вариант'?</message>
+
+  <!-- upload_*.xml, upload_finish.xml -->
+  <message key="upload.name">Имя:</message>
+  <message key="upload.file">Файл:</message>
+  <message key="upload.title">загузить Файл</message>
+  <!--message key="upload.title">Загрузка данных</message-->
+  <message key="upload.collections">Коллекции к которым добавить данные:</message>
+  <message key="upload.upload">Загрузить</message>
+  <message key="upload.completing">Загрузка завершена</message>
+  <message key="upload.please-wait">Пожалуйста подождите...</message>
+
+  <!-- changeowner_*.xml -->
+  <message key="changeowner.newowner">Новый владелец (ID):</message>
+  <message key="changeowner.title">Изменение владельца документа</message>
+  <message key="changeowner.heading">Изменить владельца {0} (ID: {1})</message>
+  <message key="changeowner.currentowner">Текущий владелец: {0} (ID: {1}).</message>
+  <message key="changeowner.lookup-user">Посмотреть ID пользователя...</message>
+  <message key="changeowner.change-owner">Изменить владельца</message>
+
+  <!-- fulltextsearch_*.xml -->
+  <message key="fulltext.query">Полнотекстовый запрос:</message>
+  <message key="fulltext.help">
+     Вы можете использовать <a href="http://lucene.apache.org/java/2_2_0/queryparsersyntax.html">полный синтаксис запросов</a> Lucene для поиска по сайту.
+      <br/><strong>Quick ref:</strong><br/>
+      Метасимволы: ? и * (не в начале слова)<br/>
+      Быстрый поиск: добавьте <span style='font-family: "Andale Mono" monospace;'>~</span> к концу слова<br/>
+      Логические операторы: AND, OR, NOT (в верхнем регистре),<br/>
+      +/- перед словом чтобы включить/исключить слово<br/>
+      Поддерживается группировка с помощью ().
+  </message>
+  <message key="fulltext.maximum-results">Максимум результатов:</message>
+  <message key="fulltext.search-in">Искать в:</message>
+  <message key="fulltext.current-site-collection">Коллекции текущего сайта</message>
+  <message key="fulltext.all-documents">Во всех документах</message>
+  <message key="fulltext.name">имя</message>
+  <message key="fulltext.content">содержимое</message>
+  <message key="fulltext.fields">поля</message>
+  <message key="fulltext.title">Полнотекстовый поиск</message>
+  <message key="fulltext.search">Поиск</message>
+
+  <!-- querysearch_*.xml -->
+  <message key="querysearch.query">Строка запроса:</message>
+  <message key="querysearch.search">Поиск</message>
+  <message key="querysearch.info">Поиск с использованием языка запросов Daisy.</message>
+  <message key="querysearch.execute-query">Выполнить запрос</message>
+  <message key="querysearch.samples">Пример запроса</message>
+  <message key="querysearch.samples.alldocs">Все документы</message>
+  <message key="querysearch.samples.alldocs-bullets">Все документы представить в виде перечисления</message>
+  <message key="querysearch.samples.lockeddocs">Все блокированные документы</message>
+  <message key="querysearch.samples.images">Все документы содержащие рисунок</message>
+  <message key="querysearch.samples.retireddocs">все отсортированные документы</message>
+  <message key="querysearch.samples.attachments">все прицепы (скрепки)</message>
+  <message key="querysearch.samples.navigationtrees">все деревья навигации</message>
+  <message key="querysearch.samples.unpublisheddocs">документы, последняя версия которых ещё не опубликована</message>
+  <message key="querysearch.samples.largestdocs">десять самых больших документов</message>
+
+  <!-- recentchanges_*.xml -->
+  <message key="recentchanges.changes-during">Изменения сделанные за:</message>
+  <message key="recentchanges.last-24-hours">Последние 24 часа</message>
+  <message key="recentchanges.last-week">Прошедшую неделю</message>
+  <message key="recentchanges.last-month">Прошедший месяц</message>
+  <message key="recentchanges.maximim-results">Максимум результатов:</message>
+  <message key="recentchanges.search-in">Искать в:</message>
+  <message key="recentchanges.current-site-collection">Коллекции текущего сайта</message>
+  <message key="recentchanges.all-documents">Во всех документах</message>
+  <message key="recentchanges.title">Недавние изменения</message>
+  <message key="recentchanges.search">Поиск</message>
+
+  <!-- usersettings_*.xml -->
+  <message key="usersettings.current-password">Текущий пароль:</message>
+  <message key="usersettings.new-password">Новый пароль:</message>
+  <message key="usersettings.new-password-confirm">Новый пароль:</message>
+  <message key="usersettings.passwords-must-be-equal">Пароли не совпадают.</message>
+  <message key="usersettings.email">Email:</message>
+  <message key="usersettings.first-name">Имя:</message>
+  <message key="usersettings.last-name">Фамилия:</message>
+  <message key="usersettings.receive-document-events">Посылать уведомления по эл.почте об изменениях документов.</message>
+  <message key="usersettings.receive-user-events">Посылать уведомления по эл.почте об изменениях пользователей (доступно только администраторам).</message>
+  <message key="usersettings.recieve-schema-events">Посылать уведомления по эл.почте об изменениях схем.</message>
+  <message key="usersettings.receive-collection-events">Посылать уведомления по эл.почте об изменениях коллекций.</message>
+  <message key="usersettings.receive-acl-events">Посылать уведомления по эл.почте об изменениях списков доступа (ACL).</message>
+  <message key="usersettings.receive-comment-events">Посылать уведомления по эл.почте о добавленных или удалённых комментариях.</message>
+  <message key="usersettings.notifications-locale">Установки языка &amp; страны для уведомлений по эл.почте:</message>
+  <message key="usersettings.title">Установки пользователя</message>
+  <message key="usersettings.change-password">Изменить пароль (опция)</message>
+  <message key="usersettings.user-data">Пользовательские данные</message>
+  <message key="usersettings.email-notifications">Уведомления по эл.почте</message>
+  <message key="usersettings.document-notification-options">Опции уведомлений для документа</message>
+  <message key="usersettings.notification-documents">Уведомления получены для следующих документов:</message>
+  <message key="usersettings.notification-documents-info">
+    Введите приказ в форме "id документа, ветвь, язык", oдин приказ в строке. Используйте знак * вместо одного или нескольких компонентов.<br/>
+    несколько примеров:<br/>
+    <ul>
+      <li><b>15,main,en</b><br/> Уведомления получены для документа 15, ветвь <em>main</em> на языке <em>en</em></li>
+      <li><b>15,*,*</b><br/>Уведомления получены для документа 15, для любой ветви и для любого языка</li>
+      <li><b>*,*,en</b><br/>Уведомления получены для всех документов на английском языке <em>en</em></li>
+      <li><b>*,*,*</b><br/>Уведомления получены для всех документов для любой ветви и для любого языка (при таком приказе все остальные приказы не нужны)</li>
+    </ul>
+  </message>
+  <!--message key="usersettings.additional-notification-options-warning">Перечисленные ниже опции будут иметь смысл при отключении расположеного выше переключателя.</message>
+  <message key="usersettings.notification-documents">Посылать уведомления по эл.почте для следующих документов (разделенный запятой список ID документов):</message-->
+  <message key="usersettings.notification-collections">Посылать уведомления по эл.почте для документов, находящихся в коллекциях:</message>
+  <message key="usersettings.notification-collections-info">
+    Введите приказ в форме "коллекция, ветвь, язык", oдин приказ в строке. Используйте знак * вместо компонентов ветвь и язык.<br/>
+    несколько примеров:<br/>
+    <b>mycollection,*,en</b><br/>
+    Уведомления получены для всех документов из коллекции <em>mycollection</em> на языке <em>en</em><br/>
+  </message>
+  <message key="usersettings.save-changes">Сохранить изменения</message>
+
+  <!-- documentbrowser(_docs).xml -->
+  <message key="docbrowser.doc-id-empty">Поле ID документа пустое.</message>
+  <message key="docbrowser.invalid-doc-id">Введен неверный ID документа.</message>
+  <message key="docbrowser.title">Вставка ссылки</message>
+  <message key="docbrowser.doc-name-like">Имя документа:</message>
+  <message key="docbrowser.doc-name-like-info">(ничего не вводить для всех документов, использовать % как метасимвол)</message>
+  <message key="docbrowser.containing-text">Содержащее текст:</message>
+  <message key="docbrowser.containing-text-optional">(опция)</message>
+  <message key="docbrowser.search-in">Искать в:</message>
+  <message key="docbrowser.current-site-collection">Коллекции текущего сайта</message>
+  <message key="docbrowser.all-documents">Во всех документах</message>
+  <message key="docbrowser.exclude-doctypes">кроме</message>
+  <message key="docbrowser.doctype-image">изображения</message>
+  <message key="docbrowser.doctype-attachment">прикреплённые данные</message>
+  <message key="docbrowser.search">Искать</message>
+  <message key="docbrowser.documents">Документы:</message>
+  <message key="docbrowser.preview">Предварительный просмотр:</message>
+  <message key="docbrowser.insert-link">Вставить&#160;ссылку</message>
+  <message key="docbrowser.nothing-found">(ничего не найдено)</message>
+  <message key="docbrowser.doc-id">ID документа</message>
+  <message key="docbrowser.branch-optional">Ветвь (опционально)</message>
+  <message key="docbrowser.language-optional">Язык (опционально)</message>
+  <message key="docbrowser.version-optional">Версия (опционально)</message>
+  <message key="docbrowser.fragment-id"> ID фрагмента</message>
+  <message key="docbrowser.lookup-frag-id">Пролистать</message>
+
+  <!-- heartbeat.xml -->
+  <message key="heartbeat.could-not-extend-lock">ПРЕДУПРЕЖДЕНИЕ: Ваша блокировка не может быть расширена, т.к. блокировка на документ уже поставлена пользователем:</message>
+  <message key="heartbeat.info">Ваша сессия поддерживается автоматически...</message>
+
+  <!-- imagebrower(_*).xml -->
+  <message key="imagebrowser.id-empty">Поле ID изображения пусто.</message>
+  <message key="imagebrowser.invalid-id">Введен неверный ID изображения.</message>
+  <message key="imagebrowser.title">Вставка изображения</message>
+  <message key="imagebrowser.images-in-collection">Изображения в выбранных коллекциях:</message>
+  <message key="imagebrowser.image-preview">Просмотр изображения:</message>
+  <message key="imagebrowser.enter-id">Вставить изображение: (введите id)</message>
+  <message key="imagebrowser.insert-image">Вставить изображение</message>
+  <message key="imagebrowser.no-collections">(коллекций нет)</message>
+  <message key="imagebrowser.no-images">(изображений нет)</message>
+
+  <!-- locked.xml -->
+  <message key="locked.title">Документ заблокирован</message>
+  <message key="locked.info-warn">Пользователь "{0}" также редактирует этот документ.</message>
+  <message key="locked.ignore-and-edit">Игнорировать и начать редактирование в любом случае (без блокировки)</message>
+  <message key="locked.info-pessimistic">Пользователь "{0}" заблокировал этот документ, поэтому Вы не сможете сейчас его редактировать.</message>
+
+  <!-- parteditor_daisyhtml_template.xml -->
+  <message key="htmleditor.switch-to-html">Вернуться к HTML</message>
+  <message key="htmleditor.cleanup-html">Очистить HTML</message>
+
+  <!-- documenteditor.xml -->
+  <message key="editdoc.document-name">Имя документа:</message>
+  <message key="editdoc.document-name-help">Название документа (не обязательно уникальное).</message>
+  <message key="editdoc.new-document-name">Новый документ</message>
+  <message key="editdoc.name-warning">Вы оставили имя документа как 'Новый документ', сохранить?</message>
+  <message key="editdoc.publish-changes-immediately">Опубликовать изменения сейчас.</message>
+  <message key="editdoc.validate">Проверить на соответствие типа документа.</message>
+  <message key="editdoc.validate-help">Рекомендуется оставить это включенным.<br/><br/>
+            Отмена проверки на соответствие типу может быть полезна если:
+            <ul>
+              <li>Вы хотите временно удалить данный документ.</li>
+              <li>Вы изменили тип документа во время его редактирования.</li>
+              <li>Документ неполный и Вы хотите продолжить его редактирование позже.</li>
+            </ul>
+  </message>
+  <message key="editdoc.save">Сохранить</message>
+  <message key="editdoc.cancel">Отменить редактирование (снять блокировку)</message>
+  <message key="editdoc.change-editor-height">Изменить высоту редактора...</message>
+
+  <!-- These are the labels of the tabs in the document editor -->
+  <message key="doceditor.parts">части</message>
+  <message key="editdoc.fields">Поля</message>
+  <message key="editdoc.links">линьк</message>
+  <message key="doceditor.misc">разное</message>
+  <message key="doceditor.additional-parts-and-fields">дополнительные части &amp; поля</message>
+  <message key="doceditor.confirm-leave-editor">Daisy редактор оставит открытим в етом докумете:</message>
+
+  <!-- doceditor_additionalPartsAndField_*.xml -->
+  <message key="editdoc.extra-parts">Перечисленные ниже части присутствуют в документе, однако являются недопустимыми для документов данного типа.</message>
+  <message key="editdoc.extra-fields">Перечисленные ниже поля присутствуют в документе, однако являются недопустимыми для документов данного типа.</message>
+  <message key="editdoc.extra-parts.id">ID типа части</message>
+  <message key="editdoc.extra-parts.label">Название части</message>
+  <message key="editdoc.extra-parts.size">Размер (в байтах)</message>
+  <message key="editdoc.extra-parts.mime-type">mime-тип</message>
+  <message key="editdoc.extra-parts.delete">Удалить</message>
+  <message key="editdoc.extra-fields.id">ID типа поля</message>
+  <message key="editdoc.extra-fields.label">Название поля</message>
+  <message key="editdoc.extra-fields.value">Значение</message>
+  <message key="editdoc.extra-fields.delete">Удалить</message>
+  <message key="editdoc.link-no-valid-docid">ID недействительного документа: {0}</message>
+  <message key="editdoc.link-no-valid-namespace">недействительное место имени: {0}</message>
+  <message key="editdoc.link-no-valid-branch">Не действительная ветвь задана в следующем линьке: {0}</message>
+  <message key="editdoc.link-no-valid-language">Не действительный язык задан в следующем линьке: {0}</message>
+  <message key="editdoc.link-not-valid">Не действительный линьк: {0}</message>
+
+  <!-- doceditor_misc_*.xml -->
+  <message key="editdoc.custom-fields">собственные поля</message>
+  <message key="editdoc.collections">Коллекции</message>
+  <message key="editdoc.options">Опции</message>
+  <message key="editdoc.private">частное</message>
+  <message key="editdoc.private-help">Документ маркированный "private"досупен только собственнику,
+            независимо от того,как отрегулирован контроль к доступу.<br/><br/>Но вы должны знать,
+      что администраторы в состоянии видеть и читать документ, даже если он маркирован " private".</message>
+  <message key="editdoc.retired">Отсортировано</message>
+  
+   <message key="editdoc.customfields.name">Имя</message>
+  <message key="editdoc.customfields.value">Значение</message>
+  <message key="editdoc.customfields.delete">Удалить</message>
+  <message key="editdoc.add-custom-field">Добавить настраиваемое поле</message>
+  <message key="editdoc.actions">Действия</message>
+
+  <!-- doceditor_links_*.xml -->
+  <message key="editdoc.links.title">Название</message>
+  <message key="editdoc.links.target">Цель</message>
+  <message key="editdoc.links.delete">Удалить</message>
+  <message key="editdoc.links.move-up">Вверх</message>
+  <message key="editdoc.links.lookupdocument">проверить документ...</message>
+  <message key="editdoc.links.openlink">открыть линьк (в новом окне)</message>
+  <message key="editdoc.links.move-down">Вниз</message>
+  <message key="editdoc.add-link">Добавить ссылку</message>
+  
+  <!-- parteditor_upload_*.xml -->
+  <message key="editdoc.filename">имя файла</message>
+  <message key="editdoc.mime-type">Mime-тип</message>
+  <message key="editdoc.upload-data">загрузить данные</message>
+
+  <!-- DocumentEditorApple.java -->
+  <message key="editdoc.part-required">Эта часть требуется.</message>
+  <message key="editdoc.field-required">Это поле требуется.</message>
+
+  <!-- DocumentApple.java -->
+  <message key="subscription-added">Подписка добавлена: теперь Вы будете получать уведомления
+    по электронной почте об изменениях этого документа.</message>
+  <message key="subscription-missing-email"><br/><strong>Предупреждение:</strong> Вы еще не сконфигурировали адрес Вашей
+    электронной почты в разделе пользовательских установок.</message>
+  <message key="subscription-deleted">Подписка удалена.</message>
+  <message key="document-in-basket">Документ был встовлен в карзинку документов.</message>	
+
+  <!-- document-to-html.xsl, document-to-xslfo.xsl -->
+  <message key="document.links-title">Ссылки</message>
+  <message key="document.fields-title">Поля</message>
+  <message key="document.fields.name">Имя</message>
+  <message key="document.fields.value">Значение</message>
+  <message key="document.part.title">Часть</message>
+  <message key="document.part.size">размер</message>
+  <message key="document.warning">ПРЕДУПРЕЖДЕНИЕ</message>
+  <message key="document.note">ЗАМЕЧАНИЕ</message>
+  <message key="document.fixme">ИСПРАВЬ МЕНЯ</message>
+  <message key="document.error">ОШИБКА</message>
+  <message key="document.unprocessed-include-directive">НЕОБРАБОТАННАЯ ДИРЕКТИВА ВКЛЮЧЕНИЯ</message>
+  <message key="document.info-link">Информация</message> <!-- this is the (info) link after links pointing directly to a part --> 
+  <message key="document.click-to-enlarge">Увеличить</message> <!-- text put below previews of large images --> 
+  <message key="document.edit-included-doc">Обрабатывать</message> <!-- edit link shown for included docs -->
+
+  <!-- mycomments.xsl -->
+  <message key="mycomments.title">мой комментарий</message>
+  <message key="mycomments.intro">Эта страница перечисляетвсе ваши частные комментарии.</message>
+  <message key="mycomments.createdon">создано</message>
+  <message key="mycomments.document">К документу</message>
+  <message key="mycomments.delete">Удалить</message>
+	
+  <!-- userregistration_*.xml -->
+  <message key="userregistration.title">Регистрация нового пользователя</message>
+  <message key="userregistration.email">Ваш email:</message>
+  <message key="userregistration.login">Ваш login (имя пользователя):</message>
+  <message key="userregistration.first-name">Ваше имя:</message>
+  <message key="userregistration.last-name">Ваша фамилия:</message>
+  <message key="userregistration.password">Пароль:</message>
+  <message key="userregistration.password-confirm">Пароль повторить:</message>
+  <message key="userregistration.passwords-must-be-equal">Ваши пароли не идентичны.</message>
+  <message key="userregistration.register">зарегестрировать</message>
+
+  <!-- registrationsuccess.xml -->
+  <message key="registrationsuccess.title">Регистрация успешна</message>
+  <message key="registrationsuccess.text">Регистрация успешна.Вы должны подтвердить регистрацию,
+  прежде чем вы сможете использовать ваш login.Для этого используйте линьк, который будет отправлен на данный Email:</message>
+  <message key="registrationsuccess.continue">Продолжить</message>
+
+  <!-- registrationconfirmed.xml -->
+  <message key="registrationconfirmed.title">Регистрация подтверждается</message>
+  <message key="registrationconfirmed.text">Ваш account пользователя активирован.</message>
+
+  <!-- passwordreminder_*.xml -->
+  <message key="passwordreminder.title">Напоминание пароля</message>
+  <message key="passwordreminder.intro">Если вы укажете внизу ваш login (имя пользователя),в
+  вам будет на ваш email отправлен новый пароль.</message>
+  <message key="passwordreminder.login">Login</message>
+  <message key="passwordreminder.mail">Запросить email</message>
+  <message key="passwordreminder.forgot-login">Забыли ваш login?</message>
+
+  <!-- pwdremindersuccess.xml -->
+  <message key="pwdremindersuccess.title">Пароль отправлен</message>
+  <message key="pwdremindersuccess.text">Новый пароль отправлен на ваш email.</message>
+
+  <!-- loginreminder_*.xml -->
+  <message key="loginreminder.email">Email</message>
+  <message key="loginreminder.title">Login напоминание</message>
+  <message key="loginreminder.intro">Если вы укажите внизу ваш email, вам будет отправлен новый login.</message>
+  <message key="loginreminder.mail">Запросить mail</message>
+
+  <!-- loginremindersuccess.xml -->
+  <message key="loginremindersuccess.title">Login отправлен</message>
+  <message key="loginremindersuccess.text">Ваш login(s) отправлен на ваш email .</message>
+
+  <!-- altvariants.xsl -->
+  <message key="altvariants.title">Вариант не найден.</message>
+  <message key="altvariants.intro">Желаемый документ не находится в этом или актуальном варианте. 
+  Пожалуйста выберите другой вариант:</message>
+
+  <!-- doctask_taskspec_*.xml -->
+  <message key="createtaskspec.description">Описание</message>
+  <message key="createtaskspec.type-of-task">Тип функции</message>
+  <message key="createtaskspec.actiontype.create-variant">Создать вариант</message>
+  <message key="createtaskspec.actiontype.delete-variant">Удалить вариант</message>
+  <message key="createtaskspec.actiontype.add-to-collection">Добавить к коллекции</message>
+  <message key="createtaskspec.actiontype.remove-from-collection">Удалить из коллкции</message>
+  <message key="createtaskspec.simpleaction.create-variant.branch">Новая ветвь</message>
+  <message key="createtaskspec.simpleaction.create-variant.language">Новый язык</message>
+  <message key="createtaskspec.simpleaction.create-variant.start-version">Стартовать версию</message>
+  <message key="createtaskspec.simpleaction.collection">Коллекция</message>
+  <message key="createtaskspec.simpleaction.add">Добавить</message>
+  <message key="createtaskspec.simpleaction.validate-on-save">При сохранении проверить на действительность</message>
+  <message key="createtaskspec.title">Создать функцию, шаг 2: описать применение</message>
+  <message key="createtaskspec.subtitle">Опишите функцию, которая должна премениться к каждому выбранному документу</message>
+  <message key="createtaskspec.info">Эта функция позволяет применение Javascript на все избранные документы.</message>
+  <message key="createtaskspec.simpleaction.delete">Удалить</message>
+  <message key="createtaskspec.simpleaction.move-up">Вверх</message>
+  <message key="createtaskspec.simpleaction.move-down">Вниз</message>
+  <message key="createtaskspec.simpleaction.no-params">(параметры не нужны)</message>
+  <message key="createtaskspec.stop-on-first-error">Остановить при первой ошибке</message>
+  <message key="createtaskspec.tasktype-javascript">Javascript</message>
+  <message key="createtaskspec.tasktype-simple">Простые действия</message>
+  <message key="createtaskspec.simpleaction.need-at-least-one">Добавить как минимум одно простое действие.</message>
+  <message key="createtaskspec.start">Старт</message>
+  <message key="createtaskspec.back">&lt; Назад</message>
+
+  <!-- documenttask_list.xsl -->
+  <message key="doctasklist.title">Функции документа</message>
+  <message key="doctasklist.info">Функции документа это функции,которые применяются для оной группы документов, 
+  обработка происходит на заднем плане.</message>
+  <message key="doctasklist.create-doctask">Создать новую функцию документа</message>
+  <message key="doctasklist.confirm-delete">Вы уверены, что вы хотите удалить функцию с ID $id ?</message>
+  <message key="doctasklist.confirm-interrupt">Вы уверены, что вы хотите прервать функцию с ID $id ?</message>
+  <message key="doctasklist.id">ID</message>
+  <message key="doctasklist.owner">Собственник</message>
+  <message key="doctasklist.state">Состояние</message>
+  <message key="doctasklist.progress">Прогресс</message>
+  <message key="doctasklist.started-at">Стартует</message>
+  <message key="doctasklist.finished-at">Закончено</message>
+  <message key="doctasklist.description">Описание</message>
+  <message key="doctasklist.script">Скрипт</message>
+  <message key="doctasklist.details">(ошибка) детали</message>
+  <message key="doctasklist.actions">Действия</message>
+  <message key="doctasklist.no-tasks">(Нет функций)</message>
+  <message key="doctasklist.show">Показать</message>
+  <message key="doctasklist.delete">Удалить</message>
+  <message key="doctasklist.interrupt">Прервать</message>
+  <message key="doctasklist.show-details">Детали</message>
+
+  <!-- shared between task pages -->
+  <message key="taskstate.initialising">Инициализирование</message>
+  <message key="taskstate.running">В пути</message>
+  <message key="taskstate.finished">Закончено</message>
+  <message key="taskstate.finished_with_errors">Закончено с ошибками</message>
+  <message key="taskstate.interrupted_by_error">Прервано из за ошибки</message>
+  <message key="taskstate.interrupted_by_user">Прервано пользователем</message>
+  <message key="taskstate.interrupted_by_shutdown">Прервано из за shutdown сервера</message>
+
+  <!-- documenttaskdetails.xsl -->
+  <message key="doctaskdetails.title">Детали функции документа</message>
+  <message key="doctaskdetails.to-task-overview">К содержанию функций</message>
+  <message key="doctaskdetails.taskid"> ID функции</message>
+  <message key="doctaskdetails.taskdescription">Описание</message>
+  <message key="doctaskdetails.state">Статус</message>
+  <message key="doctaskdetails.doc-id"> ID документа</message>
+  <message key="doctaskdetails.execution-state">Статус выполнения</message>
+  <message key="doctaskdetails.details">(Ошибка) детали</message>
+  <message key="documentexecutionstate.waiting"> В ожидании</message>
+  <message key="documentexecutionstate.done">Готово</message>
+  <message key="documentexecutionstate.error">Ошибка</message>
+  <message key="doctaskdetails.show">Показать</message>
+
+  <!-- KeySetParser.java -->
+  <message key="keylist.entry-invalid">Запись в строке {0} имеет не корректный формат.</message>
+  <message key="keylist.branch-does-not-exist">Ветвь заданная в строке {0} не существует.</message>
+  <message key="keylist.branch-retrieval-error">Проблемы доступа к в строке {0} заданной ветви: {1}</message>
+  <message key="keylist.lang-does-not-exist">Язык заданный в строке {0} не существует.</message>
+  <message key="keylist.lang-retrieval-error">Проблемы доступа к в строке {0} заданному языку: {1}</message>
+  <message key="keylist.need-at-least-one-entry">Как минимум один документ должен быть указан.</message>
+  <message key="keylist.invalid-docid">Неправильный ID документа в строке {0}.</message>
+  <message key="keylist.collection-does-not-exist">Указание одной не существующей коллекции в строке {0}.</message>
+  <message key="keylist.collection-retrieval-error">Проблемы доступа к в строке {0} заданной коллекции: {1}</message>
+
+  <!-- doctask_docselection_*.xml -->
+  <message key="createdocsel.execute-query">Выполнить запрос и добавить результат</message>
+  <message key="createdocsel.title">Создать функцию шаг 1: выбрать документ</message>
+  <message key="createdocsel.subtitle">Выберите документ, к которому должна примениться функция</message>
+  <message key="createdocsel.info">Введите в каждой строке один документ. Каждая строка должна иметь следующую форму:
+      <i>документ id, ветвь, язык</i>. Указание ветви и языка является опциями,если ничего другого не указано, то используются основная ветвь и стандартный язык.
+      Иуеиь и язык могут быть заданы через  ID или имя. Комментарии должны начинаться знаком #  и могут быть указаны в конце строки или в новой строке.</message>
+  <message key="createdocsel.add-docs-from-query">Добавить документ из результата запроса</message>
+  <message key="createdocsel.enter-query">Ввести запрос (select name where ...)</message>
+  <message key="createdocsel.no-query-entered">Запрос не введён.</message>
+  <message key="createdocsel.error-performing-query">Ошибка при вводе запроса.</message>
+  <message key="createdocsel.query-executed">Запрос выполнен, {0} результат добавлен.</message>
+  <message key="createdocsel.query-no-result">Запрос не принёс результата.</message>
+  <message key="createdocsel.next">Следующий ></message>
+
+  <!-- taskcreatedpage.xml -->
+  <message key="taskcreated.title">Функция создана</message>
+  <message key="taskcreated.info">Функция создана, ID = {0}.</message>
+  <message key="taskcreated.show-execution-details">Показать детали о выполнении этой функции</message>
+  <message key="taskcreated.go-to-task-overview">Показать список всех функций</message>
+  <message key="taskcreated.create-another-task">Создать новую функцию</message>
+
+  <!-- createdocvariant_*.xml -->
+  <message key="createdocvariant.title">Создать вариант этого документа</message>
+  <message key="createdocvariant.start-from">Стартовать при</message>
+  <message key="createdocvariant.new">новый</message>
+  <message key="createdocvariant.variant-already-exists">Этот вариант уже существует!</message>
+  <message key="createdocvariant.start-from-current">Стартовать новый вариант от другой версии данного варианта:</message>
+  <message key="createdocvariant.version-info">(введите <i>last</i>, <i>live</i> или номер версии)</message>
+  <message key="createdocvariant.start-from-current-info">
+   Использование этой опции рекомендуется при создании новой ветви. Это влечет за собой,
+   что ветвь и язык используются как стартовые пункты данного варианта 
+   и первая версия инициализируется с содержанием избранной версии.</message>
+  <message key="createdocvariant.embedded-images">Создать варианты избранных рисунков</message>
+  <message key="createdocvariant.embedded-images-info">
+    Этот документ содержитссылки на следующие рисунки, для которых также могут быть созданы новые варианты.
+    Если рисунок в новом варианте уже существует, то он будет игнорирован.
+  </message>
+  <message key="createdocvariant.new-branch">Новая ветвь</message>
+  <message key="createdocvariant.new-language">Новый язык</message>
+  <message key="createdocvariant.startversion-failmessage">Ошибка ввода: введите last, live или номер версии.</message>
+  <message key="createdocvariant.goto-editor">После создания варианта документа вернуться к editor</message>
+  <message key="createdocvariant.image-id">ID</message>
+  <message key="createdocvariant.image-name">Имя</message>
+  <message key="createdocvariant.image-create-variant">Создать вариант</message>
+
+  <!-- placeholder_*.xml -->
+  <message key="placeholder.name">Имя Документа</message>
+  <message key="placeholder.documentType">Тип документа</message>
+  <message key="placeholder.collections">Коллекции</message>
+  <message key="placeholder.title">Ссылка на новый документ</message>
+  <message key="placeholder.create">Создать</message>
+  <message key="placeholder.completing">Закончить, пожалуйста ждите...</message>
+
+  <!-- book messages shared by multiple files -->
+  <message key="book.edit-mode">Модус обработки</message>
+  <message key="book.edit-mode-xml">XML</message>
+  <message key="book.edit-mode-graphical">Графически</message>
+  <message key="bookwizard.back">&lt; Назад</message>
+  <message key="bookwizard.continue">Далее ></message>
+  <message key="bookwizard.step1">Публикация книги - шаг 1</message>
+  <message key="bookwizard.step1.name">Общие параметры</message>
+  <message key="bookwizard.step2">Публикация книги - шаг 2</message>
+  <message key="bookwizard.step2.name">Выберите для книги тип публикации</message>
+  <message key="bookwizard.step3">Публикация книги - шаг 3</message>
+  <message key="bookwizard.step3.name">Права доступа</message>
+  <message key="bookwizard.start">Стартовать публикацию книги</message>
+  <message key="book.books">книги</message>
+  <message key="book.book-definitions">Документы для определения книг</message>
+
+  <!-- bookacl_*.xml -->
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.EVERYONE">каждый</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.USER">пользователь</message>
+  <message key="org.outerj.daisy.books.store.BookAclSubjectType.ROLE">Роль</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.GRANT">предоставлять</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.DENY">запрещать</message>
+  <message key="org.outerj.daisy.books.store.BookAclActionType.NOTHING">ничего</message>
+  <message key="bookacl.subject">Субъект</message>
+  <message key="bookacl.permissions">Права</message>
+  <message key="bookacl.actions">Действия</message>
+  <message key="bookacl.subject-type">Тип</message>
+  <message key="bookacl.subject-value">Значение</message>
+  <message key="bookacl.perm-read">Читать</message>
+  <message key="bookacl.perm-manage">Управлять</message>
+  <message key="bookacl.no-entries">(нет записей)</message>
+  <message key="bookacl.add-entry">Добавить запись</message>
+  <message key="bookacl.append-entry">Прицепить запись</message>
+  <message key="bookacl.value-required">Вы должны выбрать значение.</message>
+  <message key="bookacl.error-cannot-exclude-yourself">При данных правах доступа вы сами себе запрещаете управление публикацией книги.Это не разрешено. ACL excludes manage permission for you, which is disallowed.</message>
+  <message key="bookacl.title">Обработать права доступа для книги</message>
+  <message key="bookacl.save">Сохранить</message>
+  <message key="bookacl.select">Выбрать...</message>
+
+  <!-- bookinstanceparams_*.xml -->
+  <message key="bookip.id">ID</message>
+  <message key="bookip.book-instance-name">Имя публикации книги</message>
+  <message key="bookip.book-instance-label">Обозначение публикации книги</message>
+  <message key="bookip.content-branch">Использованная ветвь</message>
+  <message key="bookip.content-language">Использованный язык</message>
+  <message key="bookip.content-version">Использованная версия</message>
+  <message key="bookip.locale">Местоположение</message>
+  <message key="bookip.book-definition">Определение книги</message>
+  <message key="bookip.book-instance">публикация книги</message>
+  <message key="pubtypes.no-properties-yet">(ещё нет характерных качеств)</message>
+  <message key="pubtypes.default-properties">Заданные установки</message>
+  <message key="pubtypes.add-pubtype">Добавить новый тип публикации</message>
+  <message key="bookip.duplicate-instance-name">Публикация книги с таким именем уже существует.</message>
+  <message key="bookip.book-instance-name-help">Разрешены только маленькие буквы a-z, цифры, пробелы, и знаки -, _, : и запятые.</message>
+
+  <!-- selectpublicationtypes_*.xml -->
+  <message key="pubtypes.need-at-least-one">Как минимум один тип публикации должен быть добавлен.</message>
+  <message key="pubtypes.duplicate-output-name">Тип публикации с таким именем уже существует.</message>
+  <message key="pubtypes.output-name">имя для этого типа публикации</message>
+  <message key="pubtypes.output-label">Обозначение для этого типа публикации</message>
+  <message key="pubtypes.add-property">Добавить характерное качество</message>
+  <message key="pubtypes.publication-properties">характерное качество типа публикации</message>
+
+  <!-- bookpublished.xml -->
+  <message key="bookpublished.started">Публикация книги стартована</message>
+  <message key="bookpublished.info">Книга публикуется в данный момент. 
+  Актуальное состояние процесса публикации вы можете наблюдать в окне.
+  Состояние актуализируется каждые 5 секунд.</message>
+
+  <!-- edit_bookinstance.xml -->
+  <message key="ebi.title">Обработать публикацию книги</message>
+  <message key="ebi.enter-new-label">Ввести новое обозначениеl:</message>
+  <message key="ebi.enter-new-name">Ввести новое имя:</message>
+  <message key="ebi.general">Общее</message>
+  <message key="ebi.publications">Публикации</message>
+  <message key="ebi.change">изменить</message>
+  <message key="ebi.label">Обозначение</message>
+  <message key="ebi.back-to-published-books">Назад к списку опубликованных книг</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="publishtaskstate.finished">Закончено</message>
+  <message key="publishtaskstate.view-publication-log">Вызвать файл протокола для данной публикации</message>
+  <message key="publishtaskstate.view-link-error-log">Вызвать файл протокола для недействительных ссылок</message>
+
+  <!-- publishtaskstate.xml -->
+  <message key="bookstate.starting">Стартовать публикацию</message>
+  <message key="bookstate.initializing">Инициализирование</message>
+  <message key="bookstate.retrieving-data">Установить данные для публикации книги</message>
+  <message key="bookstate.publishing">Публикация "{2}"</message>
+  <message key="bookstate.finished">Закончено</message>
+
+  <!-- parteditor_bookmeta_*.xml -->
+  <message key="bookmeta.no-fields-yet"> Пока нет полей с metadata .</message>
+
+  <!-- publishtasks.xsl -->
+  <message key="publishtasks.title">На данный момент действующие процессы к публикации книги</message>
+  <message key="publishtasks.book-instance">публикация книги</message>
+  <message key="publishtasks.started-by-user">Стартовано пользователем</message>
+  <message key="publishtasks.started-on">Стартовано</message>
+  <message key="publishtasks.state">Статус</message>
+  <message key="publishtasks.hidden">Нарочно не показано</message>
+  <message key="publishtasks.no-tasks-running">Нет действующих процессов.</message>
+
+  <!-- bookmanagement.xsl -->
+  <message key="bookmgmt.title">Определение книг</message>
+  <message key="bookmgmt.published-books">Опубликованные книги</message>
+  <message key="bookmgmt.publish">Опубликовать</message>
+  <message key="bookmgmt.no-bookdefs">определение книжки не возможно. Для создание нового определение книжки создать новий документ от типа "определение книжки".</message>
+	
+  <!-- bookinstancemanagement.xsl -->
+  <message key="bookinstancemgmt.title">книги</message>
+  <message key="bookinstacemgmt.publish-a-book">Опубликовать книгу</message>
+  <message key="bookinstancemgmt.view-running-tasks">показать на данный момент действующие процессы к публикации книги.</message>
+  <message key="bookinstancemgmt.edit-acl">Обработать права пользования</message>
+  <message key="bookinstancemgmt.delete">Удалить</message>
+  <message key="bookinstancemgmt.change-names">Изменить имя</message>
+  <message key="bookinstancemgmt.link-log">Файл протокола(ссылки)</message>
+  <message key="bookinstancemgmt.publication-log">Файл протокола</message>
+  <message key="bookinstancemgmt.confirm-delete">Вы уверены, что вы хотите удалить публикацию книги "{0}"? 
+  После этого она будет окончательно утеряна!</message>
+  
+	<!-- documentbasket.xsl -->
+  <message key="docbasket.title">корзинка документов</message>
+  <message key="docbasket.empty">ваш документ пуст.</message>
+  <message key="docbasket.content-title">Содержание корзинки документов</message>
+  <message key="docbasket.contains-one">ваша корзина содержит <b>один</b> документ.</message>
+  <message key="docbasket.contains-documents">ваша корзина содержит <b>{0}</b> документ.</message>
+  <message key="docbasket.refresh">Актуализировать</message>
+  <message key="docbasket.doc-name">Имя документа</message>
+  <message key="docbasket.op-select-all">Выбрать все</message>
+  <message key="docbasket.op-unselect-all">Избранное полностью удалить</message>
+  <message key="docbasket.op-remove-selected">Избранные документы удалить</message>
+  <message key="docbasket.rop-remove-all">Все документы удалить</message>
+  <message key="docbasket.actions-title">Aкции</message>
+  <message key="docbasket.action-aggr-html">Документы выполнены в формате HTML</message>
+  <message key="docbasket.action-aggr-html-plain">Документы выполнены в формате HTML, без планки навигации</message>
+  <message key="docbasket.action-aggr-pdf">Документы выполнены в формате PDF</message>
+  <message key="docbasket.action-start-doctask">Провести массовую акцию с данным документом</message>
+  <message key="docbasket.adding-title">Документы добавить в корзину документов</message>
+  <message key="docbasket.adding-manual">При чтении документа используйте сайт"Добавить в корзину документов"</message>
+  <message key="docbasket.adding-with-query">Документы добавить с помощью запроса</message>
+  <message key="docbasket.adding-from-nav">Выбрать документы из навигационного дерева</message>
+
+  <!-- docbasket_aggr_html.xsl -->
+  <message key="docbasket.aggr-title">Общее содержание корзины документов</message>
+
+  <!-- docbasket_select_from_nav.xsl -->
+  <message key="docbaset-nav.title">Корзина документов: Добавить документы из навигационного дерева</message>
+  <message key="docbasket-nav.return-to-docbasket">Вернуться к корзине документов</message>
+  <message key="docbasket-nav.add-selected-docs">Добавить избранные документы</message>
+  
+  <!-- includepreviews.xsl -->
+  <message key="includepreview.error">При вызове просмотра обнаружена ошибка.</message>
+
+  <!-- daisy-forms-styling.xsl -->
+  <message key="formstyling.load-options">Показать опции ...</message>
+
+  <!-- documentinfo.xsl / DocumentInfoApple -->
+  <message key="documentinfo.result.document-not-found">Документ не найден</message>
+  <message key="documentinfo.result.document-variant-not-found">Вариант документа не найден</message>
+  <message key="documentinfo.result.access-denied">Отказ во входе</message>
+  <message key="documentinfo.result.version-not-found">Версия не найдена</message>
+  <message key="documentinfo.result.branch-not-found">Ветвь не найдена</message>
+  <message key="documentinfo.result.language-not-found">Язык не найден</message>
+  <message key="documentinfo.result.error">Неожиданная ошибка</message>
+
+  <!-- Workflow general -->
+  <message key="wf.actor-user">Пользователь</message>
+  <message key="wf.actor-pools">Банк данных</message>
+  <message key="wf.actor">Активный пользователь</message>
+  <message key="wf.login">Имя (Логин)</message>
+  <message key="wf.section.my-tasks">Мои задания</message>
+  <message key="wf.section.search-tasks">Поиск заданий</message>
+  <message key="wf.section.search-processes">Поиск процесса</message>
+  <message key="wf.section.search-timers">Поиск счетчика времени</message>
+  <message key="wf.console">Окно дял работы</message>
+  <message key="wf.site-home">Home</message>
+  <message key="wf.priority-highest">Очень высокий</message>
+  <message key="wf.priority-high">высокий</message>
+  <message key="wf.priority-normal">нормальный</message>
+  <message key="wf.priority-low">низкий</message>
+  <message key="wf.priority-lowest">очень низкий</message>
+
+  <!-- wf_assign_*.xml -->
+  <message key="wfassign.scope-task">Только это задание</message>
+  <message key="wfassign.scope-swimlane">Все будущие задания, котрые будут рапределены процессом</message>
+  <message key="wfassign.assign">Распределение заданий</message>
+  <message key="wfassign.cancel">Прервать</message>
+  <message key="wfassign.title">Распределить задание в процессе работы</message>
+  <message key="wfassign.scope">Область действенности</message>
+
+  <!-- wfprocesssearch_*.xml -->
+  <message key="wfsearch.process-search-title">Поиск процесса</message>
+  <message key="wfsearch.task-search-title">Поиск заданий</message>
+  <message key="wfsearch.timer-search-title">Поиск счетцика времени</message>
+
+  <message key="wfsearch.process-state">Состояние</message>
+  <message key="wfsearch.process-state-open">Открыто (доступно)</message>
+  <message key="wfsearch.process-state-finished">Выполнено</message>
+  <message key="wfsearch.process-state-any">Оба</message>
+  <message key="wfsearch.description-like">Описание точно как</message>
+  <message key="wfsearch.description-like-help">Используйте % как Wildcard.</message>
+  <message key="wfsearch.process-owner">Владелец процесса</message>
+  <message key="wfsearch.process-definition">Определение процесса</message>
+  <message key="wfsearch.related-to-doc">Связь с документом</message>
+  <message key="wfsearch.search">поиск</message>
+  <message key="wfsearch.task-state">состояние</message>
+  <message key="wfsearch.task-state-open">открыто</message>
+  <message key="wfsearch.task-state-closed">закрыто</message>
+  <message key="wfsearch.task-state-any">оба</message>
+  <message key="wfsearch.task-assigned-to">распространено на</message>
+  <message key="wfsearch.task-assigned-to-me">меня</message>
+  <message key="wfsearch.task-assigned-to-anyone">каждого</message>
+  <message key="wfsearch.task-assigned-to-noone">нокого</message>
+  <message key="wfsearch.priority-at-least">минимальный приоритет</message>
+  <message key="wfsearch.process-definition">Определение процесса</message>
+  <message key="wfsearch.process-owner">Владелец процесса</message>
+  <message key="wfsearch.suspended">Прервано</message>
+  <message key="wfsearch.suspended-yes">Да</message>
+  <message key="wfsearch.suspended-no">Нет</message>
+  <message key="wfsearch.suspended-either">оба</message>
+  <message key="wfsearch.timer-failed">Задано с ошибкой</message>
+  <message key="wfsearch.timer-failed-yes">Да</message>
+  <message key="wfsearch.timer-failed-no">Нет</message>
+  <message key="wfsearch.timer-failed-either">Оба</message>
+  <message key="wfsearch.no-processes-found">Не было найдено ни одного процесса, котрый бы соответствовал заданным критериям.</message>
+  <message key="wfsearch.no-tasks-found">Не было найдено ни одного задания, которое бы соответствовало заданным критериям.</message>
+  <message key="wfsearch.no-timers-found">Не было найдено ни одного счетчика времени, котроый бы соответсвовал заданным критеряим</message>
+  <message key="wfsearch.alt-title.description">Описание</message>
+  <message key="wfsearch.alt-title.owner">Владелец</message>
+  <message key="wfsearch.alt-title.suspension">Выпад</message>
+  <message key="wfsearch.action.resume">Продолжить</message>
+  <message key="wfsearch.action.suspend">Прервать</message>
+  <message key="wfsearch.action.view">Показать</message>
+  <message key="wfsearch.action.delete">Удалить</message>
+  <message key="wfsearch.action-confirm.suspend">Процесс "{0}" прервать?</message>
+  <message key="wfsearch.action-confirm.resume">Процесс "{0}" принять снова?</message>
+  <message key="wfsearch.action-confirm.delete">Вы уверены, что хотите удалить процесс"{0}"?</message>
+  <message key="wfsearch.action.open">открыто</message>
+  <message key="wfsearch.action.pool">банк данных</message>
+  <message key="wfsearch.action-confirm.assign-to-pool">Отослать задание снова назад в банк данных?</message>
+  <message key="wfsearch.action.assign-to-me">Выслать мне</message>
+  <message key="wfsearch.action.assign">Выслать</message>
+  <message key="wfsearch.nav.first">Первое</message>
+  <message key="wfsearch.nav.prev">Предыдущее</message>
+  <message key="wfsearch.nav.next">Следующее</message>
+  <message key="wfsearch.nav.last">Последнее</message>
+  <message key="wfsearch.return-to-tasks">Назад к заданиям</message>
+  <message key="wfsearch.return-to-process-search">Назад в поиск процессов</message>
+  <message key="wfsearch.return-to-task-search">Назад в поиск заданий</message>
+  <message key="wfsearch.return-to-timer-search">Назад в поиск счетчиков времени</message>
+  <message key="wfsearch.timers-info">
+    <p>Эта страница покажет запланированные и ошибочные попытки счетчика времени. Успешно оработанные счетчики после Вашего ввода будут удалены.</p>
+    <p>Для остановки работы счетчика Вы можете прервать процесс, к которому он относится. Вы можете выбрать его из детальной страницы процесса который Вы найдете и нажмете на процесс ID.</p>
+  </message>
+
+  <!-- wf_process_delete_success.xml -->
+  <message key="wfdelscs.title">Процесс работы удален (стерт)</message>
+  <message key="wfdelscs.info">Процесс работы был успешно удален.</message>
+
+  <!-- wf_process_resume_success.xml -->
+  <message key="wfresumescs.title">Снова принять процесс рыботы</message>
+  <message key="wfresumescs.info">Процесс работы был успешно принят.</message>
+
+  <!-- wf_process_started.xml -->
+  <message key="wfpstarted.title">Запуск процесса работы</message>
+  <message key="wfpstarted.info">Процесс работы был успешно начат.</message>
+  <message key="wfpstarted.process-id">Работа процесса ID</message>
+
+  <!-- wf_process_suspended_success.xml -->
+  <message key="wfpsusp.title">Прервать процесс работы</message>
+  <message key="wfpsusp.info">Процесс работы успешно прерван.</message>
+
+  <!-- wftask_to_*.xsl -->
+  <message key="wfuptsk.save">Сохранить</message>
+  <message key="wfuptsk.cancel">Прервать</message>
+  <message key="wfuptsk.start-title">Запуск процесса</message>
+  <message key="wfuptsk.perform-title">Выпонить задания в процессе работы</message>
+  <message key="wfuptsk.actions-label.continue">Выполнение этого задания необходимо провести в другое время</message>
+  <message key="wfuptsk.actions-label.startprocess">Запустить процесс выполнения задания</message>
+  <message key="wfuptsk.actions-label.transition">Завершитьэто задание, так как последует передача.</message>
+  <message key="wfuptsk.due-date">Дата завершения</message>
+  <message key="wfuptsk.priority">Приоритет</message>
+
+  <!-- wf_processdef_selection.xsl -->
+  <message key="wfpsel.title">Запуск нового процесса</message>
+  <message key="wfpsel.intro">Выбрать тип процесса работы:</message>
+  <message key="wfpsel.no-workflows-available">Нет предложенных процессов работы.</message>
+
+  <!-- wf_tasks(_list).xsl -->
+  <message key="wftasks.title">Процесс выполнения работы</message>
+  <message key="wftasks.my-tasks">Мои задания</message>
+  <message key="wftasks.pooled-tasks">Задания для всех</message>
+  <message key="wftasks.none-assigned-to-you">Вам не предоставлены задания.</message>
+  <message key="wftasks.none-pooled">Из данного банка данных нет никаких заданий для Вас.</message>
+
+  <!-- wf_timer(_searchresult).xsl -->
+  <message key="wftimer.title">Счетчик времени процесса работы</message>
+  <message key="wftimer.id">ID</message>
+  <message key="wftimer.due-date">Дата завершения</message>
+  <message key="wftimer.suspended">Прервано</message>
+  <message key="wftimer.owner-process-id">ID процесса владельца</message>
+  <message key="wftimer.execution-path">Введенный адрес, на который установлен счетчик времени.</message>
+  <message key="wftimer.transition">рассылка по счетчику времени</message>
+  <message key="wftimer.exception">Исключение</message>
+
+</catalogue>
+
+
+

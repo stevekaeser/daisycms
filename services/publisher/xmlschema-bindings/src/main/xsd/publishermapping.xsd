@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0#publishermapping" xmlns:pm="http://outerx.org/daisy/1.0#publishermapping" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="publisherMapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="when">
+          <xs:complexType>
+            <xs:attribute name="test" type="xs:string" use="required"/>
+            <xs:attribute name="use" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

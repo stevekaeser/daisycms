@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is read by the rich text editor to let the user know the supported
+     table classes -->
+<tableClasses>
+  <class>borderless</class>
+</tableClasses>

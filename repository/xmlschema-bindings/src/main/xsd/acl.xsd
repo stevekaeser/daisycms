@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="acl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:aclObject"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:long"/>
+      <xs:attribute name="lastModified" type="xs:dateTime"/>
+      <xs:attribute name="lastModifier" type="xs:long"/>
+      <xs:attribute name="updateCount" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aclObject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:aclEntry"/>
+      </xs:sequence>
+      <xs:attribute name="expression" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aclEntry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="daisy:permissions"/>
+      </xs:sequence>
+      <xs:attribute name="subjectType" type="daisy:aclSubject" use="required"/>
+      <!--subjectValue is either a userId, a roleId or -1, dependending on
+the value of subjectType (user, role, everyone)-->
+      <xs:attribute name="subjectValue" type="xs:long" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="accessDetails">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded" minOccurs="0">
+        <xs:choice>
+          <xs:element name="allowFieldAccess">
+            <xs:complexType>
+              <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="allowPartAccess">
+            <xs:complexType>
+              <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="permission">
+            <xs:complexType>
+              <xs:attribute name="type" type="xs:string"/>
+              <xs:attribute name="action" type="xs:string"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="permissions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="permission">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" ref="daisy:accessDetails"/>
+            </xs:sequence>
+            <xs:attribute name="type" type="daisy:aclPermission" use="required"/>
+            <xs:attribute name="action" type="daisy:aclAction" use="required"/>
+            <xs:attribute name="objectReason" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectReason" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aclResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="daisy:permissions"/>
+        <xs:element name="user">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="roles">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="roleId" type="xs:long"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:long"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="documentId" type="xs:string"/>
+      <xs:attribute name="branchId" type="xs:long"/>
+      <xs:attribute name="languageId" type="xs:long"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="aclAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="grant"/>
+      <xs:enumeration value="deny"/>
+      <xs:enumeration value="nothing"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="aclSubject">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="role"/>
+      <xs:enumeration value="user"/>
+      <xs:enumeration value="everyone"/>
+      <xs:enumeration value="owner"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="aclPermission">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="read"/>
+      <xs:enumeration value="write"/>
+      <xs:enumeration value="publish"/>
+      <xs:enumeration value="delete"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="aclUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldAcl">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:acl"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newAcl">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:acl"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

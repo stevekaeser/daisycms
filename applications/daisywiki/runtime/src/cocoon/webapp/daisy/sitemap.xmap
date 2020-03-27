@@ -1,0 +1,1299 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2004 Outerthought bvba and Schaubroeck nv
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+ <map:components>
+
+  <map:generators default="file">   
+    <map:generator name="jx" src="org.apache.cocoon.template.JXTemplateGenerator" label="content" logger="sitemap.generator.jx"/>
+    <map:generator name="DaisyQuery" src="org.outerj.daisy.frontend.QueryGenerator" label="content" logger="daisy"/>
+    <map:generator name="DaisyError" src="org.outerj.daisy.frontend.ErrorGenerator" label="content" logger="daisy"/>
+  </map:generators>
+  
+  <map:transformers default="xalan">
+    <map:transformer name="forms" src="org.apache.cocoon.forms.transformation.FormsTemplateTransformer" logger="forms"/>
+    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+      <catalogues default="daisy">
+        <catalogue id="forms" name="messages" location="resource://org/apache/cocoon/forms/system/i18n"/>
+        <catalogue id="daisy" name="messages">
+          <location>wikidata:/resources/i18n</location>
+          <location>{request-attr:daisyContextPath}/resources/i18n</location>
+        </catalogue>
+        <catalogue id="skin" name="messages" location="daisyskin:i18n"/>
+      </catalogues>
+      <cache-at-startup>true</cache-at-startup>
+    </map:transformer>
+    <map:transformer name="DaisyLinks" src="org.outerj.daisy.frontend.DaisyLinkTransformer" logger="daisy"/>
+    <map:transformer name="DaisyFopImageSrc" src="org.outerj.daisy.frontend.FopImageSrcTransformer" logger="daisy"/>
+    <map:transformer name="DaisyTableHelper" src="org.outerj.daisy.frontend.TableHelperTransformer" logger="daisy"/>
+    <map:transformer name="DaisyIncludePreparedDocuments" src="org.outerj.daisy.frontend.IncludePreparedDocumentsTransformer" logger="daisy"/>
+    <map:transformer name="DaisyExternalInclude" src="org.outerj.daisy.frontend.ExternalIncludeTransformer" logger="daisy"/>
+    <map:transformer name="DaisyPublisher" src="org.outerj.daisy.frontend.PublisherTransformer" logger="daisy"/>
+    <map:transformer name="DaisyIDAbsolutizer" src="org.outerj.daisy.frontend.IDAbsolutizerTransformer" logger="daisy"/>
+    <map:transformer name="InlineEditFormTransformer" src="org.outerj.daisy.frontend.editor.InlineEditFormTransformer" logger="daisy"/>
+    <map:transformer name="serializer" src="org.outerj.daisy.frontend.SerializeTransformer" logger="daisy"/>
+    <map:transformer name="DaisyCrossRefParser" src="org.outerj.daisy.frontend.CrossRefParserTransformer" logger="daisy"/>
+    <map:transformer name="tee" src="org.apache.cocoon.transformation.TeeTransformer"/>
+    <map:transformer name="browser-update" src="org.apache.cocoon.ajax.BrowserUpdateTransformer"/>
+    <map:transformer name="stripnamespaces" src="org.apache.cocoon.transformation.StripNameSpacesTransformer" logger="daisy"/>
+    <map:transformer name="filternamespace" src="org.outerj.daisy.frontend.FilterNameSpaceTransformer" logger="daisy"/>
+  </map:transformers>
+
+  <map:selectors default="browser">
+    <map:selector name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+    <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+      <exception name="not-found" class="org.apache.cocoon.ResourceNotFoundException"/>
+      <exception name="processing" class="org.apache.cocoon.ProcessingException" unroll="true"/>
+      <exception name="rhino-wrapped" class="org.mozilla.javascript.WrappedException" unroll="true"/>
+      <exception name="publisher" class="org.outerj.daisy.publisher.GlobalPublisherException" unroll="true"/>
+      <exception name="forbidden" class="org.outerj.daisy.repository.DocumentReadDeniedException"/>
+      <exception name="not-found" class="org.outerj.daisy.repository.DocumentNotFoundException"/>
+      <exception name="not-found" class="org.outerj.daisy.repository.DocumentVariantNotFoundException"/>
+      <exception name="method-not-allowed" class="org.outerj.daisy.frontend.util.HttpMethodNotAllowedException"/>
+    </map:selector>
+    <map:selector name="ajax-request" src="org.apache.cocoon.ajax.AjaxRequestSelector"/>
+  </map:selectors>
+
+  <map:actions>
+    <map:action name="SetRequestAttribute" src="org.outerj.daisy.frontend.SetRequestAttributeAction"/>
+    <map:action name="DetermineLocale" src="org.outerj.daisy.frontend.LocaleAction"/>
+    <map:action name="SSOAction" src="org.outerj.daisy.frontend.sso.SSOAction"/>
+    <map:action name="ChallengeAction" src="org.outerj.daisy.frontend.ChallengeAction"/>
+    <map:action name="InitFrontEndContext" src="org.outerj.daisy.frontend.InitFrontEndContextAction"/>
+    <map:action name="AccountManagementStatusHeader" src="org.outerj.daisy.frontend.AccountManagementStatusHeaderAction"/>
+    <map:action name="InitSkin" src="org.outerj.daisy.frontend.InitSkinAction"/>
+    <map:action name="HandleSite" src="org.outerj.daisy.frontend.HandleSiteAction"/>
+    <map:action name="SessionInvalidate" src="org.apache.cocoon.acting.SessionInvalidatorAction"/>
+    <map:action name="ResourceExists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
+    <map:action name="SetVersionHeader" src="org.outerj.daisy.frontend.SetVersionHeaderAction"/>
+    <map:action name="SetCacheHeader" src="org.outerj.daisy.frontend.SetCacheHeaderAction"/>
+    <map:action name="HttpHeaderAction" src="org.apache.cocoon.acting.HttpHeaderAction"/>
+    <map:action name="ProtectWorkflow" src="org.outerj.daisy.frontend.workflow.WfProtectAction"/>
+    <map:action name="JXTestAction" src="org.outerj.daisy.frontend.util.JXTestAction"/>
+  </map:actions>
+
+  <map:readers default="resource">
+    <map:reader name="DaisyPart" src="org.outerj.daisy.frontend.PartReader"/>
+    <map:reader name="DaisyCaching" src="org.outerj.daisy.frontend.components.reading.CachingReader"/>
+    <map:reader name="UploadWidgetReader" src="org.outerj.daisy.frontend.components.reading.UploadWidgetReader"/>
+  </map:readers>
+
+  <map:serializers default="html">
+    <!--
+       | The special thing about this declaration of the HTML serializer is that
+       | the mimetype includes the charset specification.
+       | This is needed, because in absense of this intermediate proxies or even
+       | servlet containers might set their own default.
+       -->
+    <map:serializer logger="sitemap.serializer.html" mime-type="text/html; charset=utf-8" name="html" pool-max="32"
+      src="org.apache.cocoon.serialization.HTMLSerializer">
+      <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+      <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
+    </map:serializer>
+    <map:serializer name="fo2pdf" src="org.outerj.daisy.frontend.components.fop.FOPNGSerializer" mime-type="application/pdf"/>
+  </map:serializers>
+
+  <map:pipes default="caching">
+  </map:pipes>
+
+ </map:components>
+
+ <map:views>
+ </map:views>
+
+ <map:resources>
+   <map:resource name="GenericFormPipe">
+     <map:generate type="jx" src="{formTemplate}">
+       <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+     </map:generate>
+     <map:transform src="daisyskin:xslt/layout.xsl"/>
+     <map:transform type="i18n">
+       <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+     </map:transform>
+     <map:transform src="resources/xslt/daisy-forms-styling.xsl">
+       <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+       <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+       <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+       <map:parameter name="enable-htmlarea" value="{flow-attr:enable-htmlarea}"/>
+       <map:parameter name="htmlarea-lang" value="{flow-attr:htmlareaLang}"/>
+     </map:transform>
+     <map:transform type="i18n">
+       <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+     </map:transform>
+     <map:transform type="cinclude"/>
+     <map:transform type="DaisyExternalInclude"/>
+     <map:serialize type="html"/>
+   </map:resource>
+
+   <map:resource name="GenericMessagePipe">
+     <map:generate type="jx" src="{template}"/>
+     <map:transform src="daisyskin:xslt/layout.xsl"/>
+     <map:transform type="i18n">
+       <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+     </map:transform> 
+     <map:transform type="DaisyExternalInclude"/>
+     <map:serialize type="html"/>
+   </map:resource>
+ </map:resources>
+
+ <map:flow language="apples"/>
+
+ <map:pipelines>
+
+   <!--
+      | Below are the internal pipelines. These are pipelines that are called
+      | from within the flow-layer, not directly from the client (web browser).
+      |
+      | The internal pipelines are put before the external ones to save some
+      | performance (they are skipped in case of an external request, and
+      | will lead to faster matching for internal requests), and avoids
+      | URI space and other conflicts (like execution of the actions).
+      -->
+   <map:pipeline internal-only="true" type="noncaching">
+
+     <!--
+        | Pipelines used by the document styling engine.
+        -->
+     <map:match pattern="html-StyleDocumentPipe">
+       <map:generate type="jx" src="resources/xml/document.xml"/>
+       <map:transform type="DaisyCrossRefParser"/>
+       <map:transform type="DaisyIDAbsolutizer"/>
+       <map:transform type="DaisyTableHelper"/>
+       <map:transform src="{flow-attr:stylesheet}">
+         <map:parameter name="documentBasePath" value="{flow-attr:documentBasePath}"/>
+       </map:transform>
+       <map:transform type="filternamespace">
+         <map:parameter name="condition" value="{flow-attr:isIncluded}"/>
+         <map:parameter name="namespace" value="http://outerx.org/daisy/1.0#inlineeditor"/>
+       </map:transform>
+       <map:transform type="DaisyLinks"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="xslfo-StyleDocumentPipe">
+       <map:generate type="jx" src="resources/xml/document.xml"/>
+       <map:transform type="DaisyFopImageSrc"/>
+       <map:transform type="DaisyCrossRefParser"/>
+       <map:transform type="DaisyTableHelper"/>
+       <map:transform type="DaisyLinks"/>
+       <map:transform src="{flow-attr:stylesheet}">
+         <map:parameter name="documentBasePath" value="{flow-attr:documentBasePath}"/>
+         <map:parameter name="user" value="{flow-attr:user}"/>
+         <map:parameter name="userId" value="{flow-attr:userId}"/>
+       </map:transform>
+       <map:transform type="filternamespace">
+         <map:parameter name="condition" value="${flow-attr:isIncluded}"/>
+         <map:parameter name="namespace" value="http://outerx.org/daisy/1.0#inlineeditor"/>
+       </map:transform>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="html-DocumentPipe">
+       <map:generate type="jx" src="resources/xml/documentpage.xml"/>
+       <map:transform src="daisyskin:xslt/documentlayout.xsl"/>
+       <map:transform src="daisyskin:xslt/layout.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform type="DaisyIncludePreparedDocuments"/>
+       <map:transform type="InlineEditFormTransformer"/>
+       <map:transform type="DaisyExternalInclude"/>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:match pattern="xslfo-DocumentPipe">
+       <map:generate type="jx" src="resources/xml/documentpage.xml"/>
+       <map:transform src="daisyskin:xslt/documentlayout-xslfo.xsl"/>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform type="DaisyIncludePreparedDocuments"/>
+       <map:serialize type="fo2pdf"/>
+     </map:match>
+
+     <map:match pattern="html-InlineEditPipe">
+       <map:generate type="jx" src="cocoon:/internal/inlineEditForm">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:generate>
+       <map:transform type="i18n">
+          <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform src="resources/xslt/daisy-forms-styling.xsl">
+          <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+          <map:parameter name="htmlarea-lang" value="{flow-attr:htmlareaLang}"/>
+          <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+          <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+          <map:parameter name="enable-htmlarea" value="true"/>
+       </map:transform>
+       <map:transform type="i18n">
+         <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+       </map:transform>
+       <map:transform type="DaisyExternalInclude"/>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <!--
+        | Hook for site-specific extensions (for internal requests).
+        -->
+     <map:match pattern="ext/**">
+       <map:act type="ResourceExists" src="{request:getAttribute(., 'siteConf')/cocoonSitemapLocation}">
+         <map:mount check-reload="yes" src="{request:getAttribute(., 'siteConf')/cocoonSitemapLocation}" uri-prefix="ext/" pass-through="true"/>
+       </map:act>
+       <map:act type="ResourceExists" src="{request:getAttribute(., 'siteConf')/globalCocoonSitemapLocation}">
+         <map:mount check-reload="yes" src="{request:getAttribute(., 'siteConf')/globalCocoonSitemapLocation}" uri-prefix="ext/" pass-through="true"/>
+       </map:act>
+       <map:mount check-reload="yes" src="sites/cocoon/sitemap.xmap" uri-prefix="ext/"/>
+     </map:match>
+
+     <map:match pattern="GenericFormPipe">
+       <map:call resource="GenericFormPipe">
+         <map:parameter name="formTemplate" value="{flow-attr:formTemplate}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="Form-*-Pipe">
+       <map:call resource="GenericFormPipe">
+         <map:parameter name="formTemplate" value="resources/form/{1}_template.xml"/>
+       </map:call>
+     </map:match>
+
+     <!-- Use internal/genericPipe instead of this. This is here only for backwards
+          compatibility with existing extensions that might use it. -->
+     <map:match pattern="GenericMessagePipe">
+       <map:call resource="GenericMessagePipe">
+         <map:parameter name="template" value="{flow-attr:template}"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="internal/**">
+         <map:match pattern="internal/inlineEditForm">
+           <map:generate type="jx" src="resources/xml/inlineeditor_documentpage.xml"/>
+           <map:transform src="daisyskin:xslt/documentlayout.xsl">
+             <map:parameter name="inlineEditing" value="true"/>
+           </map:transform>
+           <map:transform src="daisyskin:xslt/layout.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyIncludePreparedDocuments"/>
+           <map:transform type="InlineEditFormTransformer"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyExternalInclude"/>
+           <map:serialize type="xml"/>
+         </map:match>
+     
+       <!--
+          | This generic pipeline is used to display many pages.
+          | It assumes an instance of GenericPipeConfig is in the flow context.
+          -->
+       <map:match pattern="internal/genericPipe">
+         <!-- Start with a JXTemplate -->
+         <map:generate type="jx" src="{flow-attr:pipeConf/template}"/>
+         <!-- Optionally apply an XSL -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/hasStylesheet"/>
+           <map:transform src="{flow-attr:pipeConf/stylesheet}"/>
+         </map:act>
+         <!-- Optionally transform links -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/transformLinks"/>
+           <map:transform type="DaisyLinks"/>
+         </map:act>
+         <!-- Optionally apply layout.xsl -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/applyLayout"/>
+           <map:transform src="daisyskin:xslt/layout.xsl">
+             <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+         </map:act>
+         <!-- Optionally apply i18n -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/applyI18n"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+         </map:act>
+         <!-- Optionally strip namespaces -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/stripNamespaces"/>
+           <map:transform type="stripnamespaces"/>
+         </map:act>
+         <!-- Optionally apply DaisyExternalInclude -->
+         <map:act type="JXTestAction">
+           <map:parameter name="test" value="pipeConf/applyExternalInclude"/>
+           <map:transform type="DaisyExternalInclude"/>
+         </map:act>
+         <!-- Serialize as XML or HTML -->
+         <map:select type="parameter">
+           <map:parameter name="parameter-selector-test" value="{flow-attr:pipeConf/serializer}"/>
+           <map:when test="xml">
+             <map:serialize type="xml"/>
+           </map:when>
+           <map:when test="pdf">
+             <map:serialize type="fo2pdf"/>
+           </map:when>
+           <map:otherwise>
+             <map:serialize type="html"/>
+           </map:otherwise>
+         </map:select>
+       </map:match>
+
+       <map:match pattern="internal/*_pubreq.xml">
+         <map:generate type="jx" src="resources/xml/{1}_pubreq.xml"/>
+         <map:serialize type="xml"/>
+       </map:match>
+
+       <map:match pattern="internal/documentEditor/**">
+         <map:match pattern="internal/documentEditor/editDocumentPipe">
+           <map:generate type="jx" src="resources/xml/documenteditor.xml">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:generate>
+           <map:transform src="daisyskin:xslt/layout.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform src="resources/xslt/daisy-forms-styling.xsl">
+             <map:parameter name="resources-uri" value="{request-attr:mountPoint}/resources/cocoon"/>
+             <map:parameter name="htmlarea-lang" value="{flow-attr:htmlareaLang}"/>
+             <map:parameter name="daisy-resources-uri" value="{request-attr:mountPoint}/resources"/>
+             <map:parameter name="enable-htmlarea" value="true"/>
+             <map:parameter name="dojo-locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyExternalInclude"/>
+           <map:serialize type="html"/>
+         </map:match>
+       </map:match>
+       
+       <map:match pattern="internal/documentBasket/**">
+         <map:match pattern="internal/documentBasket/html-publishAggregate">
+           <map:generate type="jx" src="resources/xml/page.xml"/>
+           <map:transform src="daisyskin:xslt/docbasket/docbasket_aggr_html.xsl"/>
+           <map:transform src="daisyskin:xslt/layout.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyIncludePreparedDocuments"/>
+           <map:transform type="DaisyExternalInclude"/>
+           <map:serialize type="html"/>
+         </map:match>
+
+         <map:match pattern="internal/documentBasket/xslfo-publishAggregate">
+           <map:generate type="jx" src="resources/xml/page.xml"/>
+           <map:transform src="daisyskin:xslt/docbasket/docbasket_aggr_xslfo.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyIncludePreparedDocuments"/>
+           <map:serialize type="fo2pdf"/>
+         </map:match>
+       </map:match>
+
+       <map:match pattern="internal/searchResults/**">
+         <map:match pattern="internal/searchResults/recentChanges">
+           <map:generate type="jx" src="resources/xml/page.xml"/>
+           <map:transform src="daisyskin:xslt/recentchanges.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:serialize type="html"/>
+         </map:match>
+
+         <map:match pattern="internal/searchResults/fulltext">
+           <map:generate type="jx" src="resources/xml/page.xml"/>
+           <map:transform src="{flow-attr:stylesheetPath}"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:serialize type="html"/>
+         </map:match>
+
+         <map:match pattern="internal/searchResults/querySearch">
+           <map:generate type="jx" src="resources/xml/page.xml"/>
+           <map:transform src="daisyskin:xslt/searchresult.xsl"/>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:serialize type="html"/>
+         </map:match>
+       </map:match>
+
+       <map:match pattern="internal/rssLinks">
+         <map:generate type="jx" src="resources/xml/rss-links.xml"/>
+         <map:transform src="daisyskin:xslt/rss-links.xsl"/>
+         <map:transform type="i18n">
+           <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+         </map:transform>
+         <map:serialize type="xml"/>
+       </map:match>
+
+       <map:match pattern="internal/translmgmt/searchresult">
+         <map:generate type="jx" src="resources/xml/transl_mgmt_search_result.xml"/>
+         <map:transform src="daisyskin:xslt/translmgmtsearch.xsl"/>
+         <map:transform type="i18n">
+           <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+         </map:transform>
+         <map:serialize type="html"/>
+       </map:match>
+
+       <map:match pattern="internal/translmgmt/searchresult_overview">
+         <map:generate type="jx" src="resources/xml/transl_mgmt_search_result_overview.xml"/>
+         <map:transform type="i18n">
+           <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+         </map:transform>
+         <map:serialize type="xml"/>
+       </map:match>
+       
+       <map:match pattern="internal/readUploadWidget">
+         <map:read type="UploadWidgetReader" src="flow-attr:uploadWidget">
+           <map:parameter name="disposition" value="attachment"/>
+         </map:read>
+       </map:match>
+       
+     </map:match>
+
+   </map:pipeline>
+
+   <!--
+      | Internal pipelines that need caching.
+      -->
+   <map:pipeline internal-only="true" type="caching">
+     <map:match pattern="internal/**">
+       <map:match pattern="internal/documentEditor/**">
+         <!-- Generates a Cocoon form definition for a Daisy document type definition -->
+         <map:match pattern="internal/documentEditor/inlineEditorFormDefinition">
+           <map:generate type="jx" src="resources/xml/inlineeditform_definition.xml"/>
+           <map:serialize type="xml"/>
+         </map:match>
+         
+         <!-- Generates a Cocoon form definition for a single part -->
+         <map:match pattern="internal/documentEditor/partEditorFormDefinition">
+           <map:generate type="jx" src="resources/xml/parteditform_definition.xml"/>
+           <map:serialize type="xml"/>
+         </map:match>
+
+         <!-- Generates a Cocoon form definition for all fields of a Daisy document type -->
+         <map:match pattern="internal/documentEditor/fieldEditorFormDefinition">
+           <map:generate type="jx" src="resources/xml/fieldeditform_definition.xml"/>
+           <map:serialize type="xml"/>
+         </map:match>
+
+         <!-- Generates a Cocoon form template for all fields of a Daisy document type -->
+         <map:match pattern="internal/documentEditor/fieldEditorFormTemplate">
+           <map:generate type="jx" src="resources/xml/fieldeditform_template.xml"/>
+           <map:serialize type="xml"/>
+         </map:match>
+         
+         <!-- Generates a Cocoon form template fragment for a single field of a Daisy document type -->
+         <map:match pattern="internal/documentEditor/fieldEditorTemplate/*">
+           <map:generate type="jx" src="resources/xml/fieldeditor_single_template.xml">
+             <map:parameter name="fieldTypeName" value="{1}"/>
+           </map:generate>
+           <map:serialize type="xml"/>
+         </map:match>
+
+         <!-- Generates a piece of Cocoon form template for a Daisy field type -->
+         <map:match pattern="internal/documentEditor/fieldToWidgetTemplate">
+           <map:generate src="xmodule:flow-attr:fieldTypeUseXml"/>
+           <map:transform src="{flow-attr:fieldTypeUseToWidgetTemplateXsl}">
+             <map:parameter name="displayMode" value="{flow-attr:displayMode}"/>
+           </map:transform>
+           <map:serialize type="xml"/>
+         </map:match>
+
+         <!-- Generates a piece of Cocoon form definition for a Daisy field type -->
+         <map:match pattern="internal/documentEditor/fieldToWidgetDefinition">
+           <map:generate src="xmodule:flow-attr:fieldTypeUseXml"/>
+           <map:transform src="{flow-attr:fieldTypeUseToWidgetDefinitionXsl}">
+             <map:parameter name="displayMode" value="{flow-attr:displayMode}"/>
+           </map:transform>
+           <map:serialize type="xml"/>
+         </map:match>
+
+       </map:match>
+
+     </map:match>
+
+     <map:match pattern="internal/workflow/**">
+       <map:match pattern="internal/workflow/taskToFormTemplate">
+         <map:generate type="jx" src="resources/xml/wf_task_page.xml"/>
+         <map:transform src="daisyskin:xslt/workflow/wftask_to_formtemplate.xsl"/>
+         <map:serialize type="xml"/>
+       </map:match>
+     
+       <map:match pattern="internal/workflow/taskToFormDefinition">
+         <map:generate type="jx" src="cocoon:/internal/workflow/taskToFormDefinitionBase"/>
+         <map:serialize type="xml"/>
+       </map:match>
+
+       <map:match pattern="internal/workflow/taskToFormDefinitionBase">
+         <map:generate type="jx" src="resources/xml/wf_task_page.xml"/>
+         <map:transform src="resources/xslt/wftask_to_formdefinition.xsl"/>
+         <map:serialize type="xml"/>
+       </map:match>
+     </map:match>
+   </map:pipeline>
+
+   <!--
+      | Below are the pipelines for retrieving static resources.
+      -->
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+     <!-- Note: the expires parameter also works for the non caching pipeline. -->
+     <!-- the next line is frequently commented out for debugging/development purposed, but should not be checked in commented
+     -->
+     <map:parameter name="expires" value="access plus 5 hours"/>
+ 
+     <!--
+        | The InitFrontEndContext creates an instance of FrontEndContext and
+        | stores it in a request attribute.
+        -->
+     <map:act type="InitFrontEndContext"/>
+
+     <!-- Sets the X-Daisy-Version header, this is put here since this is the first public map:pipeline -->
+     <map:act type="SetVersionHeader"/>
+
+     <!--
+        | If the URL contains a jessionid, redirect to URL without it.
+        | (The jsessionid gets added after login.) Normally the ";jsessionid" part
+        | is not passed on to Cocoon, but in some cases it is (had this problem with
+        | an Apache AJP connector)
+        -->
+     <map:match pattern="**;jsessionid=**">
+       <map:redirect-to uri="{1}"/>
+     </map:match>
+
+     <map:match pattern="resources/cocoon/dojo/**">
+       <map:read src="resource://org/apache/cocoon/dojo/resources/{1}"/>
+     </map:match>
+
+     <map:match type="regexp" pattern="^resources/skins/([^/]+)/(.*)(\.(js|png|gif|jpg|css|html|xml))$">
+       <map:read src="daisyskin:/({1}){2}{3}"/>
+     </map:match>
+     
+     <map:match pattern="resources/local/**">
+       <map:read src="wikidata:resources/local/{1}"/>
+     </map:match>
+
+     <map:match type="regexp" pattern="^resources/(.*)(\.(js|png|gif|jpg|css|html|jar|ini))$">
+       <map:read src="resources/{1}{2}"/>
+     </map:match>
+
+     <map:match pattern="favicon.ico">
+       <map:read src="wikidata:resources/favicon.ico"/>
+     </map:match>
+
+     <map:match pattern="robots.txt">
+       <map:read src="wikidata:resources/robots.txt"/>
+     </map:match>
+     
+     <map:match pattern=".well-known/host-meta">
+       <map:read src="wikidata:resources/host-meta"/>
+     </map:match>
+     
+     <map:match pattern="amcd.json">
+       <map:read src="wikidata:resources/amcd.json"/>
+     </map:match>
+     
+   </map:pipeline>
+   
+   <!--
+      | And now all the rest...
+      -->
+   <map:pipeline type="noncaching">
+     <map:parameter name="outputBufferSize" value="8192"/>
+     
+     <map:act type="AccountManagementStatusHeader"/>
+
+     <!-- Sets "Cache-Control: private" if there is a session. Note that this is done after the static
+          resources pipeline, since there the cache is controlled by the expires parameter of the map:pipeline -->
+     <map:act type="SetCacheHeader"/>
+
+     <!--
+        | Sets the name of the global (thus, non-site specific) skin, in a request
+        | attribute named "skin". Many components depend on this.
+        -->
+     <map:act type="InitSkin"/>
+
+     <!--
+        | The DetermineLocale action will try to find out what the locale is, using
+        | the specified default if nothing is found, and finally
+        | set the result in request attributes called "locale" and "localeAsString"
+        | for retrieval by other components.
+        -->
+     <map:act type="DetermineLocale">
+       <map:parameter name="default" value="en-US"/>
+     </map:act>
+     
+     <map:act type="SSOAction"/>
+     
+     <map:match pattern="">
+       <map:call function="org.outerj.daisy.frontend.IndexPageApple"/>
+     </map:match>
+
+     <map:match pattern="admin">
+       <map:redirect-to uri="admin/" global="true"/>
+     </map:match>
+
+     <map:match pattern="admin/**">
+       <map:mount check-reload="yes" src="admin/" uri-prefix="admin/"/>
+     </map:match>
+
+     <map:match pattern="login">
+       <map:call function="org.outerj.daisy.frontend.LoginApple"/>
+     </map:match>
+
+     <map:match pattern="usersettings">
+       <map:call function="org.outerj.daisy.frontend.UserSettingsApple"/>
+     </map:match>
+
+     <map:match pattern="usersettings/*">
+       <map:call continuation="{1}"/>
+     </map:match>
+
+     <map:match pattern="registration">
+       <map:call function="org.outerj.daisy.frontend.UserRegistrationApple"/>
+     </map:match>
+
+     <map:match pattern="registration/*">
+       <map:call continuation="{1}"/>
+     </map:match>
+
+     <map:match pattern="confirmRegistration">
+       <map:call function="org.outerj.daisy.frontend.ConfirmRegistrationApple"/>
+     </map:match>
+
+     <map:match pattern="passwordReminder">
+       <map:call function="org.outerj.daisy.frontend.PasswordReminderApple"/>
+     </map:match>
+
+     <map:match pattern="loginReminder">
+       <map:call function="org.outerj.daisy.frontend.LoginReminderApple"/>
+     </map:match>
+
+     <map:match pattern="locale">
+       <map:call function="org.outerj.daisy.frontend.LocaleApple"/>
+     </map:match>
+
+     <map:match pattern="doctask**">
+       <map:match pattern="doctask">
+         <map:call function="org.outerj.daisy.frontend.DocumentTaskApple"/>
+       </map:match>
+
+       <map:match pattern="doctask/new">
+         <map:call function="org.outerj.daisy.frontend.CreateDocumentTaskApple"/>
+       </map:match>
+
+       <map:match pattern="doctask/new/*/*">
+         <map:call continuation="{1}">
+           <map:parameter name="resource" value="{2}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="doctask/*">
+         <map:call function="org.outerj.daisy.frontend.DocumentTaskApple">
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="doctask/*/docdetails">
+         <map:call function="org.outerj.daisy.frontend.DocumentTaskDetailsApple">
+           <map:parameter name="id" value="{1}"/>
+         </map:call>
+       </map:match>
+     </map:match>
+     
+     <map:match pattern="login/*">
+       <map:call continuation="{1}"/>
+     </map:match>
+
+     <map:match pattern="logout">
+       <map:act type="SessionInvalidate"/>
+       <map:redirect-to uri=""/>
+     </map:match>
+
+     <map:match pattern="selectRole">
+       <map:call function="org.outerj.daisy.frontend.SelectRoleOrUserApple">
+         <map:parameter name="type" value="role"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="selectUser">
+       <map:call function="org.outerj.daisy.frontend.SelectRoleOrUserApple">
+         <map:parameter name="type" value="user"/>
+       </map:call>
+     </map:match>
+
+     <map:match pattern="books">
+       <map:redirect-to uri="books/"/>
+     </map:match>
+
+     <map:match pattern="books/**">
+       <map:mount check-reload="yes" src="books/sitemap.xmap" uri-prefix="books/"  pass-through="false"/>
+     </map:match>
+
+     <map:match pattern="switchVersionMode">
+       <map:call function="org.outerj.daisy.frontend.SwitchVersionModeApple"/>
+     </map:match>
+
+     <map:match pattern="*">
+       <map:call function="org.outerj.daisy.frontend.RootFileRequestApple">
+         <map:parameter name="path" value="{1}"/>
+       </map:call>
+     </map:match>
+
+     <!--
+        | Handle all URL's that belong to a site. The first star in the below matcher
+        | matches the site name.
+        -->
+     <map:match pattern="*/**">
+       <!--
+          | The HandleSite action retrieves the SiteConf object (an object containing information
+          | about a particular configured site) and associates it with the FrontEndContext. Also
+          | switches the skin to this sites' skin.
+          -->
+       <map:act type="HandleSite">
+         <map:parameter name="siteName" value="{1}"/>
+       </map:act>
+
+       <map:match pattern="*/">
+         <map:redirect-to uri="{request:getAttribute(., 'siteConf')/homePage}"/>
+       </map:match>
+
+       <map:match pattern="*/logout">
+         <map:act type="SessionInvalidate"/>
+         <map:redirect-to uri=""/>
+       </map:match>
+
+       <map:match pattern="*/querySearch">
+         <map:call function="org.outerj.daisy.frontend.QuerySearchApple"/>
+       </map:match>
+
+       <map:match pattern="*/querySearch/*">
+         <map:call function="org.outerj.daisy.frontend.QuerySearchApple">
+           <map:parameter name="resource" value="{2}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="*/search">
+         <map:call function="org.outerj.daisy.frontend.FulltextSearchApple"/>
+       </map:match>
+
+       <map:match pattern="*/searchAndReplace">
+         <map:call function="org.outerj.daisy.frontend.SearchAndReplaceApple"/>
+       </map:match>
+    
+       <map:match pattern="*/searchAndReplace/*/*">
+         <map:call continuation="{2}">
+           <map:parameter name="resource" value="{3}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="*/recentChanges">
+         <map:call function="org.outerj.daisy.frontend.RecentChangesApple"/>
+       </map:match>
+
+       <map:match pattern="*/myComments">
+         <map:call function="org.outerj.daisy.frontend.MyCommentsApple"/>
+       </map:match>
+
+       <map:match pattern="*/variables">
+         <map:call function="org.outerj.daisy.frontend.VariablesIndexApple"/>
+       </map:match>
+
+       <map:match pattern="*/docInfo">
+         <map:call function="org.outerj.daisy.frontend.DocInfoApple"/>
+       </map:match>
+
+       <map:match pattern="*/dialog/**.html">
+         <map:call function="org.outerj.daisy.frontend.DialogApple">
+           <map:parameter name="template" value="resources/{2}.xml"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="*/facetedBrowser/*/*">
+         <map:call function="org.outerj.daisy.frontend.FacetedBrowserApple">
+           <map:parameter name="definitionName" value="{2}"/>
+           <map:parameter name="resource" value="{3}"/>
+         </map:call>
+       </map:match>
+
+
+       <map:match pattern="*/facetedBrowser/*">
+         <map:call function="org.outerj.daisy.frontend.FacetedBrowserApple">
+           <map:parameter name="definitionName" value="{2}"/>
+         </map:call>
+       </map:match>
+
+       <map:match pattern="*/documentBasket**">
+         <map:match pattern="*/documentBasket">
+           <map:call function="org.outerj.daisy.frontend.DocumentBasketApple"/>
+         </map:match>
+
+         <map:match pattern="*/documentBasket/aggregate.html">
+           <map:call function="org.outerj.daisy.frontend.AggregateDocumentBasketApple">
+             <map:parameter name="publishType" value="html"/>
+           </map:call>
+         </map:match>
+
+         <map:match pattern="*/documentBasket/aggregate.pdf">
+           <map:call function="org.outerj.daisy.frontend.AggregateDocumentBasketApple">
+             <map:parameter name="publishType" value="xslfo"/>
+           </map:call>
+         </map:match>
+
+         <map:match pattern="*/documentBasket/selectFromNavigation">
+           <map:call function="org.outerj.daisy.frontend.NavigationToDocumentBasketApple"/>
+         </map:match>
+       </map:match>
+
+       <!--
+          | Pipelines used for htmlarea extensions.
+          -->
+       <map:match pattern="*/editing/**">
+         <map:act type="SetRequestAttribute">
+           <map:parameter name="smallErrorPage" value="true"/>
+         </map:act>
+
+         <map:match pattern="*/editing/imageBrowser">
+           <map:call function="org.outerj.daisy.frontend.BrowseImagesApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/imageBrowser/collections">
+           <map:call function="org.outerj.daisy.frontend.BrowseImagesApple">
+             <map:parameter name="resource" value="collections"/>
+           </map:call>
+         </map:match>
+
+         <map:match pattern="*/editing/imageBrowser/imagesByCollection/*">
+           <map:call function="org.outerj.daisy.frontend.BrowseImagesApple">
+             <map:parameter name="resource" value="imagesByCollection"/>
+             <map:parameter name="collectionId" value="{2}"/>
+           </map:call>
+         </map:match>
+
+         <map:match pattern="*/editing/documentBrowser">
+           <map:call function="org.outerj.daisy.frontend.BrowseDocumentsApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/documentBrowser/documents">
+           <map:call function="org.outerj.daisy.frontend.BrowseDocumentsApple">
+             <map:parameter name="resource" value="documents"/>
+           </map:call>
+         </map:match>
+
+         <map:match pattern="*/editing/previewSyncedWith">
+           <map:call function="org.outerj.daisy.frontend.PreviewSyncedWithApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/upload">
+           <map:call function="org.outerj.daisy.frontend.UploadApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/upload/*">
+           <map:call continuation="{2}"/>
+         </map:match>
+
+         <map:match pattern="*/editing/navigationPreview">
+           <map:call function="org.outerj.daisy.frontend.NavigationPreviewApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/createPlaceholder">
+           <map:call function="org.outerj.daisy.frontend.CreatePlaceholderDocApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/documentInfo.xml">
+           <map:call function="org.outerj.daisy.frontend.DocumentInfoApple"/>
+         </map:match>
+
+         <map:match pattern="*/editing/variables.xml">
+           <map:call function="org.outerj.daisy.frontend.VariablesListApple"/>
+         </map:match>
+
+         <map:act type="SetRequestAttribute">
+           <map:parameter name="smallErrorPage" value="false"/>
+         </map:act>
+       </map:match>
+
+       <!--
+          | Pipelines for workflow functionality.
+          -->
+       <map:match pattern="*/workflow/**">
+         <map:act type="ProtectWorkflow">
+           <map:match pattern="*/workflow/processDefinitions">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfProcessDefinitionApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/start">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfStartProcessApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/start/*">
+             <map:call continuation="{2}"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/performtask">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfPerformTaskApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/performtask/*/*">
+             <map:call continuation="{2}">
+               <map:parameter name="resource" value="{3}"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/task/*">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTaskApple">
+               <map:parameter name="taskId" value="{2}"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/tasks">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTasksApple">
+               <map:parameter name="resource" value=""/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/tasks/*">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTasksApple">
+               <map:parameter name="resource" value="{2}"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/task/*/assign">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfAssignTaskApple">
+               <map:parameter name="taskId" value="{2}"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/task/*/assign/*">
+             <map:call continuation="{3}"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/taskSearch">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTaskSearchApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/taskSearch/data">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTaskSearchApple">
+               <map:parameter name="resource" value="data"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/processSearch">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfProcessSearchApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/processSearch/data">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfProcessSearchApple">
+               <map:parameter name="resource" value="data"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/timerSearch">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTimerSearchApple"/>
+           </map:match>
+
+           <map:match pattern="*/workflow/timerSearch/data">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTimerSearchApple">
+               <map:parameter name="resource" value="data"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/process/*">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfProcessApple">
+               <map:parameter name="processId" value="{2}"/>
+             </map:call>
+           </map:match>
+
+           <map:match pattern="*/workflow/timer/*">
+             <map:call function="org.outerj.daisy.frontend.workflow.WfTimerApple">
+               <map:parameter name="timerId" value="{2}"/>
+             </map:call>
+           </map:match>
+         </map:act>
+       </map:match>
+
+       <!--
+          | Pipelines for translation management functionality.
+          -->
+       <map:match pattern="*/translmgmt/**">
+         <map:match pattern="*/translmgmt/search">
+           <map:call function="org.outerj.daisy.frontend.translmgmt.TranslationManagementSearchApple"/>
+         </map:match>
+       </map:match>
+
+       <!--
+          | Hook for site-specific extensions (for external requests).
+          -->
+       <map:match pattern="*/ext/**">
+         <map:act type="ResourceExists" src="{request:getAttribute(., 'siteConf')/cocoonSitemapLocation}">
+           <map:mount check-reload="yes" src="{request:getAttribute(., 'siteConf')/cocoonSitemapLocation}" uri-prefix="{../1}/ext/" pass-through="true"/>
+         </map:act>
+         <map:act type="ResourceExists" src="{request:getAttribute(., 'siteConf')/globalCocoonSitemapLocation}">
+           <map:mount check-reload="yes" src="{request:getAttribute(., 'siteConf')/globalCocoonSitemapLocation}" uri-prefix="{../1}/ext/" pass-through="true"/>
+         </map:act>
+         <map:mount check-reload="yes" src="sites/cocoon/sitemap.xmap" uri-prefix="{../1}/ext/"/>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?new$">
+         <map:call function="org.outerj.daisy.frontend.DocumentTypeSelectionApple">
+           <map:parameter name="requestedNavigationPath" value="{2}new"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/edit$">
+         <map:call function="org.outerj.daisy.frontend.editor.DocumentEditorApple">
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="lastPathPart" value="{4}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/inline-edit$">
+         <map:call function="org.outerj.daisy.frontend.editor.InlineEditorApple">
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="lastPathPart" value="{4}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/inline-edit/([^/]+)/(.*)$">
+         <map:call continuation="{5}">
+           <map:parameter name="resource" value="{6}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/inline-edit/(.*)$">
+         <map:call continuation="{5}"/>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/edit/([^/]+)/part/([^/]+)/data(/(.*))?$">
+         <map:act type="HttpHeaderAction"> <!-- overrides the value ("private") set by the SetCacheHeader action. -->
+           <map:parameter name="Cache-Control" value="private, no-store"/>
+         </map:act>
+         
+         <map:call continuation="{5}">
+           <map:parameter name="resource" value="part"/>
+           <map:parameter name="part" value="{6}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/edit/([^/]+)/(.+)$">
+         <map:call continuation="{5}">
+           <map:parameter name="resource" value="{6}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/edit/(.*)$">
+         <map:call continuation="{5}"/>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/lock/(.*)$">
+         <map:call continuation="{5}"/>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/live-history-edit$">
+         <map:call function="org.outerj.daisy.frontend.editor.LiveHistoryEditorApple">
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="lastPathPart" value="{4}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/live-history-edit/(.*)$">
+         <map:call continuation="{5}"/>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/version/([^/]+)/part/([^/]+)/data(/(.*))?$">
+         <map:read type="DaisyPart">
+           <map:parameter name="documentId" value="{4}"/>
+           <map:parameter name="branch" value="{request-param:branch}"/>
+           <map:parameter name="language" value="{request-param:language}"/>
+           <map:parameter name="defaultBranchId" value="{request:getAttribute(., 'siteConf')/branchId}"/>
+           <map:parameter name="defaultLanguageId" value="{request:getAttribute(., 'siteConf')/languageId}"/>
+           <map:parameter name="version" value="{5}"/>
+           <map:parameter name="partType" value="{6}"/>
+           <map:parameter name="filename" value="{8}"/>
+           <map:parameter name="disposition" value="{request-param:disposition}"/>
+         </map:read>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/version/([^/]+)/info$">
+         <map:call function="org.outerj.daisy.frontend.DocInfoApple">
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/version/{5}/info"/>
+           <map:parameter name="versionId" value="{5}"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/version/([^/]+)/diff$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="showDiff"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/version/{5}/diff"/>
+           <map:parameter name="versionId" value="{5}"/>
+           <map:parameter name="publishType" value="html"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/version/([^/]+).pdf$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="handleVersionRequest"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/version/{5}.pdf"/>
+           <map:parameter name="versionId" value="{5}"/>
+           <map:parameter name="publishType" value="xslfo"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/version/([^/]+)$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="handleVersionRequest"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/version/{5}"/>
+           <map:parameter name="versionId" value="{5}"/>
+           <map:parameter name="publishType" value="html"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/versions.html$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="showVersionOverview"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/versions.html"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/live-versions.html$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="showLiveVersionOverview"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/live-versions.html"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/referrers.html$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="showReferrers"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value="/referrers.html"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)/createVariant(/([^/]+))?$">
+         <map:select type="parameter">
+           <map:parameter name="parameter-selector-test" value="{6}"/>
+           <map:when test=""> <!-- no continuation ID present, start new interaction -->
+             <map:call function="org.outerj.daisy.frontend.CreateDocumentVariantApple">
+               <map:parameter name="navigationPath" value="{2}{4}"/>
+               <map:parameter name="suffix" value="/createVariant"/>
+             </map:call>
+           </map:when>
+           <map:otherwise>
+             <map:call continuation="{6}"/>
+           </map:otherwise>
+         </map:select>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)\.pdf$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="handleDocumentRequest"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value=".pdf"/>
+           <map:parameter name="publishType" value="xslfo"/>
+         </map:call>
+       </map:match>
+
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)\.html$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="handleDocumentRequest"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="suffix" value=".html"/>
+           <map:parameter name="publishType" value="html"/>
+         </map:call>
+       </map:match>
+
+       <!-- Same as above but without html extension -->
+       <map:match type="regexp" pattern="^([^/]+)/((.*)/)?([^/]+)$">
+         <map:call function="org.outerj.daisy.frontend.DocumentApple">
+           <map:parameter name="whatToDo" value="handleDocumentRequest"/>
+           <map:parameter name="navigationPath" value="{2}{4}"/>
+           <map:parameter name="publishType" value="html"/>
+         </map:call>
+       </map:match>
+     </map:match>
+
+     <map:handle-errors>
+       <map:generate type="DaisyError"/>
+
+       <map:select type="parameter">
+         <map:parameter name="parameter-selector-test" value="{request-param:error-media}"/>
+         <map:when test="xml">
+           <map:serialize type="xml" status-code="500"/>
+         </map:when>
+         <map:otherwise>
+           <!-- If the skin is known, use XSLT from the skin. -->
+           <map:select type="request-attribute">
+             <map:parameter name="attribute-name" value="skin"/>
+             <map:when test="">
+               <map:transform src="resources/common/xslt/error.xsl"/>
+             </map:when>
+             <map:otherwise>
+               <map:transform src="daisyskin:xslt/error.xsl">
+                 <map:parameter name="realPath" value="{realpath:}"/>
+               </map:transform>
+               <map:transform src="daisyskin:xslt/layout.xsl"/>
+             </map:otherwise>
+           </map:select>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request-attr:localeAsString}"/>
+           </map:transform>
+           <map:transform type="DaisyExternalInclude"/>
+           <map:act type="ChallengeAction">
+             <map:serialize status-code="401"/>
+           </map:act>
+           <map:select type="exception">
+             <map:when test="forbidden">
+               <map:serialize status-code="403"/>
+             </map:when>
+             <map:when test="not-found">
+               <map:serialize status-code="404"/>
+             </map:when>
+             <map:when test="method-not-allowed">
+               <map:serialize status-code="405"/>
+             </map:when>
+             <map:otherwise>
+               <map:serialize status-code="500"/>
+             </map:otherwise>
+           </map:select>
+         </map:otherwise>
+       </map:select>
+     </map:handle-errors>
+
+   </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

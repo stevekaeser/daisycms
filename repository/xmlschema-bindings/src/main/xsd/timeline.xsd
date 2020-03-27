@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://outerx.org/daisy/1.0" xmlns:daisy="http://outerx.org/daisy/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="timeline">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="daisy:liveHistoryEntry"/>
+      </xs:sequence>
+      <xs:attribute name="variantLastModified" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="variantLastModifier" type="xs:long" use="optional"/>
+      <xs:attribute name="variantUpdateCount" type="xs:long" use="optional"/>
+      <xs:attribute name="liveVersionId" type="xs:long" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="liveHistoryEntry">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:long" use="optional"/> <!-- id is optional when new entries are added -->
+      <xs:attribute name="beginDate" type="xs:dateTime" use="required"/>
+      <xs:attribute name="endDate" type="xs:dateTime" use="optional"/>
+      <xs:attribute name="versionId" type="xs:long" use="required"/>
+      <xs:attribute name="creator" type="xs:long" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="timelineUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="oldTimeline">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:timeline"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="newTimeline">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="daisy:timeline"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="documentId" type="xs:string" use="required"/>
+      <xs:attribute name="branchId" type="xs:long" use="required"/>
+      <xs:attribute name="languageId" type="xs:long" use="required"/>
+      <xs:attribute name="liveVersionId" type="xs:long" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
