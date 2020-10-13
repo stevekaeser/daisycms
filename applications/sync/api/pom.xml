@@ -28,7 +28,7 @@
   <dependencies>
     <dependency><groupId>daisy</groupId><artifactId>daisy-repository-api</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>commons-collections</groupId><artifactId>commons-collections</artifactId><version>3.2</version></dependency>
-    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.2</version><scope>test</scope></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.13.1</version><scope>test</scope></dependency>
   </dependencies>
   <reporting>
     <plugins>
