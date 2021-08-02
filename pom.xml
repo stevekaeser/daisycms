@@ -168,7 +168,7 @@
       <dependency><groupId>nekohtml</groupId><artifactId>nekodtd</artifactId><version>0.1.11</version></dependency>
       <dependency><groupId>nekohtml</groupId><artifactId>nekohtml</artifactId><version>0.9.5</version></dependency>
       <dependency><groupId>org.apache.cocoon</groupId><artifactId>cocoon-maven-plugin</artifactId><version>1.0.0-M3</version></dependency>
-      <dependency><groupId>org.apache.commons</groupId><artifactId>commons-compress</artifactId><version>1.0</version></dependency>
+      <dependency><groupId>org.apache.commons</groupId><artifactId>commons-compress</artifactId><version>1.21</version></dependency>
       <dependency><groupId>org.apache.geronimo.specs</groupId><artifactId>geronimo-j2ee-management_1.0_spec</artifactId><version>1.0</version></dependency>
       <dependency><groupId>org.apache.lucene</groupId><artifactId>lucene-core</artifactId><version>3.0.1</version></dependency>
       <dependency><groupId>org.apache.lucene</groupId><artifactId>lucene-highlighter</artifactId><version>3.0.1</version></dependency>
