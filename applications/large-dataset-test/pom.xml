@@ -60,7 +60,7 @@
     <dependency><groupId>daisy</groupId><artifactId>daisy-repository-spi</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-repository-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-util</artifactId><version>${project.version}</version></dependency>
-    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.2</version><scope>test</scope></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.13.1</version><scope>test</scope></dependency>
     <dependency><groupId>stax</groupId><artifactId>stax-api</artifactId><version>1.0</version></dependency>
     <dependency><groupId>xmlbeans</groupId><artifactId>xbean</artifactId><version>2.1.0</version></dependency>
     <dependency><groupId>xmlbeans</groupId><artifactId>xmlpublic</artifactId><version>2.1.0</version></dependency>
