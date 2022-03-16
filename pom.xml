@@ -195,9 +195,9 @@
       <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jcl</artifactId><version>1.4.0</version></dependency>
       <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-log4j12</artifactId><version>1.4.0</version></dependency>
       <dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>2.5</version></dependency>
-      <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>2.5</version></dependency>
-      <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>2.5</version></dependency>
-      <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>2.5</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>5.2.5.RELEASE</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>5.2.5.RELEASE</version></dependency>
+      <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>5.2.5.RELEASE</version></dependency>
       <dependency><groupId>pdfbox</groupId><artifactId>pdfbox</artifactId><version>0.7.3</version></dependency>
       <dependency><groupId>org.apache.poi</groupId><artifactId>poi-scratchpad</artifactId><version>5.2.1</version></dependency>
       <dependency><groupId>org.apache.poi</groupId><artifactId>poi</artifactId><version>3.0.1-FINAL</version></dependency>

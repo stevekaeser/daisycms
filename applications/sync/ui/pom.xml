@@ -29,12 +29,12 @@
     <dependency><groupId>avalon-framework</groupId><artifactId>avalon-framework-api</artifactId><version>4.3</version></dependency>
     <dependency><groupId>cocoon</groupId><artifactId>cocoon</artifactId><version>2.1.9</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-sync-api</artifactId><version>${project.version}</version></dependency>
-    <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>2.0</version></dependency>
-    <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>2.0</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>5.2.5.RELEASE</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>5.2.5.RELEASE</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-dao</artifactId><version>2.0</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>2.0</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>2.0</version></dependency>
-    <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>2.0</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>5.2.5.RELEASE</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-aspects</artifactId><version>2.0</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-mock</artifactId><version>2.0</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>2.0</version></dependency>
