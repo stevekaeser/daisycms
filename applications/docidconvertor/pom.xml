@@ -57,7 +57,7 @@
     <dependency><groupId>daisy</groupId><artifactId>daisy-repository-spi</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-repository-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-util</artifactId><version>${project.version}</version></dependency>
-    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>3.8.2</version><scope>test</scope></dependency>
+    <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.13.1</version><scope>test</scope></dependency>
     <dependency><groupId>nekohtml</groupId><artifactId>nekodtd</artifactId><version>0.1.11</version></dependency>
     <dependency><groupId>nekohtml</groupId><artifactId>nekohtml</artifactId><version>0.9.5</version></dependency>
     <dependency><groupId>stax</groupId><artifactId>stax-api</artifactId><version>1.0</version></dependency>
