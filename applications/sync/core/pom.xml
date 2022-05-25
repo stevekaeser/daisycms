@@ -34,7 +34,7 @@
     <dependency><groupId>daisy</groupId><artifactId>daisy-sync-api</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-jmsclient-api</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>daisy</groupId><artifactId>daisy-sync-xmlschema-bindings</artifactId><version>${project.version}</version></dependency>
-    <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>2.5</version></dependency>
+    <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>5.2.22.RELEASE</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>2.5</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>2.5</version></dependency>
     <dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>2.5</version></dependency>
