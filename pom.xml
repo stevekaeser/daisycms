@@ -200,7 +200,7 @@
       <dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>2.5</version></dependency>
       <dependency><groupId>pdfbox</groupId><artifactId>pdfbox</artifactId><version>0.7.3</version></dependency>
       <dependency><groupId>org.apache.poi</groupId><artifactId>poi-scratchpad</artifactId><version>5.2.1</version></dependency>
-      <dependency><groupId>org.apache.poi</groupId><artifactId>poi</artifactId><version>3.0.1-FINAL</version></dependency>
+      <dependency><groupId>org.apache.poi</groupId><artifactId>poi</artifactId><version>4.1.1</version></dependency>
       <dependency><groupId>postgresql</groupId><artifactId>postgresql</artifactId><version>7.4-216.jdbc3</version></dependency>
       <dependency><groupId>rhino</groupId><artifactId>js</artifactId><version>1.6R5</version></dependency>
       <dependency><groupId>saxpath</groupId><artifactId>saxpath</artifactId><version>1.0-FCS</version></dependency>
