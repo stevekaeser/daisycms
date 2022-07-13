@@ -79,7 +79,7 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-core</artifactId><version>4.1.2</version></dependency>
+      <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-core</artifactId><version>5.6.0</version></dependency>
       <dependency><groupId>org.apache.activemq</groupId><artifactId>activemq-jaas</artifactId><version>4.1.2</version></dependency>
       <dependency><groupId>antlr</groupId><artifactId>antlr</artifactId><version>2.7.6</version></dependency>
       <dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency>
